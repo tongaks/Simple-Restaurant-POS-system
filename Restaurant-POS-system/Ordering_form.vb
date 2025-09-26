@@ -1,5 +1,15 @@
-﻿Public Class Order
+﻿Imports System.IO
+
+Public Class Order
+    Private Sub Order_Close(sender As Object, e As EventArgs) Handles MyBase.FormClosed
+        ' close parent when child closes
+        Form1.Dispose()
+    End Sub
+
     Private Sub Order_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Dim form1 As New Form1
+        Dim ConnectionString As String = form1.GetConnectionString()
+
         For i As Int32 = 0 To 2
             Dim testBtn As New Button
             testBtn.Text = "Cat " + i.ToString

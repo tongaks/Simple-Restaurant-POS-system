@@ -24,10 +24,15 @@ Partial Class Order
     Private Sub InitializeComponent()
         OrderPnl = New Panel()
         NavbarPnl = New Panel()
+        Button5 = New Button()
+        Button4 = New Button()
+        Button3 = New Button()
+        Button2 = New Button()
         AccountPicBox = New PictureBox()
         SettingsPicBox = New PictureBox()
         FoodPnl = New FlowLayoutPanel()
         Panel1 = New Panel()
+        Button6 = New Button()
         MenuCategoryPnl = New FlowLayoutPanel()
         Button1 = New Button()
         TextBox1 = New TextBox()
@@ -51,12 +56,52 @@ Partial Class Order
         ' 
         NavbarPnl.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
         NavbarPnl.BackColor = Color.Salmon
+        NavbarPnl.Controls.Add(Button5)
+        NavbarPnl.Controls.Add(Button4)
+        NavbarPnl.Controls.Add(Button3)
+        NavbarPnl.Controls.Add(Button2)
         NavbarPnl.Controls.Add(AccountPicBox)
         NavbarPnl.Controls.Add(SettingsPicBox)
         NavbarPnl.Location = New Point(-1, 0)
         NavbarPnl.Name = "NavbarPnl"
         NavbarPnl.Size = New Size(1046, 68)
         NavbarPnl.TabIndex = 1
+        ' 
+        ' Button5
+        ' 
+        Button5.Location = New Point(13, 23)
+        Button5.Name = "Button5"
+        Button5.Size = New Size(75, 23)
+        Button5.TabIndex = 5
+        Button5.Text = "Menu"
+        Button5.UseVisualStyleBackColor = True
+        ' 
+        ' Button4
+        ' 
+        Button4.Location = New Point(617, 23)
+        Button4.Name = "Button4"
+        Button4.Size = New Size(75, 23)
+        Button4.TabIndex = 4
+        Button4.Text = "Hide"
+        Button4.UseVisualStyleBackColor = True
+        ' 
+        ' Button3
+        ' 
+        Button3.Location = New Point(779, 23)
+        Button3.Name = "Button3"
+        Button3.Size = New Size(75, 23)
+        Button3.TabIndex = 3
+        Button3.Text = "Settings"
+        Button3.UseVisualStyleBackColor = True
+        ' 
+        ' Button2
+        ' 
+        Button2.Location = New Point(698, 23)
+        Button2.Name = "Button2"
+        Button2.Size = New Size(75, 23)
+        Button2.TabIndex = 2
+        Button2.Text = "Account"
+        Button2.UseVisualStyleBackColor = True
         ' 
         ' AccountPicBox
         ' 
@@ -90,6 +135,7 @@ Partial Class Order
         ' 
         Panel1.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
         Panel1.BackColor = SystemColors.Control
+        Panel1.Controls.Add(Button6)
         Panel1.Controls.Add(MenuCategoryPnl)
         Panel1.Controls.Add(Button1)
         Panel1.Controls.Add(TextBox1)
@@ -98,6 +144,15 @@ Partial Class Order
         Panel1.Name = "Panel1"
         Panel1.Size = New Size(645, 538)
         Panel1.TabIndex = 1
+        ' 
+        ' Button6
+        ' 
+        Button6.Location = New Point(480, 16)
+        Button6.Name = "Button6"
+        Button6.Size = New Size(75, 23)
+        Button6.TabIndex = 6
+        Button6.Text = "Hide"
+        Button6.UseVisualStyleBackColor = True
         ' 
         ' MenuCategoryPnl
         ' 
@@ -166,4 +221,9 @@ Partial Class Order
     Friend WithEvents TextBox1 As TextBox
     Friend WithEvents MenuCategoryPnl As FlowLayoutPanel
     Friend WithEvents Button1 As Button
+    Friend WithEvents Button4 As Button
+    Friend WithEvents Button3 As Button
+    Friend WithEvents Button2 As Button
+    Friend WithEvents Button5 As Button
+    Friend WithEvents Button6 As Button
 End Class

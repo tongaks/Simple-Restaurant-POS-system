@@ -16,3 +16,15 @@ C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\
 C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\obj\Debug\net8.0-windows\Restaurant-POS-system.pdb
 C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\obj\Debug\net8.0-windows\Restaurant-POS-system.genruntimeconfig.cache
 C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\obj\Debug\net8.0-windows\ref\Restaurant-POS-system.dll
+C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\bin\Debug\net8.0-windows\System.Configuration.ConfigurationManager.dll
+C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\bin\Debug\net8.0-windows\System.Data.OleDb.dll
+C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\bin\Debug\net8.0-windows\System.Diagnostics.EventLog.dll
+C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\bin\Debug\net8.0-windows\System.Diagnostics.PerformanceCounter.dll
+C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\bin\Debug\net8.0-windows\System.Security.Cryptography.ProtectedData.dll
+C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Data.OleDb.dll
+C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.Messages.dll
+C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.dll
+C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Diagnostics.PerformanceCounter.dll
+C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\obj\Debug\net8.0-windows\Restaurant-POS-system.vbproj.AssemblyReference.cache
+C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\obj\Debug\net8.0-windows\Restaurant-POS-system.sourcelink.json
+C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\obj\Debug\net8.0-windows\Restaura.A2E95D3B.Up2Date
