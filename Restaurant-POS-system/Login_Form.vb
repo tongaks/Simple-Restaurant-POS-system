@@ -4,27 +4,11 @@ Imports System.IO
 Imports System.Reflection.Metadata.Ecma335
 
 Public Class Form1
-    Dim ConnectionString As String
+    Public ConnectionString As String
 
     Private Sub Order_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Dim CurrentPath As String = Directory.GetCurrentDirectory()
-        Dim DirInfo As New DirectoryInfo(CurrentPath)
-
-        ' move 4 up para tumutok sa parent dir ng project
-        For i As Integer = 1 To 4
-            If DirInfo.Parent IsNot Nothing Then
-                DirInfo = DirInfo.Parent
-            Else
-                Exit For
-            End If
-        Next
-
-        ConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & DirInfo.FullName & "\MSAccess\Restaurant.accdb ;Persist Security Info=False;"
+        ConnectionString = GetGlobalConnectionString()
     End Sub
-
-    Public Function GetConnectionString()
-        Return ConnectionString
-    End Function
 
     Private Function Login(uname As String, passw As String)
         Dim Connection As New OleDbConnection(ConnectionString)
