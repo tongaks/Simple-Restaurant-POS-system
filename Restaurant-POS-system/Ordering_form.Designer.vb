@@ -37,10 +37,17 @@ Partial Class Order
         TextBox1 = New TextBox()
         Label1 = New Label()
         OrderPnl = New FlowLayoutPanel()
+        DataGridView1 = New DataGridView()
+        TotalPnl = New Panel()
+        TotalLbl = New Label()
+        Label2 = New Label()
         NavbarPnl.SuspendLayout()
         CType(AccountPicBox, ComponentModel.ISupportInitialize).BeginInit()
         CType(SettingsPicBox, ComponentModel.ISupportInitialize).BeginInit()
         Panel1.SuspendLayout()
+        OrderPnl.SuspendLayout()
+        CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
+        TotalPnl.SuspendLayout()
         SuspendLayout()
         ' 
         ' NavbarPnl
@@ -116,6 +123,7 @@ Partial Class Order
         ' 
         FoodPnl.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
         FoodPnl.BackColor = SystemColors.Control
+        FoodPnl.BorderStyle = BorderStyle.FixedSingle
         FoodPnl.Location = New Point(397, 174)
         FoodPnl.Name = "FoodPnl"
         FoodPnl.Padding = New Padding(10)
@@ -126,6 +134,7 @@ Partial Class Order
         ' 
         Panel1.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
         Panel1.BackColor = SystemColors.Control
+        Panel1.BorderStyle = BorderStyle.FixedSingle
         Panel1.Controls.Add(Button6)
         Panel1.Controls.Add(MenuCategoryPnl)
         Panel1.Controls.Add(Button1)
@@ -138,15 +147,17 @@ Partial Class Order
         ' 
         ' Button6
         ' 
+        Button6.BackColor = Color.Salmon
         Button6.Location = New Point(480, 16)
         Button6.Name = "Button6"
         Button6.Size = New Size(75, 23)
         Button6.TabIndex = 6
         Button6.Text = "Hide"
-        Button6.UseVisualStyleBackColor = True
+        Button6.UseVisualStyleBackColor = False
         ' 
         ' MenuCategoryPnl
         ' 
+        MenuCategoryPnl.BorderStyle = BorderStyle.FixedSingle
         MenuCategoryPnl.Location = New Point(0, 58)
         MenuCategoryPnl.Name = "MenuCategoryPnl"
         MenuCategoryPnl.Padding = New Padding(10)
@@ -184,12 +195,56 @@ Partial Class Order
         ' 
         ' OrderPnl
         ' 
+        OrderPnl.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left
         OrderPnl.BackColor = SystemColors.Control
+        OrderPnl.BorderStyle = BorderStyle.FixedSingle
+        OrderPnl.Controls.Add(DataGridView1)
         OrderPnl.FlowDirection = FlowDirection.TopDown
         OrderPnl.Location = New Point(-1, 66)
         OrderPnl.Name = "OrderPnl"
-        OrderPnl.Size = New Size(392, 538)
+        OrderPnl.Size = New Size(392, 480)
         OrderPnl.TabIndex = 3
+        ' 
+        ' DataGridView1
+        ' 
+        DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridView1.Location = New Point(3, 3)
+        DataGridView1.Name = "DataGridView1"
+        DataGridView1.Size = New Size(240, 150)
+        DataGridView1.TabIndex = 0
+        DataGridView1.Visible = False
+        ' 
+        ' TotalPnl
+        ' 
+        TotalPnl.Anchor = AnchorStyles.Bottom Or AnchorStyles.Left
+        TotalPnl.BackColor = SystemColors.Control
+        TotalPnl.BorderStyle = BorderStyle.FixedSingle
+        TotalPnl.Controls.Add(TotalLbl)
+        TotalPnl.Controls.Add(Label2)
+        TotalPnl.Location = New Point(-1, 546)
+        TotalPnl.Name = "TotalPnl"
+        TotalPnl.Size = New Size(392, 58)
+        TotalPnl.TabIndex = 4
+        ' 
+        ' TotalLbl
+        ' 
+        TotalLbl.AutoSize = True
+        TotalLbl.Font = New Font("Segoe UI", 20F)
+        TotalLbl.Location = New Point(316, 11)
+        TotalLbl.Name = "TotalLbl"
+        TotalLbl.Size = New Size(48, 37)
+        TotalLbl.TabIndex = 1
+        TotalLbl.Text = "₱0"
+        ' 
+        ' Label2
+        ' 
+        Label2.AutoSize = True
+        Label2.Font = New Font("Segoe UI", 20F)
+        Label2.Location = New Point(12, 11)
+        Label2.Name = "Label2"
+        Label2.Size = New Size(74, 37)
+        Label2.TabIndex = 0
+        Label2.Text = "Total"
         ' 
         ' Order
         ' 
@@ -197,8 +252,9 @@ Partial Class Order
         AutoScaleMode = AutoScaleMode.Font
         BackColor = SystemColors.ControlDark
         ClientSize = New Size(1041, 604)
-        Controls.Add(OrderPnl)
+        Controls.Add(TotalPnl)
         Controls.Add(NavbarPnl)
+        Controls.Add(OrderPnl)
         Controls.Add(FoodPnl)
         Controls.Add(Panel1)
         Name = "Order"
@@ -208,6 +264,10 @@ Partial Class Order
         CType(SettingsPicBox, ComponentModel.ISupportInitialize).EndInit()
         Panel1.ResumeLayout(False)
         Panel1.PerformLayout()
+        OrderPnl.ResumeLayout(False)
+        CType(DataGridView1, ComponentModel.ISupportInitialize).EndInit()
+        TotalPnl.ResumeLayout(False)
+        TotalPnl.PerformLayout()
         ResumeLayout(False)
     End Sub
     Friend WithEvents NavbarPnl As Panel
@@ -225,4 +285,9 @@ Partial Class Order
     Friend WithEvents Button5 As Button
     Friend WithEvents Button6 As Button
     Friend WithEvents OrderPnl As FlowLayoutPanel
+    Friend WithEvents TotalPnl As Panel
+    Friend WithEvents Label2 As Label
+    Friend WithEvents TotalLbl As Label
+    Friend WithEvents TestTable As DataGridView
+    Friend WithEvents DataGridView1 As DataGridView
 End Class

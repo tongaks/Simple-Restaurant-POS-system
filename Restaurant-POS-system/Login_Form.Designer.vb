@@ -40,6 +40,7 @@ Partial Class Form1
         UsernameTxtBox.Name = "UsernameTxtBox"
         UsernameTxtBox.Size = New Size(385, 43)
         UsernameTxtBox.TabIndex = 0
+        UsernameTxtBox.Text = "admin"
         ' 
         ' PasswordTxtBox
         ' 
@@ -49,6 +50,7 @@ Partial Class Form1
         PasswordTxtBox.PasswordChar = "·"c
         PasswordTxtBox.Size = New Size(385, 43)
         PasswordTxtBox.TabIndex = 1
+        PasswordTxtBox.Text = "admin"
         ' 
         ' Label1
         ' 
