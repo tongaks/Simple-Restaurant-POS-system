@@ -22,7 +22,6 @@ Partial Class Order
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        OrderPnl = New Panel()
         NavbarPnl = New Panel()
         Button5 = New Button()
         Button4 = New Button()
@@ -37,20 +36,12 @@ Partial Class Order
         Button1 = New Button()
         TextBox1 = New TextBox()
         Label1 = New Label()
+        OrderPnl = New FlowLayoutPanel()
         NavbarPnl.SuspendLayout()
         CType(AccountPicBox, ComponentModel.ISupportInitialize).BeginInit()
         CType(SettingsPicBox, ComponentModel.ISupportInitialize).BeginInit()
         Panel1.SuspendLayout()
         SuspendLayout()
-        ' 
-        ' OrderPnl
-        ' 
-        OrderPnl.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left
-        OrderPnl.BackColor = SystemColors.Control
-        OrderPnl.Location = New Point(2, 66)
-        OrderPnl.Name = "OrderPnl"
-        OrderPnl.Size = New Size(392, 538)
-        OrderPnl.TabIndex = 0
         ' 
         ' NavbarPnl
         ' 
@@ -191,16 +182,25 @@ Partial Class Order
         Label1.Text = "Search"
         Label1.TextAlign = ContentAlignment.MiddleCenter
         ' 
+        ' OrderPnl
+        ' 
+        OrderPnl.BackColor = SystemColors.Control
+        OrderPnl.FlowDirection = FlowDirection.TopDown
+        OrderPnl.Location = New Point(-1, 66)
+        OrderPnl.Name = "OrderPnl"
+        OrderPnl.Size = New Size(392, 538)
+        OrderPnl.TabIndex = 3
+        ' 
         ' Order
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = SystemColors.ControlDark
         ClientSize = New Size(1041, 604)
+        Controls.Add(OrderPnl)
         Controls.Add(NavbarPnl)
         Controls.Add(FoodPnl)
         Controls.Add(Panel1)
-        Controls.Add(OrderPnl)
         Name = "Order"
         Text = "Order form"
         NavbarPnl.ResumeLayout(False)
@@ -210,8 +210,6 @@ Partial Class Order
         Panel1.PerformLayout()
         ResumeLayout(False)
     End Sub
-
-    Friend WithEvents OrderPnl As Panel
     Friend WithEvents NavbarPnl As Panel
     Friend WithEvents SettingsPicBox As PictureBox
     Friend WithEvents AccountPicBox As PictureBox
@@ -226,4 +224,5 @@ Partial Class Order
     Friend WithEvents Button2 As Button
     Friend WithEvents Button5 As Button
     Friend WithEvents Button6 As Button
+    Friend WithEvents OrderPnl As FlowLayoutPanel
 End Class
