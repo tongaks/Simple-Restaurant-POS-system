@@ -18,11 +18,12 @@ Public Class Order
             Reader = Command.ExecuteReader
 
             While Reader.Read
-                Dim testbtn As New Button
-                testbtn.Text = Reader("CategoryName")
-                testbtn.Size = New System.Drawing.Size(100, 40)
-                testbtn.Margin = New Padding(0, 0, 0, 10)
-                MenuCategoryPnl.Controls.Add(testbtn)
+                Dim catBtn As New Button
+                catBtn.Text = Reader("CategoryName")
+                catBtn.Size = New System.Drawing.Size(100, 40)
+                catBtn.Margin = New Padding(0, 0, 0, 10)
+                AddHandler catBtn.Click, AddressOf HandleCatClick
+                MenuCategoryPnl.Controls.Add(catBtn)
             End While
 
         Catch ex As Exception
@@ -81,6 +82,12 @@ Public Class Order
         Dim label As New Label
         label.Text = name & " " & price
         OrderPnl.Controls.Add(label)
+    End Sub
+
+    Private Sub HandleCatClick(sender As Object, e As EventArgs)
+        Dim catName = CType(sender, Button).Text
+        FoodPnl.Controls.Clear()
+        LoadMenuItems(catName)
     End Sub
 
     Private Sub Order_Load(sender As Object, e As EventArgs) Handles MyBase.Load
