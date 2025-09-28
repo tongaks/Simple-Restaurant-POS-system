@@ -15,7 +15,7 @@ Public Class Order
         LoadMenuCategories()
         LoadMenuItems("Foods")
 
-        DataGridView1.ColumnCount = 3
+        DataGridView1.ColumnCount = 4
         DataGridView1.Columns(0).Name = "ItemAmount"
         DataGridView1.Columns("ItemAmount").ValueType = GetType(Integer)
 
@@ -23,6 +23,12 @@ Public Class Order
 
         DataGridView1.Columns(2).Name = "ItemPrice"
         DataGridView1.Columns("ItemPrice").ValueType = GetType(Integer)
+
+        DataGridView1.Columns(3).Name = "Total"
+        DataGridView1.Columns("Total").ValueType = GetType(Integer)
+
+        'DataGridView1.DefaultCellStyle.Font = New Font("Segue UI", 15.0F, FontStyle.Regular)
+        'DataGridView1.Rows(0).Height = 20
     End Sub
 
     Private Sub Order_Close(sender As Object, e As EventArgs) Handles MyBase.FormClosed
@@ -99,76 +105,6 @@ Public Class Order
         End Try
     End Sub
 
-    Private Sub AddItemToOrderPanel()
-        OrderPnl.Controls.Clear()
-
-        For Each row In DataGridView1.Rows
-            If row.Cells(0).value = Nothing Then
-                Exit For
-            End If
-
-            Dim amount = row.Cells(0).value.ToString
-            Dim name = row.Cells(1).value.ToString
-            Dim price = row.Cells(2).value.ToString
-
-            Dim totalPnlWidth As Integer = OrderPnl.Width
-            Dim itemNameWidth As Integer = CInt(totalPnlWidth * 0.45)
-            Dim itemPriceWidth As Integer = CInt(totalPnlWidth * 0.25)
-            Dim buttonWidth As Integer = 30
-            Dim itemCountWidth As Integer = 35
-
-            Dim itemCount As New Label
-            itemCount.Text = amount
-            itemCount.Font = New Font("Segue UI", 16.0F, FontStyle.Regular)
-            itemCount.Size = New System.Drawing.Size(itemCountWidth, 30)
-            itemCount.TextAlign = ContentAlignment.MiddleCenter
-
-            Dim itemName As New Label
-            itemName.Text = name
-            itemName.Size = New System.Drawing.Size(itemNameWidth, 30)
-            itemName.Font = New Font("Segue UI", 16.0F, FontStyle.Regular)
-            itemName.AutoEllipsis = True
-
-            Dim itemPrice As New Label
-            itemPrice.Text = "₱" & price
-            itemPrice.Size = New System.Drawing.Size(itemPriceWidth, 30)
-            itemPrice.Font = New Font("Segue UI", 16.0F, FontStyle.Regular)
-            itemPrice.TextAlign = ContentAlignment.MiddleRight
-
-            Dim increaseBtn As New Button
-            increaseBtn.Text = "+"
-            increaseBtn.BackColor = Color.SpringGreen
-            increaseBtn.FlatStyle = FlatStyle.Flat
-            increaseBtn.Width = buttonWidth
-            increaseBtn.Height = 30
-            increaseBtn.Cursor = Cursors.Hand
-            increaseBtn.Tag = itemCount.Text
-
-            Dim decreaseBtn As New Button
-            decreaseBtn.Text = "-"
-            decreaseBtn.BackColor = Color.Salmon
-            decreaseBtn.FlatStyle = FlatStyle.Flat
-            decreaseBtn.Width = buttonWidth
-            decreaseBtn.Height = 30
-            decreaseBtn.Cursor = Cursors.Hand
-            decreaseBtn.Tag = itemCount.Text
-
-            Dim panel As New FlowLayoutPanel
-            panel.BackColor = Color.LightBlue
-            panel.FlowDirection = FlowDirection.LeftToRight
-            panel.WrapContents = False
-            panel.Margin = New Padding(0)
-            panel.Controls.Add(itemCount)
-            panel.Controls.Add(itemName)
-            panel.Controls.Add(itemPrice)
-            panel.Controls.Add(increaseBtn)
-            panel.Controls.Add(decreaseBtn)
-            panel.Size = New System.Drawing.Size(totalPnlWidth, itemName.Height + 5)
-            panel.Padding = New Padding(0, 0, 0, 5)
-            OrderPnl.Controls.Add(panel)
-        Next
-    End Sub
-
     Private Sub HandleItemClick(sender As Object, e As EventArgs)
         Dim name = CType(sender, Button).Text
         Dim price = CType(sender, Button).Tag
@@ -179,17 +115,18 @@ Public Class Order
             If row.Cells(1).Value IsNot Nothing AndAlso row.Cells(1).Value.ToString() = name Then
                 nameExists = True
                 row.Cells(0).Value = CInt(row.Cells(0).Value) + 1
+                row.Cells(3).Value = CInt(row.Cells(3).Value) + price
                 Exit For
             End If
         Next
 
         If Not nameExists Then
             Dim newRow As New DataGridViewRow()
-            newRow.CreateCells(DataGridView1, 1, name, price)
+            newRow.CreateCells(DataGridView1, 1, name, price, price)
             DataGridView1.Rows.Add(newRow)
         End If
 
-        AddItemToOrderPanel()
+        'AddItemToOrderPanel()
 
         CurrentTotal += Integer.Parse(price)
         TotalLbl.Text = "₱" + CStr(CurrentTotal)
@@ -203,5 +140,33 @@ Public Class Order
 
     Private Sub Button6_Click(sender As Object, e As EventArgs)
         Panel1.Hide()
+    End Sub
+
+    Private Sub CreateOrderBtn_Click(sender As Object, e As EventArgs) Handles CreateOrderBtn.Click
+        Dim ConnectionString = GetGlobalConnectionString()
+        Dim Connection As New OleDbConnection(ConnectionString)
+
+        Dim TotalAmount As Integer = Integer.Parse(TotalLbl.Text.Substring(1))
+
+        Try
+            Connection.Open()
+            Dim Query As String = "INSERT INTO Orders (order_date, order_time, username, total_amount) VALUES (?, ?, ?, ?)"
+            Dim Command As New OleDbCommand(Query, Connection)
+            Command.Parameters.AddWithValue("?", DateTime.Now.Date)
+            Command.Parameters.AddWithValue("?", DateTime.Now.TimeOfDay)
+            Command.Parameters.AddWithValue("?", CurrentUser)
+            Command.Parameters.AddWithValue("?", TotalAmount)
+
+            If Command.ExecuteNonQuery() > 0 Then
+                MsgBox("Order created", MsgBoxStyle.Information, "Success")
+            End If
+
+        Catch ex As Exception
+            MsgBox("Failed to create order: " + ex.ToString, MsgBoxStyle.Critical, "Error")
+        Finally
+            If Connection.State = ConnectionState.Open Then
+                Connection.Close()
+            End If
+        End Try
     End Sub
 End Class

@@ -49,7 +49,9 @@ Public Class Form1
         End If
 
         If Login(UsernameTxtBox.Text, PasswordTxtBox.Text) Then
+            CurrentUser = UsernameTxtBox.Text
             Order.Show(Me)
+            'Admin.Show()
             Hide()
         End If
     End Sub
@@ -57,7 +59,9 @@ Public Class Form1
     Private Sub HandleEnter(sender As Object, e As KeyPressEventArgs) Handles UsernameTxtBox.KeyPress, PasswordTxtBox.KeyPress
         If Asc(e.KeyChar) = 13 Then
             If Login(UsernameTxtBox.Text, PasswordTxtBox.Text) Then
+                CurrentUser = UsernameTxtBox.Text
                 Order.Show()
+                'Admin.Show()
                 Me.Hide()
             End If
         End If

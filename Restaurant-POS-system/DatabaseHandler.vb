@@ -2,9 +2,14 @@
 
 Module GlobalFunctions
     Private ReadOnly DirInfo As DirectoryInfo = GetBaseDirectory()
+    Public CurrentUser As String
 
     Public Function GetGlobalConnectionString() As String
         Return "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & DirInfo.FullName & "\MSAccess\Restaurant.accdb ;Persist Security Info=False;"
+    End Function
+
+    Public Function GetOrdersConnectionString() As String
+        Return "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & DirInfo.FullName & "\MSAccess\Orders.accdb ;Persist Security Info=False;"
     End Function
 
     Private Function GetBaseDirectory() As DirectoryInfo
