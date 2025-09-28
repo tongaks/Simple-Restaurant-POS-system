@@ -9,6 +9,7 @@ Imports System.Xml
 Public Class Order
     Dim CurrentTotal As Integer
     Private Sub Order_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.WindowState = WindowState.Maximized
 
         CurrentTotal = 0
         LoadMenuCategories()
@@ -42,8 +43,8 @@ Public Class Order
             While Reader.Read
                 Dim catBtn As New Button
                 catBtn.Text = Reader("CategoryName")
-                catBtn.Size = New System.Drawing.Size(100, 40)
-                catBtn.Margin = New Padding(0, 0, 0, 10)
+                catBtn.Size = New System.Drawing.Size(100, 50)
+                catBtn.FlatStyle = FlatStyle.Flat
                 AddHandler catBtn.Click, AddressOf HandleCatClick
                 MenuCategoryPnl.Controls.Add(catBtn)
             End While
@@ -198,5 +199,9 @@ Public Class Order
         Dim catName = CType(sender, Button).Text
         FoodPnl.Controls.Clear()
         LoadMenuItems(catName)
+    End Sub
+
+    Private Sub Button6_Click(sender As Object, e As EventArgs)
+        Panel1.Hide()
     End Sub
 End Class

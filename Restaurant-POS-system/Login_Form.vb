@@ -8,6 +8,7 @@ Public Class Form1
 
     Private Sub Order_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ConnectionString = GetGlobalConnectionString()
+        Me.WindowState = WindowState.Maximized
     End Sub
 
     Private Function Login(uname As String, passw As String)
@@ -24,10 +25,8 @@ Public Class Form1
 
             Reader = Command.ExecuteReader()
 
-            If Reader.HasRows Then
-                MsgBox("Successful login")
-            Else
-                MsgBox("Invalid username or password")
+            If Reader.HasRows = False Then
+                MsgBox("Invalid username or password.", MsgBoxStyle.Critical, "Attention")
                 Return False
             End If
 
@@ -45,13 +44,22 @@ Public Class Form1
 
     Private Sub LoginBtn_Click(sender As Object, e As EventArgs) Handles LoginBtn.Click
         If String.IsNullOrWhiteSpace(UsernameTxtBox.Text) Or String.IsNullOrWhiteSpace(PasswordTxtBox.Text) Then
-            MsgBox("Please complete the credentials.")
+            MsgBox("Please complete the user credentials.", MsgBoxStyle.Critical, "Attention")
             Return
         End If
 
         If Login(UsernameTxtBox.Text, PasswordTxtBox.Text) Then
             Order.Show(Me)
             Hide()
+        End If
+    End Sub
+
+    Private Sub HandleEnter(sender As Object, e As KeyPressEventArgs) Handles UsernameTxtBox.KeyPress, PasswordTxtBox.KeyPress
+        If Asc(e.KeyChar) = 13 Then
+            If Login(UsernameTxtBox.Text, PasswordTxtBox.Text) Then
+                Order.Show()
+                Me.Hide()
+            End If
         End If
     End Sub
 End Class
