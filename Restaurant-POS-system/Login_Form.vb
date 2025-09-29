@@ -2,6 +2,7 @@
 Imports System.Data.Common
 Imports System.IO
 Imports System.Reflection.Metadata.Ecma335
+Imports MySql.Data.MySqlClient
 
 Public Class Form1
     Public ConnectionString As String
@@ -13,13 +14,13 @@ Public Class Form1
     End Sub
 
     Private Function Login(uname As String, passw As String, table As String)
-        Dim Connection As New OleDbConnection(ConnectionString)
-        Dim Reader As OleDbDataReader
+        Dim Connection As New MySqlConnection(ConnectionString)
+        Dim Reader As MySqlDataReader
 
         Try
             Connection.Open()
-            Dim Query As String = "SELECT * from [" & table & "] WHERE Username = @Username AND Password = @Password"
-            Dim Command As New OleDbCommand(Query, Connection)
+            Dim Query As String = "SELECT * from " & table & " WHERE Username = @Username AND Password = @Password"
+            Dim Command As New MySqlCommand(Query, Connection)
 
             Command.Parameters.AddWithValue("@Username", uname)
             Command.Parameters.AddWithValue("@Password", passw)
@@ -56,7 +57,7 @@ Public Class Form1
     End Sub
 
     Private Sub LoginBtn_Click(sender As Object, e As EventArgs) Handles LoginBtn.Click
-        Dim table As String = If((IsAdmin), "Admin", "User")
+        Dim table As String = If((IsAdmin), "admin", "user")
 
         If String.IsNullOrWhiteSpace(UsernameTxtBox.Text) Or String.IsNullOrWhiteSpace(PasswordTxtBox.Text) Then
             MsgBox("Please complete the user credentials.", MsgBoxStyle.Critical, "Attention")
@@ -77,16 +78,16 @@ Public Class Form1
     Private Sub HandleLogin(table As String)
         If Login(UsernameTxtBox.Text, PasswordTxtBox.Text, table) Then
             CurrentUser = UsernameTxtBox.Text
-            Dim Connection As New OleDbConnection(ConnectionString)
+            Dim Connection As New MySqlConnection(ConnectionString)
 
             Try
                 Connection.Open()
-                Dim Query As String = "INSERT INTO LoginLogs (Username, DateLogin, TimeLogin, Role) VALUES (?, ?, ?, ?)"
-                Dim Command As New OleDbCommand(Query, Connection)
-                Command.Parameters.AddWithValue("?", CurrentUser)
-                Command.Parameters.AddWithValue("?", DateTime.Now.Date)
-                Command.Parameters.AddWithValue("?", DateTime.Now.TimeOfDay)
-                Command.Parameters.AddWithValue("?", "Role here")
+                Dim Query As String = "INSERT INTO loginlogs (Username, DateLogin, TimeLogin, Role) VALUES (@uname, @date, @time, @role)"
+                Dim Command As New MySqlCommand(Query, Connection)
+                Command.Parameters.AddWithValue("@uname", CurrentUser)
+                Command.Parameters.AddWithValue("@date", DateTime.Now.Date)
+                Command.Parameters.AddWithValue("@time", DateTime.Now.TimeOfDay)
+                Command.Parameters.AddWithValue("@role", "Role here")
 
                 If Command.ExecuteNonQuery() > 0 Then
                     Order.Show(Me)

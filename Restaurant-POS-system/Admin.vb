@@ -5,6 +5,8 @@
 Imports System.Data.OleDb
 Imports System.IO
 Imports System.Text
+Imports MySql.Data
+Imports MySql.Data.MySqlClient
 
 Public Class Admin
     Private currentUserRole As String = "Admin"
@@ -49,11 +51,11 @@ Public Class Admin
     ''' </summary>
     Private Sub LoadAuditLogs(Optional usernameFilter As String = "", Optional dateFrom As DateTime? = Nothing, Optional dateTo As DateTime? = Nothing)
         Try
-            Using connection As New OleDbConnection(GetGlobalConnectionString())
+            Using connection As New MySqlConnection(GetGlobalConnectionString())
                 connection.Open()
+                Dim query As String = "SELECT log_time, username, role, action FROM activity_logs WHERE 1=1"
 
-                Dim query As String = "SELECT TOP 200 log_time, username, role, action FROM activity_logs WHERE 1=1"
-                Dim cmd As New OleDbCommand()
+                Dim cmd As New MySqlCommand()
 
                 ' Add filters
                 If Not String.IsNullOrEmpty(usernameFilter) Then
@@ -71,11 +73,12 @@ Public Class Admin
                     cmd.Parameters.AddWithValue("@dateTo", dateTo.Value.Date.AddDays(1).AddSeconds(-1))
                 End If
 
-                query += " ORDER BY log_time DESC"
+                query += " ORDER BY log_time DESC LIMIT 200"
+
                 cmd.CommandText = query
                 cmd.Connection = connection
 
-                Dim adapter As New OleDbDataAdapter(cmd)
+                Dim adapter As New MySqlDataAdapter(cmd)
                 Dim dt As New DataTable()
                 adapter.Fill(dt)
 
@@ -109,16 +112,16 @@ Public Class Admin
     ''' </summary>
     Private Sub GenerateSalesReport()
         Try
-            Using connection As New OleDbConnection(GetGlobalConnectionString())
+            Using connection As New MySqlConnection(GetGlobalConnectionString())
                 connection.Open()
 
                 ' Get sales summary
                 Dim summaryQuery As String = "SELECT COUNT(*) AS OrderCount, SUM(total_amount) AS TotalSales FROM orders WHERE order_date >= @dateFrom AND order_date <= @dateTo"
-                Using cmd As New OleDbCommand(summaryQuery, connection)
+                Using cmd As New MySqlCommand(summaryQuery, connection)
                     cmd.Parameters.AddWithValue("@dateFrom", dtpFrom.Value.Date)
                     cmd.Parameters.AddWithValue("@dateTo", dtpTo.Value.Date.AddDays(1).AddSeconds(-1))
 
-                    Using reader As OleDbDataReader = cmd.ExecuteReader()
+                    Using reader As MySqlDataReader = cmd.ExecuteReader()
                         If reader.Read() Then
                             lblTotalSales.Text = "₱" & If(IsDBNull(reader("TotalSales")), 0, reader("TotalSales"))
                             lblOrderCount.Text = If(IsDBNull(reader("OrderCount")), 0, reader("OrderCount")).ToString()
@@ -128,11 +131,11 @@ Public Class Admin
 
                 ' Get detailed transactions
                 Dim detailQuery As String = "SELECT * FROM orders WHERE order_date >= @dateFrom AND order_date <= @dateTo ORDER BY order_date DESC"
-                Using cmd As New OleDbCommand(detailQuery, connection)
+                Using cmd As New MySqlCommand(detailQuery, connection)
                     cmd.Parameters.AddWithValue("@dateFrom", dtpFrom.Value.Date)
                     cmd.Parameters.AddWithValue("@dateTo", dtpTo.Value.Date.AddDays(1).AddSeconds(-1))
 
-                    Dim adapter As New OleDbDataAdapter(cmd)
+                    Dim adapter As New MySqlDataAdapter(cmd)
                     Dim dt As New DataTable()
                     adapter.Fill(dt)
 
@@ -215,11 +218,11 @@ Public Class Admin
     ''' </summary>
     Private Sub LoadUserAccounts()
         Try
-            Using connection As New OleDbConnection(GetGlobalConnectionString())
+            Using connection As New MySqlConnection(GetGlobalConnectionString())
                 connection.Open()
-                Dim query As String = "SELECT ID, Username, 'User' AS Role FROM [User] UNION ALL SELECT ID, Username, 'Admin' AS Role FROM Admin"
-                Using cmd As New OleDbCommand(query, connection)
-                    Dim adapter As New OleDbDataAdapter(cmd)
+                Dim query As String = "SELECT ID, Username, 'User' AS Role FROM user UNION ALL SELECT ID, Username, 'Admin' AS Role FROM Admin"
+                Using cmd As New MySqlCommand(query, connection)
+                    Dim adapter As New MySqlDataAdapter(cmd)
                     Dim dt As New DataTable()
                     adapter.Fill(dt)
                     dgvUsers.DataSource = dt

@@ -1,18 +1,24 @@
 ﻿Imports System.Data.OleDb
+Imports System.IO
 Imports System.Reflection.Metadata
 Imports System.Runtime.InteropServices
+Imports MySql.Data.MySqlClient
 Imports Windows.Win32.UI.Input
 
 Public Class Manage_menu
-    Dim IsEdit As Boolean
+    Dim IsEdit As Boolean = False
+    Dim CurrentTable As String
+    Dim IsItemNameChanged As Boolean = False
+    Dim IsItemImgChanged As Boolean = False
+    Dim IsItemPriceChanged As Boolean = False
+    Dim ImagePath As String
 
     Private Sub Manage_menu_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.WindowState = WindowState.Maximized
 
-        IsEdit = False
-
         LoadMenuCategories()
         LoadMenuItems("Foods")
+        CurrentTable = "Foods"
     End Sub
 
     Public Function CreateFoodItemButton(itemName As String, itemPrice As String, imgPath As String)
@@ -25,7 +31,7 @@ Public Class Manage_menu
 
         If Not imgPath = Nothing Then
             Dim image As Image = Image.FromFile(imgPath)
-            foodBtn.Image = ResizeImageFit(image, foodBtn)
+            foodBtn.BackgroundImage = ResizeImageFit(image, foodBtn)
         End If
 
         AddHandler foodBtn.Click, AddressOf HandleItemClick
@@ -54,15 +60,18 @@ Public Class Manage_menu
         EditBtn.Visible = True
         DeleteBtn.Visible = True
 
+        ItemNameTxtBox.Text = ""
+        PriceTxtBox.Text = ""
+
         Dim item As Button = CType(sender, Button)
         Dim price As String = item.Tag
 
         ItemBtn.Text = item.Text
 
-        If item.Image IsNot Nothing Then
-            ItemBtn.Image = ResizeImageFit(item.Image, ItemBtn)
+        If item.BackgroundImage IsNot Nothing Then
+            ItemBtn.BackgroundImage = ResizeImageFit(item.Image, ItemBtn)
         Else
-            ItemBtn.Image = Nothing
+            ItemBtn.BackgroundImage = Nothing
         End If
 
         ItemNameTxtBox.Text = item.Text
@@ -70,17 +79,22 @@ Public Class Manage_menu
     End Sub
 
     Private Sub LoadMenuItems(table As String)
-        Dim Connection As New OleDbConnection(GetGlobalConnectionString)
-        Dim Reader As OleDbDataReader
+        FoodPnl.Controls.Clear()
+
+        Dim Connection As New MySqlConnection(GetGlobalConnectionString)
+        Dim Reader As MySqlDataReader
 
         Try
             Connection.Open()
-            Dim Query As String = "SELECT * FROM [" & table & "]"
-            Dim Command As New OleDbCommand(Query, Connection)
+            Dim Query As String = "SELECT * FROM `" & table & "`"
+            Dim Command As New MySqlCommand(Query, Connection)
             Reader = Command.ExecuteReader
 
             While Reader.Read
-                Dim imagePath = If((Reader("ImagePath") = "N/A"), Nothing, Reader("ImagePath"))
+                Dim imagePath As String = Nothing
+                If Not IsDBNull(Reader("ImagePath")) Then
+                    imagePath = If((Reader("ImagePath") = "N/A"), Nothing, Reader("ImagePath"))
+                End If
 
                 Dim panel As FlowLayoutPanel = CreateFoodItemButton(Reader("ItemName"), Reader("ItemPrice"), imagePath)
                 FoodPnl.Controls.Add(panel)
@@ -99,13 +113,13 @@ Public Class Manage_menu
     End Sub
 
     Private Sub LoadMenuCategories()
-        Dim Connection As New OleDbConnection(GetGlobalConnectionString)
-        Dim Reader As OleDbDataReader
+        Dim Connection As New MySqlConnection(GetGlobalConnectionString)
+        Dim Reader As MySqlDataReader
 
         Try
             Connection.Open()
             Dim Query As String = "SELECT * FROM Categories"
-            Dim Command As New OleDbCommand(Query, Connection)
+            Dim Command As New MySqlCommand(Query, Connection)
             Reader = Command.ExecuteReader
 
             While Reader.Read
@@ -129,6 +143,7 @@ Public Class Manage_menu
     Private Sub HandleCatClick(sender As Object, e As EventArgs)
         Dim catName = CType(sender, Button).Text
         FoodPnl.Controls.Clear()
+        CurrentTable = catName
         LoadMenuItems(catName)
     End Sub
 
@@ -137,15 +152,51 @@ Public Class Manage_menu
         FileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;|All Files|*.*"
 
         If FileDialog.ShowDialog() = DialogResult.OK Then
-            Dim path As String = FileDialog.FileName
-            MsgBox(path)
+            ImagePath = FileDialog.FileName
 
-            Dim image As Image = Image.FromFile(path)
-            ItemBtn.Image = ResizeImageFit(image, ItemBtn)
+            Dim image As Image = Image.FromFile(ImagePath)
+            ItemBtn.BackgroundImage = ResizeImageFit(image, ItemBtn)
         End If
     End Sub
 
+    Private Sub HandleChange_Update(sender As Object, e As EventArgs) Handles ItemNameTxtBox.TextChanged, PriceTxtBox.TextChanged, ItemBtn.BackgroundImageChanged
+        If IsEdit = True Then
+            EditBtn.Text = "Update"
+            EditBtn.BackColor = Color.LightBlue
+            AddHandler EditBtn.Click, AddressOf UpdateChanges
+        End If
+    End Sub
+
+    Private Sub UpdateChanges(sender As Object, e As EventArgs)
+        Dim Connection As New MySqlConnection(GetGlobalConnectionString)
+
+        Try
+            Connection.Open()
+            Dim Query As String = "UPDATE `" & CurrentTable & "` SET ItemName = @itemName, ItemPrice = @price, ImagePath = @imgpath WHERE ItemName = @itemOldName"
+            Dim Command As New MySqlCommand(Query, Connection)
+            Command.Parameters.AddWithValue("@imgpath", ImagePath)
+            Command.Parameters.AddWithValue("@itemName", ItemNameTxtBox.Text)
+            Command.Parameters.AddWithValue("@itemOldName", ItemBtn.Text)
+            Command.Parameters.AddWithValue("@price", PriceTxtBox.Text)
+
+            If Command.ExecuteNonQuery > 0 Then
+                MsgBox("Successfully updated the item!", MsgBoxStyle.Information, "Success")
+                LoadMenuItems(CurrentTable)
+                IsEdit = False
+            Else
+                MsgBox("Failed to update the item.", MsgBoxStyle.Critical, "Failed")
+            End If
+
+        Catch ex As Exception
+            MsgBox("Error updating item image: " + ex.ToString, MsgBoxStyle.Critical, "Error")
+        End Try
+    End Sub
+
     Private Sub EditClick(sender As Object, e As EventArgs) Handles EditBtn.Click
-        IsEdit = If((IsEdit = False), True, False)
+        IsEdit = If(IsEdit = False, True, False)
+
+        ItemNameTxtBox.Enabled = IsEdit
+        PriceTxtBox.Enabled = IsEdit
+        ItemBtn.Enabled = IsEdit
     End Sub
 End Class

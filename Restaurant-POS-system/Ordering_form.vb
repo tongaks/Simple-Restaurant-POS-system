@@ -4,7 +4,8 @@ Imports System.IO
 Imports System.Transactions
 Imports System.Windows.Forms.Design
 Imports System.Xml
-
+Imports MySql.Data
+Imports MySql.Data.MySqlClient
 
 Public Class Order
     Dim CurrentTotal As Integer
@@ -37,13 +38,13 @@ Public Class Order
     End Sub
 
     Private Sub LoadMenuCategories()
-        Dim Connection As New OleDbConnection(GetGlobalConnectionString)
-        Dim Reader As OleDbDataReader
+        Dim Connection As New MySqlConnection(GetGlobalConnectionString)
+        Dim Reader As MySqlDataReader
 
         Try
             Connection.Open()
             Dim Query As String = "SELECT * FROM Categories"
-            Dim Command As New OleDbCommand(Query, Connection)
+            Dim Command As New MySqlCommand(Query, Connection)
             Reader = Command.ExecuteReader
 
             While Reader.Read
@@ -65,13 +66,13 @@ Public Class Order
     End Sub
 
     Private Sub LoadMenuItems(table As String)
-        Dim Connection As New OleDbConnection(GetGlobalConnectionString)
-        Dim Reader As OleDbDataReader
+        Dim Connection As New MySqlConnection(GetGlobalConnectionString)
+        Dim Reader As MySqlDataReader
 
         Try
             Connection.Open()
-            Dim Query As String = "SELECT * FROM [" & table & "]"
-            Dim Command As New OleDbCommand(Query, Connection)
+            Dim Query As String = "SELECT * FROM `" & table & "`"
+            Dim Command As New MySqlCommand(Query, Connection)
             Reader = Command.ExecuteReader
 
             While Reader.Read
@@ -82,12 +83,11 @@ Public Class Order
                 foodBtn.Tag = Reader("ItemPrice")
                 foodBtn.Cursor = Cursors.Hand
 
-                ' image must be copied into one dir for better management
-                ' consider storing it to Pictures/Restaurant-Images or smthing
-
-                If Not Reader("ImagePath") = "N/A" Then
-                    Dim image As Image = Image.FromFile(Reader("ImagePath"))
-                    foodBtn.Image = ResizeImageFit(image, foodBtn)
+                If Not IsDBNull(Reader("ImagePath")) Then
+                    If Not Reader("ImagePath") = "N/A" Then
+                        Dim image As Image = Image.FromFile(Reader("ImagePath"))
+                        foodBtn.Image = ResizeImageFit(image, foodBtn)
+                    End If
                 End If
 
                 AddHandler foodBtn.Click, AddressOf HandleItemClick
@@ -153,18 +153,18 @@ Public Class Order
 
     Private Sub CreateOrderBtn_Click(sender As Object, e As EventArgs) Handles CreateOrderBtn.Click
         Dim ConnectionString = GetGlobalConnectionString()
-        Dim Connection As New OleDbConnection(ConnectionString)
+        Dim Connection As New MySqlConnection(ConnectionString)
 
         Dim TotalAmount As Integer = Integer.Parse(TotalLbl.Text.Substring(1))
 
         Try
             Connection.Open()
-            Dim Query As String = "INSERT INTO Orders (order_date, order_time, username, total_amount) VALUES (?, ?, ?, ?)"
-            Dim Command As New OleDbCommand(Query, Connection)
-            Command.Parameters.AddWithValue("?", DateTime.Now.Date)
-            Command.Parameters.AddWithValue("?", DateTime.Now.TimeOfDay)
-            Command.Parameters.AddWithValue("?", CurrentUser)
-            Command.Parameters.AddWithValue("?", TotalAmount)
+            Dim Query As String = "INSERT INTO orders (order_date, order_time, username, total_amount) VALUES (@date, @time, @user, @total)"
+            Dim Command As New MySqlCommand(Query, Connection)
+            Command.Parameters.AddWithValue("@date", DateTime.Now.Date)
+            Command.Parameters.AddWithValue("@time", DateTime.Now.TimeOfDay)
+            Command.Parameters.AddWithValue("@user", CurrentUser)
+            Command.Parameters.AddWithValue("@total", TotalAmount)
 
             If Command.ExecuteNonQuery() > 0 Then
                 MsgBox("Order created", MsgBoxStyle.Information, "Success")

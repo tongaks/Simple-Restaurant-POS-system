@@ -41,6 +41,7 @@ Partial Class Manage_menu
         ItemBtn = New Button()
         PriceLbl = New Label()
         ItemNameLbl = New Label()
+        Button1 = New Button()
         NavbarPnl.SuspendLayout()
         Panel1.SuspendLayout()
         Panel2.SuspendLayout()
@@ -153,6 +154,7 @@ Partial Class Manage_menu
         ' ItemInfoPnl
         ' 
         ItemInfoPnl.BackColor = SystemColors.ButtonFace
+        ItemInfoPnl.Controls.Add(Button1)
         ItemInfoPnl.Controls.Add(Label4)
         ItemInfoPnl.Controls.Add(PriceTxtBox)
         ItemInfoPnl.Controls.Add(ItemNameTxtBox)
@@ -220,6 +222,7 @@ Partial Class Manage_menu
         ' 
         ' ItemBtn
         ' 
+        ItemBtn.Enabled = False
         ItemBtn.Location = New Point(103, 34)
         ItemBtn.Name = "ItemBtn"
         ItemBtn.Size = New Size(148, 138)
@@ -249,6 +252,18 @@ Partial Class Manage_menu
         ItemNameLbl.TabIndex = 0
         ItemNameLbl.Text = "Item name"
         ItemNameLbl.Visible = False
+        ' 
+        ' Button1
+        ' 
+        Button1.BackColor = SystemColors.ControlDark
+        Button1.FlatStyle = FlatStyle.Flat
+        Button1.Location = New Point(15, 388)
+        Button1.Name = "Button1"
+        Button1.Size = New Size(106, 44)
+        Button1.TabIndex = 10
+        Button1.Text = "Cancel"
+        Button1.UseVisualStyleBackColor = False
+        Button1.Visible = False
         ' 
         ' Manage_menu
         ' 
@@ -289,4 +304,5 @@ Partial Class Manage_menu
     Friend WithEvents PriceTxtBox As TextBox
     Friend WithEvents ItemNameTxtBox As TextBox
     Friend WithEvents Label4 As Label
+    Friend WithEvents Button1 As Button
 End Class
