@@ -16,7 +16,7 @@ Imports System.Reflection
 <Assembly: System.Reflection.AssemblyCompanyAttribute("Restaurant-POS-system"),  _
  Assembly: System.Reflection.AssemblyConfigurationAttribute("Debug"),  _
  Assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0"),  _
- Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+189805b3445b790323adfffb98cab6db26f26918"),  _
+ Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dc1698660a6bfc7b5baf3ec48446bd1c9ccc0c60"),  _
  Assembly: System.Reflection.AssemblyProductAttribute("Restaurant-POS-system"),  _
  Assembly: System.Reflection.AssemblyTitleAttribute("Restaurant-POS-system"),  _
  Assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0"),  _

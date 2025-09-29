@@ -113,7 +113,7 @@ Public Class Admin
                 connection.Open()
 
                 ' Get sales summary
-                Dim summaryQuery As String = "SELECT COUNT(*) AS OrderCount, SUM(total_amount) AS TotalSales FROM orders WHERE order_time >= @dateFrom AND order_time <= @dateTo"
+                Dim summaryQuery As String = "SELECT COUNT(*) AS OrderCount, SUM(total_amount) AS TotalSales FROM orders WHERE order_date >= @dateFrom AND order_date <= @dateTo"
                 Using cmd As New OleDbCommand(summaryQuery, connection)
                     cmd.Parameters.AddWithValue("@dateFrom", dtpFrom.Value.Date)
                     cmd.Parameters.AddWithValue("@dateTo", dtpTo.Value.Date.AddDays(1).AddSeconds(-1))
@@ -127,7 +127,7 @@ Public Class Admin
                 End Using
 
                 ' Get detailed transactions
-                Dim detailQuery As String = "SELECT order_id, order_time, username, total_amount FROM orders WHERE order_time >= @dateFrom AND order_time <= @dateTo ORDER BY order_time DESC"
+                Dim detailQuery As String = "SELECT * FROM orders WHERE order_date >= @dateFrom AND order_date <= @dateTo ORDER BY order_date DESC"
                 Using cmd As New OleDbCommand(detailQuery, connection)
                     cmd.Parameters.AddWithValue("@dateFrom", dtpFrom.Value.Date)
                     cmd.Parameters.AddWithValue("@dateTo", dtpTo.Value.Date.AddDays(1).AddSeconds(-1))

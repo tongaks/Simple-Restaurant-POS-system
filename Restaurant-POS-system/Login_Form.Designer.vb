@@ -24,12 +24,12 @@ Partial Class Form1
     Private Sub InitializeComponent()
         UsernameTxtBox = New TextBox()
         PasswordTxtBox = New TextBox()
-        Label1 = New Label()
-        Label2 = New Label()
+        UsernameLbl = New Label()
+        PasswordLbl = New Label()
         Label3 = New Label()
         PictureBox1 = New PictureBox()
         LoginBtn = New Button()
-        Button1 = New Button()
+        LoginAsAdminBtn = New Button()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
@@ -52,25 +52,25 @@ Partial Class Form1
         PasswordTxtBox.TabIndex = 1
         PasswordTxtBox.Text = "admin"
         ' 
-        ' Label1
+        ' UsernameLbl
         ' 
-        Label1.AutoSize = True
-        Label1.Font = New Font("Segoe UI", 20F)
-        Label1.Location = New Point(72, 215)
-        Label1.Name = "Label1"
-        Label1.Size = New Size(136, 37)
-        Label1.TabIndex = 2
-        Label1.Text = "Username"
+        UsernameLbl.AutoSize = True
+        UsernameLbl.Font = New Font("Segoe UI", 20F)
+        UsernameLbl.Location = New Point(72, 215)
+        UsernameLbl.Name = "UsernameLbl"
+        UsernameLbl.Size = New Size(136, 37)
+        UsernameLbl.TabIndex = 2
+        UsernameLbl.Text = "Username"
         ' 
-        ' Label2
+        ' PasswordLbl
         ' 
-        Label2.AutoSize = True
-        Label2.Font = New Font("Segoe UI", 20F)
-        Label2.Location = New Point(72, 328)
-        Label2.Name = "Label2"
-        Label2.Size = New Size(128, 37)
-        Label2.TabIndex = 3
-        Label2.Text = "Password"
+        PasswordLbl.AutoSize = True
+        PasswordLbl.Font = New Font("Segoe UI", 20F)
+        PasswordLbl.Location = New Point(72, 328)
+        PasswordLbl.Name = "PasswordLbl"
+        PasswordLbl.Size = New Size(128, 37)
+        PasswordLbl.TabIndex = 3
+        PasswordLbl.Text = "Password"
         ' 
         ' Label3
         ' 
@@ -101,16 +101,16 @@ Partial Class Form1
         LoginBtn.Text = "Login"
         LoginBtn.UseVisualStyleBackColor = False
         ' 
-        ' Button1
+        ' LoginAsAdminBtn
         ' 
-        Button1.BackColor = Color.DarkSeaGreen
-        Button1.FlatStyle = FlatStyle.Flat
-        Button1.Location = New Point(72, 442)
-        Button1.Name = "Button1"
-        Button1.Size = New Size(122, 48)
-        Button1.TabIndex = 7
-        Button1.Text = "Login as admin"
-        Button1.UseVisualStyleBackColor = False
+        LoginAsAdminBtn.BackColor = Color.DarkSeaGreen
+        LoginAsAdminBtn.FlatStyle = FlatStyle.Flat
+        LoginAsAdminBtn.Location = New Point(72, 442)
+        LoginAsAdminBtn.Name = "LoginAsAdminBtn"
+        LoginAsAdminBtn.Size = New Size(122, 48)
+        LoginAsAdminBtn.TabIndex = 7
+        LoginAsAdminBtn.Text = "Login as admin"
+        LoginAsAdminBtn.UseVisualStyleBackColor = False
         ' 
         ' Form1
         ' 
@@ -118,12 +118,12 @@ Partial Class Form1
         AutoScaleMode = AutoScaleMode.Font
         BackColor = SystemColors.ControlDark
         ClientSize = New Size(1041, 604)
-        Controls.Add(Button1)
+        Controls.Add(LoginAsAdminBtn)
         Controls.Add(LoginBtn)
         Controls.Add(PictureBox1)
         Controls.Add(Label3)
-        Controls.Add(Label2)
-        Controls.Add(Label1)
+        Controls.Add(PasswordLbl)
+        Controls.Add(UsernameLbl)
         Controls.Add(PasswordTxtBox)
         Controls.Add(UsernameTxtBox)
         Name = "Form1"
@@ -135,11 +135,11 @@ Partial Class Form1
 
     Friend WithEvents UsernameTxtBox As TextBox
     Friend WithEvents PasswordTxtBox As TextBox
-    Friend WithEvents Label1 As Label
-    Friend WithEvents Label2 As Label
+    Friend WithEvents UsernameLbl As Label
+    Friend WithEvents PasswordLbl As Label
     Friend WithEvents Label3 As Label
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents LoginBtn As Button
-    Friend WithEvents Button1 As Button
+    Friend WithEvents LoginAsAdminBtn As Button
 
 End Class
