@@ -81,6 +81,15 @@ Public Class Order
                 foodBtn.Margin = New Padding(0, 0, 0, 0)
                 foodBtn.Tag = Reader("ItemPrice")
                 foodBtn.Cursor = Cursors.Hand
+
+                ' image must be copied into one dir for better management
+                ' consider storing it to Pictures/Restaurant-Images or smthing
+
+                If Not Reader("ImagePath") = "N/A" Then
+                    Dim image As Image = Image.FromFile(Reader("ImagePath"))
+                    foodBtn.Image = ResizeImageFit(image, foodBtn)
+                End If
+
                 AddHandler foodBtn.Click, AddressOf HandleItemClick
 
                 Dim foodPrice As New Label

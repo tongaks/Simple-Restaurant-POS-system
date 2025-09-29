@@ -57,7 +57,6 @@ Public Class Form1
 
     Private Sub LoginBtn_Click(sender As Object, e As EventArgs) Handles LoginBtn.Click
         Dim table As String = If((IsAdmin), "Admin", "User")
-        MsgBox("table: " & table)
 
         If String.IsNullOrWhiteSpace(UsernameTxtBox.Text) Or String.IsNullOrWhiteSpace(PasswordTxtBox.Text) Then
             MsgBox("Please complete the user credentials.", MsgBoxStyle.Critical, "Attention")
@@ -91,6 +90,9 @@ Public Class Form1
 
                 If Command.ExecuteNonQuery() > 0 Then
                     Order.Show(Me)
+                    If IsAdmin Then
+                        Admin.Show()
+                    End If
                     Me.Hide()
                 Else
                     MsgBox("Failed to login", MsgBoxStyle.Critical, "Error logging in")

@@ -26,4 +26,18 @@ Module GlobalFunctions
 
         Return currentDir
     End Function
+
+    Public Function ResizeImageFit(img As Image, btn As Button) As Image
+        Dim newWidth As Integer = btn.ClientSize.Width
+        Dim newHeight As Integer = btn.ClientSize.Height
+
+        Dim bmp As New Bitmap(newWidth, newHeight)
+        Using g As Graphics = Graphics.FromImage(bmp)
+            g.InterpolationMode = Drawing2D.InterpolationMode.HighQualityBicubic
+            g.DrawImage(img, 0, 0, newWidth, newHeight)
+        End Using
+        Return bmp
+    End Function
+
+
 End Module
