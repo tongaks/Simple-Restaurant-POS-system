@@ -16,39 +16,6 @@ Public Class Manage_menu
         LoadMenuCategories()
         LoadMenuItems(CurrentTable)
     End Sub
-    Private Function CreateFoodItemButton(itemName As String, itemPrice As String, imgPath As String, isItem As Boolean) As FlowLayoutPanel
-        Dim foodBtn As New Button With {
-        .Text = itemName,
-        .Size = New Size(100, 100),
-        .Margin = New Padding(0),
-        .Cursor = Cursors.Hand,
-        .Tag = itemPrice
-    }
-
-        If Not String.IsNullOrEmpty(imgPath) Then
-            Dim image As Image = Image.FromFile(imgPath)
-            foodBtn.BackgroundImage = ResizeImageFit(image, foodBtn)
-            foodBtn.Tag &= "," & imgPath
-        End If
-
-        If isItem Then
-            AddHandler foodBtn.Click, AddressOf HandleItemClick
-        End If
-
-        Dim foodPrice As New Label
-        foodPrice.Text = "₱" & itemPrice
-        foodPrice.Font = New Font("Segue UI", 18.0F, FontStyle.Regular)
-        foodPrice.TextAlign = ContentAlignment.MiddleCenter
-
-        Dim container As New FlowLayoutPanel With {
-            .Size = New Size(100, 100 + foodPrice.Size.Height)
-        }
-
-        container.Controls.Add(foodBtn)
-        container.Controls.Add(foodPrice)
-
-        Return container
-    End Function
     Private Sub ClearMenuItemForm()
         ItemNameTxtBox.Text = String.Empty
         PriceTxtBox.Text = String.Empty
@@ -106,6 +73,7 @@ Public Class Manage_menu
     End Sub
     Private Sub HandleItemClick(sender As Object, e As EventArgs)
         EditBtn.Enabled = True
+        SaveBtn.Enabled = False
         ShowForm()
 
         Dim item As Button = CType(sender, Button)
@@ -231,6 +199,39 @@ Public Class Manage_menu
             End Using
         End Using
     End Sub
+    Private Sub SearchItem(itemName As String)
+        Dim Connection As New MySqlConnection(GetGlobalConnectionString)
+        Dim Reader As MySqlDataReader
+
+        Try
+            Connection.Open()
+            Dim Query As String = "SELECT ItemName, ItemPrice, ImagePath FROM (SELECT ItemName, ItemPrice, ImagePath FROM `restaurant`.foods UNION ALL SELECT ItemName, ItemPrice, ImagePath FROM `restaurant`.drinks UNION ALL SELECT ItemName, ItemPrice, ImagePath FROM `restaurant`.`Snacks/Sides`) AS CombinedItems WHERE ItemName LIKE CONCAT('%', @itemName, '%')"
+            Dim Command As New MySqlCommand(Query, Connection)
+            Command.Parameters.AddWithValue("@itemName", SearchTxtBox.Text)
+            Reader = Command.ExecuteReader
+
+            If Reader.HasRows Then
+                FoodPnl.Controls.Clear()
+            Else Return
+            End If
+
+            While Reader.Read
+                Dim foodName = Reader("ItemName")
+                Dim foodPrice = Reader("ItemPrice")
+                Dim imagePath = If(IsDBNull(Reader("ImagePath")), "", Reader("ImagePath"))
+
+                Dim container As FlowLayoutPanel = CreateFoodItemButton(foodName, foodPrice, imagePath)
+                For Each btn As Button In container.Controls.OfType(Of Button)()
+                    AddHandler btn.Click, AddressOf HandleItemClick
+                Next
+
+                FoodPnl.Controls.Add(container)
+            End While
+
+        Catch ex As Exception
+
+        End Try
+    End Sub
     Private Sub LoadMenuCategories()
         MenuCategoryPnl.Controls.Clear()
 
@@ -268,13 +269,17 @@ Public Class Manage_menu
                 Using reader As MySqlDataReader = command.ExecuteReader()
                     While reader.Read()
                         Dim imagePath As String = If(IsDBNull(reader("ImagePath")) OrElse reader("ImagePath").ToString() = "N/A", Nothing, reader("ImagePath").ToString())
-                        Dim panel As FlowLayoutPanel = CreateFoodItemButton(reader("ItemName").ToString(), reader("ItemPrice").ToString(), imagePath, True)
+                        Dim panel As FlowLayoutPanel = CreateFoodItemButton(reader("ItemName").ToString(), reader("ItemPrice").ToString(), imagePath)
+                        For Each btn As Button In panel.Controls.OfType(Of Button)()
+                            AddHandler btn.Click, AddressOf HandleItemClick
+                        Next
+
                         FoodPnl.Controls.Add(panel)
                     End While
                 End Using
 
                 ' Add "Add new item" button
-                Dim addNewPanel As FlowLayoutPanel = CreateFoodItemButton("Add new item", "0", String.Empty, False)
+                Dim addNewPanel As FlowLayoutPanel = CreateFoodItemButton("Add new item", "0", String.Empty)
                 ' iterate through the panel's controls to get the button
                 For Each btn As Button In addNewPanel.Controls.OfType(Of Button)()
                     AddHandler btn.Click, AddressOf HandleAddNewItem
@@ -343,6 +348,12 @@ Public Class Manage_menu
             DisableForm()
         End If
     End Sub
+    Private Sub SearchBtn_Click(sender As Object, e As EventArgs) Handles SearchBtn.Click
+        If Not String.IsNullOrEmpty(SearchTxtBox.Text) Then
+            SearchItem(SearchTxtBox.Text)
+        End If
+    End Sub
+
 
 
     'listeners for events
@@ -361,6 +372,13 @@ Public Class Manage_menu
     Private Sub HandleNumbersOnly(sender As Object, e As KeyPressEventArgs) Handles PriceTxtBox.KeyPress
         If Not Char.IsDigit(e.KeyChar) AndAlso Not Char.IsControl(e.KeyChar) Then
             e.Handled = True
+        End If
+    End Sub
+    Private Sub HandleSearchTxtBoxEnter(sender As Object, e As KeyPressEventArgs) Handles SearchTxtBox.KeyPress
+        If Asc(e.KeyChar) = 13 Then
+            If Not String.IsNullOrEmpty(SearchTxtBox.Text) Then
+                SearchItem(SearchTxtBox.Text)
+            End If
         End If
     End Sub
 End Class

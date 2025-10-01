@@ -44,4 +44,48 @@ Module GlobalFunctions
         Form1.Dispose()
     End Sub
 
+    Public Function CreateFoodItemButton(itemName As String, itemPrice As String, imgPath As String) As FlowLayoutPanel
+        Dim foodBtn As New Button With {
+        .Text = itemName,
+        .Size = New Size(100, 100),
+        .Margin = New Padding(0),
+        .Cursor = Cursors.Hand,
+        .Tag = itemPrice
+    }
+
+        If Not String.IsNullOrEmpty(imgPath) Then
+            Dim image As Image = Image.FromFile(imgPath)
+            foodBtn.BackgroundImage = ResizeImageFit(image, foodBtn)
+            foodBtn.Tag &= "," & imgPath
+        End If
+
+        Dim foodPrice As New Label
+        foodPrice.Text = "₱" & itemPrice
+        foodPrice.Font = New Font("Segue UI", 18.0F, FontStyle.Regular)
+        foodPrice.TextAlign = ContentAlignment.MiddleCenter
+
+        Dim container As New FlowLayoutPanel With {
+            .Size = New Size(100, 100 + foodPrice.Size.Height)
+        }
+
+        container.Controls.Add(foodBtn)
+        container.Controls.Add(foodPrice)
+
+        Return container
+    End Function
+
+    Public Function ExtractTag(tag As String)
+        Dim price As String
+        Dim tagImgPath As String
+        If tag.Contains(",") Then
+            Dim tagInfo() As String = tag.Split(","c)
+            price = tagInfo(0)
+            tagImgPath = tagInfo(1)
+            Return (price, tagImgPath)
+        Else
+            price = tag
+            Return tag
+        End If
+    End Function
+
 End Module

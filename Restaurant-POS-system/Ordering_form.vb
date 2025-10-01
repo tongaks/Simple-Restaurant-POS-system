@@ -1,11 +1,11 @@
 ﻿Imports System.ComponentModel.DataAnnotations
-Imports System.Data.OleDb
 Imports System.IO
 Imports System.Transactions
 Imports System.Windows.Forms.Design
 Imports System.Xml
 Imports MySql.Data
 Imports MySql.Data.MySqlClient
+Imports ZstdSharp.Unsafe
 
 Public Class Order
     Dim CurrentTotal As Integer
@@ -113,12 +113,56 @@ Public Class Order
             End If
         End Try
     End Sub
+    Private Sub SearchItem(itemName As String)
+        Dim Connection As New MySqlConnection(GetGlobalConnectionString)
+        Dim Reader As MySqlDataReader
+
+        Try
+            Connection.Open()
+            Dim Query As String = "SELECT ItemName, ItemPrice, ImagePath FROM (SELECT ItemName, ItemPrice, ImagePath FROM `restaurant`.foods UNION ALL SELECT ItemName, ItemPrice, ImagePath FROM `restaurant`.drinks UNION ALL SELECT ItemName, ItemPrice, ImagePath FROM `restaurant`.`Snacks/Sides`) AS CombinedItems WHERE ItemName LIKE CONCAT('%', @itemName, '%')"
+            Dim Command As New MySqlCommand(Query, Connection)
+            Command.Parameters.AddWithValue("@itemName", SearchTxtBox.Text)
+            Reader = Command.ExecuteReader
+
+            If Reader.HasRows Then
+                FoodPnl.Controls.Clear()
+            Else Return
+            End If
+
+            While Reader.Read
+                Dim foodName = Reader("ItemName")
+                Dim foodPrice = Reader("ItemPrice")
+                Dim imagePath = If(IsDBNull(Reader("ImagePath")), "", Reader("ImagePath"))
+
+                Dim container As FlowLayoutPanel = CreateFoodItemButton(foodName, foodPrice, imagePath)
+                For Each btn As Button In container.Controls.OfType(Of Button)()
+                    AddHandler btn.Click, AddressOf HandleItemClick
+                Next
+
+                FoodPnl.Controls.Add(container)
+            End While
+
+        Catch ex As Exception
+
+        End Try
+    End Sub
 
 
     ' Menu item/category click handlers
     Private Sub HandleItemClick(sender As Object, e As EventArgs)
         Dim name = CType(sender, Button).Text
-        Dim price = CType(sender, Button).Tag
+
+        Dim tag As String = CType(sender, Button).Tag.ToString()
+        Dim price As String
+        Dim tagImgPath As String = ""
+
+        If tag.Contains(",") Then
+            Dim tagInfo() As String = tag.Split(","c)
+            price = tagInfo(0)
+            tagImgPath = tagInfo(1)
+        Else
+            price = tag
+        End If
 
         Dim nameExists As Boolean = False
 
@@ -126,7 +170,7 @@ Public Class Order
             If row.Cells(1).Value IsNot Nothing AndAlso row.Cells(1).Value.ToString() = name Then
                 nameExists = True
                 row.Cells(0).Value = CInt(row.Cells(0).Value) + 1
-                row.Cells(3).Value = CInt(row.Cells(3).Value) + price
+                row.Cells(3).Value = CInt(row.Cells(3).Value) + Integer.Parse(price)
                 Exit For
             End If
         Next
@@ -136,8 +180,6 @@ Public Class Order
             newRow.CreateCells(DataGridView1, 1, name, price, price)
             DataGridView1.Rows.Add(newRow)
         End If
-
-        'AddItemToOrderPanel()
 
         CurrentTotal += Integer.Parse(price)
         TotalLbl.Text = "₱" + CStr(CurrentTotal)
@@ -149,7 +191,7 @@ Public Class Order
     End Sub
 
 
-    ' Buttons handler
+    ' Buttons
     Private Sub Button6_Click(sender As Object, e As EventArgs)
         Panel1.Hide()
     End Sub
@@ -180,4 +222,20 @@ Public Class Order
             End If
         End Try
     End Sub
+    Private Sub SearchBtn_Click(sender As Object, e As EventArgs) Handles SearchBtn.Click
+        If Not String.IsNullOrEmpty(SearchTxtBox.Text) Then
+            SearchItem(SearchTxtBox.Text)
+        End If
+    End Sub
+
+
+    ' listeners
+    Private Sub HandleSearchTxtBoxEnter(sender As Object, e As KeyPressEventArgs) Handles SearchTxtBox.KeyPress
+        If Asc(e.KeyChar) = 13 Then
+            If Not String.IsNullOrEmpty(SearchTxtBox.Text) Then
+                SearchItem(SearchTxtBox.Text)
+            End If
+        End If
+    End Sub
+
 End Class

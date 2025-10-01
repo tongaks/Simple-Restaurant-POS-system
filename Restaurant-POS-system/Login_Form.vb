@@ -13,6 +13,8 @@ Public Class Form1
         IsAdmin = False
     End Sub
 
+
+    ' CRUD 
     Private Function Login(uname As String, passw As String, table As String)
         Dim Connection As New MySqlConnection(ConnectionString)
         Dim Reader As MySqlDataReader
@@ -44,18 +46,21 @@ Public Class Form1
         Return True
     End Function
 
+
+    ' Button
     Private Sub LoginAsAdmin_Click(sender As Object, e As EventArgs) Handles LoginAsAdminBtn.Click
         If IsAdmin = False Then
             IsAdmin = True
             UsernameLbl.Text = "Admin username"
             PasswordLbl.Text = "Admin password"
+            LoginAsAdminBtn.Text = "Login as User"
         Else
             IsAdmin = False
             UsernameLbl.Text = "Username"
             PasswordLbl.Text = "Password"
+            LoginAsAdminBtn.Text = "Login as Admin"
         End If
     End Sub
-
     Private Sub LoginBtn_Click(sender As Object, e As EventArgs) Handles LoginBtn.Click
         Dim table As String = If((IsAdmin), "admin", "user")
 
@@ -67,6 +72,8 @@ Public Class Form1
         HandleLogin(table)
     End Sub
 
+
+    ' Handlers
     Private Sub HandleEnter(sender As Object, e As KeyPressEventArgs) Handles UsernameTxtBox.KeyPress, PasswordTxtBox.KeyPress
         If Asc(e.KeyChar) = 13 Then
             Dim table As String = If((IsAdmin), "Admin", "User")
@@ -74,7 +81,6 @@ Public Class Form1
             HandleLogin(table)
         End If
     End Sub
-
     Private Sub HandleLogin(table As String)
         If Login(UsernameTxtBox.Text, PasswordTxtBox.Text, table) Then
             CurrentUser = UsernameTxtBox.Text
