@@ -40,5 +40,8 @@ Module GlobalFunctions
         Return bmp
     End Function
 
+    Public Sub FormCloseParent(sender As Object, e As EventArgs)
+        Form1.Dispose()
+    End Sub
 
 End Module

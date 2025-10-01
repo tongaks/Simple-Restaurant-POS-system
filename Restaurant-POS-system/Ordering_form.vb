@@ -31,12 +31,13 @@ Public Class Order
         'DataGridView1.DefaultCellStyle.Font = New Font("Segue UI", 15.0F, FontStyle.Regular)
         'DataGridView1.Rows(0).Height = 20
     End Sub
-
     Private Sub Order_Close(sender As Object, e As EventArgs) Handles MyBase.FormClosed
         ' close parent when child closes
         Form1.Dispose()
     End Sub
 
+
+    ' CRUD functions
     Private Sub LoadMenuCategories()
         Dim Connection As New MySqlConnection(GetGlobalConnectionString)
         Dim Reader As MySqlDataReader
@@ -64,7 +65,6 @@ Public Class Order
             End If
         End Try
     End Sub
-
     Private Sub LoadMenuItems(table As String)
         Dim Connection As New MySqlConnection(GetGlobalConnectionString)
         Dim Reader As MySqlDataReader
@@ -114,6 +114,8 @@ Public Class Order
         End Try
     End Sub
 
+
+    ' Menu item/category click handlers
     Private Sub HandleItemClick(sender As Object, e As EventArgs)
         Dim name = CType(sender, Button).Text
         Dim price = CType(sender, Button).Tag
@@ -140,17 +142,17 @@ Public Class Order
         CurrentTotal += Integer.Parse(price)
         TotalLbl.Text = "₱" + CStr(CurrentTotal)
     End Sub
-
     Private Sub HandleCatClick(sender As Object, e As EventArgs)
         Dim catName = CType(sender, Button).Text
         FoodPnl.Controls.Clear()
         LoadMenuItems(catName)
     End Sub
 
+
+    ' Buttons handler
     Private Sub Button6_Click(sender As Object, e As EventArgs)
         Panel1.Hide()
     End Sub
-
     Private Sub CreateOrderBtn_Click(sender As Object, e As EventArgs) Handles CreateOrderBtn.Click
         Dim ConnectionString = GetGlobalConnectionString()
         Dim Connection As New MySqlConnection(ConnectionString)

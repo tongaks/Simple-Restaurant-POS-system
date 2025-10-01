@@ -33,6 +33,9 @@ Partial Class Manage_menu
         FoodPnl = New FlowLayoutPanel()
         Panel2 = New Panel()
         ItemInfoPnl = New Panel()
+        SaveBtn = New Button()
+        UpdateBtn = New Button()
+        CancelBtn = New Button()
         Label4 = New Label()
         PriceTxtBox = New TextBox()
         ItemNameTxtBox = New TextBox()
@@ -41,7 +44,6 @@ Partial Class Manage_menu
         ItemBtn = New Button()
         PriceLbl = New Label()
         ItemNameLbl = New Label()
-        Button1 = New Button()
         NavbarPnl.SuspendLayout()
         Panel1.SuspendLayout()
         Panel2.SuspendLayout()
@@ -129,7 +131,7 @@ Partial Class Manage_menu
         MenuCategoryPnl.Location = New Point(3, 3)
         MenuCategoryPnl.Name = "MenuCategoryPnl"
         MenuCategoryPnl.Padding = New Padding(0, 0, 0, 20)
-        MenuCategoryPnl.Size = New Size(1055, 60)
+        MenuCategoryPnl.Size = New Size(628, 60)
         MenuCategoryPnl.TabIndex = 1
         ' 
         ' FoodPnl
@@ -138,7 +140,7 @@ Partial Class Manage_menu
         FoodPnl.BackColor = SystemColors.Control
         FoodPnl.Location = New Point(3, 60)
         FoodPnl.Name = "FoodPnl"
-        FoodPnl.Size = New Size(1053, 916)
+        FoodPnl.Size = New Size(625, 480)
         FoodPnl.TabIndex = 2
         ' 
         ' Panel2
@@ -154,7 +156,9 @@ Partial Class Manage_menu
         ' ItemInfoPnl
         ' 
         ItemInfoPnl.BackColor = SystemColors.ButtonFace
-        ItemInfoPnl.Controls.Add(Button1)
+        ItemInfoPnl.Controls.Add(SaveBtn)
+        ItemInfoPnl.Controls.Add(UpdateBtn)
+        ItemInfoPnl.Controls.Add(CancelBtn)
         ItemInfoPnl.Controls.Add(Label4)
         ItemInfoPnl.Controls.Add(PriceTxtBox)
         ItemInfoPnl.Controls.Add(ItemNameTxtBox)
@@ -165,8 +169,47 @@ Partial Class Manage_menu
         ItemInfoPnl.Controls.Add(ItemNameLbl)
         ItemInfoPnl.Location = New Point(23, 65)
         ItemInfoPnl.Name = "ItemInfoPnl"
-        ItemInfoPnl.Size = New Size(359, 444)
+        ItemInfoPnl.Size = New Size(359, 507)
         ItemInfoPnl.TabIndex = 0
+        ' 
+        ' SaveBtn
+        ' 
+        SaveBtn.BackColor = Color.SpringGreen
+        SaveBtn.Enabled = False
+        SaveBtn.FlatStyle = FlatStyle.Flat
+        SaveBtn.Location = New Point(13, 388)
+        SaveBtn.Name = "SaveBtn"
+        SaveBtn.Size = New Size(106, 44)
+        SaveBtn.TabIndex = 12
+        SaveBtn.Text = "Add"
+        SaveBtn.UseVisualStyleBackColor = False
+        SaveBtn.Visible = False
+        ' 
+        ' UpdateBtn
+        ' 
+        UpdateBtn.BackColor = Color.LightBlue
+        UpdateBtn.Enabled = False
+        UpdateBtn.FlatStyle = FlatStyle.Flat
+        UpdateBtn.Location = New Point(71, 449)
+        UpdateBtn.Name = "UpdateBtn"
+        UpdateBtn.Size = New Size(106, 44)
+        UpdateBtn.TabIndex = 11
+        UpdateBtn.Text = "Update"
+        UpdateBtn.UseVisualStyleBackColor = False
+        UpdateBtn.Visible = False
+        ' 
+        ' CancelBtn
+        ' 
+        CancelBtn.BackColor = SystemColors.ControlDark
+        CancelBtn.Enabled = False
+        CancelBtn.FlatStyle = FlatStyle.Flat
+        CancelBtn.Location = New Point(190, 449)
+        CancelBtn.Name = "CancelBtn"
+        CancelBtn.Size = New Size(106, 44)
+        CancelBtn.TabIndex = 10
+        CancelBtn.Text = "Cancel"
+        CancelBtn.UseVisualStyleBackColor = False
+        CancelBtn.Visible = False
         ' 
         ' Label4
         ' 
@@ -199,6 +242,7 @@ Partial Class Manage_menu
         ' DeleteBtn
         ' 
         DeleteBtn.BackColor = Color.IndianRed
+        DeleteBtn.Enabled = False
         DeleteBtn.FlatStyle = FlatStyle.Flat
         DeleteBtn.Location = New Point(241, 388)
         DeleteBtn.Name = "DeleteBtn"
@@ -210,9 +254,10 @@ Partial Class Manage_menu
         ' 
         ' EditBtn
         ' 
-        EditBtn.BackColor = Color.SpringGreen
+        EditBtn.BackColor = Color.Goldenrod
+        EditBtn.Enabled = False
         EditBtn.FlatStyle = FlatStyle.Flat
-        EditBtn.Location = New Point(127, 388)
+        EditBtn.Location = New Point(129, 388)
         EditBtn.Name = "EditBtn"
         EditBtn.Size = New Size(106, 44)
         EditBtn.TabIndex = 5
@@ -253,18 +298,6 @@ Partial Class Manage_menu
         ItemNameLbl.Text = "Item name"
         ItemNameLbl.Visible = False
         ' 
-        ' Button1
-        ' 
-        Button1.BackColor = SystemColors.ControlDark
-        Button1.FlatStyle = FlatStyle.Flat
-        Button1.Location = New Point(15, 388)
-        Button1.Name = "Button1"
-        Button1.Size = New Size(106, 44)
-        Button1.TabIndex = 10
-        Button1.Text = "Cancel"
-        Button1.UseVisualStyleBackColor = False
-        Button1.Visible = False
-        ' 
         ' Manage_menu
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -304,5 +337,7 @@ Partial Class Manage_menu
     Friend WithEvents PriceTxtBox As TextBox
     Friend WithEvents ItemNameTxtBox As TextBox
     Friend WithEvents Label4 As Label
-    Friend WithEvents Button1 As Button
+    Friend WithEvents CancelBtn As Button
+    Friend WithEvents UpdateBtn As Button
+    Friend WithEvents SaveBtn As Button
 End Class

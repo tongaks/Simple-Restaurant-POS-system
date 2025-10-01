@@ -90,9 +90,10 @@ Public Class Form1
                 Command.Parameters.AddWithValue("@role", "Role here")
 
                 If Command.ExecuteNonQuery() > 0 Then
-                    Order.Show(Me)
                     If IsAdmin Then
                         Admin.Show()
+                    Else
+                        Order.Show(Me)
                     End If
                     Me.Hide()
                 Else
