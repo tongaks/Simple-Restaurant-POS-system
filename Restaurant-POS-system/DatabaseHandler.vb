@@ -7,7 +7,7 @@ Module GlobalFunctions
 
     Public Function GetGlobalConnectionString() As String
         'Return "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & DirInfo.FullName & "\MSAccess\Restaurant.accdb ;Persist Security Info=False;"
-        Return "server=localhost;user=root;database=restaurant;port=3306;password=washer22456;"
+        Return "server=localhost;user=root;database=restaurant;port=3306;password=;"
     End Function
 
     Public Function GetOrdersConnectionString() As String

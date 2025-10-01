@@ -28,6 +28,9 @@ Partial Class Manage_menu
         SearchBtn = New Button()
         Button3 = New Button()
         Button2 = New Button()
+        ' navigation buttons for Manage_menu (back + logout)
+        btnBack = New Button()
+        btnLogout = New Button()
         Panel1 = New Panel()
         MenuCategoryPnl = New FlowLayoutPanel()
         FoodPnl = New FlowLayoutPanel()
@@ -59,6 +62,9 @@ Partial Class Manage_menu
         NavbarPnl.Controls.Add(SearchBtn)
         NavbarPnl.Controls.Add(Button3)
         NavbarPnl.Controls.Add(Button2)
+        ' add back/logout to navbar
+        NavbarPnl.Controls.Add(btnBack)
+        NavbarPnl.Controls.Add(btnLogout)
         NavbarPnl.Location = New Point(414, 0)
         NavbarPnl.Name = "NavbarPnl"
         NavbarPnl.Size = New Size(627, 68)
@@ -112,6 +118,32 @@ Partial Class Manage_menu
         Button2.TabIndex = 2
         Button2.Text = "Account"
         Button2.UseVisualStyleBackColor = True
+        ' 
+        ' btnBack
+        ' 
+        btnBack.BackColor = Color.LightSkyBlue
+        btnBack.FlatStyle = FlatStyle.Flat
+        btnBack.Font = New Font("Segoe UI", 10.0F)
+        btnBack.Location = New Point(430, 16)
+        btnBack.Name = "btnBack"
+        btnBack.Size = New Size(80, 36)
+        btnBack.TabIndex = 20
+        btnBack.Text = "Back"
+        btnBack.UseVisualStyleBackColor = False
+        btnBack.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        ' 
+        ' btnLogout
+        ' 
+        btnLogout.BackColor = Color.LightCoral
+        btnLogout.FlatStyle = FlatStyle.Flat
+        btnLogout.Font = New Font("Segoe UI", 10.0F)
+        btnLogout.Location = New Point(520, 16)
+        btnLogout.Name = "btnLogout"
+        btnLogout.Size = New Size(80, 36)
+        btnLogout.TabIndex = 21
+        btnLogout.Text = "Logout"
+        btnLogout.UseVisualStyleBackColor = False
+        btnLogout.Anchor = AnchorStyles.Top Or AnchorStyles.Right
         ' 
         ' Panel1
         ' 
@@ -324,6 +356,9 @@ Partial Class Manage_menu
     Friend WithEvents SearchBtn As Button
     Friend WithEvents Button3 As Button
     Friend WithEvents Button2 As Button
+    ' new buttons on Manage_menu
+    Friend WithEvents btnBack As Button
+    Friend WithEvents btnLogout As Button
     Friend WithEvents Panel1 As Panel
     Friend WithEvents MenuCategoryPnl As FlowLayoutPanel
     Friend WithEvents FoodPnl As FlowLayoutPanel

@@ -6,11 +6,15 @@ Public Class Manage_menu
     Private IsEdit As Boolean = False
     Private CurrentTable As String = "Foods"
     Private ImagePath As String = ""
+    Private navButtons As AdminNavButtons ' reuse nav logic
 
     Private Sub Manage_menu_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ' add this function so that when this form is closed, the parent form as well
         AddHandler MyBase.FormClosed, AddressOf FormCloseParent
         Me.WindowState = FormWindowState.Maximized
+
+        ' Initialize nav buttons (only Back + Logout exist on this form)
+        navButtons = New AdminNavButtons(Me, btnLogout, btnBack)
 
         ' load menu items
         LoadMenuCategories()
