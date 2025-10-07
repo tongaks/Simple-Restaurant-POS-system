@@ -28,7 +28,6 @@ Partial Class Manage_menu
         SearchBtn = New Button()
         Button3 = New Button()
         Button2 = New Button()
-        ' navigation buttons for Manage_menu (back + logout)
         btnBack = New Button()
         btnLogout = New Button()
         Panel1 = New Panel()
@@ -62,29 +61,30 @@ Partial Class Manage_menu
         NavbarPnl.Controls.Add(SearchBtn)
         NavbarPnl.Controls.Add(Button3)
         NavbarPnl.Controls.Add(Button2)
-        ' add back/logout to navbar
         NavbarPnl.Controls.Add(btnBack)
         NavbarPnl.Controls.Add(btnLogout)
-        NavbarPnl.Location = New Point(414, 0)
+        NavbarPnl.Location = New Point(473, 0)
+        NavbarPnl.Margin = New Padding(3, 4, 3, 4)
         NavbarPnl.Name = "NavbarPnl"
-        NavbarPnl.Size = New Size(627, 68)
+        NavbarPnl.Size = New Size(717, 91)
         NavbarPnl.TabIndex = 7
         ' 
         ' SearchTxtBox
         ' 
         SearchTxtBox.Font = New Font("Segoe UI", 15F)
-        SearchTxtBox.Location = New Point(80, 19)
+        SearchTxtBox.Location = New Point(91, 25)
+        SearchTxtBox.Margin = New Padding(3, 4, 3, 4)
         SearchTxtBox.Name = "SearchTxtBox"
-        SearchTxtBox.Size = New Size(255, 34)
+        SearchTxtBox.Size = New Size(291, 41)
         SearchTxtBox.TabIndex = 7
         ' 
         ' Label1
         ' 
         Label1.AutoSize = True
         Label1.Font = New Font("Segoe UI", 12F)
-        Label1.Location = New Point(17, 22)
+        Label1.Location = New Point(19, 29)
         Label1.Name = "Label1"
-        Label1.Size = New Size(57, 21)
+        Label1.Size = New Size(70, 28)
         Label1.TabIndex = 6
         Label1.Text = "Search"
         ' 
@@ -92,9 +92,10 @@ Partial Class Manage_menu
         ' 
         SearchBtn.BackColor = Color.FromArgb(CByte(128), CByte(255), CByte(128))
         SearchBtn.FlatStyle = FlatStyle.Flat
-        SearchBtn.Location = New Point(352, 21)
+        SearchBtn.Location = New Point(402, 28)
+        SearchBtn.Margin = New Padding(3, 4, 3, 4)
         SearchBtn.Name = "SearchBtn"
-        SearchBtn.Size = New Size(75, 34)
+        SearchBtn.Size = New Size(86, 45)
         SearchBtn.TabIndex = 5
         SearchBtn.Text = "Search"
         SearchBtn.UseVisualStyleBackColor = False
@@ -102,9 +103,10 @@ Partial Class Manage_menu
         ' Button3
         ' 
         Button3.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        Button3.Location = New Point(969, 27)
+        Button3.Location = New Point(1107, 36)
+        Button3.Margin = New Padding(3, 4, 3, 4)
         Button3.Name = "Button3"
-        Button3.Size = New Size(75, 23)
+        Button3.Size = New Size(86, 31)
         Button3.TabIndex = 3
         Button3.Text = "Settings"
         Button3.UseVisualStyleBackColor = True
@@ -112,38 +114,41 @@ Partial Class Manage_menu
         ' Button2
         ' 
         Button2.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        Button2.Location = New Point(888, 27)
+        Button2.Location = New Point(1015, 36)
+        Button2.Margin = New Padding(3, 4, 3, 4)
         Button2.Name = "Button2"
-        Button2.Size = New Size(75, 23)
+        Button2.Size = New Size(86, 31)
         Button2.TabIndex = 2
         Button2.Text = "Account"
         Button2.UseVisualStyleBackColor = True
         ' 
         ' btnBack
         ' 
+        btnBack.Anchor = AnchorStyles.Top Or AnchorStyles.Right
         btnBack.BackColor = Color.LightSkyBlue
         btnBack.FlatStyle = FlatStyle.Flat
-        btnBack.Font = New Font("Segoe UI", 10.0F)
-        btnBack.Location = New Point(430, 16)
+        btnBack.Font = New Font("Segoe UI", 10F)
+        btnBack.Location = New Point(491, 21)
+        btnBack.Margin = New Padding(3, 4, 3, 4)
         btnBack.Name = "btnBack"
-        btnBack.Size = New Size(80, 36)
+        btnBack.Size = New Size(91, 48)
         btnBack.TabIndex = 20
         btnBack.Text = "Back"
         btnBack.UseVisualStyleBackColor = False
-        btnBack.Anchor = AnchorStyles.Top Or AnchorStyles.Right
         ' 
         ' btnLogout
         ' 
+        btnLogout.Anchor = AnchorStyles.Top Or AnchorStyles.Right
         btnLogout.BackColor = Color.LightCoral
         btnLogout.FlatStyle = FlatStyle.Flat
-        btnLogout.Font = New Font("Segoe UI", 10.0F)
-        btnLogout.Location = New Point(520, 16)
+        btnLogout.Font = New Font("Segoe UI", 10F)
+        btnLogout.Location = New Point(594, 21)
+        btnLogout.Margin = New Padding(3, 4, 3, 4)
         btnLogout.Name = "btnLogout"
-        btnLogout.Size = New Size(80, 36)
+        btnLogout.Size = New Size(91, 48)
         btnLogout.TabIndex = 21
         btnLogout.Text = "Logout"
         btnLogout.UseVisualStyleBackColor = False
-        btnLogout.Anchor = AnchorStyles.Top Or AnchorStyles.Right
         ' 
         ' Panel1
         ' 
@@ -151,28 +156,31 @@ Partial Class Manage_menu
         Panel1.BackColor = Color.DarkGray
         Panel1.Controls.Add(MenuCategoryPnl)
         Panel1.Controls.Add(FoodPnl)
-        Panel1.Location = New Point(414, 66)
+        Panel1.Location = New Point(473, 88)
+        Panel1.Margin = New Padding(3, 4, 3, 4)
         Panel1.Name = "Panel1"
-        Panel1.Size = New Size(628, 538)
+        Panel1.Size = New Size(718, 717)
         Panel1.TabIndex = 9
         ' 
         ' MenuCategoryPnl
         ' 
         MenuCategoryPnl.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
         MenuCategoryPnl.BackColor = Color.WhiteSmoke
-        MenuCategoryPnl.Location = New Point(3, 3)
+        MenuCategoryPnl.Location = New Point(3, 4)
+        MenuCategoryPnl.Margin = New Padding(3, 4, 3, 4)
         MenuCategoryPnl.Name = "MenuCategoryPnl"
-        MenuCategoryPnl.Padding = New Padding(0, 0, 0, 20)
-        MenuCategoryPnl.Size = New Size(628, 60)
+        MenuCategoryPnl.Padding = New Padding(0, 0, 0, 27)
+        MenuCategoryPnl.Size = New Size(718, 80)
         MenuCategoryPnl.TabIndex = 1
         ' 
         ' FoodPnl
         ' 
         FoodPnl.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
         FoodPnl.BackColor = SystemColors.Control
-        FoodPnl.Location = New Point(3, 60)
+        FoodPnl.Location = New Point(3, 80)
+        FoodPnl.Margin = New Padding(3, 4, 3, 4)
         FoodPnl.Name = "FoodPnl"
-        FoodPnl.Size = New Size(625, 480)
+        FoodPnl.Size = New Size(714, 640)
         FoodPnl.TabIndex = 2
         ' 
         ' Panel2
@@ -181,8 +189,9 @@ Partial Class Manage_menu
         Panel2.BackColor = SystemColors.ControlLight
         Panel2.Controls.Add(ItemInfoPnl)
         Panel2.Location = New Point(1, 1)
+        Panel2.Margin = New Padding(3, 4, 3, 4)
         Panel2.Name = "Panel2"
-        Panel2.Size = New Size(405, 603)
+        Panel2.Size = New Size(463, 804)
         Panel2.TabIndex = 10
         ' 
         ' ItemInfoPnl
@@ -199,9 +208,10 @@ Partial Class Manage_menu
         ItemInfoPnl.Controls.Add(ItemBtn)
         ItemInfoPnl.Controls.Add(PriceLbl)
         ItemInfoPnl.Controls.Add(ItemNameLbl)
-        ItemInfoPnl.Location = New Point(23, 65)
+        ItemInfoPnl.Location = New Point(26, 87)
+        ItemInfoPnl.Margin = New Padding(3, 4, 3, 4)
         ItemInfoPnl.Name = "ItemInfoPnl"
-        ItemInfoPnl.Size = New Size(359, 507)
+        ItemInfoPnl.Size = New Size(410, 676)
         ItemInfoPnl.TabIndex = 0
         ' 
         ' SaveBtn
@@ -209,9 +219,10 @@ Partial Class Manage_menu
         SaveBtn.BackColor = Color.SpringGreen
         SaveBtn.Enabled = False
         SaveBtn.FlatStyle = FlatStyle.Flat
-        SaveBtn.Location = New Point(13, 388)
+        SaveBtn.Location = New Point(15, 517)
+        SaveBtn.Margin = New Padding(3, 4, 3, 4)
         SaveBtn.Name = "SaveBtn"
-        SaveBtn.Size = New Size(106, 44)
+        SaveBtn.Size = New Size(121, 59)
         SaveBtn.TabIndex = 12
         SaveBtn.Text = "Add"
         SaveBtn.UseVisualStyleBackColor = False
@@ -222,9 +233,10 @@ Partial Class Manage_menu
         UpdateBtn.BackColor = Color.LightBlue
         UpdateBtn.Enabled = False
         UpdateBtn.FlatStyle = FlatStyle.Flat
-        UpdateBtn.Location = New Point(71, 449)
+        UpdateBtn.Location = New Point(81, 599)
+        UpdateBtn.Margin = New Padding(3, 4, 3, 4)
         UpdateBtn.Name = "UpdateBtn"
-        UpdateBtn.Size = New Size(106, 44)
+        UpdateBtn.Size = New Size(121, 59)
         UpdateBtn.TabIndex = 11
         UpdateBtn.Text = "Update"
         UpdateBtn.UseVisualStyleBackColor = False
@@ -235,9 +247,10 @@ Partial Class Manage_menu
         CancelBtn.BackColor = SystemColors.ControlDark
         CancelBtn.Enabled = False
         CancelBtn.FlatStyle = FlatStyle.Flat
-        CancelBtn.Location = New Point(190, 449)
+        CancelBtn.Location = New Point(217, 599)
+        CancelBtn.Margin = New Padding(3, 4, 3, 4)
         CancelBtn.Name = "CancelBtn"
-        CancelBtn.Size = New Size(106, 44)
+        CancelBtn.Size = New Size(121, 59)
         CancelBtn.TabIndex = 10
         CancelBtn.Text = "Cancel"
         CancelBtn.UseVisualStyleBackColor = False
@@ -247,27 +260,29 @@ Partial Class Manage_menu
         ' 
         Label4.AutoSize = True
         Label4.Font = New Font("Segoe UI", 15F)
-        Label4.Location = New Point(60, 34)
+        Label4.Location = New Point(69, 45)
         Label4.Name = "Label4"
-        Label4.Size = New Size(240, 28)
+        Label4.Size = New Size(305, 35)
         Label4.TabIndex = 9
         Label4.Text = "Select an item to edit here"
         ' 
         ' PriceTxtBox
         ' 
         PriceTxtBox.Enabled = False
-        PriceTxtBox.Location = New Point(127, 275)
+        PriceTxtBox.Location = New Point(145, 367)
+        PriceTxtBox.Margin = New Padding(3, 4, 3, 4)
         PriceTxtBox.Name = "PriceTxtBox"
-        PriceTxtBox.Size = New Size(71, 23)
+        PriceTxtBox.Size = New Size(81, 27)
         PriceTxtBox.TabIndex = 8
         PriceTxtBox.Visible = False
         ' 
         ' ItemNameTxtBox
         ' 
         ItemNameTxtBox.Enabled = False
-        ItemNameTxtBox.Location = New Point(127, 226)
+        ItemNameTxtBox.Location = New Point(145, 301)
+        ItemNameTxtBox.Margin = New Padding(3, 4, 3, 4)
         ItemNameTxtBox.Name = "ItemNameTxtBox"
-        ItemNameTxtBox.Size = New Size(169, 23)
+        ItemNameTxtBox.Size = New Size(193, 27)
         ItemNameTxtBox.TabIndex = 7
         ItemNameTxtBox.Visible = False
         ' 
@@ -276,9 +291,10 @@ Partial Class Manage_menu
         DeleteBtn.BackColor = Color.IndianRed
         DeleteBtn.Enabled = False
         DeleteBtn.FlatStyle = FlatStyle.Flat
-        DeleteBtn.Location = New Point(241, 388)
+        DeleteBtn.Location = New Point(275, 517)
+        DeleteBtn.Margin = New Padding(3, 4, 3, 4)
         DeleteBtn.Name = "DeleteBtn"
-        DeleteBtn.Size = New Size(106, 44)
+        DeleteBtn.Size = New Size(121, 59)
         DeleteBtn.TabIndex = 6
         DeleteBtn.Text = "Delete"
         DeleteBtn.UseVisualStyleBackColor = False
@@ -289,9 +305,10 @@ Partial Class Manage_menu
         EditBtn.BackColor = Color.Goldenrod
         EditBtn.Enabled = False
         EditBtn.FlatStyle = FlatStyle.Flat
-        EditBtn.Location = New Point(129, 388)
+        EditBtn.Location = New Point(147, 517)
+        EditBtn.Margin = New Padding(3, 4, 3, 4)
         EditBtn.Name = "EditBtn"
-        EditBtn.Size = New Size(106, 44)
+        EditBtn.Size = New Size(121, 59)
         EditBtn.TabIndex = 5
         EditBtn.Text = "Edit"
         EditBtn.UseVisualStyleBackColor = False
@@ -300,9 +317,10 @@ Partial Class Manage_menu
         ' ItemBtn
         ' 
         ItemBtn.Enabled = False
-        ItemBtn.Location = New Point(103, 34)
+        ItemBtn.Location = New Point(118, 45)
+        ItemBtn.Margin = New Padding(3, 4, 3, 4)
         ItemBtn.Name = "ItemBtn"
-        ItemBtn.Size = New Size(148, 138)
+        ItemBtn.Size = New Size(169, 184)
         ItemBtn.TabIndex = 2
         ItemBtn.Text = "Button1"
         ItemBtn.UseVisualStyleBackColor = True
@@ -312,9 +330,9 @@ Partial Class Manage_menu
         ' 
         PriceLbl.AutoSize = True
         PriceLbl.Font = New Font("Segoe UI", 15F)
-        PriceLbl.Location = New Point(67, 270)
+        PriceLbl.Location = New Point(77, 360)
         PriceLbl.Name = "PriceLbl"
-        PriceLbl.Size = New Size(54, 28)
+        PriceLbl.Size = New Size(69, 35)
         PriceLbl.TabIndex = 1
         PriceLbl.Text = "Price"
         PriceLbl.Visible = False
@@ -323,22 +341,23 @@ Partial Class Manage_menu
         ' 
         ItemNameLbl.AutoSize = True
         ItemNameLbl.Font = New Font("Segoe UI", 15F)
-        ItemNameLbl.Location = New Point(17, 218)
+        ItemNameLbl.Location = New Point(19, 291)
         ItemNameLbl.Name = "ItemNameLbl"
-        ItemNameLbl.Size = New Size(104, 28)
+        ItemNameLbl.Size = New Size(134, 35)
         ItemNameLbl.TabIndex = 0
         ItemNameLbl.Text = "Item name"
         ItemNameLbl.Visible = False
         ' 
         ' Manage_menu
         ' 
-        AutoScaleDimensions = New SizeF(7F, 15F)
+        AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = SystemColors.ControlDark
-        ClientSize = New Size(1041, 604)
+        ClientSize = New Size(1190, 805)
         Controls.Add(NavbarPnl)
         Controls.Add(Panel1)
         Controls.Add(Panel2)
+        Margin = New Padding(3, 4, 3, 4)
         Name = "Manage_menu"
         Text = "Manage menu"
         NavbarPnl.ResumeLayout(False)

@@ -1,0 +1,6 @@
+2025-09-29 00:50:59 - LoadAuditLogs: The Microsoft Access database engine cannot find the input table or query 'activity_logs'. Make sure it exists and that its name is spelled correctly.
+2025-09-30 00:49:48 - LoadAuditLogs: An OLEDB Provider was not specified in the ConnectionString.  An example would be, 'Provider=SQLOLEDB;'.
+2025-09-30 00:51:17 - LoadAuditLogs: An OLEDB Provider was not specified in the ConnectionString.  An example would be, 'Provider=SQLOLEDB;'.
+2025-09-30 00:53:03 - LoadAuditLogs: An OLEDB Provider was not specified in the ConnectionString.  An example would be, 'Provider=SQLOLEDB;'.
+2025-09-30 00:56:38 - LoadAuditLogs: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '200 log_time, username, role, action FROM activity_logs WHERE 1=1 ORDER BY log_t' at line 1
+2025-09-30 00:58:32 - LoadAuditLogs: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ORDER BY log_time DESC' at line 1
