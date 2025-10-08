@@ -2817,23 +2817,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\rosales\\.nuget\\packages\\": {},
-    "D:\\VisualStudio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\Administrator\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\rosales\\Source\\Repos\\Simple-Restaurant-POS-system\\Restaurant-POS-system\\Restaurant-POS-system.vbproj",
+      "projectUniqueName": "C:\\Users\\Administrator\\source\\repos\\Restaurant-POS-system\\Restaurant-POS-system\\Restaurant-POS-system.vbproj",
       "projectName": "Restaurant-POS-system",
-      "projectPath": "C:\\Users\\rosales\\Source\\Repos\\Simple-Restaurant-POS-system\\Restaurant-POS-system\\Restaurant-POS-system.vbproj",
-      "packagesPath": "C:\\Users\\rosales\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\rosales\\Source\\Repos\\Simple-Restaurant-POS-system\\Restaurant-POS-system\\obj\\",
+      "projectPath": "C:\\Users\\Administrator\\source\\repos\\Restaurant-POS-system\\Restaurant-POS-system\\Restaurant-POS-system.vbproj",
+      "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Administrator\\source\\repos\\Restaurant-POS-system\\Restaurant-POS-system\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "D:\\VisualStudio\\Shared\\NuGetPackages"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\rosales\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
