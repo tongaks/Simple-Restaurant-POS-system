@@ -17,7 +17,7 @@ Public Class Order
         LoadMenuCategories()
         LoadMenuItems("Foods")
 
-        DataGridView1.ColumnCount = 4
+        DataGridView1.ColumnCount = 5
         DataGridView1.Columns(0).Name = "ItemAmount"
         DataGridView1.Columns("ItemAmount").ValueType = GetType(Integer)
 
@@ -28,6 +28,9 @@ Public Class Order
 
         DataGridView1.Columns(3).Name = "Total"
         DataGridView1.Columns("Total").ValueType = GetType(Integer)
+
+        DataGridView1.Columns(4).Name = "ImagePath"
+        DataGridView1.Columns("ImagePath").ValueType = GetType(String)
 
         'DataGridView1.DefaultCellStyle.Font = New Font("Segue UI", 15.0F, FontStyle.Regular)
         'DataGridView1.Rows(0).Height = 20
@@ -158,7 +161,7 @@ Public Class Order
 
         Dim tag As String = CType(sender, Button).Tag.ToString()
         Dim price As String
-        Dim tagImgPath As String = ""
+        Dim tagImgPath As String = Nothing
 
         If tag.Contains(",") Then
             Dim tagInfo() As String = tag.Split(","c)
@@ -181,14 +184,13 @@ Public Class Order
 
         If Not nameExists Then
             Dim newRow As New DataGridViewRow()
-            newRow.CreateCells(DataGridView1, 1, name, price, price)
+            newRow.CreateCells(DataGridView1, 1, name, price, price, tagImgPath)
             DataGridView1.Rows.Add(newRow)
 
             Dim image As Image = CType(sender, Button).BackgroundImage
-            'OrderPnl.Controls.Add(AddItemToOrderList(name, price, "1", image))
             OrderPnl.Controls.Add(AddItemToOrderList(name, price, "1", tagImgPath))
         ElseIf nameExists Then
-            UpdateItemOrderList(tagImgPath)
+            UpdateItemOrderList()
         End If
 
         CurrentTotal += Integer.Parse(price)
@@ -209,6 +211,7 @@ Public Class Order
         mainPanel.FlowDirection = FlowDirection.LeftToRight
         mainPanel.WrapContents = False
         mainPanel.Width = OrderPnl.Width
+        mainPanel.Height = 100 ' Make sure the height is fixed for layout
         mainPanel.BackColor = Color.LightGray
         mainPanel.Padding = New Padding(10)
         mainPanel.AutoSize = False
@@ -223,52 +226,75 @@ Public Class Order
         ' Item amount label (wrapped in a Panel for vertical alignment)
         Dim itemAmountLabel As New Label()
         itemAmountLabel.Text = itemAmount
-        itemAmountLabel.Font = New Font("Arial", 10, FontStyle.Bold)
+        itemAmountLabel.Font = New Font("Arial", 16, FontStyle.Bold)
         itemAmountLabel.AutoSize = True
 
         Dim amountWrapper As New Panel()
         amountWrapper.Size = New Size(itemAmountLabel.PreferredWidth + 10, mainPanel.Height)
-        itemAmountLabel.Location = New Point(0, (mainPanel.Height - itemAmountLabel.Height) \ 2)
+        itemAmountLabel.Location = New Point(0, ((mainPanel.Height - itemAmountLabel.Height) \ 2) - 30)
         amountWrapper.Controls.Add(itemAmountLabel)
 
-        ' Item name label (also wrapped for centering)
+        ' Container for labels (item name and item price)
+        Dim itemInfoPanel As New FlowLayoutPanel()
+        itemInfoPanel.FlowDirection = FlowDirection.TopDown
+        itemInfoPanel.AutoSize = True
+        itemInfoPanel.Margin = New Padding(10, 10, 10, 10)
+
+        ' Item name label
         Dim labelName As New Label()
         labelName.Text = itemName
         labelName.Font = New Font("Arial", 14, FontStyle.Bold)
         labelName.AutoSize = True
 
-        Dim nameWrapper As New Panel()
-        nameWrapper.Size = New Size(labelName.PreferredWidth + 10, mainPanel.Height)
-        labelName.Location = New Point(0, (mainPanel.Height - labelName.Height) \ 2)
-        nameWrapper.Controls.Add(labelName)
-
-        ' Price label in a FlowLayoutPanel (right-aligned)
+        ' Item price label
         Dim labelPrice As New Label()
         labelPrice.Text = "₱" & itemPrice
         labelPrice.Font = New Font("Arial", 12, FontStyle.Bold)
         labelPrice.AutoSize = True
 
-        Dim priceWrapper As New Panel()
-        priceWrapper.Size = New Size(labelPrice.PreferredWidth + 10, mainPanel.Height)
-        labelPrice.Location = New Point(0, (mainPanel.Height - labelPrice.Height) \ 2)
-        priceWrapper.Controls.Add(labelPrice)
+        itemInfoPanel.Controls.Add(labelName)
+        itemInfoPanel.Controls.Add(labelPrice)
 
-        ' Spacer to push price to the right
-        Dim spacerPanel As New Panel()
-        spacerPanel.Width = mainPanel.Width - (pictureBox.Width + amountWrapper.Width + nameWrapper.Width + priceWrapper.Width + 60)
-        spacerPanel.Height = 10
-        spacerPanel.Margin = New Padding(0)
+        ' Spacer to push buttons to the right
+        Dim spacer As New Panel()
+        spacer.Width = mainPanel.Width - (amountWrapper.Width + pictureBox.Width + itemInfoPanel.PreferredSize.Width + 180)
+        spacer.Height = 10
+        spacer.Margin = New Padding(0)
 
-        ' Add controls to main FlowLayoutPanel
-        mainPanel.Controls.Add(amountWrapper)
+        ' Buttons (increase/decrease)
+        Dim itemButtonPanel As New FlowLayoutPanel()
+        itemButtonPanel.FlowDirection = FlowDirection.LeftToRight
+        itemButtonPanel.AutoSize = True
+        itemButtonPanel.Margin = New Padding(0, 10, 0, 0)
+
+        Dim increaseButton As New Button()
+        increaseButton.Text = "+"
+        increaseButton.Tag = itemName
+        increaseButton.BackColor = Color.Green
+        increaseButton.Size = New Size(50, 50)
+        AddHandler increaseButton.Click, AddressOf IncreaseButtonHandler
+
+        Dim decreaseButton As New Button()
+        decreaseButton.Text = "-"
+        decreaseButton.Tag = itemName
+        decreaseButton.BackColor = Color.Orange
+        decreaseButton.Size = New Size(50, 50)
+        AddHandler decreaseButton.Click, AddressOf DecreaseButtonHandler
+
+        itemButtonPanel.Controls.Add(increaseButton)
+        itemButtonPanel.Controls.Add(amountWrapper)
+        itemButtonPanel.Controls.Add(decreaseButton)
+
+        ' Add controls to main panel
+        'mainPanel.Controls.Add(amountWrapper)
         mainPanel.Controls.Add(pictureBox)
-        mainPanel.Controls.Add(nameWrapper)
-        mainPanel.Controls.Add(spacerPanel)
-        mainPanel.Controls.Add(priceWrapper)
+        mainPanel.Controls.Add(itemInfoPanel)
+        mainPanel.Controls.Add(spacer)
+        mainPanel.Controls.Add(itemButtonPanel)
 
         Return mainPanel
     End Function
-    Private Sub UpdateItemOrderList(ByVal itemImage As String)
+    Private Sub UpdateItemOrderList()
         If OrderPnl.HasChildren Then
             OrderPnl.Controls.Clear()
         End If
@@ -277,6 +303,7 @@ Public Class Order
             Dim itemAmount = CInt(row.Cells(0).Value)
             Dim itemName As String = CStr(row.Cells(1).Value)
             Dim itemPrice As String = CStr(row.Cells(2).Value)
+            Dim itemImage As String = CStr(row.Cells(4).Value)
             OrderPnl.Controls.Add(AddItemToOrderList(itemName, itemPrice, itemAmount, itemImage))
         Next row
     End Sub
@@ -318,6 +345,50 @@ Public Class Order
         If Not String.IsNullOrEmpty(SearchTxtBox.Text) Then
             SearchItem(SearchTxtBox.Text)
         End If
+    End Sub
+    Private Sub IncreaseButtonHandler(sender As Object, e As EventArgs)
+        Dim itemName As String = CType(sender, Button).Tag.ToString()
+
+        Dim itemBtnName As String = CType(sender, Button).Tag
+        Dim price As String = "0"
+
+        For Each row As DataGridViewRow In DataGridView1.Rows
+            If row.Cells(1).Value IsNot Nothing AndAlso row.Cells(1).Value.ToString() = itemName Then
+                row.Cells(0).Value = CInt(row.Cells(0).Value) + 1
+                price = CStr(row.Cells(2).Value)
+                Exit For
+            End If
+        Next
+
+        UpdateItemOrderList()
+
+        CurrentTotal += Integer.Parse(price)
+        TotalLbl.Text = "₱" + CStr(CurrentTotal)
+    End Sub
+    Private Sub DecreaseButtonHandler(sender As Object, e As EventArgs)
+        Dim itemName As String = CType(sender, Button).Tag.ToString()
+
+        Dim itemBtnName As String = CType(sender, Button).Tag
+        Dim price As String = "0"
+
+        For Each row As DataGridViewRow In DataGridView1.Rows
+            If row.Cells(1).Value IsNot Nothing AndAlso row.Cells(1).Value.ToString() = itemName Then
+                Dim currentAmount = CInt(row.Cells(0).Value)
+                If currentAmount > 0 And Not (currentAmount - 1) = 0 Then
+                    row.Cells(0).Value = currentAmount - 1
+                    price = CStr(row.Cells(2).Value)
+                Else
+                    MsgBox("Deleted row: item amount is equal to 0")
+                    DataGridView1.Rows.RemoveAt(row.Index)
+                End If
+
+                Exit For
+            End If
+        Next
+
+        UpdateItemOrderList()
+        CurrentTotal -= Integer.Parse(price)
+        TotalLbl.Text = "₱" + CStr(CurrentTotal)
     End Sub
 
 
