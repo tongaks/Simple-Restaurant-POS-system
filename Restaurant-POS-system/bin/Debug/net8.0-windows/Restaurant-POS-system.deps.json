@@ -8,7 +8,9 @@
     ".NETCoreApp,Version=v8.0": {
       "Restaurant-POS-system/1.0.0": {
         "dependencies": {
+          "CrystalReports.ReportAppServer.Controllers": "13.0.4003",
           "MySql.Data": "9.4.0",
+          "PDFsharp": "6.2.2",
           "System.Data.OleDb": "9.0.9"
         },
         "runtime": {
@@ -20,6 +22,76 @@
           "lib/net6.0/BouncyCastle.Cryptography.dll": {
             "assemblyVersion": "2.0.0.0",
             "fileVersion": "2.5.1.28965"
+          }
+        }
+      },
+      "CrystalReports.ReportAppServer.CommLayer/13.0.4003": {
+        "dependencies": {
+          "CrystalReports.ReportAppServer.CommonObjectModel": "13.0.4003"
+        },
+        "runtime": {
+          "lib/net40/CrystalDecisions.ReportAppServer.CommLayer.dll": {
+            "assemblyVersion": "13.0.4000.0",
+            "fileVersion": "13.0.33.4485"
+          }
+        }
+      },
+      "CrystalReports.ReportAppServer.CommonObjectModel/13.0.4003": {
+        "runtime": {
+          "lib/net40/CrystalDecisions.ReportAppServer.CommonObjectModel.dll": {
+            "assemblyVersion": "13.0.4000.0",
+            "fileVersion": "13.0.33.4485"
+          }
+        }
+      },
+      "CrystalReports.ReportAppServer.Controllers/13.0.4003": {
+        "dependencies": {
+          "CrystalReports.ReportAppServer.CommLayer": "13.0.4003",
+          "CrystalReports.ReportAppServer.CommonObjectModel": "13.0.4003",
+          "CrystalReports.ReportAppServer.CubeDefModel": "13.0.4003",
+          "CrystalReports.ReportAppServer.DataDefModel": "13.0.4003",
+          "CrystalReports.ReportAppServer.ReportDefModel": "13.0.4003"
+        },
+        "runtime": {
+          "lib/net40/CrystalDecisions.ReportAppServer.Controllers.dll": {
+            "assemblyVersion": "13.0.4000.0",
+            "fileVersion": "13.0.33.4485"
+          }
+        }
+      },
+      "CrystalReports.ReportAppServer.CubeDefModel/13.0.4003": {
+        "dependencies": {
+          "CrystalReports.ReportAppServer.CommonObjectModel": "13.0.4003",
+          "CrystalReports.ReportAppServer.DataDefModel": "13.0.4003"
+        },
+        "runtime": {
+          "lib/net40/CrystalDecisions.ReportAppServer.CubeDefModel.dll": {
+            "assemblyVersion": "13.0.4000.0",
+            "fileVersion": "13.0.33.4485"
+          }
+        }
+      },
+      "CrystalReports.ReportAppServer.DataDefModel/13.0.4003": {
+        "dependencies": {
+          "CrystalReports.ReportAppServer.CommonObjectModel": "13.0.4003"
+        },
+        "runtime": {
+          "lib/net40/CrystalDecisions.ReportAppServer.DataDefModel.dll": {
+            "assemblyVersion": "13.0.4000.0",
+            "fileVersion": "13.0.33.4485"
+          }
+        }
+      },
+      "CrystalReports.ReportAppServer.ReportDefModel/13.0.4003": {
+        "dependencies": {
+          "CrystalReports.ReportAppServer.CommonObjectModel": "13.0.4003",
+          "CrystalReports.ReportAppServer.CubeDefModel": "13.0.4003",
+          "CrystalReports.ReportAppServer.DataDefModel": "13.0.4003"
+        },
+        "runtime": {
+          "lib/net40/CrystalDecisions.ReportAppServer.ReportDefModel.dll": {
+            "assemblyVersion": "13.0.4000.0",
+            "fileVersion": "13.0.33.4485"
           }
         }
       },
@@ -57,6 +129,69 @@
           "lib/net6.0/K4os.Hash.xxHash.dll": {
             "assemblyVersion": "1.0.8.0",
             "fileVersion": "1.0.8.0"
+          }
+        }
+      },
+      "Microsoft.Extensions.DependencyInjection/8.0.1": {
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.2"
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.Extensions.DependencyInjection.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.1024.46610"
+          }
+        }
+      },
+      "Microsoft.Extensions.DependencyInjection.Abstractions/8.0.2": {
+        "runtime": {
+          "lib/net8.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.1024.46610"
+          }
+        }
+      },
+      "Microsoft.Extensions.Logging/8.0.1": {
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection": "8.0.1",
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.2",
+          "Microsoft.Extensions.Options": "8.0.2"
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.Extensions.Logging.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.1024.46610"
+          }
+        }
+      },
+      "Microsoft.Extensions.Logging.Abstractions/8.0.2": {
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.2"
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.Extensions.Logging.Abstractions.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.1024.46610"
+          }
+        }
+      },
+      "Microsoft.Extensions.Options/8.0.2": {
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.2",
+          "Microsoft.Extensions.Primitives": "8.0.0"
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.Extensions.Options.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.224.6711"
+          }
+        }
+      },
+      "Microsoft.Extensions.Primitives/8.0.0": {
+        "runtime": {
+          "lib/net8.0/Microsoft.Extensions.Primitives.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.23.53103"
           }
         }
       },
@@ -109,6 +244,50 @@
             "rid": "win-x64",
             "assetType": "native",
             "fileVersion": "4.3.0.1"
+          }
+        }
+      },
+      "PDFsharp/6.2.2": {
+        "dependencies": {
+          "Microsoft.Extensions.Logging": "8.0.1",
+          "System.Security.Cryptography.Pkcs": "8.0.1"
+        },
+        "runtime": {
+          "lib/net8.0/PdfSharp.BarCodes.dll": {
+            "assemblyVersion": "6.2.2.0",
+            "fileVersion": "6.2.2.7569"
+          },
+          "lib/net8.0/PdfSharp.Charting.dll": {
+            "assemblyVersion": "6.2.2.0",
+            "fileVersion": "6.2.2.7569"
+          },
+          "lib/net8.0/PdfSharp.Cryptography.dll": {
+            "assemblyVersion": "6.2.2.0",
+            "fileVersion": "6.2.2.7569"
+          },
+          "lib/net8.0/PdfSharp.Quality.dll": {
+            "assemblyVersion": "6.2.2.0",
+            "fileVersion": "6.2.2.7569"
+          },
+          "lib/net8.0/PdfSharp.Shared.dll": {
+            "assemblyVersion": "6.2.2.0",
+            "fileVersion": "6.2.2.7569"
+          },
+          "lib/net8.0/PdfSharp.Snippets.dll": {
+            "assemblyVersion": "6.2.2.0",
+            "fileVersion": "6.2.2.7569"
+          },
+          "lib/net8.0/PdfSharp.System.dll": {
+            "assemblyVersion": "6.2.2.0",
+            "fileVersion": "6.2.2.7569"
+          },
+          "lib/net8.0/PdfSharp.WPFonts.dll": {
+            "assemblyVersion": "6.2.2.0",
+            "fileVersion": "6.2.2.7569"
+          },
+          "lib/net8.0/PdfSharp.dll": {
+            "assemblyVersion": "6.2.2.0",
+            "fileVersion": "6.2.2.7569"
           }
         }
       },
@@ -234,6 +413,22 @@
           "System.Runtime": "4.3.0"
         }
       },
+      "System.Security.Cryptography.Pkcs/8.0.1": {
+        "runtime": {
+          "lib/net8.0/System.Security.Cryptography.Pkcs.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.1024.46610"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net8.0/System.Security.Cryptography.Pkcs.dll": {
+            "rid": "win",
+            "assetType": "runtime",
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.1024.46610"
+          }
+        }
+      },
       "System.Security.Cryptography.ProtectedData/9.0.9": {
         "runtime": {
           "lib/net8.0/System.Security.Cryptography.ProtectedData.dll": {
@@ -315,6 +510,48 @@
       "path": "bouncycastle.cryptography/2.5.1",
       "hashPath": "bouncycastle.cryptography.2.5.1.nupkg.sha512"
     },
+    "CrystalReports.ReportAppServer.CommLayer/13.0.4003": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-hBoIi0tS4i8UxM8q+QAP11QdhhR2fRURJb7nvAtPEWT4fSO9+1f9vl8EDkGUp3aletMetR5r+WjAQZRrHcLoyg==",
+      "path": "crystalreports.reportappserver.commlayer/13.0.4003",
+      "hashPath": "crystalreports.reportappserver.commlayer.13.0.4003.nupkg.sha512"
+    },
+    "CrystalReports.ReportAppServer.CommonObjectModel/13.0.4003": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-dLSfzSNg+OxDTcqUFahhCLvMBxF7bKDxnh1EBKXoLl65SSHP8QBNAeI4CpKXtNimUOUJ/sW1McuGYX4CAgUmAw==",
+      "path": "crystalreports.reportappserver.commonobjectmodel/13.0.4003",
+      "hashPath": "crystalreports.reportappserver.commonobjectmodel.13.0.4003.nupkg.sha512"
+    },
+    "CrystalReports.ReportAppServer.Controllers/13.0.4003": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-60Tg65l9NCFX4u8MFX2QWAL7GmQhtmUXJaNhv9F/vXEmlFXHC76vbkwgBumKQcIPpoOhlZK/dqz6YcNP0sHkgA==",
+      "path": "crystalreports.reportappserver.controllers/13.0.4003",
+      "hashPath": "crystalreports.reportappserver.controllers.13.0.4003.nupkg.sha512"
+    },
+    "CrystalReports.ReportAppServer.CubeDefModel/13.0.4003": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ZBns1JhhuBrHudpZowKNRlhXY/GW5BWMoqyafM3eHxoZL1K4mSn/UYPEzNFseYio4abUs5Iw4+K8adCOtfinqw==",
+      "path": "crystalreports.reportappserver.cubedefmodel/13.0.4003",
+      "hashPath": "crystalreports.reportappserver.cubedefmodel.13.0.4003.nupkg.sha512"
+    },
+    "CrystalReports.ReportAppServer.DataDefModel/13.0.4003": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8sSuETn80yMzW0Edjn6Y3Dyif85QKCf4771Q44Jk/soxTo8FcSG8VEm91M9d+CrFivFqlsH7ENPjjKhQ1kInsg==",
+      "path": "crystalreports.reportappserver.datadefmodel/13.0.4003",
+      "hashPath": "crystalreports.reportappserver.datadefmodel.13.0.4003.nupkg.sha512"
+    },
+    "CrystalReports.ReportAppServer.ReportDefModel/13.0.4003": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-lEXNeJ9x2GVPL/+PmhTJrsY84uGwgj+Uum1CLBnphdpkORBwauETrU1dDSVaQbgYGahfDZgm0PtZEWVbU2MfjQ==",
+      "path": "crystalreports.reportappserver.reportdefmodel/13.0.4003",
+      "hashPath": "crystalreports.reportappserver.reportdefmodel.13.0.4003.nupkg.sha512"
+    },
     "Google.Protobuf/3.30.0": {
       "type": "package",
       "serviceable": true,
@@ -343,6 +580,48 @@
       "path": "k4os.hash.xxhash/1.0.8",
       "hashPath": "k4os.hash.xxhash.1.0.8.nupkg.sha512"
     },
+    "Microsoft.Extensions.DependencyInjection/8.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-BmANAnR5Xd4Oqw7yQ75xOAYODybZQRzdeNucg7kS5wWKd2PNnMdYtJ2Vciy0QLylRmv42DGl5+AFL9izA6F1Rw==",
+      "path": "microsoft.extensions.dependencyinjection/8.0.1",
+      "hashPath": "microsoft.extensions.dependencyinjection.8.0.1.nupkg.sha512"
+    },
+    "Microsoft.Extensions.DependencyInjection.Abstractions/8.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3iE7UF7MQkCv1cxzCahz+Y/guQbTqieyxyaWKhrRO91itI9cOKO76OHeQDahqG4MmW5umr3CcCvGmK92lWNlbg==",
+      "path": "microsoft.extensions.dependencyinjection.abstractions/8.0.2",
+      "hashPath": "microsoft.extensions.dependencyinjection.abstractions.8.0.2.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Logging/8.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-4x+pzsQEbqxhNf1QYRr5TDkLP9UsLT3A6MdRKDDEgrW7h1ljiEPgTNhKYUhNCCAaVpQECVQ+onA91PTPnIp6Lw==",
+      "path": "microsoft.extensions.logging/8.0.1",
+      "hashPath": "microsoft.extensions.logging.8.0.1.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Logging.Abstractions/8.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-nroMDjS7hNBPtkZqVBbSiQaQjWRDxITI8Y7XnDs97rqG3EbzVTNLZQf7bIeUJcaHOV8bca47s1Uxq94+2oGdxA==",
+      "path": "microsoft.extensions.logging.abstractions/8.0.2",
+      "hashPath": "microsoft.extensions.logging.abstractions.8.0.2.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Options/8.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-dWGKvhFybsaZpGmzkGCbNNwBD1rVlWzrZKANLW/CcbFJpCEceMCGzT7zZwHOGBCbwM0SzBuceMj5HN1LKV1QqA==",
+      "path": "microsoft.extensions.options/8.0.2",
+      "hashPath": "microsoft.extensions.options.8.0.2.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Primitives/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-bXJEZrW9ny8vjMF1JV253WeLhpEVzFo1lyaZu1vQ4ZxWUlVvknZ/+ftFgVheLubb4eZPSwwxBeqS1JkCOjxd8g==",
+      "path": "microsoft.extensions.primitives/8.0.0",
+      "hashPath": "microsoft.extensions.primitives.8.0.0.nupkg.sha512"
+    },
     "Microsoft.NETCore.Platforms/1.1.0": {
       "type": "package",
       "serviceable": true,
@@ -363,6 +642,13 @@
       "sha512": "sha512-yGfcv5TSj72rwUdywZqtM90qlZ9AuSNckG2Fb9OxuXkskhnqi/DGBaOji9z2G4q3BgFfddbm/WmZzFfAggjbSw==",
       "path": "mysql.data/9.4.0",
       "hashPath": "mysql.data.9.4.0.nupkg.sha512"
+    },
+    "PDFsharp/6.2.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-azgX2bTtQhhGyw2dfTph4rzqFR50BDD3KiPRedNg4cPwZMrVDeQ/D0lH2oIBbTbzWVmRIyTNJTeN9ux1XUdltg==",
+      "path": "pdfsharp/6.2.2",
+      "hashPath": "pdfsharp.6.2.2.nupkg.sha512"
     },
     "System.Buffers/4.5.1": {
       "type": "package",
@@ -454,6 +740,13 @@
       "sha512": "sha512-DHMaRn8D8YCK2GG2pw+UzNxn/OHVfaWx7OTLBD/hPegHZZgcZh3H6seWegrC4BYwsfuGrywIuT+MQs+rPqRLTQ==",
       "path": "system.runtime.loader/4.3.0",
       "hashPath": "system.runtime.loader.4.3.0.nupkg.sha512"
+    },
+    "System.Security.Cryptography.Pkcs/8.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-CoCRHFym33aUSf/NtWSVSZa99dkd0Hm7OCZUxORBjRB16LNhIEOf8THPqzIYlvKM0nNDAPTRBa1FxEECrgaxxA==",
+      "path": "system.security.cryptography.pkcs/8.0.1",
+      "hashPath": "system.security.cryptography.pkcs.8.0.1.nupkg.sha512"
     },
     "System.Security.Cryptography.ProtectedData/9.0.9": {
       "type": "package",

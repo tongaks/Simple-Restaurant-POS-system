@@ -50,9 +50,17 @@
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
           "dependencies": {
+            "CrystalReports.ReportAppServer.Controllers": {
+              "target": "Package",
+              "version": "[13.0.4003, )"
+            },
             "MySql.Data": {
               "target": "Package",
               "version": "[9.4.0, )"
+            },
+            "PDFsharp": {
+              "target": "Package",
+              "version": "[6.2.2, )"
             },
             "System.Data.OleDb": {
               "target": "Package",

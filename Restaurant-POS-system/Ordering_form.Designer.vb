@@ -37,6 +37,9 @@ Partial Class Order
         MenuCategoryPnl = New FlowLayoutPanel()
         FoodPnl = New FlowLayoutPanel()
         OrderPnl = New FlowLayoutPanel()
+        Label3 = New Label()
+        Label4 = New Label()
+        Button1 = New Button()
         NavbarPnl.SuspendLayout()
         CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
         TotalPnl.SuspendLayout()
@@ -128,30 +131,33 @@ Partial Class Order
         TotalPnl.Anchor = AnchorStyles.Bottom Or AnchorStyles.Left
         TotalPnl.BackColor = SystemColors.Control
         TotalPnl.BorderStyle = BorderStyle.FixedSingle
+        TotalPnl.Controls.Add(Button1)
+        TotalPnl.Controls.Add(Label4)
+        TotalPnl.Controls.Add(Label3)
         TotalPnl.Controls.Add(CreateOrderBtn)
         TotalPnl.Controls.Add(TotalLbl)
         TotalPnl.Controls.Add(Label2)
-        TotalPnl.Location = New Point(-1, 546)
+        TotalPnl.Location = New Point(-1, 493)
         TotalPnl.Name = "TotalPnl"
-        TotalPnl.Size = New Size(470, 58)
+        TotalPnl.Size = New Size(470, 111)
         TotalPnl.TabIndex = 4
         ' 
         ' CreateOrderBtn
         ' 
         CreateOrderBtn.BackColor = Color.LightGreen
         CreateOrderBtn.FlatStyle = FlatStyle.Flat
-        CreateOrderBtn.Location = New Point(334, 11)
+        CreateOrderBtn.Location = New Point(317, 56)
         CreateOrderBtn.Name = "CreateOrderBtn"
-        CreateOrderBtn.Size = New Size(125, 38)
+        CreateOrderBtn.Size = New Size(141, 38)
         CreateOrderBtn.TabIndex = 2
-        CreateOrderBtn.Text = "Proceed"
+        CreateOrderBtn.Text = "Proceed to checkout"
         CreateOrderBtn.UseVisualStyleBackColor = False
         ' 
         ' TotalLbl
         ' 
         TotalLbl.AutoSize = True
         TotalLbl.Font = New Font("Segoe UI", 20F)
-        TotalLbl.Location = New Point(146, 9)
+        TotalLbl.Location = New Point(124, 53)
         TotalLbl.Name = "TotalLbl"
         TotalLbl.Size = New Size(48, 37)
         TotalLbl.TabIndex = 1
@@ -161,7 +167,7 @@ Partial Class Order
         ' 
         Label2.AutoSize = True
         Label2.Font = New Font("Segoe UI", 20F)
-        Label2.Location = New Point(12, 7)
+        Label2.Location = New Point(12, 53)
         Label2.Name = "Label2"
         Label2.Size = New Size(74, 37)
         Label2.TabIndex = 0
@@ -204,8 +210,39 @@ Partial Class Order
         OrderPnl.FlowDirection = FlowDirection.TopDown
         OrderPnl.Location = New Point(0, 0)
         OrderPnl.Name = "OrderPnl"
-        OrderPnl.Size = New Size(469, 549)
+        OrderPnl.Size = New Size(469, 493)
         OrderPnl.TabIndex = 6
+        ' 
+        ' Label3
+        ' 
+        Label3.AutoSize = True
+        Label3.Font = New Font("Segoe UI", 15F)
+        Label3.Location = New Point(14, 13)
+        Label3.Name = "Label3"
+        Label3.Size = New Size(89, 28)
+        Label3.TabIndex = 3
+        Label3.Text = "Discount"
+        ' 
+        ' Label4
+        ' 
+        Label4.AutoSize = True
+        Label4.Font = New Font("Segoe UI", 15F)
+        Label4.Location = New Point(127, 15)
+        Label4.Name = "Label4"
+        Label4.Size = New Size(35, 28)
+        Label4.TabIndex = 4
+        Label4.Text = "₱0"
+        ' 
+        ' Button1
+        ' 
+        Button1.BackColor = Color.Gold
+        Button1.FlatStyle = FlatStyle.Flat
+        Button1.Location = New Point(317, 10)
+        Button1.Name = "Button1"
+        Button1.Size = New Size(141, 38)
+        Button1.TabIndex = 5
+        Button1.Text = "Apply voucher"
+        Button1.UseVisualStyleBackColor = False
         ' 
         ' Order
         ' 
@@ -243,4 +280,7 @@ Partial Class Order
     Friend WithEvents Label1 As Label
     Friend WithEvents DataGridView1 As DataGridView
     Friend WithEvents OrderPnl As FlowLayoutPanel
+    Friend WithEvents Label3 As Label
+    Friend WithEvents Button1 As Button
+    Friend WithEvents Label4 As Label
 End Class

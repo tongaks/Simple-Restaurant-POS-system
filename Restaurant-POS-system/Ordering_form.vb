@@ -1,16 +1,23 @@
 ﻿Imports System.ComponentModel.DataAnnotations
 Imports System.IO
+Imports System.Reflection.Metadata
 Imports System.Transactions
 Imports System.Windows.Forms.Design
 Imports System.Xml
 Imports MySql.Data
 Imports MySql.Data.MySqlClient
 Imports Mysqlx.Resultset
+Imports PdfSharp.Drawing
+Imports PdfSharp.Pdf
 Imports ZstdSharp.Unsafe
+Imports PdfSharp.Quality
+Imports PdfSharp.Fonts
+
 
 Public Class Order
     Dim CurrentTotal As Integer
     Private Sub Order_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        GlobalFontSettings.UseWindowsFontsUnderWindows = True
         Me.WindowState = WindowState.Maximized
 
         CurrentTotal = 0
@@ -318,19 +325,23 @@ Public Class Order
         Dim ConnectionString = GetGlobalConnectionString()
         Dim Connection As New MySqlConnection(ConnectionString)
 
-        Dim TotalAmount As Integer = Integer.Parse(TotalLbl.Text.Substring(1))
+        Dim TotalAmount = Integer.Parse(TotalLbl.Text.Substring(1))
 
         Try
             Connection.Open()
-            Dim Query As String = "INSERT INTO orders (order_date, order_time, username, total_amount) VALUES (@date, @time, @user, @total)"
+            Dim Query = "INSERT INTO orders (order_date, order_time, username, total_amount) VALUES (@date, @time, @user, @total)"
             Dim Command As New MySqlCommand(Query, Connection)
-            Command.Parameters.AddWithValue("@date", DateTime.Now.Date)
-            Command.Parameters.AddWithValue("@time", DateTime.Now.TimeOfDay)
+            Command.Parameters.AddWithValue("@date", Date.Now.Date)
+            Command.Parameters.AddWithValue("@time", Date.Now.TimeOfDay)
             Command.Parameters.AddWithValue("@user", CurrentUser)
             Command.Parameters.AddWithValue("@total", TotalAmount)
 
-            If Command.ExecuteNonQuery() > 0 Then
+            If Command.ExecuteNonQuery > 0 Then
                 MsgBox("Order created", MsgBoxStyle.Information, "Success")
+                CreateReceiptPDF()
+                CurrentTotal = 0
+                DataGridView1.Rows.Clear()
+                UpdateItemOrderList()
             End If
 
         Catch ex As Exception
@@ -389,6 +400,36 @@ Public Class Order
         UpdateItemOrderList()
         CurrentTotal -= Integer.Parse(price)
         TotalLbl.Text = "₱" + CStr(CurrentTotal)
+    End Sub
+
+
+    ' Create receipt
+    Private Sub CreateReceiptPDF()
+        Dim receipt As New PdfDocument
+        Dim page As PdfPage = receipt.AddPage()
+        Dim gfx As XGraphics = XGraphics.FromPdfPage(page)
+        Dim regFont As New XFont("Arial", 12, XFontStyleEx.Regular)
+        Dim textBrush As XBrush = XBrushes.Black
+
+        Dim currentDate As String = Date.Now.ToString
+
+        gfx.DrawString("User: " & CurrentUser, regFont, textBrush, New XRect(50, 50, 200, 100), XStringFormats.TopLeft)
+        gfx.DrawString("Date & time: " & currentDate, regFont, textBrush, New XRect(50, 80, 200, 100), XStringFormats.TopLeft)
+
+        Dim posY As Integer = 100
+        For Each row As DataGridViewRow In DataGridView1.Rows
+            Dim itemName As String = row.Cells(1).Value.ToString
+            Dim itemPrice As String = row.Cells(2).Value.ToString
+            Dim itemAmount As String = row.Cells(0).Value.ToString
+            Dim orderFormat As String = itemAmount & "  " & itemName & "    ₱" & itemPrice
+            gfx.DrawString(orderFormat, regFont, textBrush, New XRect(50, posY, 200, 100), XStringFormats.TopLeft)
+            posY += 30
+        Next
+
+        gfx.DrawString("Total: ₱" & CurrentTotal, regFont, textBrush, New XRect(50, posY + 50, 200, 100), XStringFormats.TopLeft)
+
+        Const filename As String = "Receipt.pdf"
+        receipt.Save("C:\Users\Administrator\Documents\" & filename)
     End Sub
 
 
