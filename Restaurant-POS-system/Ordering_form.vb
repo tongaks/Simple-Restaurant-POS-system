@@ -5,6 +5,7 @@ Imports System.Windows.Forms.Design
 Imports System.Xml
 Imports MySql.Data
 Imports MySql.Data.MySqlClient
+Imports Mysqlx.Resultset
 Imports ZstdSharp.Unsafe
 
 Public Class Order
@@ -35,6 +36,7 @@ Public Class Order
         ' close parent when child closes
         Form1.Dispose()
     End Sub
+
 
 
     ' CRUD functions
@@ -87,6 +89,7 @@ Public Class Order
                     If Not Reader("ImagePath") = "N/A" Then
                         Dim image As Image = Image.FromFile(Reader("ImagePath"))
                         foodBtn.Image = ResizeImageFit(image, foodBtn)
+                        foodBtn.Tag &= "," & Reader("ImagePath")
                     End If
                 End If
 
@@ -148,6 +151,7 @@ Public Class Order
     End Sub
 
 
+
     ' Menu item/category click handlers
     Private Sub HandleItemClick(sender As Object, e As EventArgs)
         Dim name = CType(sender, Button).Text
@@ -179,6 +183,12 @@ Public Class Order
             Dim newRow As New DataGridViewRow()
             newRow.CreateCells(DataGridView1, 1, name, price, price)
             DataGridView1.Rows.Add(newRow)
+
+            Dim image As Image = CType(sender, Button).BackgroundImage
+            'OrderPnl.Controls.Add(AddItemToOrderList(name, price, "1", image))
+            OrderPnl.Controls.Add(AddItemToOrderList(name, price, "1", tagImgPath))
+        ElseIf nameExists Then
+            UpdateItemOrderList(tagImgPath)
         End If
 
         CurrentTotal += Integer.Parse(price)
@@ -189,6 +199,88 @@ Public Class Order
         FoodPnl.Controls.Clear()
         LoadMenuItems(catName)
     End Sub
+
+
+
+    ' Display the items
+    Private Function AddItemToOrderList(ByVal itemName As String, ByVal itemPrice As String, ByVal itemAmount As String, ByVal itemImage As String) As FlowLayoutPanel
+        ' Create the main FlowLayoutPanel
+        Dim mainPanel As New FlowLayoutPanel()
+        mainPanel.FlowDirection = FlowDirection.LeftToRight
+        mainPanel.WrapContents = False
+        mainPanel.Width = OrderPnl.Width
+        mainPanel.BackColor = Color.LightGray
+        mainPanel.Padding = New Padding(10)
+        mainPanel.AutoSize = False
+
+        ' PictureBox
+        Dim pictureBox As New PictureBox()
+        pictureBox.Size = New Size(80, 80)
+        pictureBox.Image = If(String.IsNullOrEmpty(itemImage), Nothing, Image.FromFile(itemImage))
+        pictureBox.SizeMode = PictureBoxSizeMode.StretchImage
+        pictureBox.Margin = New Padding(5)
+
+        ' Item amount label (wrapped in a Panel for vertical alignment)
+        Dim itemAmountLabel As New Label()
+        itemAmountLabel.Text = itemAmount
+        itemAmountLabel.Font = New Font("Arial", 10, FontStyle.Bold)
+        itemAmountLabel.AutoSize = True
+
+        Dim amountWrapper As New Panel()
+        amountWrapper.Size = New Size(itemAmountLabel.PreferredWidth + 10, mainPanel.Height)
+        itemAmountLabel.Location = New Point(0, (mainPanel.Height - itemAmountLabel.Height) \ 2)
+        amountWrapper.Controls.Add(itemAmountLabel)
+
+        ' Item name label (also wrapped for centering)
+        Dim labelName As New Label()
+        labelName.Text = itemName
+        labelName.Font = New Font("Arial", 14, FontStyle.Bold)
+        labelName.AutoSize = True
+
+        Dim nameWrapper As New Panel()
+        nameWrapper.Size = New Size(labelName.PreferredWidth + 10, mainPanel.Height)
+        labelName.Location = New Point(0, (mainPanel.Height - labelName.Height) \ 2)
+        nameWrapper.Controls.Add(labelName)
+
+        ' Price label in a FlowLayoutPanel (right-aligned)
+        Dim labelPrice As New Label()
+        labelPrice.Text = "₱" & itemPrice
+        labelPrice.Font = New Font("Arial", 12, FontStyle.Bold)
+        labelPrice.AutoSize = True
+
+        Dim priceWrapper As New Panel()
+        priceWrapper.Size = New Size(labelPrice.PreferredWidth + 10, mainPanel.Height)
+        labelPrice.Location = New Point(0, (mainPanel.Height - labelPrice.Height) \ 2)
+        priceWrapper.Controls.Add(labelPrice)
+
+        ' Spacer to push price to the right
+        Dim spacerPanel As New Panel()
+        spacerPanel.Width = mainPanel.Width - (pictureBox.Width + amountWrapper.Width + nameWrapper.Width + priceWrapper.Width + 60)
+        spacerPanel.Height = 10
+        spacerPanel.Margin = New Padding(0)
+
+        ' Add controls to main FlowLayoutPanel
+        mainPanel.Controls.Add(amountWrapper)
+        mainPanel.Controls.Add(pictureBox)
+        mainPanel.Controls.Add(nameWrapper)
+        mainPanel.Controls.Add(spacerPanel)
+        mainPanel.Controls.Add(priceWrapper)
+
+        Return mainPanel
+    End Function
+    Private Sub UpdateItemOrderList(ByVal itemImage As String)
+        If OrderPnl.HasChildren Then
+            OrderPnl.Controls.Clear()
+        End If
+
+        For Each row As DataGridViewRow In DataGridView1.Rows
+            Dim itemAmount = CInt(row.Cells(0).Value)
+            Dim itemName As String = CStr(row.Cells(1).Value)
+            Dim itemPrice As String = CStr(row.Cells(2).Value)
+            OrderPnl.Controls.Add(AddItemToOrderList(itemName, itemPrice, itemAmount, itemImage))
+        Next row
+    End Sub
+
 
 
     ' Buttons
@@ -229,6 +321,7 @@ Public Class Order
     End Sub
 
 
+
     ' listeners
     Private Sub HandleSearchTxtBoxEnter(sender As Object, e As KeyPressEventArgs) Handles SearchTxtBox.KeyPress
         If Asc(e.KeyChar) = 13 Then
@@ -237,5 +330,4 @@ Public Class Order
             End If
         End If
     End Sub
-
 End Class

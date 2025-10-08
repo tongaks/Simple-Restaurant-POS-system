@@ -23,6 +23,7 @@ Partial Class Order
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         NavbarPnl = New Panel()
+        DataGridView1 = New DataGridView()
         SearchTxtBox = New TextBox()
         Label1 = New Label()
         SearchBtn = New Button()
@@ -35,28 +36,43 @@ Partial Class Order
         Panel1 = New Panel()
         MenuCategoryPnl = New FlowLayoutPanel()
         FoodPnl = New FlowLayoutPanel()
-        Panel2 = New Panel()
-        DataGridView1 = New DataGridView()
+        OrderPnl = New FlowLayoutPanel()
         NavbarPnl.SuspendLayout()
+        CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
         TotalPnl.SuspendLayout()
         Panel1.SuspendLayout()
-        Panel2.SuspendLayout()
-        CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' NavbarPnl
         ' 
         NavbarPnl.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
         NavbarPnl.BackColor = Color.DarkSeaGreen
+        NavbarPnl.Controls.Add(DataGridView1)
         NavbarPnl.Controls.Add(SearchTxtBox)
         NavbarPnl.Controls.Add(Label1)
         NavbarPnl.Controls.Add(SearchBtn)
         NavbarPnl.Controls.Add(Button3)
         NavbarPnl.Controls.Add(Button2)
-        NavbarPnl.Location = New Point(414, 0)
+        NavbarPnl.Location = New Point(478, 0)
         NavbarPnl.Name = "NavbarPnl"
-        NavbarPnl.Size = New Size(627, 68)
+        NavbarPnl.Size = New Size(563, 68)
         NavbarPnl.TabIndex = 1
+        ' 
+        ' DataGridView1
+        ' 
+        DataGridView1.AllowUserToAddRows = False
+        DataGridView1.AllowUserToDeleteRows = False
+        DataGridView1.AllowUserToOrderColumns = True
+        DataGridView1.AllowUserToResizeColumns = False
+        DataGridView1.AllowUserToResizeRows = False
+        DataGridView1.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left
+        DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+        DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridView1.Location = New Point(0, 12)
+        DataGridView1.Name = "DataGridView1"
+        DataGridView1.Size = New Size(298, 109)
+        DataGridView1.TabIndex = 1
+        DataGridView1.Visible = False
         ' 
         ' SearchTxtBox
         ' 
@@ -90,7 +106,7 @@ Partial Class Order
         ' Button3
         ' 
         Button3.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        Button3.Location = New Point(542, 27)
+        Button3.Location = New Point(478, 27)
         Button3.Name = "Button3"
         Button3.Size = New Size(75, 23)
         Button3.TabIndex = 3
@@ -100,7 +116,7 @@ Partial Class Order
         ' Button2
         ' 
         Button2.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        Button2.Location = New Point(461, 27)
+        Button2.Location = New Point(397, 27)
         Button2.Name = "Button2"
         Button2.Size = New Size(75, 23)
         Button2.TabIndex = 2
@@ -117,14 +133,14 @@ Partial Class Order
         TotalPnl.Controls.Add(Label2)
         TotalPnl.Location = New Point(-1, 546)
         TotalPnl.Name = "TotalPnl"
-        TotalPnl.Size = New Size(409, 58)
+        TotalPnl.Size = New Size(470, 58)
         TotalPnl.TabIndex = 4
         ' 
         ' CreateOrderBtn
         ' 
         CreateOrderBtn.BackColor = Color.LightGreen
         CreateOrderBtn.FlatStyle = FlatStyle.Flat
-        CreateOrderBtn.Location = New Point(271, 9)
+        CreateOrderBtn.Location = New Point(334, 11)
         CreateOrderBtn.Name = "CreateOrderBtn"
         CreateOrderBtn.Size = New Size(125, 38)
         CreateOrderBtn.TabIndex = 2
@@ -157,9 +173,9 @@ Partial Class Order
         Panel1.BackColor = Color.DarkGray
         Panel1.Controls.Add(MenuCategoryPnl)
         Panel1.Controls.Add(FoodPnl)
-        Panel1.Location = New Point(414, 66)
+        Panel1.Location = New Point(478, 66)
         Panel1.Name = "Panel1"
-        Panel1.Size = New Size(628, 538)
+        Panel1.Size = New Size(564, 538)
         Panel1.TabIndex = 5
         ' 
         ' MenuCategoryPnl
@@ -169,42 +185,27 @@ Partial Class Order
         MenuCategoryPnl.Location = New Point(3, 3)
         MenuCategoryPnl.Name = "MenuCategoryPnl"
         MenuCategoryPnl.Padding = New Padding(0, 0, 0, 20)
-        MenuCategoryPnl.Size = New Size(627, 60)
+        MenuCategoryPnl.Size = New Size(563, 60)
         MenuCategoryPnl.TabIndex = 1
         ' 
         ' FoodPnl
         ' 
         FoodPnl.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
         FoodPnl.BackColor = SystemColors.Control
-        FoodPnl.Location = New Point(3, 60)
+        FoodPnl.Location = New Point(2, 60)
         FoodPnl.Name = "FoodPnl"
-        FoodPnl.Size = New Size(625, 478)
+        FoodPnl.Size = New Size(561, 478)
         FoodPnl.TabIndex = 2
         ' 
-        ' Panel2
+        ' OrderPnl
         ' 
-        Panel2.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left
-        Panel2.BackColor = SystemColors.Control
-        Panel2.Controls.Add(DataGridView1)
-        Panel2.Location = New Point(2, 1)
-        Panel2.Name = "Panel2"
-        Panel2.Size = New Size(405, 545)
-        Panel2.TabIndex = 6
-        ' 
-        ' DataGridView1
-        ' 
-        DataGridView1.AllowUserToAddRows = False
-        DataGridView1.AllowUserToDeleteRows = False
-        DataGridView1.AllowUserToOrderColumns = True
-        DataGridView1.AllowUserToResizeColumns = False
-        DataGridView1.AllowUserToResizeRows = False
-        DataGridView1.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left
-        DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
-        DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridView1.Location = New Point(0, 0)
-        DataGridView1.Name = "DataGridView1"
-        DataGridView1.Size = New Size(405, 545)
-        DataGridView1.TabIndex = 1
+        OrderPnl.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left
+        OrderPnl.BackColor = SystemColors.Control
+        OrderPnl.FlowDirection = FlowDirection.TopDown
+        OrderPnl.Location = New Point(0, 0)
+        OrderPnl.Name = "OrderPnl"
+        OrderPnl.Size = New Size(469, 549)
+        OrderPnl.TabIndex = 6
         ' 
         ' Order
         ' 
@@ -212,7 +213,7 @@ Partial Class Order
         AutoScaleMode = AutoScaleMode.Font
         BackColor = SystemColors.ControlDark
         ClientSize = New Size(1041, 604)
-        Controls.Add(Panel2)
+        Controls.Add(OrderPnl)
         Controls.Add(NavbarPnl)
         Controls.Add(Panel1)
         Controls.Add(TotalPnl)
@@ -220,11 +221,10 @@ Partial Class Order
         Text = "Order form"
         NavbarPnl.ResumeLayout(False)
         NavbarPnl.PerformLayout()
+        CType(DataGridView1, ComponentModel.ISupportInitialize).EndInit()
         TotalPnl.ResumeLayout(False)
         TotalPnl.PerformLayout()
         Panel1.ResumeLayout(False)
-        Panel2.ResumeLayout(False)
-        CType(DataGridView1, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
     End Sub
     Friend WithEvents NavbarPnl As Panel
@@ -241,6 +241,6 @@ Partial Class Order
     Friend WithEvents CreateOrderBtn As Button
     Friend WithEvents SearchTxtBox As TextBox
     Friend WithEvents Label1 As Label
-    Friend WithEvents Panel2 As Panel
     Friend WithEvents DataGridView1 As DataGridView
+    Friend WithEvents OrderPnl As FlowLayoutPanel
 End Class

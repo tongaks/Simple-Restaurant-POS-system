@@ -254,7 +254,7 @@ Partial Class Manage_menu
         ' 
         ' EditBtn
         ' 
-        EditBtn.BackColor = Color.Goldenrod
+        EditBtn.BackColor = Color.Gold
         EditBtn.Enabled = False
         EditBtn.FlatStyle = FlatStyle.Flat
         EditBtn.Location = New Point(129, 388)

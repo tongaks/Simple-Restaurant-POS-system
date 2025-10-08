@@ -1,17 +1,17 @@
 ﻿' Admin Dashboard Form - OrderUp! System
 ' Features: Audit Log, Sales Report, Menu Management, User Management
-' Database: MS Access (OleDb)
+' Database: MySQL
 
 Imports System.Data.OleDb
 Imports System.IO
 Imports System.Text
 Imports MySql.Data
 Imports MySql.Data.MySqlClient
+Imports System.Windows.Forms
 
 Public Class Admin
     Private currentUserRole As String = "Admin"
-    Private currentPage As Integer = 0
-    Private pageSize As Integer = 50
+    Private navButtons As AdminNavButtons
 
     ' Simple PathManager helper class
     Public Class PathManager
@@ -38,6 +38,10 @@ Public Class Admin
     ''' Form load - initialize dashboard and load audit logs
     ''' </summary>
     Private Sub Admin_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ' Initialize navigation buttons with the buttons from Designer
+        ' For Admin, pass only logout, help, and instructions buttons (no back button)
+        navButtons = New AdminNavButtons(Me, btnLogout, Nothing, btnHelp, btnInstructions)
+
         Me.WindowState = FormWindowState.Maximized
         LoadAuditLogs()
         pnlSalesReport.Visible = False
@@ -296,10 +300,16 @@ Public Class Admin
     End Sub
 
     Private Sub pnlHeader_Paint(sender As Object, e As PaintEventArgs) Handles pnlHeader.Paint
-
+        ' Empty handler - can be removed if not needed
     End Sub
 
     Private Sub btnCreateAccount_Click(sender As Object, e As EventArgs) Handles btnCreateAccount.Click
-
+        ' To be implemented in future version
     End Sub
 End Class
+
+''' <summary>
+''' Manages navigation buttons for Admin and related forms.
+''' Handles Logout, Back, Help, and Instructions functionality.
+''' Constructor accepts existing designer buttons (one or more) so logic lives here and forms stay clean.
+''' </summary>
