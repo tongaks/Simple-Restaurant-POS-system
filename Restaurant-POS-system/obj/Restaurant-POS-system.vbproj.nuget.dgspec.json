@@ -54,6 +54,18 @@
               "target": "Package",
               "version": "[13.0.4003, )"
             },
+            "Font.Awesome": {
+              "target": "Package",
+              "version": "[5.13.0, )"
+            },
+            "FontAwesome": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            },
+            "FontAwesome.Sharp": {
+              "target": "Package",
+              "version": "[6.6.0, )"
+            },
             "MySql.Data": {
               "target": "Package",
               "version": "[9.4.0, )"

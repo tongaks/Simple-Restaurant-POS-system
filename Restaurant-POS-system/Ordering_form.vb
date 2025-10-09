@@ -12,6 +12,9 @@ Imports PdfSharp.Pdf
 Imports ZstdSharp.Unsafe
 Imports PdfSharp.Quality
 Imports PdfSharp.Fonts
+Imports System.Data.OleDb
+Imports Mysqlx
+Imports Mysqlx.XDevAPI.Common
 
 
 Public Class Order
@@ -272,20 +275,21 @@ Public Class Order
         Dim itemButtonPanel As New FlowLayoutPanel()
         itemButtonPanel.FlowDirection = FlowDirection.LeftToRight
         itemButtonPanel.AutoSize = True
-        itemButtonPanel.Margin = New Padding(0, 10, 0, 0)
+        itemButtonPanel.Margin = New Padding(30, 10, 0, 0)
 
         Dim increaseButton As New Button()
         increaseButton.Text = "+"
         increaseButton.Tag = itemName
         increaseButton.BackColor = Color.Green
-        increaseButton.Size = New Size(50, 50)
+        increaseButton.Size = New Size(40, 40)
         AddHandler increaseButton.Click, AddressOf IncreaseButtonHandler
 
         Dim decreaseButton As New Button()
         decreaseButton.Text = "-"
         decreaseButton.Tag = itemName
-        decreaseButton.BackColor = Color.Orange
-        decreaseButton.Size = New Size(50, 50)
+        decreaseButton.BackColor = Color.Red
+        decreaseButton.ForeColor = Color.White
+        decreaseButton.Size = New Size(40, 40)
         AddHandler decreaseButton.Click, AddressOf DecreaseButtonHandler
 
         itemButtonPanel.Controls.Add(increaseButton)
@@ -306,6 +310,10 @@ Public Class Order
             OrderPnl.Controls.Clear()
         End If
 
+        ' Instead of refreshing everything, just loop through the orderpnl then
+        ' per panel children, iterate through it again or just name the panel with the name
+        ' of the item. After finding the name, change that panel's amount instead of everything
+
         For Each row As DataGridViewRow In DataGridView1.Rows
             Dim itemAmount = CInt(row.Cells(0).Value)
             Dim itemName As String = CStr(row.Cells(1).Value)
@@ -322,6 +330,12 @@ Public Class Order
         Panel1.Hide()
     End Sub
     Private Sub CreateOrderBtn_Click(sender As Object, e As EventArgs) Handles CreateOrderBtn.Click
+        If Not DataGridView1.Rows.Count > 0 Then
+            MsgBox("Please create an order first", MsgBoxStyle.Critical, "Warning")
+            Return
+        End If
+
+
         Dim ConnectionString = GetGlobalConnectionString()
         Dim Connection As New MySqlConnection(ConnectionString)
 
@@ -340,6 +354,7 @@ Public Class Order
                 MsgBox("Order created", MsgBoxStyle.Information, "Success")
                 CreateReceiptPDF()
                 CurrentTotal = 0
+                TotalLbl.Text = CurrentTotal
                 DataGridView1.Rows.Clear()
                 UpdateItemOrderList()
             End If
@@ -352,7 +367,7 @@ Public Class Order
             End If
         End Try
     End Sub
-    Private Sub SearchBtn_Click(sender As Object, e As EventArgs) Handles SearchBtn.Click
+    Private Sub SearchBtn_Click(sender As Object, e As EventArgs)
         If Not String.IsNullOrEmpty(SearchTxtBox.Text) Then
             SearchItem(SearchTxtBox.Text)
         End If
@@ -385,6 +400,8 @@ Public Class Order
         For Each row As DataGridViewRow In DataGridView1.Rows
             If row.Cells(1).Value IsNot Nothing AndAlso row.Cells(1).Value.ToString() = itemName Then
                 Dim currentAmount = CInt(row.Cells(0).Value)
+                price = CStr(row.Cells(2).Value)
+
                 If currentAmount > 0 And Not (currentAmount - 1) = 0 Then
                     row.Cells(0).Value = currentAmount - 1
                     price = CStr(row.Cells(2).Value)
@@ -428,8 +445,32 @@ Public Class Order
 
         gfx.DrawString("Total: ₱" & CurrentTotal, regFont, textBrush, New XRect(50, posY + 50, 200, 100), XStringFormats.TopLeft)
 
-        Const filename As String = "Receipt.pdf"
-        receipt.Save("C:\Users\Administrator\Documents\" & filename)
+        Dim receiptID As String = ""
+
+        Dim Connection As New MySqlConnection(GetGlobalConnectionString)
+        Try
+            Connection.Open()
+            Dim Query As String = "SELECT COUNT(*) AS `TOTAL` FROM restaurant.orders"
+            Dim Command As New MySqlCommand(Query, Connection)
+            Dim Reader As MySqlDataReader = Command.ExecuteReader
+
+            If Reader.Read Then
+                receiptID = Reader("TOTAL")
+            End If
+
+            'MsgBox("total number of orders: " & idCount)
+            'receiptID = idCount
+
+        Catch ex As Exception
+            MsgBox("Error from db: " & ex.ToString, MsgBoxStyle.Critical, "Error")
+        End Try
+
+        Dim receiptPath = "C:\Users\Administrator\Documents\Receipts\"
+        Dim filename As String = "Receipt" & receiptID & ".pdf"
+        receiptPath &= filename
+        receipt.Save(receiptPath)
+
+        MsgBox("A receipt has been created at: " & receiptPath)
     End Sub
 
 
@@ -442,4 +483,5 @@ Public Class Order
             End If
         End If
     End Sub
+
 End Class

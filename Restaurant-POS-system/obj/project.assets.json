@@ -91,6 +91,24 @@
           "lib/net40/CrystalDecisions.ReportAppServer.ReportDefModel.dll": {}
         }
       },
+      "Font.Awesome/5.13.0": {
+        "type": "package"
+      },
+      "FontAwesome/4.7.0": {
+        "type": "package"
+      },
+      "FontAwesome.Sharp/6.6.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0-windows7.0/FontAwesome.Sharp.dll": {}
+        },
+        "runtime": {
+          "lib/net8.0-windows7.0/FontAwesome.Sharp.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.WindowsDesktop.App"
+        ]
+      },
       "Google.Protobuf/3.30.0": {
         "type": "package",
         "compile": {
@@ -918,6 +936,98 @@
         "crystalreports.reportappserver.reportdefmodel.13.0.4003.nupkg.sha512",
         "crystalreports.reportappserver.reportdefmodel.nuspec",
         "lib/net40/CrystalDecisions.ReportAppServer.ReportDefModel.dll"
+      ]
+    },
+    "Font.Awesome/5.13.0": {
+      "sha512": "bb+aWUhtojzkqmgPh1HfuOWuggnbhH5Y2PPYfTGN11w0Z4eU8/ZwauLlOX/kAg5/Vch/5T/l84VeaWjMU2aclg==",
+      "type": "package",
+      "path": "font.awesome/5.13.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Content/Content/brands.css",
+        "Content/Content/brands.min.css",
+        "Content/Content/fontawesome-all.css",
+        "Content/Content/fontawesome-all.min.css",
+        "Content/Content/fontawesome.css",
+        "Content/Content/fontawesome.min.css",
+        "Content/Content/regular.css",
+        "Content/Content/regular.min.css",
+        "Content/Content/solid.css",
+        "Content/Content/solid.min.css",
+        "Content/Content/svg-with-js.css",
+        "Content/Content/svg-with-js.min.css",
+        "Content/Content/v4-shims.css",
+        "Content/Content/v4-shims.min.css",
+        "Content/Scripts/fontawesome/all.js",
+        "Content/Scripts/fontawesome/all.min.js",
+        "Content/Scripts/fontawesome/brands.js",
+        "Content/Scripts/fontawesome/brands.min.js",
+        "Content/Scripts/fontawesome/conflict-detection.js",
+        "Content/Scripts/fontawesome/conflict-detection.min.js",
+        "Content/Scripts/fontawesome/fontawesome.js",
+        "Content/Scripts/fontawesome/fontawesome.min.js",
+        "Content/Scripts/fontawesome/regular.js",
+        "Content/Scripts/fontawesome/regular.min.js",
+        "Content/Scripts/fontawesome/solid.js",
+        "Content/Scripts/fontawesome/solid.min.js",
+        "Content/Scripts/fontawesome/v4-shims.js",
+        "Content/Scripts/fontawesome/v4-shims.min.js",
+        "Content/webfonts/fa-brands-400.eot",
+        "Content/webfonts/fa-brands-400.svg",
+        "Content/webfonts/fa-brands-400.ttf",
+        "Content/webfonts/fa-brands-400.woff",
+        "Content/webfonts/fa-brands-400.woff2",
+        "Content/webfonts/fa-regular-400.eot",
+        "Content/webfonts/fa-regular-400.svg",
+        "Content/webfonts/fa-regular-400.ttf",
+        "Content/webfonts/fa-regular-400.woff",
+        "Content/webfonts/fa-regular-400.woff2",
+        "Content/webfonts/fa-solid-900.eot",
+        "Content/webfonts/fa-solid-900.svg",
+        "Content/webfonts/fa-solid-900.ttf",
+        "Content/webfonts/fa-solid-900.woff",
+        "Content/webfonts/fa-solid-900.woff2",
+        "font.awesome.5.13.0.nupkg.sha512",
+        "font.awesome.nuspec"
+      ]
+    },
+    "FontAwesome/4.7.0": {
+      "sha512": "n4H/brfszElyoZ4kmGh8E75uqvLzLvFr3h2PFVdPH1LwUmWIpeqdaW2pcC4oZAhg7sESyObh0IZpAI8COCNeUg==",
+      "type": "package",
+      "path": "fontawesome/4.7.0",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Content/Content/font-awesome.css",
+        "Content/Content/font-awesome.min.css",
+        "Content/fonts/FontAwesome.otf",
+        "Content/fonts/fontawesome-webfont.eot",
+        "Content/fonts/fontawesome-webfont.svg",
+        "Content/fonts/fontawesome-webfont.ttf",
+        "Content/fonts/fontawesome-webfont.woff",
+        "Content/fonts/fontawesome-webfont.woff2",
+        "fontawesome.4.7.0.nupkg.sha512",
+        "fontawesome.nuspec",
+        "tools/install.ps1"
+      ]
+    },
+    "FontAwesome.Sharp/6.6.0": {
+      "sha512": "bJCb2x73UC1nD9+9iMLaUy6Ujf9Pf+buL6FHwVnaoDYT4CQNLazz59hO5gQ0+SMSW0G+ZXmjjShOYr3Jn2UZiw==",
+      "type": "package",
+      "path": "fontawesome.sharp/6.6.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "fontawesome.sharp.6.6.0.nupkg.sha512",
+        "fontawesome.sharp.nuspec",
+        "lib/net472/FontAwesome.Sharp.dll",
+        "lib/net48/FontAwesome.Sharp.dll",
+        "lib/net6.0-windows7.0/FontAwesome.Sharp.dll",
+        "lib/net7.0-windows7.0/FontAwesome.Sharp.dll",
+        "lib/net8.0-windows7.0/FontAwesome.Sharp.dll",
+        "lib/netcoreapp3.1/FontAwesome.Sharp.dll"
       ]
     },
     "Google.Protobuf/3.30.0": {
@@ -2456,6 +2566,9 @@
   "projectFileDependencyGroups": {
     "net8.0-windows7.0": [
       "CrystalReports.ReportAppServer.Controllers >= 13.0.4003",
+      "Font.Awesome >= 5.13.0",
+      "FontAwesome >= 4.7.0",
+      "FontAwesome.Sharp >= 6.6.0",
       "MySql.Data >= 9.4.0",
       "PDFsharp >= 6.2.2",
       "System.Data.OleDb >= 9.0.9"
@@ -2514,6 +2627,18 @@
           "CrystalReports.ReportAppServer.Controllers": {
             "target": "Package",
             "version": "[13.0.4003, )"
+          },
+          "Font.Awesome": {
+            "target": "Package",
+            "version": "[5.13.0, )"
+          },
+          "FontAwesome": {
+            "target": "Package",
+            "version": "[4.7.0, )"
+          },
+          "FontAwesome.Sharp": {
+            "target": "Package",
+            "version": "[6.6.0, )"
           },
           "MySql.Data": {
             "target": "Package",

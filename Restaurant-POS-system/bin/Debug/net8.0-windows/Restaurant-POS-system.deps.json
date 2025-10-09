@@ -9,6 +9,9 @@
       "Restaurant-POS-system/1.0.0": {
         "dependencies": {
           "CrystalReports.ReportAppServer.Controllers": "13.0.4003",
+          "Font.Awesome": "5.13.0",
+          "FontAwesome": "4.7.0",
+          "FontAwesome.Sharp": "6.6.0",
           "MySql.Data": "9.4.0",
           "PDFsharp": "6.2.2",
           "System.Data.OleDb": "9.0.9"
@@ -92,6 +95,16 @@
           "lib/net40/CrystalDecisions.ReportAppServer.ReportDefModel.dll": {
             "assemblyVersion": "13.0.4000.0",
             "fileVersion": "13.0.33.4485"
+          }
+        }
+      },
+      "Font.Awesome/5.13.0": {},
+      "FontAwesome/4.7.0": {},
+      "FontAwesome.Sharp/6.6.0": {
+        "runtime": {
+          "lib/net8.0-windows7.0/FontAwesome.Sharp.dll": {
+            "assemblyVersion": "6.6.0.0",
+            "fileVersion": "6.6.0.0"
           }
         }
       },
@@ -551,6 +564,27 @@
       "sha512": "sha512-lEXNeJ9x2GVPL/+PmhTJrsY84uGwgj+Uum1CLBnphdpkORBwauETrU1dDSVaQbgYGahfDZgm0PtZEWVbU2MfjQ==",
       "path": "crystalreports.reportappserver.reportdefmodel/13.0.4003",
       "hashPath": "crystalreports.reportappserver.reportdefmodel.13.0.4003.nupkg.sha512"
+    },
+    "Font.Awesome/5.13.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-bb+aWUhtojzkqmgPh1HfuOWuggnbhH5Y2PPYfTGN11w0Z4eU8/ZwauLlOX/kAg5/Vch/5T/l84VeaWjMU2aclg==",
+      "path": "font.awesome/5.13.0",
+      "hashPath": "font.awesome.5.13.0.nupkg.sha512"
+    },
+    "FontAwesome/4.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-n4H/brfszElyoZ4kmGh8E75uqvLzLvFr3h2PFVdPH1LwUmWIpeqdaW2pcC4oZAhg7sESyObh0IZpAI8COCNeUg==",
+      "path": "fontawesome/4.7.0",
+      "hashPath": "fontawesome.4.7.0.nupkg.sha512"
+    },
+    "FontAwesome.Sharp/6.6.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-bJCb2x73UC1nD9+9iMLaUy6Ujf9Pf+buL6FHwVnaoDYT4CQNLazz59hO5gQ0+SMSW0G+ZXmjjShOYr3Jn2UZiw==",
+      "path": "fontawesome.sharp/6.6.0",
+      "hashPath": "fontawesome.sharp.6.6.0.nupkg.sha512"
     },
     "Google.Protobuf/3.30.0": {
       "type": "package",
