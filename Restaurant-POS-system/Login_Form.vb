@@ -14,39 +14,6 @@ Public Class Form1
     End Sub
 
 
-    ' CRUD 
-    Private Function Login(uname As String, passw As String, table As String)
-        Dim Connection As New MySqlConnection(ConnectionString)
-        Dim Reader As MySqlDataReader
-
-        Try
-            Connection.Open()
-            Dim Query As String = "SELECT * from " & table & " WHERE Username = @Username AND Password = @Password"
-            Dim Command As New MySqlCommand(Query, Connection)
-
-            Command.Parameters.AddWithValue("@Username", uname)
-            Command.Parameters.AddWithValue("@Password", passw)
-
-            Reader = Command.ExecuteReader()
-
-            If Reader.HasRows = False Then
-                MsgBox("Invalid username or password.", MsgBoxStyle.Critical, "Attention")
-                Return False
-            End If
-
-        Catch ex As Exception
-            MsgBox("Error on trying to login: " + ex.Message, MsgBoxStyle.Critical, "Error")
-            Return False
-        Finally
-            If Connection.State = ConnectionState.Open Then
-                Connection.Close()
-            End If
-        End Try
-
-        Return True
-    End Function
-
-
     ' Button
     Private Sub LoginAsAdmin_Click(sender As Object, e As EventArgs) Handles LoginAsAdminBtn.Click
         If IsAdmin = False Then
@@ -93,7 +60,7 @@ Public Class Form1
                 Command.Parameters.AddWithValue("@uname", CurrentUser)
                 Command.Parameters.AddWithValue("@date", DateTime.Now.Date)
                 Command.Parameters.AddWithValue("@time", DateTime.Now.TimeOfDay)
-                Command.Parameters.AddWithValue("@role", "Role here")
+                Command.Parameters.AddWithValue("@role", If(IsAdmin, "admin", "user"))
 
                 If Command.ExecuteNonQuery() > 0 Then
                     If IsAdmin Then

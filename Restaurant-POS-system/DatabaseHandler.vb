@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports MySql.Data.MySqlClient
 
 Module GlobalFunctions
     Private ReadOnly DirInfo As DirectoryInfo = GetBaseDirectory()
@@ -6,12 +7,39 @@ Module GlobalFunctions
     Public IsAdmin As Boolean
 
     Public Function GetGlobalConnectionString() As String
-        'Return "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & DirInfo.FullName & "\MSAccess\Restaurant.accdb ;Persist Security Info=False;"
         Return "server=localhost;user=root;database=restaurant;port=3306;password=washer22456;"
     End Function
 
-    Public Function GetOrdersConnectionString() As String
-        Return "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & DirInfo.FullName & "\MSAccess\Orders.accdb ;Persist Security Info=False;"
+    ' Login CRUD
+    Public Function Login(uname As String, passw As String, table As String)
+        Dim Connection As New MySqlConnection(GetGlobalConnectionString)
+        Dim Reader As MySqlDataReader
+
+        Try
+            Connection.Open()
+            Dim Query As String = "SELECT * from " & table & " WHERE Username = @Username AND Password = @Password"
+            Dim Command As New MySqlCommand(Query, Connection)
+
+            Command.Parameters.AddWithValue("@Username", uname)
+            Command.Parameters.AddWithValue("@Password", passw)
+
+            Reader = Command.ExecuteReader()
+
+            If Reader.HasRows = False Then
+                MsgBox("Invalid username or password.", MsgBoxStyle.Critical, "Attention")
+                Return False
+            End If
+
+        Catch ex As Exception
+            MsgBox("Error on trying to login: " + ex.Message, MsgBoxStyle.Critical, "Error")
+            Return False
+        Finally
+            If Connection.State = ConnectionState.Open Then
+                Connection.Close()
+            End If
+        End Try
+
+        Return True
     End Function
 
     Private Function GetBaseDirectory() As DirectoryInfo

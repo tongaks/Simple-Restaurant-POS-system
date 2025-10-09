@@ -418,6 +418,15 @@ Public Class Order
         CurrentTotal -= Integer.Parse(price)
         TotalLbl.Text = "₱" + CStr(CurrentTotal)
     End Sub
+    Private Sub ApplyVoucher_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Dim applyVoucherForm As New ApplyVoucher
+
+        If applyVoucherForm.ShowDialog() = DialogResult.OK Then
+            For Each txtbox As TextBox In applyVoucherForm.DiscountPnl.Controls.OfType(Of TextBox)
+                MsgBox(txtbox.Text)
+            Next
+        End If
+    End Sub
 
 
     ' Create receipt
@@ -483,5 +492,4 @@ Public Class Order
             End If
         End If
     End Sub
-
 End Class

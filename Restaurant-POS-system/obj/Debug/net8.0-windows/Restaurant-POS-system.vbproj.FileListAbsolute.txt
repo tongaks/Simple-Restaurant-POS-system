@@ -28,7 +28,6 @@ C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\
 C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\obj\Debug\net8.0-windows\Restaurant-POS-system.vbproj.AssemblyReference.cache
 C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\obj\Debug\net8.0-windows\Restaurant-POS-system.sourcelink.json
 C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\obj\Debug\net8.0-windows\Restaura.A2E95D3B.Up2Date
-C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\obj\Debug\net8.0-windows\Restaurant_POS_system.SalesReport.resources
 C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\obj\Debug\net8.0-windows\Restaurant_POS_system.Admin.resources
 C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\bin\Debug\net8.0-windows\BouncyCastle.Cryptography.dll
 C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\bin\Debug\net8.0-windows\Google.Protobuf.dll
@@ -69,5 +68,5 @@ C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\
 C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\bin\Debug\net8.0-windows\PdfSharp.dll
 C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\bin\Debug\net8.0-windows\System.Security.Cryptography.Pkcs.dll
 C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
-C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\obj\Debug\net8.0-windows\Restaurant_POS_system.Receipt_form.resources
 C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\bin\Debug\net8.0-windows\FontAwesome.Sharp.dll
+C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\obj\Debug\net8.0-windows\Restaurant_POS_system.ApplyVoucher.resources

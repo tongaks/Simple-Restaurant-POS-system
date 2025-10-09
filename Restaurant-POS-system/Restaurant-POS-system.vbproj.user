@@ -4,6 +4,9 @@
     <Compile Update="Admin.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="ApplyVoucher.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Login_Form.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -11,12 +14,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Ordering_form.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Receipt_form.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="SalesReport.vb">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>
