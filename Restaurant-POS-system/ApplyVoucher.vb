@@ -4,8 +4,6 @@ Imports MySql.Data.MySqlClient
 Public Class ApplyVoucher
     Dim IsCancelled = True
 
-    Private Sub ApplyVoucher_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-    End Sub
     Private Sub OnFormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         If e.CloseReason = CloseReason.UserClosing And IsCancelled Then
             Me.DialogResult = DialogResult.Cancel
@@ -40,6 +38,9 @@ Public Class ApplyVoucher
                 DiscountPnl.Enabled = True
                 LoginPnl.Enabled = False
             End If
+        ElseIf Asc(e.KeyChar) = 27 Then
+            Me.DialogResult = DialogResult.Cancel
+            Me.Close()
         End If
     End Sub
     Private Sub HandleEnterDisocunt(sender As Object, e As KeyPressEventArgs) Handles DiscountTxtBox.KeyPress
@@ -56,9 +57,7 @@ Public Class ApplyVoucher
             Return
         End If
 
-        If Login(UsernameTxtBox.Text, PasswordTxtBox.Text, "admin") = False Then
-            MsgBox("Invalid username or password.", MsgBoxStyle.Critical, "Error")
-            Return
+        If Login(UsernameTxtBox.Text, PasswordTxtBox.Text, "admin") Then
         Else
             DiscountPnl.Enabled = True
             LoginPnl.Enabled = False

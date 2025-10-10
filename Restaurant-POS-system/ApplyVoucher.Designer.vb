@@ -35,6 +35,8 @@ Partial Class ApplyVoucher
         Label4 = New Label()
         Label5 = New Label()
         Panel1 = New Panel()
+        ComboBox1 = New ComboBox()
+        Label6 = New Label()
         LoginPnl.SuspendLayout()
         DiscountPnl.SuspendLayout()
         Panel1.SuspendLayout()
@@ -116,13 +118,15 @@ Partial Class ApplyVoucher
         ' 
         ' DiscountPnl
         ' 
+        DiscountPnl.Controls.Add(Label6)
+        DiscountPnl.Controls.Add(ComboBox1)
         DiscountPnl.Controls.Add(ApplyVoucherBtn)
         DiscountPnl.Controls.Add(DiscountTxtBox)
         DiscountPnl.Controls.Add(Label4)
         DiscountPnl.Enabled = False
         DiscountPnl.Location = New Point(1, 305)
         DiscountPnl.Name = "DiscountPnl"
-        DiscountPnl.Size = New Size(405, 129)
+        DiscountPnl.Size = New Size(405, 179)
         DiscountPnl.TabIndex = 6
         ' 
         ' ApplyVoucherBtn
@@ -132,9 +136,9 @@ Partial Class ApplyVoucher
         ApplyVoucherBtn.IconChar = FontAwesome.Sharp.IconChar.None
         ApplyVoucherBtn.IconColor = Color.Black
         ApplyVoucherBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
-        ApplyVoucherBtn.Location = New Point(276, 81)
+        ApplyVoucherBtn.Location = New Point(265, 104)
         ApplyVoucherBtn.Name = "ApplyVoucherBtn"
-        ApplyVoucherBtn.Size = New Size(75, 35)
+        ApplyVoucherBtn.Size = New Size(109, 35)
         ApplyVoucherBtn.TabIndex = 6
         ApplyVoucherBtn.Text = "Apply"
         ApplyVoucherBtn.UseVisualStyleBackColor = False
@@ -142,7 +146,7 @@ Partial Class ApplyVoucher
         ' DiscountTxtBox
         ' 
         DiscountTxtBox.Font = New Font("Segoe UI", 15F)
-        DiscountTxtBox.Location = New Point(53, 37)
+        DiscountTxtBox.Location = New Point(53, 124)
         DiscountTxtBox.Name = "DiscountTxtBox"
         DiscountTxtBox.Size = New Size(164, 34)
         DiscountTxtBox.TabIndex = 6
@@ -150,9 +154,10 @@ Partial Class ApplyVoucher
         ' Label4
         ' 
         Label4.AutoSize = True
-        Label4.Location = New Point(53, 19)
+        Label4.Font = New Font("Segoe UI", 14F)
+        Label4.Location = New Point(49, 96)
         Label4.Name = "Label4"
-        Label4.Size = New Size(85, 15)
+        Label4.Size = New Size(136, 25)
         Label4.TabIndex = 7
         Label4.Text = "Discount value"
         ' 
@@ -177,14 +182,35 @@ Partial Class ApplyVoucher
         Panel1.Size = New Size(398, 72)
         Panel1.TabIndex = 7
         ' 
+        ' ComboBox1
+        ' 
+        ComboBox1.Font = New Font("Segoe UI", 15F)
+        ComboBox1.FormattingEnabled = True
+        ComboBox1.Location = New Point(53, 42)
+        ComboBox1.Name = "ComboBox1"
+        ComboBox1.Size = New Size(162, 36)
+        ComboBox1.TabIndex = 8
+        ' 
+        ' Label6
+        ' 
+        Label6.AutoSize = True
+        Label6.Font = New Font("Segoe UI", 14F)
+        Label6.Location = New Point(49, 14)
+        Label6.Name = "Label6"
+        Label6.Size = New Size(127, 25)
+        Label6.TabIndex = 9
+        Label6.Text = "Discount type"
+        ' 
         ' ApplyVoucher
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(398, 450)
+        ClientSize = New Size(398, 496)
         Controls.Add(Panel1)
         Controls.Add(DiscountPnl)
         Controls.Add(LoginPnl)
+        FormBorderStyle = FormBorderStyle.FixedSingle
+        MaximizeBox = False
         Name = "ApplyVoucher"
         Text = "ApplyVoucher"
         LoginPnl.ResumeLayout(False)
@@ -209,4 +235,6 @@ Partial Class ApplyVoucher
     Friend WithEvents Label4 As Label
     Friend WithEvents Label5 As Label
     Friend WithEvents Panel1 As Panel
+    Friend WithEvents ComboBox1 As ComboBox
+    Friend WithEvents Label6 As Label
 End Class

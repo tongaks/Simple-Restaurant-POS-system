@@ -70,3 +70,5 @@ C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\
 C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
 C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\bin\Debug\net8.0-windows\FontAwesome.Sharp.dll
 C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\obj\Debug\net8.0-windows\Restaurant_POS_system.ApplyVoucher.resources
+C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\obj\Debug\net8.0-windows\Restaurant_POS_system.Resources.resources
+C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\obj\Debug\net8.0-windows\Restaurant_POS_system.Settings.resources

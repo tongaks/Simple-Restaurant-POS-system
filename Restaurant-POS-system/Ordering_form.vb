@@ -21,6 +21,8 @@ Public Class Order
     Dim CurrentTotal As Integer
     Dim CurrentSubTotal As Integer
     Dim DiscountValue As Double = 0
+    Dim CurrentFocusedItem As String
+
     Private Sub Order_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         GlobalFontSettings.UseWindowsFontsUnderWindows = True
         Me.WindowState = WindowState.Maximized
@@ -43,13 +45,60 @@ Public Class Order
 
         DataGridView1.Columns(4).Name = "ImagePath"
         DataGridView1.Columns("ImagePath").ValueType = GetType(String)
-
-        'DataGridView1.DefaultCellStyle.Font = New Font("Segue UI", 15.0F, FontStyle.Regular)
-        'DataGridView1.Rows(0).Height = 20
     End Sub
     Private Sub Order_Close(sender As Object, e As EventArgs) Handles MyBase.FormClosed
         ' close parent when child closes
         Form1.Dispose()
+    End Sub
+
+
+    ' Form dialog for increasing/decreasing item amount
+    ' WIP
+    Private Sub DisplayItemDialogForm(ByVal itemAmount As Integer)
+        Dim itemDialog As New Form
+        itemDialog.Size = New System.Drawing.Size(500, 150)
+        itemDialog.StartPosition = FormStartPosition.CenterScreen
+
+        Dim itemButtonPanel As New FlowLayoutPanel()
+        itemButtonPanel.FlowDirection = FlowDirection.LeftToRight
+        itemButtonPanel.AutoSize = True
+        itemButtonPanel.Margin = New Padding(30, 10, 0, 0)
+
+        Dim itemAmountLabel As New Label()
+        itemAmountLabel.Text = itemAmount.ToString
+        itemAmountLabel.Font = New Font("Arial", 50, FontStyle.Bold)
+        itemAmountLabel.AutoSize = True
+
+        Dim amountWrapper As New Panel()
+        amountWrapper.Size = New Size(itemAmountLabel.PreferredWidth + 10, itemButtonPanel.Height)
+        itemAmountLabel.Location = New Point(0, ((itemButtonPanel.Height - itemAmountLabel.Height) \ 2))
+        amountWrapper.Controls.Add(itemAmountLabel)
+
+        Dim increaseButton As New Button()
+        increaseButton.Text = "+"
+        increaseButton.Tag = CurrentFocusedItem
+        increaseButton.BackColor = Color.Green
+        increaseButton.Size = New Size(100, 100)
+        AddHandler increaseButton.Click, AddressOf IncreaseButtonHandler
+
+        Dim decreaseButton As New Button()
+        decreaseButton.Text = "-"
+        decreaseButton.Tag = CurrentFocusedItem
+        decreaseButton.BackColor = Color.Red
+        decreaseButton.ForeColor = Color.White
+        decreaseButton.Size = New Size(100, 100)
+        AddHandler decreaseButton.Click, AddressOf DecreaseButtonHandler
+
+        itemButtonPanel.Controls.Add(increaseButton)
+        itemButtonPanel.Controls.Add(amountWrapper)
+        itemButtonPanel.Controls.Add(decreaseButton)
+
+        itemDialog.Controls.Add(itemButtonPanel)
+        itemDialog.Size = New System.Drawing.Size(itemButtonPanel.Width + 20, 150)
+
+        If itemDialog.ShowDialog() = DialogResult.OK Then
+            MsgBox("wow")
+        End If
     End Sub
 
 
@@ -169,7 +218,9 @@ Public Class Order
 
     ' Menu item/category click handlers
     Private Sub HandleItemClick(sender As Object, e As EventArgs)
+
         Dim name = CType(sender, Button).Text
+        Dim itemAmount As Integer = 0
 
         Dim tag As String = CType(sender, Button).Tag.ToString()
         Dim price As String
@@ -189,6 +240,7 @@ Public Class Order
             If row.Cells(1).Value IsNot Nothing AndAlso row.Cells(1).Value.ToString() = name Then
                 nameExists = True
                 row.Cells(0).Value = CInt(row.Cells(0).Value) + 1
+                itemAmount = CInt(row.Cells(0).Value)
                 row.Cells(3).Value = CInt(row.Cells(3).Value) + Integer.Parse(price)
                 Exit For
             End If
@@ -204,6 +256,9 @@ Public Class Order
         ElseIf nameExists Then
             UpdateItemOrderList()
         End If
+
+        CurrentFocusedItem = name ' set the current item focused to clicked item
+        'DisplayItemDialogForm(itemAmount)
 
         CurrentSubTotal += Integer.Parse(price)
         SubtotalLbl.Text = "₱" + CurrentSubTotal.ToString
@@ -351,8 +406,8 @@ Public Class Order
             Connection.Open()
             Dim Query = "INSERT INTO orders (order_date, order_time, username, total_amount) VALUES (@date, @time, @user, @total)"
             Dim Command As New MySqlCommand(Query, Connection)
-            Command.Parameters.AddWithValue("@date", Date.Now.Date)
-            Command.Parameters.AddWithValue("@time", Date.Now.TimeOfDay)
+            Command.Parameters.AddWithValue("@date", Date.Now.ToString("yyyy-MM-dd"))
+            Command.Parameters.AddWithValue("@time", Date.Now.ToString("HH:mm:ss"))
             Command.Parameters.AddWithValue("@user", CurrentUser)
             Command.Parameters.AddWithValue("@total", TotalAmount)
 
@@ -386,15 +441,7 @@ Public Class Order
         Dim itemName As String = CType(sender, Button).Tag.ToString()
 
         Dim itemBtnName As String = CType(sender, Button).Tag
-        Dim price As String = "0"
-
-        For Each row As DataGridViewRow In DataGridView1.Rows
-            If row.Cells(1).Value IsNot Nothing AndAlso row.Cells(1).Value.ToString() = itemName Then
-                row.Cells(0).Value = CInt(row.Cells(0).Value) + 1
-                price = CStr(row.Cells(2).Value)
-                Exit For
-            End If
-        Next
+        Dim price As String = HandleItemAmountUpdate(True, itemBtnName)
 
         UpdateItemOrderList()
 
@@ -405,24 +452,7 @@ Public Class Order
         Dim itemName As String = CType(sender, Button).Tag.ToString()
 
         Dim itemBtnName As String = CType(sender, Button).Tag
-        Dim price As String = "0"
-
-        For Each row As DataGridViewRow In DataGridView1.Rows
-            If row.Cells(1).Value IsNot Nothing AndAlso row.Cells(1).Value.ToString() = itemName Then
-                Dim currentAmount = CInt(row.Cells(0).Value)
-                price = CStr(row.Cells(2).Value)
-
-                If currentAmount > 0 And Not (currentAmount - 1) = 0 Then
-                    row.Cells(0).Value = currentAmount - 1
-                    price = CStr(row.Cells(2).Value)
-                Else
-                    MsgBox("Deleted row: item amount is equal to 0")
-                    DataGridView1.Rows.RemoveAt(row.Index)
-                End If
-
-                Exit For
-            End If
-        Next
+        Dim price As String = HandleItemAmountUpdate(False, itemBtnName)
 
         UpdateItemOrderList()
         CurrentTotal -= Integer.Parse(price)
@@ -504,7 +534,7 @@ Public Class Order
 
 
 
-    ' listeners
+    ' listeners & handlers
     Private Sub HandleSearchTxtBoxEnter(sender As Object, e As KeyPressEventArgs) Handles SearchTxtBox.KeyPress
         If Asc(e.KeyChar) = 13 Then
             If Not String.IsNullOrEmpty(SearchTxtBox.Text) Then
@@ -512,4 +542,41 @@ Public Class Order
             End If
         End If
     End Sub
+    Private Sub IconButton3_Click(sender As Object, e As EventArgs) Handles IconButton3.Click
+        Dim res = MsgBox("Are you sure you wnat to log out?", MsgBoxStyle.YesNoCancel, "Notice")
+        If res = MsgBoxResult.Yes Then
+            CurrentUser = ""
+            IsAdmin = Nothing
+            Form1.Show()
+            Me.Hide()
+        End If
+    End Sub
+    Private Function HandleItemAmountUpdate(ByVal isIncrease As Boolean, ByVal itemName As String)
+        For Each row As DataGridViewRow In DataGridView1.Rows
+            If row.Cells(1).Value IsNot Nothing AndAlso row.Cells(1).Value.ToString() = itemName Then
+
+                Dim newval As Integer = 0
+                Dim currentAmount = CInt(row.Cells(0).Value)
+
+                If isIncrease Then
+                    newval = CInt(row.Cells(0).Value) + 1
+                Else
+                    If currentAmount > 0 And Not (currentAmount - 1) = 0 Then
+                        row.Cells(0).Value = currentAmount - 1
+                        Return CStr(row.Cells(2).Value)
+                    Else
+                        MsgBox("Deleted row: item amount is equal to 0")
+                        DataGridView1.Rows.RemoveAt(row.Index)
+                    End If
+                End If
+
+                row.Cells(0).Value = newval
+
+                Return CStr(row.Cells(2).Value) ' return item price
+                Exit For
+            End If
+        Next
+
+        Return "0"
+    End Function
 End Class
