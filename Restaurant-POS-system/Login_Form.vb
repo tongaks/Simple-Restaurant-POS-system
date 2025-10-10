@@ -60,7 +60,7 @@ Public Class Form1
                 Command.Parameters.AddWithValue("@uname", CurrentUser)
                 Command.Parameters.AddWithValue("@date", DateTime.Now.Date)
                 Command.Parameters.AddWithValue("@time", DateTime.Now.TimeOfDay)
-                Command.Parameters.AddWithValue("@role", If(IsAdmin, "admin", "user"))
+                Command.Parameters.AddWithValue("@role", If(IsAdmin, "admin", "cashier"))
 
                 If Command.ExecuteNonQuery() > 0 Then
                     If IsAdmin Then

@@ -30,9 +30,11 @@ Partial Class Order
         Label1 = New Label()
         DataGridView1 = New DataGridView()
         TotalPnl = New Panel()
+        SubtotalLbl = New Label()
+        Label6 = New Label()
         CreateOrderBtn = New FontAwesome.Sharp.IconButton()
         Button1 = New Button()
-        Label4 = New Label()
+        DiscountLbl = New Label()
         Label3 = New Label()
         TotalLbl = New Label()
         Label2 = New Label()
@@ -137,28 +139,50 @@ Partial Class Order
         DataGridView1.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left
         DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
         DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridView1.Location = New Point(36, 63)
+        DataGridView1.Location = New Point(206, 44)
         DataGridView1.Name = "DataGridView1"
-        DataGridView1.Size = New Size(29, 31)
+        DataGridView1.Size = New Size(29, 49)
         DataGridView1.TabIndex = 1
         DataGridView1.Visible = False
         ' 
         ' TotalPnl
         ' 
         TotalPnl.Anchor = AnchorStyles.Bottom Or AnchorStyles.Left
-        TotalPnl.BackColor = SystemColors.Control
+        TotalPnl.BackColor = SystemColors.ControlLight
         TotalPnl.BorderStyle = BorderStyle.FixedSingle
+        TotalPnl.Controls.Add(SubtotalLbl)
+        TotalPnl.Controls.Add(Label6)
         TotalPnl.Controls.Add(CreateOrderBtn)
         TotalPnl.Controls.Add(DataGridView1)
         TotalPnl.Controls.Add(Button1)
-        TotalPnl.Controls.Add(Label4)
+        TotalPnl.Controls.Add(DiscountLbl)
         TotalPnl.Controls.Add(Label3)
         TotalPnl.Controls.Add(TotalLbl)
         TotalPnl.Controls.Add(Label2)
-        TotalPnl.Location = New Point(-1, 493)
+        TotalPnl.Location = New Point(0, 475)
         TotalPnl.Name = "TotalPnl"
-        TotalPnl.Size = New Size(452, 111)
+        TotalPnl.Size = New Size(452, 129)
         TotalPnl.TabIndex = 4
+        ' 
+        ' SubtotalLbl
+        ' 
+        SubtotalLbl.AutoSize = True
+        SubtotalLbl.Font = New Font("Segoe UI", 15F)
+        SubtotalLbl.Location = New Point(131, 10)
+        SubtotalLbl.Name = "SubtotalLbl"
+        SubtotalLbl.Size = New Size(35, 28)
+        SubtotalLbl.TabIndex = 7
+        SubtotalLbl.Text = "₱0"
+        ' 
+        ' Label6
+        ' 
+        Label6.AutoSize = True
+        Label6.Font = New Font("Segoe UI", 15F)
+        Label6.Location = New Point(18, 10)
+        Label6.Name = "Label6"
+        Label6.Size = New Size(87, 28)
+        Label6.TabIndex = 6
+        Label6.Text = "Subtotal"
         ' 
         ' CreateOrderBtn
         ' 
@@ -169,7 +193,7 @@ Partial Class Order
         CreateOrderBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
         CreateOrderBtn.IconSize = 40
         CreateOrderBtn.ImageAlign = ContentAlignment.MiddleRight
-        CreateOrderBtn.Location = New Point(293, 55)
+        CreateOrderBtn.Location = New Point(293, 71)
         CreateOrderBtn.Name = "CreateOrderBtn"
         CreateOrderBtn.Size = New Size(141, 38)
         CreateOrderBtn.TabIndex = 1
@@ -180,28 +204,28 @@ Partial Class Order
         ' 
         Button1.BackColor = Color.Gold
         Button1.FlatStyle = FlatStyle.Flat
-        Button1.Location = New Point(293, 11)
+        Button1.Location = New Point(293, 23)
         Button1.Name = "Button1"
         Button1.Size = New Size(141, 38)
         Button1.TabIndex = 5
-        Button1.Text = "Apply voucher"
+        Button1.Text = "Apply discount"
         Button1.UseVisualStyleBackColor = False
         ' 
-        ' Label4
+        ' DiscountLbl
         ' 
-        Label4.AutoSize = True
-        Label4.Font = New Font("Segoe UI", 15F)
-        Label4.Location = New Point(127, 15)
-        Label4.Name = "Label4"
-        Label4.Size = New Size(35, 28)
-        Label4.TabIndex = 4
-        Label4.Text = "₱0"
+        DiscountLbl.AutoSize = True
+        DiscountLbl.Font = New Font("Segoe UI", 15F)
+        DiscountLbl.Location = New Point(131, 42)
+        DiscountLbl.Name = "DiscountLbl"
+        DiscountLbl.Size = New Size(39, 28)
+        DiscountLbl.TabIndex = 4
+        DiscountLbl.Text = "%0"
         ' 
         ' Label3
         ' 
         Label3.AutoSize = True
         Label3.Font = New Font("Segoe UI", 15F)
-        Label3.Location = New Point(14, 13)
+        Label3.Location = New Point(18, 40)
         Label3.Name = "Label3"
         Label3.Size = New Size(89, 28)
         Label3.TabIndex = 3
@@ -211,7 +235,7 @@ Partial Class Order
         ' 
         TotalLbl.AutoSize = True
         TotalLbl.Font = New Font("Segoe UI", 20F)
-        TotalLbl.Location = New Point(124, 53)
+        TotalLbl.Location = New Point(127, 72)
         TotalLbl.Name = "TotalLbl"
         TotalLbl.Size = New Size(48, 37)
         TotalLbl.TabIndex = 1
@@ -221,7 +245,7 @@ Partial Class Order
         ' 
         Label2.AutoSize = True
         Label2.Font = New Font("Segoe UI", 20F)
-        Label2.Location = New Point(12, 53)
+        Label2.Location = New Point(15, 72)
         Label2.Name = "Label2"
         Label2.Size = New Size(74, 37)
         Label2.TabIndex = 0
@@ -264,7 +288,7 @@ Partial Class Order
         OrderPnl.FlowDirection = FlowDirection.TopDown
         OrderPnl.Location = New Point(0, 0)
         OrderPnl.Name = "OrderPnl"
-        OrderPnl.Size = New Size(452, 493)
+        OrderPnl.Size = New Size(452, 478)
         OrderPnl.TabIndex = 6
         ' 
         ' Order
@@ -301,9 +325,11 @@ Partial Class Order
     Friend WithEvents OrderPnl As FlowLayoutPanel
     Friend WithEvents Label3 As Label
     Friend WithEvents Button1 As Button
-    Friend WithEvents Label4 As Label
+    Friend WithEvents DiscountLbl As Label
     Friend WithEvents CreateOrderBtn As FontAwesome.Sharp.IconButton
     Friend WithEvents SearchBtn As FontAwesome.Sharp.IconButton
     Friend WithEvents IconButton2 As FontAwesome.Sharp.IconButton
     Friend WithEvents IconButton3 As FontAwesome.Sharp.IconButton
+    Friend WithEvents SubtotalLbl As Label
+    Friend WithEvents Label6 As Label
 End Class

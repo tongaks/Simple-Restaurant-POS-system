@@ -10,7 +10,10 @@ Module GlobalFunctions
         Return "server=localhost;user=root;database=restaurant;port=3306;password=washer22456;"
     End Function
 
-    ' Login CRUD
+
+
+
+    ' CRUD (Login, Insert activity)
     Public Function Login(uname As String, passw As String, table As String)
         Dim Connection As New MySqlConnection(GetGlobalConnectionString)
         Dim Reader As MySqlDataReader
@@ -41,6 +44,30 @@ Module GlobalFunctions
 
         Return True
     End Function
+    Public Sub InsertActivityLog(ByVal action As String)
+        Dim Connection As New MySqlConnection(GetGlobalConnectionString)
+
+        Try
+            Connection.Open()
+            Dim Query As String = "INSERT INTO restaurant.activity_logs (username, role, action, log_time) VALUES (@user, @role, @action, @time)"
+            Dim Command As New MySqlCommand(Query, Connection)
+            Command.Parameters.AddWithValue("@user", CurrentUser)
+            Command.Parameters.AddWithValue("@role", If((IsAdmin), "admin", "cashier"))
+            Command.Parameters.AddWithValue("@action", action)
+
+            Dim timeAndDate As String = Date.Now.ToString("MM/dd/yyyy HH:mm:ss")
+            Command.Parameters.AddWithValue("@time", timeAndDate)
+
+            If Not Command.ExecuteNonQuery > 0 Then
+                MsgBox("Failed to insert activity log", MsgBoxStyle.Critical, "Error")
+            End If
+        Catch ex As Exception
+            MsgBox("Failed to insert activity log: " & ex.ToString, MsgBoxStyle.Critical, "Error")
+        End Try
+    End Sub
+
+
+
 
     Private Function GetBaseDirectory() As DirectoryInfo
         Dim currentDir As New DirectoryInfo(Directory.GetCurrentDirectory())

@@ -31,59 +31,68 @@ Partial Class ApplyVoucher
         Label3 = New Label()
         DiscountPnl = New Panel()
         ApplyVoucherBtn = New FontAwesome.Sharp.IconButton()
-        TextBox1 = New TextBox()
+        DiscountTxtBox = New TextBox()
         Label4 = New Label()
+        Label5 = New Label()
+        Panel1 = New Panel()
         LoginPnl.SuspendLayout()
         DiscountPnl.SuspendLayout()
+        Panel1.SuspendLayout()
         SuspendLayout()
         ' 
         ' UsernameTxtBox
         ' 
-        UsernameTxtBox.Location = New Point(54, 76)
+        UsernameTxtBox.Font = New Font("Segoe UI", 15F)
+        UsernameTxtBox.Location = New Point(53, 121)
         UsernameTxtBox.Name = "UsernameTxtBox"
-        UsernameTxtBox.Size = New Size(296, 23)
+        UsernameTxtBox.Size = New Size(296, 34)
         UsernameTxtBox.TabIndex = 0
         ' 
         ' PasswordTxtBox
         ' 
-        PasswordTxtBox.Location = New Point(54, 131)
+        PasswordTxtBox.Font = New Font("Segoe UI", 15F)
+        PasswordTxtBox.Location = New Point(55, 195)
         PasswordTxtBox.Name = "PasswordTxtBox"
-        PasswordTxtBox.Size = New Size(296, 23)
+        PasswordTxtBox.PasswordChar = "·"c
+        PasswordTxtBox.Size = New Size(296, 34)
         PasswordTxtBox.TabIndex = 1
         ' 
         ' LoginBtn
         ' 
+        LoginBtn.BackColor = Color.SpringGreen
+        LoginBtn.FlatStyle = FlatStyle.Flat
         LoginBtn.IconChar = FontAwesome.Sharp.IconChar.None
         LoginBtn.IconColor = Color.Black
         LoginBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
-        LoginBtn.Location = New Point(275, 171)
+        LoginBtn.Location = New Point(276, 246)
         LoginBtn.Name = "LoginBtn"
-        LoginBtn.Size = New Size(75, 23)
+        LoginBtn.Size = New Size(75, 33)
         LoginBtn.TabIndex = 2
         LoginBtn.Text = "Login"
-        LoginBtn.UseVisualStyleBackColor = True
+        LoginBtn.UseVisualStyleBackColor = False
         ' 
         ' Label1
         ' 
         Label1.AutoSize = True
-        Label1.Location = New Point(54, 58)
+        Label1.Font = New Font("Segoe UI", 14F)
+        Label1.Location = New Point(53, 94)
         Label1.Name = "Label1"
-        Label1.Size = New Size(98, 15)
+        Label1.Size = New Size(155, 25)
         Label1.TabIndex = 3
         Label1.Text = "Admin username"
         ' 
         ' Label2
         ' 
         Label2.AutoSize = True
-        Label2.Location = New Point(54, 113)
+        Label2.Font = New Font("Segoe UI", 14F)
+        Label2.Location = New Point(55, 168)
         Label2.Name = "Label2"
-        Label2.Size = New Size(96, 15)
+        Label2.Size = New Size(152, 25)
         Label2.TabIndex = 4
         Label2.Text = "Admin password"
         ' 
         ' LoginPnl
         ' 
-        LoginPnl.Controls.Add(Label3)
         LoginPnl.Controls.Add(PasswordTxtBox)
         LoginPnl.Controls.Add(Label2)
         LoginPnl.Controls.Add(UsernameTxtBox)
@@ -91,47 +100,52 @@ Partial Class ApplyVoucher
         LoginPnl.Controls.Add(LoginBtn)
         LoginPnl.Location = New Point(1, 1)
         LoginPnl.Name = "LoginPnl"
-        LoginPnl.Size = New Size(401, 208)
+        LoginPnl.Size = New Size(401, 298)
         LoginPnl.TabIndex = 5
         ' 
         ' Label3
         ' 
         Label3.AutoSize = True
-        Label3.Location = New Point(20, 20)
+        Label3.Font = New Font("Segoe UI", 15F)
+        Label3.ForeColor = SystemColors.ButtonHighlight
+        Label3.Location = New Point(15, 7)
         Label3.Name = "Label3"
-        Label3.Size = New Size(98, 15)
+        Label3.Size = New Size(161, 28)
         Label3.TabIndex = 5
         Label3.Text = "Admin credential"
         ' 
         ' DiscountPnl
         ' 
         DiscountPnl.Controls.Add(ApplyVoucherBtn)
-        DiscountPnl.Controls.Add(TextBox1)
+        DiscountPnl.Controls.Add(DiscountTxtBox)
         DiscountPnl.Controls.Add(Label4)
         DiscountPnl.Enabled = False
-        DiscountPnl.Location = New Point(0, 225)
+        DiscountPnl.Location = New Point(1, 305)
         DiscountPnl.Name = "DiscountPnl"
         DiscountPnl.Size = New Size(405, 129)
         DiscountPnl.TabIndex = 6
         ' 
         ' ApplyVoucherBtn
         ' 
+        ApplyVoucherBtn.BackColor = Color.SpringGreen
+        ApplyVoucherBtn.FlatStyle = FlatStyle.Flat
         ApplyVoucherBtn.IconChar = FontAwesome.Sharp.IconChar.None
         ApplyVoucherBtn.IconColor = Color.Black
         ApplyVoucherBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
-        ApplyVoucherBtn.Location = New Point(276, 84)
+        ApplyVoucherBtn.Location = New Point(276, 81)
         ApplyVoucherBtn.Name = "ApplyVoucherBtn"
-        ApplyVoucherBtn.Size = New Size(75, 23)
+        ApplyVoucherBtn.Size = New Size(75, 35)
         ApplyVoucherBtn.TabIndex = 6
         ApplyVoucherBtn.Text = "Apply"
-        ApplyVoucherBtn.UseVisualStyleBackColor = True
+        ApplyVoucherBtn.UseVisualStyleBackColor = False
         ' 
-        ' TextBox1
+        ' DiscountTxtBox
         ' 
-        TextBox1.Location = New Point(53, 37)
-        TextBox1.Name = "TextBox1"
-        TextBox1.Size = New Size(164, 23)
-        TextBox1.TabIndex = 6
+        DiscountTxtBox.Font = New Font("Segoe UI", 15F)
+        DiscountTxtBox.Location = New Point(53, 37)
+        DiscountTxtBox.Name = "DiscountTxtBox"
+        DiscountTxtBox.Size = New Size(164, 34)
+        DiscountTxtBox.TabIndex = 6
         ' 
         ' Label4
         ' 
@@ -142,11 +156,33 @@ Partial Class ApplyVoucher
         Label4.TabIndex = 7
         Label4.Text = "Discount value"
         ' 
+        ' Label5
+        ' 
+        Label5.AutoSize = True
+        Label5.Font = New Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label5.ForeColor = SystemColors.ButtonHighlight
+        Label5.Location = New Point(15, 37)
+        Label5.Name = "Label5"
+        Label5.Size = New Size(377, 21)
+        Label5.TabIndex = 6
+        Label5.Text = "Enter the admin's credentials to apply the discount"
+        ' 
+        ' Panel1
+        ' 
+        Panel1.BackColor = Color.DarkSeaGreen
+        Panel1.Controls.Add(Label5)
+        Panel1.Controls.Add(Label3)
+        Panel1.Location = New Point(1, -1)
+        Panel1.Name = "Panel1"
+        Panel1.Size = New Size(398, 72)
+        Panel1.TabIndex = 7
+        ' 
         ' ApplyVoucher
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(398, 450)
+        Controls.Add(Panel1)
         Controls.Add(DiscountPnl)
         Controls.Add(LoginPnl)
         Name = "ApplyVoucher"
@@ -155,6 +191,8 @@ Partial Class ApplyVoucher
         LoginPnl.PerformLayout()
         DiscountPnl.ResumeLayout(False)
         DiscountPnl.PerformLayout()
+        Panel1.ResumeLayout(False)
+        Panel1.PerformLayout()
         ResumeLayout(False)
     End Sub
 
@@ -167,6 +205,8 @@ Partial Class ApplyVoucher
     Friend WithEvents Label3 As Label
     Friend WithEvents DiscountPnl As Panel
     Friend WithEvents ApplyVoucherBtn As FontAwesome.Sharp.IconButton
-    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents DiscountTxtBox As TextBox
     Friend WithEvents Label4 As Label
+    Friend WithEvents Label5 As Label
+    Friend WithEvents Panel1 As Panel
 End Class

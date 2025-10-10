@@ -19,6 +19,8 @@ Imports Mysqlx.XDevAPI.Common
 
 Public Class Order
     Dim CurrentTotal As Integer
+    Dim CurrentSubTotal As Integer
+    Dim DiscountValue As Double = 0
     Private Sub Order_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         GlobalFontSettings.UseWindowsFontsUnderWindows = True
         Me.WindowState = WindowState.Maximized
@@ -203,8 +205,12 @@ Public Class Order
             UpdateItemOrderList()
         End If
 
-        CurrentTotal += Integer.Parse(price)
-        TotalLbl.Text = "₱" + CStr(CurrentTotal)
+        CurrentSubTotal += Integer.Parse(price)
+        SubtotalLbl.Text = "₱" + CurrentSubTotal.ToString
+
+        Dim appliedDiscount = (DiscountValue * CurrentSubTotal)
+        CurrentTotal = If((Not DiscountValue = 0), Integer.Abs(appliedDiscount - CurrentSubTotal), CurrentSubTotal)
+        TotalLbl.Text = "₱" & CurrentTotal.ToString
     End Sub
     Private Sub HandleCatClick(sender As Object, e As EventArgs)
         Dim catName = CType(sender, Button).Text
@@ -354,9 +360,13 @@ Public Class Order
                 MsgBox("Order created", MsgBoxStyle.Information, "Success")
                 CreateReceiptPDF()
                 CurrentTotal = 0
+                CurrentSubTotal = 0
+                DiscountValue = 0
+
                 TotalLbl.Text = CurrentTotal
                 DataGridView1.Rows.Clear()
                 UpdateItemOrderList()
+                InsertActivityLog("Created an order")
             End If
 
         Catch ex As Exception
@@ -423,10 +433,20 @@ Public Class Order
 
         If applyVoucherForm.ShowDialog() = DialogResult.OK Then
             For Each txtbox As TextBox In applyVoucherForm.DiscountPnl.Controls.OfType(Of TextBox)
-                MsgBox(txtbox.Text)
+                DiscountValue = Double.Parse(txtbox.Text) / 100
+                DiscountLbl.Text = "%" & Double.Parse(txtbox.Text)
+                MsgBox("Discount value: " & DiscountLbl.Text)
             Next
+
+            InsertActivityLog("Applied discount: " & DiscountValue)
+            Dim appliedDiscount = (DiscountValue * CurrentTotal)
+            CurrentTotal = If((Not DiscountValue = 0), Integer.Abs(appliedDiscount - CurrentSubTotal), CurrentSubTotal)
+            TotalLbl.Text = "₱" + CurrentTotal.ToString
         End If
+
+        ' need to log the apllying of voucher
     End Sub
+
 
 
     ' Create receipt
