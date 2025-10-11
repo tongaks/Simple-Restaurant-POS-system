@@ -1,11 +1,25 @@
 ﻿Imports System.IO
+'Imports System.Windows.Controls
+Imports System.Windows.Forms
 Imports MySql.Data.MySqlClient
 
 Module GlobalFunctions
-    Private ReadOnly DirInfo As DirectoryInfo = GetBaseDirectory()
+    Public Structure TagData
+        Public Price As String
+        Public TagImagePath As String
+    End Structure
+
+    Public Structure SettingsConfigStruct
+        Public MenuItemButtonSize As Integer
+        Public EnableShortcutKeys As Boolean
+    End Structure
+
     Public CurrentUser As String
     Public IsAdmin As Boolean
+    Public SettingsConfig As SettingsConfigStruct
 
+
+    ' For mysqlconnection
     Public Function GetGlobalConnectionString() As String
         Return "server=localhost;user=root;database=restaurant;port=3306;password=washer22456;"
     End Function
@@ -65,24 +79,49 @@ Module GlobalFunctions
             MsgBox("Failed to insert activity log: " & ex.ToString, MsgBoxStyle.Critical, "Error")
         End Try
     End Sub
+    Public Sub GetSettingsConfig()
+        Dim Connection As New MySqlConnection(GetGlobalConnectionString)
 
+        Try
+            Connection.Open()
+            Dim Query As String = "SELECT * FROM restaurant.settings"
+            Dim Command As New MySqlCommand(Query, Connection)
+            Dim Reader As MySqlDataReader
+            Reader = Command.ExecuteReader
 
-
-
-    Private Function GetBaseDirectory() As DirectoryInfo
-        Dim currentDir As New DirectoryInfo(Directory.GetCurrentDirectory())
-
-        For i As Integer = 1 To 4
-            If currentDir.Parent IsNot Nothing Then
-                currentDir = currentDir.Parent
-            Else
-                Exit For
+            If Reader.HasRows = False Then
+                MsgBox("Settings configuration is unitialized", MsgBoxStyle.Critical, "Error")
+                Return
             End If
-        Next
 
-        Return currentDir
-    End Function
+            While Reader.Read
+                SettingsConfig.MenuItemButtonSize = Reader("MenuItemButtonSize")
+                SettingsConfig.EnableShortcutKeys = Reader("EnableShortcutKeys")
+            End While
 
+        Catch ex As Exception
+            MsgBox("Failed to get the settings configureations", MsgBoxStyle.Critical, "Error")
+        Finally
+            If Connection.State = ConnectionState.Open Then
+                Connection.Close()
+            End If
+        End Try
+    End Sub
+
+
+    ' Textbox hint
+    Public Sub TextHint(ByVal txtbox As TextBox, ByVal text As String)
+        If Not txtbox.Focused And String.IsNullOrEmpty(txtbox.Text) Then
+            txtbox.ForeColor = Color.Gray
+            txtbox.Text = text
+        Else
+            txtbox.ForeColor = Color.Black
+            txtbox.Clear()
+        End If
+    End Sub
+
+
+    ' Image resize
     Public Function ResizeImageFit(img As Image, btn As Button) As Image
         Dim newWidth As Integer = btn.ClientSize.Width
         Dim newHeight As Integer = btn.ClientSize.Height
@@ -100,28 +139,47 @@ Module GlobalFunctions
     End Sub
 
     Public Function CreateFoodItemButton(itemName As String, itemPrice As String, imgPath As String) As FlowLayoutPanel
+        ' Create the main button
         Dim foodBtn As New Button With {
-        .Text = itemName,
-        .Size = New Size(100, 100),
-        .Margin = New Padding(0),
-        .Cursor = Cursors.Hand,
-        .Tag = itemPrice
-    }
+            .Text = itemName,
+            .Size = New Size(100, 100),
+            .Margin = New Padding(0),
+            .Cursor = Cursors.Hand,
+            .FlatStyle = FlatStyle.Flat
+        }
 
-        If Not String.IsNullOrEmpty(imgPath) Then
-            Dim image As Image = Image.FromFile(imgPath)
-            foodBtn.BackgroundImage = ResizeImageFit(image, foodBtn)
-            foodBtn.Tag &= "," & imgPath
+        ' Store data in Tag (use a consistent format or create a TagData class)
+        foodBtn.Tag = itemPrice
+        If Not String.IsNullOrEmpty(imgPath) AndAlso File.Exists(imgPath) Then
+            Try
+                Using image As Image = Image.FromFile(imgPath)
+                    foodBtn.BackgroundImage = ResizeImageFit(image, foodBtn)
+                    foodBtn.BackgroundImageLayout = ImageLayout.Stretch
+                End Using
+                foodBtn.Tag &= "," & imgPath
+            Catch ex As Exception
+                MsgBox("Error loading image: " & ex.Message, MsgBoxStyle.Critical, "Image Load Error")
+            End Try
         End If
 
-        Dim foodPrice As New Label
-        foodPrice.Text = "₱" & itemPrice
-        foodPrice.Font = New Font("Segue UI", 18.0F, FontStyle.Regular)
-        foodPrice.TextAlign = ContentAlignment.MiddleCenter
+        ' Price label
+        Dim foodPrice As New Label With {
+        .Text = "₱" & itemPrice,
+        .Font = New Font("Segoe UI", 12.0F, FontStyle.Bold),
+        .TextAlign = ContentAlignment.MiddleCenter,
+        .AutoSize = False,
+        .Width = 100,
+        .Height = 25
+    }
 
+        ' Container panel for button + label
         Dim container As New FlowLayoutPanel With {
-            .Size = New Size(100, 100 + foodPrice.Size.Height)
-        }
+        .Size = New Size(100, 125),
+        .FlowDirection = FlowDirection.TopDown,
+        .WrapContents = False,
+        .AutoSize = False,
+        .Margin = New Padding(5)
+    }
 
         container.Controls.Add(foodBtn)
         container.Controls.Add(foodPrice)
@@ -129,18 +187,20 @@ Module GlobalFunctions
         Return container
     End Function
 
-    Public Function ExtractTag(tag As String)
-        Dim price As String
-        Dim tagImgPath As String
+    Public Function ExtractTag(tag As String) As TagData
+        Dim result As New TagData()
+
         If tag.Contains(",") Then
             Dim tagInfo() As String = tag.Split(","c)
-            price = tagInfo(0)
-            tagImgPath = tagInfo(1)
-            Return (price, tagImgPath)
+            result.Price = tagInfo(0).Trim()
+            result.TagImagePath = tagInfo(1).Trim()
         Else
-            price = tag
-            Return tag
+            result.Price = tag.Trim()
+            result.TagImagePath = String.Empty ' or Nothing
         End If
+
+        Return result
     End Function
+
 
 End Module

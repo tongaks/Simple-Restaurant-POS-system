@@ -30,13 +30,14 @@ Partial Class ApplyVoucher
         LoginPnl = New Panel()
         Label3 = New Label()
         DiscountPnl = New Panel()
+        Label6 = New Label()
+        ComboBox1 = New ComboBox()
         ApplyVoucherBtn = New FontAwesome.Sharp.IconButton()
         DiscountTxtBox = New TextBox()
         Label4 = New Label()
         Label5 = New Label()
         Panel1 = New Panel()
-        ComboBox1 = New ComboBox()
-        Label6 = New Label()
+        CancelBtn = New FontAwesome.Sharp.IconButton()
         LoginPnl.SuspendLayout()
         DiscountPnl.SuspendLayout()
         Panel1.SuspendLayout()
@@ -129,6 +130,25 @@ Partial Class ApplyVoucher
         DiscountPnl.Size = New Size(405, 179)
         DiscountPnl.TabIndex = 6
         ' 
+        ' Label6
+        ' 
+        Label6.AutoSize = True
+        Label6.Font = New Font("Segoe UI", 14F)
+        Label6.Location = New Point(49, 14)
+        Label6.Name = "Label6"
+        Label6.Size = New Size(127, 25)
+        Label6.TabIndex = 9
+        Label6.Text = "Discount type"
+        ' 
+        ' ComboBox1
+        ' 
+        ComboBox1.Font = New Font("Segoe UI", 15F)
+        ComboBox1.FormattingEnabled = True
+        ComboBox1.Location = New Point(53, 42)
+        ComboBox1.Name = "ComboBox1"
+        ComboBox1.Size = New Size(162, 36)
+        ComboBox1.TabIndex = 8
+        ' 
         ' ApplyVoucherBtn
         ' 
         ApplyVoucherBtn.BackColor = Color.SpringGreen
@@ -136,7 +156,7 @@ Partial Class ApplyVoucher
         ApplyVoucherBtn.IconChar = FontAwesome.Sharp.IconChar.None
         ApplyVoucherBtn.IconColor = Color.Black
         ApplyVoucherBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
-        ApplyVoucherBtn.Location = New Point(265, 104)
+        ApplyVoucherBtn.Location = New Point(266, 124)
         ApplyVoucherBtn.Name = "ApplyVoucherBtn"
         ApplyVoucherBtn.Size = New Size(109, 35)
         ApplyVoucherBtn.TabIndex = 6
@@ -182,36 +202,33 @@ Partial Class ApplyVoucher
         Panel1.Size = New Size(398, 72)
         Panel1.TabIndex = 7
         ' 
-        ' ComboBox1
+        ' CancelBtn
         ' 
-        ComboBox1.Font = New Font("Segoe UI", 15F)
-        ComboBox1.FormattingEnabled = True
-        ComboBox1.Location = New Point(53, 42)
-        ComboBox1.Name = "ComboBox1"
-        ComboBox1.Size = New Size(162, 36)
-        ComboBox1.TabIndex = 8
-        ' 
-        ' Label6
-        ' 
-        Label6.AutoSize = True
-        Label6.Font = New Font("Segoe UI", 14F)
-        Label6.Location = New Point(49, 14)
-        Label6.Name = "Label6"
-        Label6.Size = New Size(127, 25)
-        Label6.TabIndex = 9
-        Label6.Text = "Discount type"
+        CancelBtn.BackColor = SystemColors.AppWorkspace
+        CancelBtn.FlatStyle = FlatStyle.Flat
+        CancelBtn.IconChar = FontAwesome.Sharp.IconChar.None
+        CancelBtn.IconColor = Color.Black
+        CancelBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
+        CancelBtn.Location = New Point(267, 495)
+        CancelBtn.Name = "CancelBtn"
+        CancelBtn.Size = New Size(109, 33)
+        CancelBtn.TabIndex = 5
+        CancelBtn.Text = "Cancel"
+        CancelBtn.UseVisualStyleBackColor = False
         ' 
         ' ApplyVoucher
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(398, 496)
+        ClientSize = New Size(398, 540)
+        Controls.Add(CancelBtn)
         Controls.Add(Panel1)
         Controls.Add(DiscountPnl)
         Controls.Add(LoginPnl)
         FormBorderStyle = FormBorderStyle.FixedSingle
         MaximizeBox = False
         Name = "ApplyVoucher"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "ApplyVoucher"
         LoginPnl.ResumeLayout(False)
         LoginPnl.PerformLayout()
@@ -237,4 +254,5 @@ Partial Class ApplyVoucher
     Friend WithEvents Panel1 As Panel
     Friend WithEvents ComboBox1 As ComboBox
     Friend WithEvents Label6 As Label
+    Friend WithEvents CancelBtn As FontAwesome.Sharp.IconButton
 End Class

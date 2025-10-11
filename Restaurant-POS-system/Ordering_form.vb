@@ -15,6 +15,7 @@ Imports PdfSharp.Fonts
 Imports System.Data.OleDb
 Imports Mysqlx
 Imports Mysqlx.XDevAPI.Common
+Imports System.Drawing.Text
 
 
 Public Class Order
@@ -22,8 +23,14 @@ Public Class Order
     Dim CurrentSubTotal As Integer
     Dim DiscountValue As Double = 0
     Dim CurrentFocusedItem As String
+    Dim MenuItems As New List(Of Button)
+    Dim currentIndex As Integer = 0
+    Dim CurrentFocused As Button = Nothing
 
     Private Sub Order_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        GetSettingsConfig()
+
+        Me.KeyPreview = True
         GlobalFontSettings.UseWindowsFontsUnderWindows = True
         Me.WindowState = WindowState.Maximized
 
@@ -50,6 +57,10 @@ Public Class Order
         ' close parent when child closes
         Form1.Dispose()
     End Sub
+    Private Sub OrderForm_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
+        HandleKeydown(sender, e)
+    End Sub
+
 
 
     ' Form dialog for increasing/decreasing item amount
@@ -134,6 +145,8 @@ Public Class Order
     Private Sub LoadMenuItems(table As String)
         Dim Connection As New MySqlConnection(GetGlobalConnectionString)
         Dim Reader As MySqlDataReader
+        MenuItems.Clear() ' clear for another menu items when change in catalog
+        currentIndex = 0 ' reset index
 
         Try
             Connection.Open()
@@ -142,12 +155,18 @@ Public Class Order
             Reader = Command.ExecuteReader
 
             While Reader.Read
+                Dim settingsSize = SettingsConfig.MenuItemButtonSize
+
                 Dim foodBtn As New Button
                 foodBtn.Text = Reader("ItemName")
-                foodBtn.Size = New System.Drawing.Size(100, 100)
+                foodBtn.Size = New System.Drawing.Size(settingsSize, settingsSize)
                 foodBtn.Margin = New Padding(0, 0, 0, 0)
                 foodBtn.Tag = Reader("ItemPrice")
                 foodBtn.Cursor = Cursors.Hand
+                foodBtn.FlatStyle = FlatStyle.Flat
+                foodBtn.FlatAppearance.BorderSize = 3
+                foodBtn.FlatAppearance.BorderColor = Color.Gray
+                foodBtn.TabStop = True
 
                 If Not IsDBNull(Reader("ImagePath")) Then
                     If Not Reader("ImagePath") = "N/A" Then
@@ -165,11 +184,12 @@ Public Class Order
                 foodPrice.TextAlign = ContentAlignment.MiddleCenter
 
                 Dim FoodContainerPnl As New FlowLayoutPanel
-                FoodContainerPnl.Size = New System.Drawing.Size(100, 100 + foodPrice.Size.Height)
+                FoodContainerPnl.Size = New System.Drawing.Size(100 + settingsSize, 100 + settingsSize)
                 FoodContainerPnl.Controls.Add(foodBtn)
                 FoodContainerPnl.Controls.Add(foodPrice)
 
                 FoodPnl.Controls.Add(FoodContainerPnl)
+                MenuItems.Add(foodBtn)
             End While
 
         Catch ex As Exception
@@ -215,62 +235,30 @@ Public Class Order
     End Sub
 
 
+    ' TODO
+    ' need to copy or make the handle item click add item to order list
+    ' available for handle key down aswell
+
 
     ' Menu item/category click handlers
     Private Sub HandleItemClick(sender As Object, e As EventArgs)
+        Dim button As Button = CType(sender, Button)
+        CurrentFocused = button
 
-        Dim name = CType(sender, Button).Text
-        Dim itemAmount As Integer = 0
+        Dim itemName = button.Text
+        Dim tagData As TagData = ExtractTag(button.Tag)
+        Dim itemPrice As String = tagData.Price
+        Dim itemImage As String = tagData.TagImagePath
+        HandleIfItemExistsInOrder(itemName, itemPrice, itemImage)
+        HandleDiscount(itemPrice)
 
-        Dim tag As String = CType(sender, Button).Tag.ToString()
-        Dim price As String
-        Dim tagImgPath As String = Nothing
-
-        If tag.Contains(",") Then
-            Dim tagInfo() As String = tag.Split(","c)
-            price = tagInfo(0)
-            tagImgPath = tagInfo(1)
-        Else
-            price = tag
-        End If
-
-        Dim nameExists As Boolean = False
-
-        For Each row As DataGridViewRow In DataGridView1.Rows
-            If row.Cells(1).Value IsNot Nothing AndAlso row.Cells(1).Value.ToString() = name Then
-                nameExists = True
-                row.Cells(0).Value = CInt(row.Cells(0).Value) + 1
-                itemAmount = CInt(row.Cells(0).Value)
-                row.Cells(3).Value = CInt(row.Cells(3).Value) + Integer.Parse(price)
-                Exit For
-            End If
-        Next
-
-        If Not nameExists Then
-            Dim newRow As New DataGridViewRow()
-            newRow.CreateCells(DataGridView1, 1, name, price, price, tagImgPath)
-            DataGridView1.Rows.Add(newRow)
-
-            Dim image As Image = CType(sender, Button).BackgroundImage
-            OrderPnl.Controls.Add(AddItemToOrderList(name, price, "1", tagImgPath))
-        ElseIf nameExists Then
-            UpdateItemOrderList()
-        End If
-
-        CurrentFocusedItem = name ' set the current item focused to clicked item
-        'DisplayItemDialogForm(itemAmount)
-
-        CurrentSubTotal += Integer.Parse(price)
-        SubtotalLbl.Text = "₱" + CurrentSubTotal.ToString
-
-        Dim appliedDiscount = (DiscountValue * CurrentSubTotal)
-        CurrentTotal = If((Not DiscountValue = 0), Integer.Abs(appliedDiscount - CurrentSubTotal), CurrentSubTotal)
-        TotalLbl.Text = "₱" & CurrentTotal.ToString
+        CurrentFocusedItem = itemName
     End Sub
     Private Sub HandleCatClick(sender As Object, e As EventArgs)
-        Dim catName = CType(sender, Button).Text
+        Dim catName = CType(sender, Button)
         FoodPnl.Controls.Clear()
-        LoadMenuItems(catName)
+        FoodPnl.Focus()
+        LoadMenuItems(catName.Text)
     End Sub
 
 
@@ -387,9 +375,6 @@ Public Class Order
 
 
     ' Buttons
-    Private Sub Button6_Click(sender As Object, e As EventArgs)
-        Panel1.Hide()
-    End Sub
     Private Sub CreateOrderBtn_Click(sender As Object, e As EventArgs) Handles CreateOrderBtn.Click
         If Not DataGridView1.Rows.Count > 0 Then
             MsgBox("Please create an order first", MsgBoxStyle.Critical, "Warning")
@@ -414,14 +399,19 @@ Public Class Order
             If Command.ExecuteNonQuery > 0 Then
                 MsgBox("Order created", MsgBoxStyle.Information, "Success")
                 CreateReceiptPDF()
+
                 CurrentTotal = 0
                 CurrentSubTotal = 0
                 DiscountValue = 0
 
                 TotalLbl.Text = CurrentTotal
+                SubtotalLbl.Text = CurrentSubTotal
+                DiscountLbl.Text = "%" & DiscountValue
+
                 DataGridView1.Rows.Clear()
                 UpdateItemOrderList()
                 InsertActivityLog("Created an order")
+                FoodPnl.Focus()
             End If
 
         Catch ex As Exception
@@ -476,7 +466,9 @@ Public Class Order
 
         ' need to log the apllying of voucher
     End Sub
-
+    Private Sub SettingsBtn_Click(sender As Object, e As EventArgs) Handles SettingsBtn.Click
+        Settings.ShowDialog()
+    End Sub
 
 
     ' Create receipt
@@ -542,7 +534,7 @@ Public Class Order
             End If
         End If
     End Sub
-    Private Sub IconButton3_Click(sender As Object, e As EventArgs) Handles IconButton3.Click
+    Private Sub LogoutButton_Click(sender As Object, e As EventArgs) Handles IconButton3.Click
         Dim res = MsgBox("Are you sure you wnat to log out?", MsgBoxStyle.YesNoCancel, "Notice")
         If res = MsgBoxResult.Yes Then
             CurrentUser = ""
@@ -579,4 +571,80 @@ Public Class Order
 
         Return "0"
     End Function
+    Private Sub HandleKeydown(sender As Object, e As KeyEventArgs)
+        If e.Control AndAlso e.KeyCode = Keys.Enter Then
+            CreateOrderBtn_Click(sender, e)
+        ElseIf e.KeyCode = Keys.Left Then
+            If currentIndex > 0 Then
+                MenuItems(currentIndex).FlatAppearance.BorderColor = Color.Gray
+                currentIndex -= 1
+            End If
+
+        ElseIf e.KeyCode = Keys.Right Then
+            If currentIndex < MenuItems.Count - 1 Then
+                MenuItems(currentIndex).FlatAppearance.BorderColor = Color.Gray
+                currentIndex += 1
+            End If
+
+        ElseIf e.KeyCode = Keys.Enter Then
+            ' Regular Enter (without Ctrl)
+            Dim itemName As String = CurrentFocused.Text
+            Dim tagData As TagData = ExtractTag(CurrentFocused.Tag)
+            Dim itemPrice As String = tagData.Price
+            Dim itemImage As String = tagData.TagImagePath
+            HandleIfItemExistsInOrder(itemName, itemPrice, itemImage)
+            HandleDiscount(itemPrice)
+            CurrentFocusedItem = itemName
+        Else
+            Me.Focus()
+        End If
+
+
+        MenuItems(currentIndex).FlatAppearance.BorderColor = Color.Red
+
+        ' get the currrent focused btn instead of using btn.focus()
+        CurrentFocusedItem = MenuItems(currentIndex).Text
+        For Each btn As Button In MenuItems
+            If btn.Text = CurrentFocusedItem Then
+                CurrentFocused = btn
+            End If
+        Next
+    End Sub
+    Private Sub HandleIfItemExistsInOrder(ByVal itemName As String, ByVal itemPrice As String, ByVal tagImgPath As String)
+        Dim nameExists As Boolean = False
+        Dim itemAmount As Integer = 0
+
+        For Each row As DataGridViewRow In DataGridView1.Rows
+            If row.Cells(1).Value IsNot Nothing AndAlso row.Cells(1).Value.ToString() = itemName Then
+                ' increment item amount
+                nameExists = True
+                row.Cells(0).Value = CInt(row.Cells(0).Value) + 1
+
+                ' get item amount
+                itemAmount = CInt(row.Cells(0).Value)
+
+                'row.Cells(3).Value = CInt(row.Cells(3).Value) + Integer.Parse(itemPrice)
+                Exit For
+            End If
+        Next
+
+        ' create new row if doesn't exists
+        If Not nameExists Then
+            Dim newRow As New DataGridViewRow()
+            newRow.CreateCells(DataGridView1, 1, itemName, itemPrice, itemPrice, tagImgPath)
+            DataGridView1.Rows.Add(newRow)
+
+            OrderPnl.Controls.Add(AddItemToOrderList(itemName, itemPrice, "1", tagImgPath))
+        ElseIf nameExists Then
+            UpdateItemOrderList()  ' just update the order list if it exists
+        End If
+    End Sub
+    Private Sub HandleDiscount(ByVal itemPrice As String)
+        CurrentSubTotal += Integer.Parse(itemPrice)
+        SubtotalLbl.Text = "₱" + CurrentSubTotal.ToString
+
+        Dim appliedDiscount = (DiscountValue * CurrentSubTotal)
+        CurrentTotal = If((Not DiscountValue = 0), Integer.Abs(appliedDiscount - CurrentSubTotal), CurrentSubTotal)
+        TotalLbl.Text = "₱" & CurrentTotal.ToString
+    End Sub
 End Class

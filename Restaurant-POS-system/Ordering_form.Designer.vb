@@ -25,7 +25,7 @@ Partial Class Order
         NavbarPnl = New Panel()
         IconButton3 = New FontAwesome.Sharp.IconButton()
         SearchBtn = New FontAwesome.Sharp.IconButton()
-        IconButton2 = New FontAwesome.Sharp.IconButton()
+        SettingsBtn = New FontAwesome.Sharp.IconButton()
         SearchTxtBox = New TextBox()
         Label1 = New Label()
         DataGridView1 = New DataGridView()
@@ -39,6 +39,7 @@ Partial Class Order
         TotalLbl = New Label()
         Label2 = New Label()
         Panel1 = New Panel()
+        CurrentFocusedPnl = New Panel()
         MenuCategoryPnl = New FlowLayoutPanel()
         FoodPnl = New FlowLayoutPanel()
         OrderPnl = New FlowLayoutPanel()
@@ -54,7 +55,7 @@ Partial Class Order
         NavbarPnl.BackColor = Color.DarkSeaGreen
         NavbarPnl.Controls.Add(IconButton3)
         NavbarPnl.Controls.Add(SearchBtn)
-        NavbarPnl.Controls.Add(IconButton2)
+        NavbarPnl.Controls.Add(SettingsBtn)
         NavbarPnl.Controls.Add(SearchTxtBox)
         NavbarPnl.Controls.Add(Label1)
         NavbarPnl.Location = New Point(458, 0)
@@ -95,21 +96,21 @@ Partial Class Order
         SearchBtn.TextAlign = ContentAlignment.MiddleRight
         SearchBtn.UseVisualStyleBackColor = False
         ' 
-        ' IconButton2
+        ' SettingsBtn
         ' 
-        IconButton2.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        IconButton2.BackColor = Color.DarkSeaGreen
-        IconButton2.FlatAppearance.BorderSize = 0
-        IconButton2.FlatStyle = FlatStyle.Flat
-        IconButton2.IconChar = FontAwesome.Sharp.IconChar.Cog
-        IconButton2.IconColor = Color.Black
-        IconButton2.IconFont = FontAwesome.Sharp.IconFont.Auto
-        IconButton2.IconSize = 40
-        IconButton2.Location = New Point(528, 16)
-        IconButton2.Name = "IconButton2"
-        IconButton2.Size = New Size(43, 42)
-        IconButton2.TabIndex = 1
-        IconButton2.UseVisualStyleBackColor = False
+        SettingsBtn.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        SettingsBtn.BackColor = Color.DarkSeaGreen
+        SettingsBtn.FlatAppearance.BorderSize = 0
+        SettingsBtn.FlatStyle = FlatStyle.Flat
+        SettingsBtn.IconChar = FontAwesome.Sharp.IconChar.Cog
+        SettingsBtn.IconColor = Color.Black
+        SettingsBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
+        SettingsBtn.IconSize = 40
+        SettingsBtn.Location = New Point(528, 16)
+        SettingsBtn.Name = "SettingsBtn"
+        SettingsBtn.Size = New Size(43, 42)
+        SettingsBtn.TabIndex = 1
+        SettingsBtn.UseVisualStyleBackColor = False
         ' 
         ' SearchTxtBox
         ' 
@@ -193,20 +194,21 @@ Partial Class Order
         CreateOrderBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
         CreateOrderBtn.IconSize = 40
         CreateOrderBtn.ImageAlign = ContentAlignment.MiddleRight
-        CreateOrderBtn.Location = New Point(293, 71)
+        CreateOrderBtn.Location = New Point(307, 71)
         CreateOrderBtn.Name = "CreateOrderBtn"
-        CreateOrderBtn.Size = New Size(141, 38)
+        CreateOrderBtn.Size = New Size(123, 38)
         CreateOrderBtn.TabIndex = 1
-        CreateOrderBtn.Text = "Proceed"
+        CreateOrderBtn.Text = "Create order"
+        CreateOrderBtn.TextAlign = ContentAlignment.MiddleLeft
         CreateOrderBtn.UseVisualStyleBackColor = False
         ' 
         ' Button1
         ' 
         Button1.BackColor = Color.Gold
         Button1.FlatStyle = FlatStyle.Flat
-        Button1.Location = New Point(293, 23)
+        Button1.Location = New Point(307, 23)
         Button1.Name = "Button1"
-        Button1.Size = New Size(141, 38)
+        Button1.Size = New Size(123, 38)
         Button1.TabIndex = 5
         Button1.Text = "Apply discount"
         Button1.UseVisualStyleBackColor = False
@@ -255,12 +257,22 @@ Partial Class Order
         ' 
         Panel1.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
         Panel1.BackColor = Color.DarkGray
+        Panel1.Controls.Add(CurrentFocusedPnl)
         Panel1.Controls.Add(MenuCategoryPnl)
         Panel1.Controls.Add(FoodPnl)
         Panel1.Location = New Point(458, 66)
         Panel1.Name = "Panel1"
         Panel1.Size = New Size(584, 538)
         Panel1.TabIndex = 5
+        ' 
+        ' CurrentFocusedPnl
+        ' 
+        CurrentFocusedPnl.Anchor = AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        CurrentFocusedPnl.BackColor = SystemColors.ControlLight
+        CurrentFocusedPnl.Location = New Point(2, 449)
+        CurrentFocusedPnl.Name = "CurrentFocusedPnl"
+        CurrentFocusedPnl.Size = New Size(584, 89)
+        CurrentFocusedPnl.TabIndex = 0
         ' 
         ' MenuCategoryPnl
         ' 
@@ -278,7 +290,7 @@ Partial Class Order
         FoodPnl.BackColor = SystemColors.Control
         FoodPnl.Location = New Point(2, 60)
         FoodPnl.Name = "FoodPnl"
-        FoodPnl.Size = New Size(581, 478)
+        FoodPnl.Size = New Size(581, 388)
         FoodPnl.TabIndex = 2
         ' 
         ' OrderPnl
@@ -328,8 +340,9 @@ Partial Class Order
     Friend WithEvents DiscountLbl As Label
     Friend WithEvents CreateOrderBtn As FontAwesome.Sharp.IconButton
     Friend WithEvents SearchBtn As FontAwesome.Sharp.IconButton
-    Friend WithEvents IconButton2 As FontAwesome.Sharp.IconButton
+    Friend WithEvents SettingsBtn As FontAwesome.Sharp.IconButton
     Friend WithEvents IconButton3 As FontAwesome.Sharp.IconButton
     Friend WithEvents SubtotalLbl As Label
     Friend WithEvents Label6 As Label
+    Friend WithEvents CurrentFocusedPnl As Panel
 End Class

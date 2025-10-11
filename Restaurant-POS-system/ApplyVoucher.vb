@@ -53,7 +53,7 @@ Public Class ApplyVoucher
 
     ' Buttons
     Private Sub LoginAdmin_Click(sender As Object, e As EventArgs) Handles LoginBtn.Click
-        If Not ValidateInputs() Then
+        If Not ValidateInputs Then
             Return
         End If
 
@@ -66,11 +66,14 @@ Public Class ApplyVoucher
     Private Sub ApplyVoucherClick_Click(sender As Object, e As EventArgs) Handles ApplyVoucherBtn.Click
         HandleApplyVoucher()
     End Sub
+    Private Sub CancelButton_Click(sender As Object, e As EventArgs) Handles CancelBtn.Click
+        Me.DialogResult = DialogResult.Cancel
+        Me.Close()
+    End Sub
 
 
 
-
-    ' Handle
+    ' Handlers
     Private Function HandleApplyVoucher()
         If Not String.IsNullOrEmpty(DiscountTxtBox.Text) Then
             IsCancelled = False
