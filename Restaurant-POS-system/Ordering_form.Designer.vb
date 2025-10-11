@@ -287,6 +287,7 @@ Partial Class Order
         ' FoodPnl
         ' 
         FoodPnl.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        FoodPnl.AutoScroll = True
         FoodPnl.BackColor = SystemColors.Control
         FoodPnl.Location = New Point(2, 60)
         FoodPnl.Name = "FoodPnl"
@@ -296,6 +297,7 @@ Partial Class Order
         ' OrderPnl
         ' 
         OrderPnl.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left
+        OrderPnl.AutoScroll = True
         OrderPnl.BackColor = SystemColors.Control
         OrderPnl.FlowDirection = FlowDirection.TopDown
         OrderPnl.Location = New Point(0, 0)

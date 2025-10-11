@@ -4,12 +4,17 @@ Imports MySql.Data.MySqlClient
 Public Class ApplyVoucher
     Dim IsCancelled = True
 
+    ' fomr stuffs
     Private Sub OnFormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         If e.CloseReason = CloseReason.UserClosing And IsCancelled Then
             Me.DialogResult = DialogResult.Cancel
         End If
     End Sub
+    Private Sub ApplyVoucher_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        AddHandler DiscountTxtBox.KeyPress, AddressOf HandleNumberOnly
 
+        UsernameTxtBox.Focus()
+    End Sub
 
 
     ' Validation
@@ -20,11 +25,6 @@ Public Class ApplyVoucher
         Else Return True
         End If
     End Function
-    Private Sub HandleNumberOnly(sender As Object, e As KeyPressEventArgs) Handles DiscountTxtBox.KeyPress
-        If Not Char.IsDigit(e.KeyChar) And Not Asc(e.KeyChar) = 8 Then
-            e.Handled = True
-        End If
-    End Sub
     Private Sub HandleEnterCredential(sender As Object, e As KeyPressEventArgs) Handles UsernameTxtBox.KeyPress, PasswordTxtBox.KeyPress
         If Asc(e.KeyChar) = 13 Then
             If Not ValidateInputs() Then
@@ -37,6 +37,7 @@ Public Class ApplyVoucher
             Else
                 DiscountPnl.Enabled = True
                 LoginPnl.Enabled = False
+                DiscountTxtBox.Focus()
             End If
         ElseIf Asc(e.KeyChar) = 27 Then
             Me.DialogResult = DialogResult.Cancel
@@ -61,6 +62,7 @@ Public Class ApplyVoucher
         Else
             DiscountPnl.Enabled = True
             LoginPnl.Enabled = False
+            DiscountTxtBox.Focus()
         End If
     End Sub
     Private Sub ApplyVoucherClick_Click(sender As Object, e As EventArgs) Handles ApplyVoucherBtn.Click
@@ -87,5 +89,4 @@ Public Class ApplyVoucher
 
         Return True
     End Function
-
 End Class

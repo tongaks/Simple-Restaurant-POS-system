@@ -32,6 +32,8 @@ Partial Class Settings
         EditBtn = New FontAwesome.Sharp.IconButton()
         Label4 = New Label()
         ConfigPnl = New Panel()
+        FontSizeTxtBtn = New TextBox()
+        Label2 = New Label()
         Panel1.SuspendLayout()
         ConfigPnl.SuspendLayout()
         SuspendLayout()
@@ -55,7 +57,7 @@ Partial Class Settings
         ' Label3
         ' 
         Label3.AutoSize = True
-        Label3.Location = New Point(27, 60)
+        Label3.Location = New Point(27, 98)
         Label3.Name = "Label3"
         Label3.Size = New Size(115, 15)
         Label3.TabIndex = 4
@@ -64,7 +66,7 @@ Partial Class Settings
         ' ShortcutKeyChckBox
         ' 
         ShortcutKeyChckBox.AutoSize = True
-        ShortcutKeyChckBox.Location = New Point(150, 63)
+        ShortcutKeyChckBox.Location = New Point(150, 101)
         ShortcutKeyChckBox.Name = "ShortcutKeyChckBox"
         ShortcutKeyChckBox.Size = New Size(15, 14)
         ShortcutKeyChckBox.TabIndex = 5
@@ -72,6 +74,7 @@ Partial Class Settings
         ' 
         ' Panel1
         ' 
+        Panel1.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
         Panel1.BackColor = Color.DarkSeaGreen
         Panel1.Controls.Add(SaveBtn)
         Panel1.Controls.Add(CancelBtn)
@@ -84,6 +87,7 @@ Partial Class Settings
         ' 
         ' SaveBtn
         ' 
+        SaveBtn.Anchor = AnchorStyles.Top Or AnchorStyles.Right
         SaveBtn.BackColor = Color.SpringGreen
         SaveBtn.Enabled = False
         SaveBtn.FlatStyle = FlatStyle.Flat
@@ -102,6 +106,7 @@ Partial Class Settings
         ' 
         ' CancelBtn
         ' 
+        CancelBtn.Anchor = AnchorStyles.Top Or AnchorStyles.Right
         CancelBtn.BackColor = SystemColors.AppWorkspace
         CancelBtn.FlatStyle = FlatStyle.Flat
         CancelBtn.IconChar = FontAwesome.Sharp.IconChar.LongArrowAltRight
@@ -119,6 +124,7 @@ Partial Class Settings
         ' 
         ' EditBtn
         ' 
+        EditBtn.Anchor = AnchorStyles.Top Or AnchorStyles.Right
         EditBtn.BackColor = Color.Khaki
         EditBtn.FlatStyle = FlatStyle.Flat
         EditBtn.IconChar = FontAwesome.Sharp.IconChar.Pencil
@@ -147,6 +153,8 @@ Partial Class Settings
         ' 
         ' ConfigPnl
         ' 
+        ConfigPnl.Controls.Add(FontSizeTxtBtn)
+        ConfigPnl.Controls.Add(Label2)
         ConfigPnl.Controls.Add(ItemBtnSizeTxtBox)
         ConfigPnl.Controls.Add(Label1)
         ConfigPnl.Controls.Add(ShortcutKeyChckBox)
@@ -156,6 +164,22 @@ Partial Class Settings
         ConfigPnl.Name = "ConfigPnl"
         ConfigPnl.Size = New Size(337, 197)
         ConfigPnl.TabIndex = 7
+        ' 
+        ' FontSizeTxtBtn
+        ' 
+        FontSizeTxtBtn.Location = New Point(150, 59)
+        FontSizeTxtBtn.Name = "FontSizeTxtBtn"
+        FontSizeTxtBtn.Size = New Size(100, 23)
+        FontSizeTxtBtn.TabIndex = 7
+        ' 
+        ' Label2
+        ' 
+        Label2.AutoSize = True
+        Label2.Location = New Point(30, 62)
+        Label2.Name = "Label2"
+        Label2.Size = New Size(112, 15)
+        Label2.TabIndex = 6
+        Label2.Text = "Menu item font size"
         ' 
         ' Settings
         ' 
@@ -183,4 +207,6 @@ Partial Class Settings
     Friend WithEvents Label4 As Label
     Friend WithEvents SaveBtn As FontAwesome.Sharp.IconButton
     Friend WithEvents ConfigPnl As Panel
+    Friend WithEvents FontSizeTxtBtn As TextBox
+    Friend WithEvents Label2 As Label
 End Class

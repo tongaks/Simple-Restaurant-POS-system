@@ -11,6 +11,7 @@ Module GlobalFunctions
 
     Public Structure SettingsConfigStruct
         Public MenuItemButtonSize As Integer
+        Public MenuItemFontSize As Integer
         Public EnableShortcutKeys As Boolean
     End Structure
 
@@ -27,7 +28,7 @@ Module GlobalFunctions
 
 
 
-    ' CRUD (Login, Insert activity)
+    ' CRUD (Login, Insert activity, get settings confonig)
     Public Function Login(uname As String, passw As String, table As String)
         Dim Connection As New MySqlConnection(GetGlobalConnectionString)
         Dim Reader As MySqlDataReader
@@ -96,6 +97,7 @@ Module GlobalFunctions
 
             While Reader.Read
                 SettingsConfig.MenuItemButtonSize = Reader("MenuItemButtonSize")
+                SettingsConfig.MenuItemFontSize = Reader("MenuItemFontSize")
                 SettingsConfig.EnableShortcutKeys = Reader("EnableShortcutKeys")
             End While
 
@@ -109,7 +111,7 @@ Module GlobalFunctions
     End Sub
 
 
-    ' Textbox hint
+    ' Textbox things
     Public Sub TextHint(ByVal txtbox As TextBox, ByVal text As String)
         If Not txtbox.Focused And String.IsNullOrEmpty(txtbox.Text) Then
             txtbox.ForeColor = Color.Gray
@@ -117,6 +119,11 @@ Module GlobalFunctions
         Else
             txtbox.ForeColor = Color.Black
             txtbox.Clear()
+        End If
+    End Sub
+    Public Sub HandleNumberOnly(sender As Object, e As KeyPressEventArgs)
+        If Not Char.IsDigit(e.KeyChar) And Not Asc(e.KeyChar) = 8 Then
+            e.Handled = True
         End If
     End Sub
 
@@ -133,11 +140,12 @@ Module GlobalFunctions
         End Using
         Return bmp
     End Function
-
     Public Sub FormCloseParent(sender As Object, e As EventArgs)
         Form1.Dispose()
     End Sub
 
+
+    ' random
     Public Function CreateFoodItemButton(itemName As String, itemPrice As String, imgPath As String) As FlowLayoutPanel
         ' Create the main button
         Dim foodBtn As New Button With {

@@ -2,16 +2,29 @@
 
 Public Class Settings
     Dim IsEdit As Boolean = False
+    Dim HasUpdate As Boolean = False
 
     Private Sub Settings_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ' load configs
         GetSettingsConfig()
         ItemBtnSizeTxtBox.Text = SettingsConfig.MenuItemButtonSize
+        FontSizeTxtBtn.Text = SettingsConfig.MenuItemFontSize
         ShortcutKeyChckBox.Checked = SettingsConfig.EnableShortcutKeys
 
         Me.WindowState = WindowState.Maximized
-    End Sub
 
+        ' add handlers for number only
+        AddHandler ItemBtnSizeTxtBox.KeyPress, AddressOf HandleNumberOnly
+        AddHandler FontSizeTxtBtn.KeyPress, AddressOf HandleNumberOnly
+    End Sub
+    Private Sub HandleFormClose(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        Me.DialogResult = If((HasUpdate), DialogResult.OK, DialogResult.Cancel)
+        HasUpdate = False
+
+        EditBtn.Enabled = True
+        SaveBtn.Enabled = False
+        ConfigPnl.Enabled = False
+    End Sub
 
     ' buttons
     Private Sub EditButton_Click(sender As Object, e As EventArgs) Handles EditBtn.Click
@@ -24,6 +37,7 @@ Public Class Settings
         IsEdit = False
         EditBtn.Enabled = True
         SaveBtn.Enabled = False
+        HasUpdate = False
 
         ' reset the form (and change it back to previos config)
         ConfigPnl.Enabled = False
@@ -41,7 +55,9 @@ Public Class Settings
             Command.Parameters.AddWithValue("@shrtky", ShortcutKeyChckBox.Checked)
 
             If Command.ExecuteNonQuery > 0 Then
+                HasUpdate = True
                 MsgBox("Successfully updated the configurations!", MsgBoxStyle.Information, "Success")
+                GetSettingsConfig() ' refresh SettingsConfig struct data
             End If
 
         Catch ex As Exception

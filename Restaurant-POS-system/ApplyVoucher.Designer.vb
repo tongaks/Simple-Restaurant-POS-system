@@ -144,10 +144,12 @@ Partial Class ApplyVoucher
         ' 
         ComboBox1.Font = New Font("Segoe UI", 15F)
         ComboBox1.FormattingEnabled = True
+        ComboBox1.Items.AddRange(New Object() {"Senior", "Student", "PWD"})
         ComboBox1.Location = New Point(53, 42)
         ComboBox1.Name = "ComboBox1"
-        ComboBox1.Size = New Size(162, 36)
+        ComboBox1.Size = New Size(191, 36)
         ComboBox1.TabIndex = 8
+        ComboBox1.Text = "Select or type here"
         ' 
         ' ApplyVoucherBtn
         ' 
@@ -168,7 +170,7 @@ Partial Class ApplyVoucher
         DiscountTxtBox.Font = New Font("Segoe UI", 15F)
         DiscountTxtBox.Location = New Point(53, 124)
         DiscountTxtBox.Name = "DiscountTxtBox"
-        DiscountTxtBox.Size = New Size(164, 34)
+        DiscountTxtBox.Size = New Size(191, 34)
         DiscountTxtBox.TabIndex = 6
         ' 
         ' Label4

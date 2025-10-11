@@ -33,11 +33,11 @@ Public Class Order
         Me.KeyPreview = True
         GlobalFontSettings.UseWindowsFontsUnderWindows = True
         Me.WindowState = WindowState.Maximized
-
         CurrentTotal = 0
+
+        ' data grid view essentials
         LoadMenuCategories()
         LoadMenuItems("Foods")
-
         DataGridView1.ColumnCount = 5
         DataGridView1.Columns(0).Name = "ItemAmount"
         DataGridView1.Columns("ItemAmount").ValueType = GetType(Integer)
@@ -58,7 +58,9 @@ Public Class Order
         Form1.Dispose()
     End Sub
     Private Sub OrderForm_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
-        HandleKeydown(sender, e)
+        If SettingsConfig.EnableShortcutKeys Then
+            HandleKeydown(sender, e)
+        End If
     End Sub
 
 
@@ -158,9 +160,9 @@ Public Class Order
                 Dim settingsSize = SettingsConfig.MenuItemButtonSize
 
                 Dim foodBtn As New Button
-                foodBtn.Text = Reader("ItemName")
                 foodBtn.Size = New System.Drawing.Size(settingsSize, settingsSize)
                 foodBtn.Margin = New Padding(0, 0, 0, 0)
+                foodBtn.Text = Reader("ItemName")
                 foodBtn.Tag = Reader("ItemPrice")
                 foodBtn.Cursor = Cursors.Hand
                 foodBtn.FlatStyle = FlatStyle.Flat
@@ -173,19 +175,32 @@ Public Class Order
                         Dim image As Image = Image.FromFile(Reader("ImagePath"))
                         foodBtn.Image = ResizeImageFit(image, foodBtn)
                         foodBtn.Tag &= "," & Reader("ImagePath")
+                        foodBtn.ForeColor = Color.Transparent
                     End If
                 End If
 
                 AddHandler foodBtn.Click, AddressOf HandleItemClick
 
+                Dim foodFont As New Font("Segue UI", SettingsConfig.MenuItemFontSize, FontStyle.Regular)
+
+                Dim foodName As New Label
+                foodName.Text = Reader("ItemName")
+                foodName.Font = foodFont
+                foodName.AutoSize = False
+                foodName.MinimumSize = New Size(foodName.PreferredWidth, foodName.PreferredHeight)
+                foodName.TextAlign = ContentAlignment.MiddleCenter
+
                 Dim foodPrice As New Label
                 foodPrice.Text = "₱" & Reader("ItemPrice")
-                foodPrice.Font = New Font("Segue UI", 18.0F, FontStyle.Regular)
+                foodPrice.Font = foodFont
+                foodName.AutoSize = False
                 foodPrice.TextAlign = ContentAlignment.MiddleCenter
 
                 Dim FoodContainerPnl As New FlowLayoutPanel
-                FoodContainerPnl.Size = New System.Drawing.Size(100 + settingsSize, 100 + settingsSize)
+                FoodContainerPnl.FlowDirection = FlowDirection.TopDown
+                FoodContainerPnl.Size = New System.Drawing.Size(settingsSize, settingsSize + foodName.Height + foodPrice.Height)
                 FoodContainerPnl.Controls.Add(foodBtn)
+                FoodContainerPnl.Controls.Add(foodName)
                 FoodContainerPnl.Controls.Add(foodPrice)
 
                 FoodPnl.Controls.Add(FoodContainerPnl)
@@ -455,7 +470,6 @@ Public Class Order
             For Each txtbox As TextBox In applyVoucherForm.DiscountPnl.Controls.OfType(Of TextBox)
                 DiscountValue = Double.Parse(txtbox.Text) / 100
                 DiscountLbl.Text = "%" & Double.Parse(txtbox.Text)
-                MsgBox("Discount value: " & DiscountLbl.Text)
             Next
 
             InsertActivityLog("Applied discount: " & DiscountValue)
@@ -467,8 +481,12 @@ Public Class Order
         ' need to log the apllying of voucher
     End Sub
     Private Sub SettingsBtn_Click(sender As Object, e As EventArgs) Handles SettingsBtn.Click
-        Settings.ShowDialog()
+        If Settings.ShowDialog() = DialogResult.OK Then
+            FoodPnl.Controls.Clear()  ' reload the menu items
+            LoadMenuItems("foods")
+        End If
     End Sub
+
 
 
     ' Create receipt
