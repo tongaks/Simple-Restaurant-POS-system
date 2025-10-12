@@ -82,9 +82,9 @@ Partial Class SalesReport
         ' lblTitle
         ' 
         lblTitle.AutoSize = True
-        lblTitle.Font = New Font("Segoe UI", 24.0F, FontStyle.Bold)
+        lblTitle.Font = New Font("Segoe UI", 24F, FontStyle.Bold)
         lblTitle.ForeColor = Color.White
-        lblTitle.Location = New Point(30, 20)
+        lblTitle.Location = New Point(12, 11)
         lblTitle.Name = "lblTitle"
         lblTitle.Size = New Size(325, 54)
         lblTitle.TabIndex = 0
@@ -93,32 +93,34 @@ Partial Class SalesReport
         ' btnBack
         ' 
         btnBack.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        btnBack.BackColor = Color.FromArgb(CByte(135), CByte(206), CByte(250))
+        btnBack.BackColor = Color.SteelBlue
+        btnBack.FlatAppearance.BorderColor = Color.SteelBlue
         btnBack.FlatAppearance.BorderSize = 0
         btnBack.FlatStyle = FlatStyle.Flat
-        btnBack.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
-        btnBack.ForeColor = Color.White
-        btnBack.Location = New Point(1152, 12)
+        btnBack.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        btnBack.ForeColor = Color.FromArgb(CByte(0), CByte(0), CByte(192))
+        btnBack.Location = New Point(1249, 8)
         btnBack.Name = "btnBack"
-        btnBack.Size = New Size(108, 48)
+        btnBack.Size = New Size(65, 62)
         btnBack.TabIndex = 1
-        btnBack.Text = "← Back"
-        btnBack.UseVisualStyleBackColor = False
+        btnBack.Text = "➜]"
+        btnBack.UseVisualStyleBackColor = True
         ' 
         ' btnLogout
         ' 
         btnLogout.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        btnLogout.BackColor = Color.FromArgb(CByte(255), CByte(107), CByte(107))
+        btnLogout.BackColor = Color.SteelBlue
+        btnLogout.FlatAppearance.BorderColor = Color.SteelBlue
         btnLogout.FlatAppearance.BorderSize = 0
         btnLogout.FlatStyle = FlatStyle.Flat
-        btnLogout.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
-        btnLogout.ForeColor = Color.White
-        btnLogout.Location = New Point(1277, 12)
+        btnLogout.Font = New Font("Showcard Gothic", 22.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        btnLogout.ForeColor = Color.Red
+        btnLogout.Location = New Point(1326, 7)
         btnLogout.Name = "btnLogout"
-        btnLogout.Size = New Size(103, 48)
+        btnLogout.Size = New Size(63, 62)
         btnLogout.TabIndex = 2
-        btnLogout.Text = "Logout"
-        btnLogout.UseVisualStyleBackColor = False
+        btnLogout.Text = CStr(ChrW(9211))
+        btnLogout.UseVisualStyleBackColor = True
         ' 
         ' pnlControls
         ' 
@@ -144,7 +146,7 @@ Partial Class SalesReport
         btnPrint.Anchor = AnchorStyles.Top Or AnchorStyles.Right
         btnPrint.BackColor = Color.FromArgb(CByte(189), CByte(189), CByte(189))
         btnPrint.FlatStyle = FlatStyle.Flat
-        btnPrint.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        btnPrint.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         btnPrint.Location = New Point(1200, 20)
         btnPrint.Name = "btnPrint"
         btnPrint.Size = New Size(120, 40)
@@ -157,7 +159,7 @@ Partial Class SalesReport
         btnExportPdf.Anchor = AnchorStyles.Top Or AnchorStyles.Right
         btnExportPdf.BackColor = Color.FromArgb(CByte(255), CByte(107), CByte(107))
         btnExportPdf.FlatStyle = FlatStyle.Flat
-        btnExportPdf.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        btnExportPdf.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         btnExportPdf.ForeColor = Color.White
         btnExportPdf.Location = New Point(1065, 20)
         btnExportPdf.Name = "btnExportPdf"
@@ -171,7 +173,7 @@ Partial Class SalesReport
         btnExportCsv.Anchor = AnchorStyles.Top Or AnchorStyles.Right
         btnExportCsv.BackColor = Color.FromArgb(CByte(76), CByte(175), CByte(80))
         btnExportCsv.FlatStyle = FlatStyle.Flat
-        btnExportCsv.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        btnExportCsv.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         btnExportCsv.ForeColor = Color.White
         btnExportCsv.Location = New Point(930, 20)
         btnExportCsv.Name = "btnExportCsv"
@@ -184,18 +186,18 @@ Partial Class SalesReport
         ' 
         btnGenerateReport.BackColor = Color.FromArgb(CByte(70), CByte(130), CByte(180))
         btnGenerateReport.FlatStyle = FlatStyle.Flat
-        btnGenerateReport.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
+        btnGenerateReport.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
         btnGenerateReport.ForeColor = Color.White
         btnGenerateReport.Location = New Point(520, 20)
         btnGenerateReport.Name = "btnGenerateReport"
-        btnGenerateReport.Size = New Size(150, 40)
+        btnGenerateReport.Size = New Size(179, 40)
         btnGenerateReport.TabIndex = 4
         btnGenerateReport.Text = "Generate Report"
         btnGenerateReport.UseVisualStyleBackColor = False
         ' 
         ' dtpTo
         ' 
-        dtpTo.Font = New Font("Segoe UI", 10.0F)
+        dtpTo.Font = New Font("Segoe UI", 10F)
         dtpTo.Format = DateTimePickerFormat.Short
         dtpTo.Location = New Point(330, 25)
         dtpTo.Name = "dtpTo"
@@ -204,7 +206,7 @@ Partial Class SalesReport
         ' 
         ' dtpFrom
         ' 
-        dtpFrom.Font = New Font("Segoe UI", 10.0F)
+        dtpFrom.Font = New Font("Segoe UI", 10F)
         dtpFrom.Format = DateTimePickerFormat.Short
         dtpFrom.Location = New Point(100, 25)
         dtpFrom.Name = "dtpFrom"
@@ -214,7 +216,7 @@ Partial Class SalesReport
         ' Label2
         ' 
         Label2.AutoSize = True
-        Label2.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
+        Label2.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
         Label2.Location = New Point(280, 30)
         Label2.Name = "Label2"
         Label2.Size = New Size(33, 23)
@@ -224,7 +226,7 @@ Partial Class SalesReport
         ' Label1
         ' 
         Label1.AutoSize = True
-        Label1.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
+        Label1.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
         Label1.Location = New Point(30, 30)
         Label1.Name = "Label1"
         Label1.Size = New Size(57, 23)
@@ -259,7 +261,7 @@ Partial Class SalesReport
         ' Label10
         ' 
         Label10.AutoSize = True
-        Label10.Font = New Font("Segoe UI", 36.0F)
+        Label10.Font = New Font("Segoe UI", 36F)
         Label10.ForeColor = Color.SaddleBrown
         Label10.Location = New Point(-1, 6)
         Label10.Name = "Label10"
@@ -270,7 +272,7 @@ Partial Class SalesReport
         ' lblAvgOrder
         ' 
         lblAvgOrder.AutoSize = True
-        lblAvgOrder.Font = New Font("Segoe UI", 24.0F, FontStyle.Bold)
+        lblAvgOrder.Font = New Font("Segoe UI", 24F, FontStyle.Bold)
         lblAvgOrder.ForeColor = Color.FromArgb(CByte(139), CByte(69), CByte(19))
         lblAvgOrder.Location = New Point(109, 35)
         lblAvgOrder.Name = "lblAvgOrder"
@@ -304,7 +306,7 @@ Partial Class SalesReport
         ' Label9
         ' 
         Label9.AutoSize = True
-        Label9.Font = New Font("Segoe UI", 36.0F)
+        Label9.Font = New Font("Segoe UI", 36F)
         Label9.ForeColor = Color.MidnightBlue
         Label9.Location = New Point(-4, 4)
         Label9.Name = "Label9"
@@ -315,7 +317,7 @@ Partial Class SalesReport
         ' lblOrderCount
         ' 
         lblOrderCount.AutoSize = True
-        lblOrderCount.Font = New Font("Segoe UI", 24.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        lblOrderCount.Font = New Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         lblOrderCount.ForeColor = Color.FromArgb(CByte(25), CByte(25), CByte(112))
         lblOrderCount.Location = New Point(104, 35)
         lblOrderCount.Name = "lblOrderCount"
@@ -349,7 +351,7 @@ Partial Class SalesReport
         ' lblTotalsalesicon
         ' 
         lblTotalsalesicon.AutoSize = True
-        lblTotalsalesicon.Font = New Font("Segoe UI", 36.0F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        lblTotalsalesicon.Font = New Font("Segoe UI", 36F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
         lblTotalsalesicon.ForeColor = Color.FromArgb(CByte(0), CByte(192), CByte(0))
         lblTotalsalesicon.Location = New Point(-6, 4)
         lblTotalsalesicon.Name = "lblTotalsalesicon"
@@ -361,7 +363,7 @@ Partial Class SalesReport
         ' lblTotalSales
         ' 
         lblTotalSales.AutoSize = True
-        lblTotalSales.Font = New Font("Segoe UI", 24.0F, FontStyle.Bold)
+        lblTotalSales.Font = New Font("Segoe UI", 24F, FontStyle.Bold)
         lblTotalSales.ForeColor = Color.FromArgb(CByte(0), CByte(192), CByte(0))
         lblTotalSales.Location = New Point(107, 42)
         lblTotalSales.Name = "lblTotalSales"
@@ -409,7 +411,7 @@ Partial Class SalesReport
         ' 
         Label7.BackColor = Color.FromArgb(CByte(50), CByte(205), CByte(50))
         Label7.Dock = DockStyle.Top
-        Label7.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
+        Label7.Font = New Font("Segoe UI", 11F, FontStyle.Bold)
         Label7.ForeColor = Color.White
         Label7.Location = New Point(10, 10)
         Label7.Name = "Label7"
@@ -435,7 +437,7 @@ Partial Class SalesReport
         ' 
         Label5.BackColor = Color.FromArgb(CByte(255), CByte(127), CByte(80))
         Label5.Dock = DockStyle.Top
-        Label5.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
+        Label5.Font = New Font("Segoe UI", 11F, FontStyle.Bold)
         Label5.ForeColor = Color.White
         Label5.Location = New Point(10, 10)
         Label5.Name = "Label5"
@@ -461,7 +463,7 @@ Partial Class SalesReport
         ' 
         Label4.BackColor = Color.FromArgb(CByte(70), CByte(130), CByte(180))
         Label4.Dock = DockStyle.Top
-        Label4.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
+        Label4.Font = New Font("Segoe UI", 11F, FontStyle.Bold)
         Label4.ForeColor = Color.White
         Label4.Location = New Point(10, 10)
         Label4.Name = "Label4"
@@ -480,7 +482,7 @@ Partial Class SalesReport
         pnlTransactions.Location = New Point(0, 703)
         pnlTransactions.Name = "pnlTransactions"
         pnlTransactions.Padding = New Padding(20)
-        pnlTransactions.Size = New Size(1400, 279)
+        pnlTransactions.Size = New Size(1400, 352)
         pnlTransactions.TabIndex = 4
         ' 
         ' dgvTransactions
@@ -496,7 +498,7 @@ Partial Class SalesReport
         dgvTransactions.ReadOnly = True
         dgvTransactions.RowHeadersWidth = 51
         dgvTransactions.SelectionMode = DataGridViewSelectionMode.FullRowSelect
-        dgvTransactions.Size = New Size(1360, 180)
+        dgvTransactions.Size = New Size(1360, 253)
         dgvTransactions.TabIndex = 1
         ' 
         ' lblTransactions
@@ -518,7 +520,7 @@ Partial Class SalesReport
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.White
-        ClientSize = New Size(1400, 982)
+        ClientSize = New Size(1400, 1055)
         Controls.Add(pnlTransactions)
         Controls.Add(pnlCharts)
         Controls.Add(pnlMetrics)
