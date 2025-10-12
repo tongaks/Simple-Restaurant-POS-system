@@ -304,6 +304,7 @@ Partial Class Order
         OrderPnl.Name = "OrderPnl"
         OrderPnl.Size = New Size(452, 478)
         OrderPnl.TabIndex = 6
+        OrderPnl.WrapContents = False
         ' 
         ' Order
         ' 

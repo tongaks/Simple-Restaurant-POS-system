@@ -44,7 +44,6 @@ Public Class Form1
     Private Sub HandleEnter(sender As Object, e As KeyPressEventArgs) Handles UsernameTxtBox.KeyPress, PasswordTxtBox.KeyPress
         If Asc(e.KeyChar) = 13 Then
             Dim table As String = If((IsAdmin), "Admin", "User")
-            MsgBox("table: " & table)
             HandleLogin(table)
         End If
     End Sub

@@ -162,7 +162,7 @@ Partial Class Settings
         ConfigPnl.Enabled = False
         ConfigPnl.Location = New Point(21, 85)
         ConfigPnl.Name = "ConfigPnl"
-        ConfigPnl.Size = New Size(337, 197)
+        ConfigPnl.Size = New Size(739, 214)
         ConfigPnl.TabIndex = 7
         ' 
         ' FontSizeTxtBtn

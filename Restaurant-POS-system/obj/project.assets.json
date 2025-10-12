@@ -15,82 +15,6 @@
           }
         }
       },
-      "CrystalReports.ReportAppServer.CommLayer/13.0.4003": {
-        "type": "package",
-        "dependencies": {
-          "CrystalReports.ReportAppServer.CommonObjectModel": "13.0.4003"
-        },
-        "compile": {
-          "lib/net40/CrystalDecisions.ReportAppServer.CommLayer.dll": {}
-        },
-        "runtime": {
-          "lib/net40/CrystalDecisions.ReportAppServer.CommLayer.dll": {}
-        }
-      },
-      "CrystalReports.ReportAppServer.CommonObjectModel/13.0.4003": {
-        "type": "package",
-        "compile": {
-          "lib/net40/CrystalDecisions.ReportAppServer.CommonObjectModel.dll": {}
-        },
-        "runtime": {
-          "lib/net40/CrystalDecisions.ReportAppServer.CommonObjectModel.dll": {}
-        }
-      },
-      "CrystalReports.ReportAppServer.Controllers/13.0.4003": {
-        "type": "package",
-        "dependencies": {
-          "CrystalReports.ReportAppServer.CommLayer": "13.0.4003",
-          "CrystalReports.ReportAppServer.CommonObjectModel": "13.0.4003",
-          "CrystalReports.ReportAppServer.CubeDefModel": "13.0.4003",
-          "CrystalReports.ReportAppServer.DataDefModel": "13.0.4003",
-          "CrystalReports.ReportAppServer.ReportDefModel": "13.0.4003"
-        },
-        "compile": {
-          "lib/net40/CrystalDecisions.ReportAppServer.Controllers.dll": {}
-        },
-        "runtime": {
-          "lib/net40/CrystalDecisions.ReportAppServer.Controllers.dll": {}
-        }
-      },
-      "CrystalReports.ReportAppServer.CubeDefModel/13.0.4003": {
-        "type": "package",
-        "dependencies": {
-          "CrystalReports.ReportAppServer.CommonObjectModel": "13.0.4003",
-          "CrystalReports.ReportAppServer.DataDefModel": "13.0.4003"
-        },
-        "compile": {
-          "lib/net40/CrystalDecisions.ReportAppServer.CubeDefModel.dll": {}
-        },
-        "runtime": {
-          "lib/net40/CrystalDecisions.ReportAppServer.CubeDefModel.dll": {}
-        }
-      },
-      "CrystalReports.ReportAppServer.DataDefModel/13.0.4003": {
-        "type": "package",
-        "dependencies": {
-          "CrystalReports.ReportAppServer.CommonObjectModel": "13.0.4003"
-        },
-        "compile": {
-          "lib/net40/CrystalDecisions.ReportAppServer.DataDefModel.dll": {}
-        },
-        "runtime": {
-          "lib/net40/CrystalDecisions.ReportAppServer.DataDefModel.dll": {}
-        }
-      },
-      "CrystalReports.ReportAppServer.ReportDefModel/13.0.4003": {
-        "type": "package",
-        "dependencies": {
-          "CrystalReports.ReportAppServer.CommonObjectModel": "13.0.4003",
-          "CrystalReports.ReportAppServer.CubeDefModel": "13.0.4003",
-          "CrystalReports.ReportAppServer.DataDefModel": "13.0.4003"
-        },
-        "compile": {
-          "lib/net40/CrystalDecisions.ReportAppServer.ReportDefModel.dll": {}
-        },
-        "runtime": {
-          "lib/net40/CrystalDecisions.ReportAppServer.ReportDefModel.dll": {}
-        }
-      },
       "Font.Awesome/5.13.0": {
         "type": "package"
       },
@@ -343,6 +267,30 @@
             "assetType": "native",
             "rid": "win-x64"
           }
+        }
+      },
+      "PdfiumViewer/2.13.0": {
+        "type": "package",
+        "compile": {
+          "lib/net20/PdfiumViewer.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net20/PdfiumViewer.dll": {
+            "related": ".xml"
+          }
+        },
+        "resource": {
+          "lib/net20/nl/PdfiumViewer.resources.dll": {
+            "locale": "nl"
+          }
+        }
+      },
+      "PdfiumViewer.Native.x86_64.v8-xfa/2018.4.8.256": {
+        "type": "package",
+        "build": {
+          "Build/PdfiumViewer.Native.x86_64.v8-xfa.props": {}
         }
       },
       "PDFsharp/6.2.2": {
@@ -842,102 +790,6 @@
         "packageIcon.png"
       ]
     },
-    "CrystalReports.ReportAppServer.CommLayer/13.0.4003": {
-      "sha512": "hBoIi0tS4i8UxM8q+QAP11QdhhR2fRURJb7nvAtPEWT4fSO9+1f9vl8EDkGUp3aletMetR5r+WjAQZRrHcLoyg==",
-      "type": "package",
-      "path": "crystalreports.reportappserver.commlayer/13.0.4003",
-      "files": [
-        ".editoricon.png",
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "CHANGELOG.md",
-        "LICENSE",
-        "README.md",
-        "crystalreports.reportappserver.commlayer.13.0.4003.nupkg.sha512",
-        "crystalreports.reportappserver.commlayer.nuspec",
-        "lib/net40/CrystalDecisions.ReportAppServer.CommLayer.dll"
-      ]
-    },
-    "CrystalReports.ReportAppServer.CommonObjectModel/13.0.4003": {
-      "sha512": "dLSfzSNg+OxDTcqUFahhCLvMBxF7bKDxnh1EBKXoLl65SSHP8QBNAeI4CpKXtNimUOUJ/sW1McuGYX4CAgUmAw==",
-      "type": "package",
-      "path": "crystalreports.reportappserver.commonobjectmodel/13.0.4003",
-      "files": [
-        ".editoricon.png",
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "CHANGELOG.md",
-        "LICENSE",
-        "README.md",
-        "crystalreports.reportappserver.commonobjectmodel.13.0.4003.nupkg.sha512",
-        "crystalreports.reportappserver.commonobjectmodel.nuspec",
-        "lib/net40/CrystalDecisions.ReportAppServer.CommonObjectModel.dll"
-      ]
-    },
-    "CrystalReports.ReportAppServer.Controllers/13.0.4003": {
-      "sha512": "60Tg65l9NCFX4u8MFX2QWAL7GmQhtmUXJaNhv9F/vXEmlFXHC76vbkwgBumKQcIPpoOhlZK/dqz6YcNP0sHkgA==",
-      "type": "package",
-      "path": "crystalreports.reportappserver.controllers/13.0.4003",
-      "files": [
-        ".editoricon.png",
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "CHANGELOG.md",
-        "LICENSE",
-        "README.md",
-        "crystalreports.reportappserver.controllers.13.0.4003.nupkg.sha512",
-        "crystalreports.reportappserver.controllers.nuspec",
-        "lib/net40/CrystalDecisions.ReportAppServer.Controllers.dll"
-      ]
-    },
-    "CrystalReports.ReportAppServer.CubeDefModel/13.0.4003": {
-      "sha512": "ZBns1JhhuBrHudpZowKNRlhXY/GW5BWMoqyafM3eHxoZL1K4mSn/UYPEzNFseYio4abUs5Iw4+K8adCOtfinqw==",
-      "type": "package",
-      "path": "crystalreports.reportappserver.cubedefmodel/13.0.4003",
-      "files": [
-        ".editoricon.png",
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "CHANGELOG.md",
-        "LICENSE",
-        "README.md",
-        "crystalreports.reportappserver.cubedefmodel.13.0.4003.nupkg.sha512",
-        "crystalreports.reportappserver.cubedefmodel.nuspec",
-        "lib/net40/CrystalDecisions.ReportAppServer.CubeDefModel.dll"
-      ]
-    },
-    "CrystalReports.ReportAppServer.DataDefModel/13.0.4003": {
-      "sha512": "8sSuETn80yMzW0Edjn6Y3Dyif85QKCf4771Q44Jk/soxTo8FcSG8VEm91M9d+CrFivFqlsH7ENPjjKhQ1kInsg==",
-      "type": "package",
-      "path": "crystalreports.reportappserver.datadefmodel/13.0.4003",
-      "files": [
-        ".editoricon.png",
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "CHANGELOG.md",
-        "LICENSE",
-        "README.md",
-        "crystalreports.reportappserver.datadefmodel.13.0.4003.nupkg.sha512",
-        "crystalreports.reportappserver.datadefmodel.nuspec",
-        "lib/net40/CrystalDecisions.ReportAppServer.DataDefModel.dll"
-      ]
-    },
-    "CrystalReports.ReportAppServer.ReportDefModel/13.0.4003": {
-      "sha512": "lEXNeJ9x2GVPL/+PmhTJrsY84uGwgj+Uum1CLBnphdpkORBwauETrU1dDSVaQbgYGahfDZgm0PtZEWVbU2MfjQ==",
-      "type": "package",
-      "path": "crystalreports.reportappserver.reportdefmodel/13.0.4003",
-      "files": [
-        ".editoricon.png",
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "CHANGELOG.md",
-        "LICENSE",
-        "README.md",
-        "crystalreports.reportappserver.reportdefmodel.13.0.4003.nupkg.sha512",
-        "crystalreports.reportappserver.reportdefmodel.nuspec",
-        "lib/net40/CrystalDecisions.ReportAppServer.ReportDefModel.dll"
-      ]
-    },
     "Font.Awesome/5.13.0": {
       "sha512": "bb+aWUhtojzkqmgPh1HfuOWuggnbhH5Y2PPYfTGN11w0Z4eU8/ZwauLlOX/kAg5/Vch/5T/l84VeaWjMU2aclg==",
       "type": "package",
@@ -1422,6 +1274,35 @@
         "runtimes/win-x64/native/k5sprt64.dll",
         "runtimes/win-x64/native/krb5_64.dll",
         "runtimes/win-x64/native/krbcc64.dll"
+      ]
+    },
+    "PdfiumViewer/2.13.0": {
+      "sha512": "Nw4owBmJzDVXoMRjCnqPbET07CPOawwhcNjt+PyRaSxONN9bsFF+cm9kcMsDLEAEaxsiDJo5jls8bCQjvjidkA==",
+      "type": "package",
+      "path": "pdfiumviewer/2.13.0",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Tools/Install.ps1",
+        "lib/net20/PdfiumViewer.dll",
+        "lib/net20/PdfiumViewer.xml",
+        "lib/net20/nl/PdfiumViewer.resources.dll",
+        "pdfiumviewer.2.13.0.nupkg.sha512",
+        "pdfiumviewer.nuspec"
+      ]
+    },
+    "PdfiumViewer.Native.x86_64.v8-xfa/2018.4.8.256": {
+      "sha512": "0RQwmLMPKOHBRqRK+NPMR2H5EQ4KlYO+LnT3Y2lByVUa5/JTPCMswL46JEXX+/MAfJtCpS2PzJvy6QzpH2nuIw==",
+      "type": "package",
+      "path": "pdfiumviewer.native.x86_64.v8-xfa/2018.4.8.256",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Build/PdfiumViewer.Native.x86_64.v8-xfa.props",
+        "Build/x64/pdfium.dll",
+        "pdfiumviewer.native.x86_64.v8-xfa.2018.4.8.256.nupkg.sha512",
+        "pdfiumviewer.native.x86_64.v8-xfa.nuspec"
       ]
     },
     "PDFsharp/6.2.2": {
@@ -2565,12 +2446,13 @@
   },
   "projectFileDependencyGroups": {
     "net8.0-windows7.0": [
-      "CrystalReports.ReportAppServer.Controllers >= 13.0.4003",
       "Font.Awesome >= 5.13.0",
       "FontAwesome >= 4.7.0",
       "FontAwesome.Sharp >= 6.6.0",
       "MySql.Data >= 9.4.0",
       "PDFsharp >= 6.2.2",
+      "PdfiumViewer >= 2.13.0",
+      "PdfiumViewer.Native.x86_64.v8-xfa >= 2018.4.8.256",
       "System.Data.OleDb >= 9.0.9"
     ]
   },
@@ -2624,10 +2506,6 @@
       "net8.0-windows7.0": {
         "targetAlias": "net8.0-windows",
         "dependencies": {
-          "CrystalReports.ReportAppServer.Controllers": {
-            "target": "Package",
-            "version": "[13.0.4003, )"
-          },
           "Font.Awesome": {
             "target": "Package",
             "version": "[5.13.0, )"
@@ -2647,6 +2525,14 @@
           "PDFsharp": {
             "target": "Package",
             "version": "[6.2.2, )"
+          },
+          "PdfiumViewer": {
+            "target": "Package",
+            "version": "[2.13.0, )"
+          },
+          "PdfiumViewer.Native.x86_64.v8-xfa": {
+            "target": "Package",
+            "version": "[2018.4.8.256, )"
           },
           "System.Data.OleDb": {
             "target": "Package",
@@ -2681,58 +2567,8 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Package 'CrystalReports.ReportAppServer.CommLayer 13.0.4003' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0-windows7.0'. This package may not be fully compatible with your project.",
-      "libraryId": "CrystalReports.ReportAppServer.CommLayer",
-      "targetGraphs": [
-        "net8.0-windows7.0"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'CrystalReports.ReportAppServer.CommonObjectModel 13.0.4003' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0-windows7.0'. This package may not be fully compatible with your project.",
-      "libraryId": "CrystalReports.ReportAppServer.CommonObjectModel",
-      "targetGraphs": [
-        "net8.0-windows7.0"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'CrystalReports.ReportAppServer.Controllers 13.0.4003' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0-windows7.0'. This package may not be fully compatible with your project.",
-      "libraryId": "CrystalReports.ReportAppServer.Controllers",
-      "targetGraphs": [
-        "net8.0-windows7.0"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'CrystalReports.ReportAppServer.CubeDefModel 13.0.4003' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0-windows7.0'. This package may not be fully compatible with your project.",
-      "libraryId": "CrystalReports.ReportAppServer.CubeDefModel",
-      "targetGraphs": [
-        "net8.0-windows7.0"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'CrystalReports.ReportAppServer.DataDefModel 13.0.4003' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0-windows7.0'. This package may not be fully compatible with your project.",
-      "libraryId": "CrystalReports.ReportAppServer.DataDefModel",
-      "targetGraphs": [
-        "net8.0-windows7.0"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'CrystalReports.ReportAppServer.ReportDefModel 13.0.4003' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0-windows7.0'. This package may not be fully compatible with your project.",
-      "libraryId": "CrystalReports.ReportAppServer.ReportDefModel",
+      "message": "Package 'PdfiumViewer 2.13.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0-windows7.0'. This package may not be fully compatible with your project.",
+      "libraryId": "PdfiumViewer",
       "targetGraphs": [
         "net8.0-windows7.0"
       ]

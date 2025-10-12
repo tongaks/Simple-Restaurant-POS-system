@@ -1,4 +1,6 @@
 ﻿Imports System.ComponentModel.DataAnnotations
+Imports System.Data.OleDb
+Imports System.Drawing.Text
 Imports System.IO
 Imports System.Reflection.Metadata
 Imports System.Transactions
@@ -6,16 +8,15 @@ Imports System.Windows.Forms.Design
 Imports System.Xml
 Imports MySql.Data
 Imports MySql.Data.MySqlClient
-Imports Mysqlx.Resultset
-Imports PdfSharp.Drawing
-Imports PdfSharp.Pdf
-Imports ZstdSharp.Unsafe
-Imports PdfSharp.Quality
-Imports PdfSharp.Fonts
-Imports System.Data.OleDb
 Imports Mysqlx
+Imports Mysqlx.Resultset
 Imports Mysqlx.XDevAPI.Common
-Imports System.Drawing.Text
+Imports PdfiumViewer
+Imports PdfSharp.Drawing
+Imports PdfSharp.Fonts
+Imports PdfSharp.Pdf
+Imports PdfSharp.Quality
+Imports ZstdSharp.Unsafe
 
 
 Public Class Order
@@ -383,7 +384,9 @@ Public Class Order
             Dim itemName As String = CStr(row.Cells(1).Value)
             Dim itemPrice As String = CStr(row.Cells(2).Value)
             Dim itemImage As String = CStr(row.Cells(4).Value)
-            OrderPnl.Controls.Add(AddItemToOrderList(itemName, itemPrice, itemAmount, itemImage))
+            Dim item As FlowLayoutPanel = AddItemToOrderList(itemName, itemPrice, itemAmount, itemImage)
+            OrderPnl.Controls.Add(item)
+            OrderPnl.ScrollControlIntoView(item)
         Next row
     End Sub
 
@@ -413,7 +416,29 @@ Public Class Order
 
             If Command.ExecuteNonQuery > 0 Then
                 MsgBox("Order created", MsgBoxStyle.Information, "Success")
-                CreateReceiptPDF()
+                Dim receiptName = CreateReceiptPDF()
+
+                ' display receipt
+                Dim receiptForm As New Form
+                receiptForm.Size = New System.Drawing.Size(500, 800)
+                receiptForm.KeyPreview = True
+                receiptForm.Text = "Receipt"
+                receiptForm.StartPosition = FormStartPosition.CenterScreen
+                AddHandler receiptForm.KeyPress, Sub()
+                                                     receiptForm.Close()
+                                                 End Sub
+
+                Dim pdfViewer1 = New PdfiumViewer.PdfViewer()
+                pdfViewer1.Dock = DockStyle.Fill
+                receiptForm.Controls.Add(pdfViewer1)
+                pdfViewer1.Document = PdfiumViewer.PdfDocument.Load(receiptName)
+                pdfViewer1.ZoomMode = PdfViewerZoomMode.FitWidth
+
+                receiptForm.Height = pdfViewer1.Height
+                receiptForm.ShowDialog()
+
+
+                InsertActivityLog("Created an order with total of " & CurrentTotal)
 
                 CurrentTotal = 0
                 CurrentSubTotal = 0
@@ -425,7 +450,6 @@ Public Class Order
 
                 DataGridView1.Rows.Clear()
                 UpdateItemOrderList()
-                InsertActivityLog("Created an order")
                 FoodPnl.Focus()
             End If
 
@@ -467,12 +491,34 @@ Public Class Order
         Dim applyVoucherForm As New ApplyVoucher
 
         If applyVoucherForm.ShowDialog() = DialogResult.OK Then
-            For Each txtbox As TextBox In applyVoucherForm.DiscountPnl.Controls.OfType(Of TextBox)
-                DiscountValue = Double.Parse(txtbox.Text) / 100
-                DiscountLbl.Text = "%" & Double.Parse(txtbox.Text)
+            Dim discountType As String = ""
+
+            For Each cntrl As Control In applyVoucherForm.DiscountPnl.Controls
+                If TypeOf cntrl Is TextBox Then
+                    Dim txtBox As TextBox = CType(cntrl, TextBox)
+                    Dim val As Double = 0.0
+
+                    If Double.TryParse(txtBox.Text, val) Then
+                        DiscountValue = val / 100
+                        DiscountLbl.Text = "%" & txtBox.Text
+                    End If
+
+                ElseIf TypeOf cntrl Is ComboBox Then
+                    Dim cmbBox As ComboBox = CType(cntrl, ComboBox)
+
+                    If Not cmbBox.Text.Contains("Select") Then
+                        discountType = cmbBox.Text
+                    End If
+
+                End If
             Next
 
-            InsertActivityLog("Applied discount: " & DiscountValue)
+            Dim activityStatement As String = "Applied discount: " & DiscountValue
+            If Not String.IsNullOrEmpty(discountType) Then
+                activityStatement &= " Type: " & discountType
+            End If
+
+            InsertActivityLog(activityStatement)
             Dim appliedDiscount = (DiscountValue * CurrentTotal)
             CurrentTotal = If((Not DiscountValue = 0), Integer.Abs(appliedDiscount - CurrentSubTotal), CurrentSubTotal)
             TotalLbl.Text = "₱" + CurrentTotal.ToString
@@ -490,8 +536,8 @@ Public Class Order
 
 
     ' Create receipt
-    Private Sub CreateReceiptPDF()
-        Dim receipt As New PdfDocument
+    Private Function CreateReceiptPDF()
+        Dim receipt As New PdfSharp.Pdf.PdfDocument
         Dim page As PdfPage = receipt.AddPage()
         Dim gfx As XGraphics = XGraphics.FromPdfPage(page)
         Dim regFont As New XFont("Arial", 12, XFontStyleEx.Regular)
@@ -499,10 +545,10 @@ Public Class Order
 
         Dim currentDate As String = Date.Now.ToString
 
-        gfx.DrawString("User: " & CurrentUser, regFont, textBrush, New XRect(50, 50, 200, 100), XStringFormats.TopLeft)
+        gfx.DrawString("Cashier: " & CurrentUser, regFont, textBrush, New XRect(50, 50, 200, 100), XStringFormats.TopLeft)
         gfx.DrawString("Date & time: " & currentDate, regFont, textBrush, New XRect(50, 80, 200, 100), XStringFormats.TopLeft)
 
-        Dim posY As Integer = 100
+        Dim posY As Integer = 120
         For Each row As DataGridViewRow In DataGridView1.Rows
             Dim itemName As String = row.Cells(1).Value.ToString
             Dim itemPrice As String = row.Cells(2).Value.ToString
@@ -512,7 +558,9 @@ Public Class Order
             posY += 30
         Next
 
-        gfx.DrawString("Total: ₱" & CurrentTotal, regFont, textBrush, New XRect(50, posY + 50, 200, 100), XStringFormats.TopLeft)
+        gfx.DrawString("Sub total: ₱" & CurrentSubTotal, regFont, textBrush, New XRect(50, posY + 50, 200, 100), XStringFormats.TopLeft)
+        gfx.DrawString("Discount: %" & DiscountValue, regFont, textBrush, New XRect(50, posY + 80, 200, 100), XStringFormats.TopLeft)
+        gfx.DrawString("Total: ₱" & CurrentTotal, regFont, textBrush, New XRect(50, posY + 110, 200, 100), XStringFormats.TopLeft)
 
         Dim receiptID As String = ""
 
@@ -540,7 +588,8 @@ Public Class Order
         receipt.Save(receiptPath)
 
         MsgBox("A receipt has been created at: " & receiptPath)
-    End Sub
+        Return receiptPath
+    End Function
 
 
 
@@ -652,7 +701,9 @@ Public Class Order
             newRow.CreateCells(DataGridView1, 1, itemName, itemPrice, itemPrice, tagImgPath)
             DataGridView1.Rows.Add(newRow)
 
-            OrderPnl.Controls.Add(AddItemToOrderList(itemName, itemPrice, "1", tagImgPath))
+            Dim item As FlowLayoutPanel = AddItemToOrderList(itemName, itemPrice, itemAmount, tagImgPath)
+            OrderPnl.Controls.Add(item)
+            OrderPnl.ScrollControlIntoView(item)
         ElseIf nameExists Then
             UpdateItemOrderList()  ' just update the order list if it exists
         End If

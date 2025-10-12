@@ -3,32 +3,40 @@
   "WorkspaceRootPath": "C:\\Users\\Administrator\\source\\repos\\Restaurant-POS-system\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{60F555CE-20F7-42B7-ABA9-AA8E0EF53592}|Restaurant-POS-system\\Restaurant-POS-system.vbproj|c:\\users\\administrator\\source\\repos\\restaurant-pos-system\\restaurant-pos-system\\applyvoucher.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form",
-      "RelativeMoniker": "D:0:0:{60F555CE-20F7-42B7-ABA9-AA8E0EF53592}|Restaurant-POS-system\\Restaurant-POS-system.vbproj|solutionrelative:restaurant-pos-system\\applyvoucher.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{60F555CE-20F7-42B7-ABA9-AA8E0EF53592}|Restaurant-POS-system\\Restaurant-POS-system.vbproj|c:\\users\\administrator\\source\\repos\\restaurant-pos-system\\restaurant-pos-system\\applyvoucher.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
-      "RelativeMoniker": "D:0:0:{60F555CE-20F7-42B7-ABA9-AA8E0EF53592}|Restaurant-POS-system\\Restaurant-POS-system.vbproj|solutionrelative:restaurant-pos-system\\applyvoucher.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{60F555CE-20F7-42B7-ABA9-AA8E0EF53592}|Restaurant-POS-system\\Restaurant-POS-system.vbproj|c:\\users\\administrator\\source\\repos\\restaurant-pos-system\\restaurant-pos-system\\settings.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form",
-      "RelativeMoniker": "D:0:0:{60F555CE-20F7-42B7-ABA9-AA8E0EF53592}|Restaurant-POS-system\\Restaurant-POS-system.vbproj|solutionrelative:restaurant-pos-system\\settings.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form"
+      "AbsoluteMoniker": "D:0:0:{60F555CE-20F7-42B7-ABA9-AA8E0EF53592}|Restaurant-POS-system\\Restaurant-POS-system.vbproj|c:\\users\\administrator\\source\\repos\\restaurant-pos-system\\restaurant-pos-system\\ordering_form.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{60F555CE-20F7-42B7-ABA9-AA8E0EF53592}|Restaurant-POS-system\\Restaurant-POS-system.vbproj|solutionrelative:restaurant-pos-system\\ordering_form.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{60F555CE-20F7-42B7-ABA9-AA8E0EF53592}|Restaurant-POS-system\\Restaurant-POS-system.vbproj|c:\\users\\administrator\\source\\repos\\restaurant-pos-system\\restaurant-pos-system\\ordering_form.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form",
       "RelativeMoniker": "D:0:0:{60F555CE-20F7-42B7-ABA9-AA8E0EF53592}|Restaurant-POS-system\\Restaurant-POS-system.vbproj|solutionrelative:restaurant-pos-system\\ordering_form.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{60F555CE-20F7-42B7-ABA9-AA8E0EF53592}|Restaurant-POS-system\\Restaurant-POS-system.vbproj|c:\\users\\administrator\\source\\repos\\restaurant-pos-system\\restaurant-pos-system\\databasehandler.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
-      "RelativeMoniker": "D:0:0:{60F555CE-20F7-42B7-ABA9-AA8E0EF53592}|Restaurant-POS-system\\Restaurant-POS-system.vbproj|solutionrelative:restaurant-pos-system\\databasehandler.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+      "AbsoluteMoniker": "D:0:0:{60F555CE-20F7-42B7-ABA9-AA8E0EF53592}|Restaurant-POS-system\\Restaurant-POS-system.vbproj|c:\\users\\administrator\\source\\repos\\restaurant-pos-system\\restaurant-pos-system\\receipt.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form",
+      "RelativeMoniker": "D:0:0:{60F555CE-20F7-42B7-ABA9-AA8E0EF53592}|Restaurant-POS-system\\Restaurant-POS-system.vbproj|solutionrelative:restaurant-pos-system\\receipt.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60F555CE-20F7-42B7-ABA9-AA8E0EF53592}|Restaurant-POS-system\\Restaurant-POS-system.vbproj|c:\\users\\administrator\\source\\repos\\restaurant-pos-system\\restaurant-pos-system\\applyvoucher.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form",
+      "RelativeMoniker": "D:0:0:{60F555CE-20F7-42B7-ABA9-AA8E0EF53592}|Restaurant-POS-system\\Restaurant-POS-system.vbproj|solutionrelative:restaurant-pos-system\\applyvoucher.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60F555CE-20F7-42B7-ABA9-AA8E0EF53592}|Restaurant-POS-system\\Restaurant-POS-system.vbproj|c:\\users\\administrator\\source\\repos\\restaurant-pos-system\\restaurant-pos-system\\login_form.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{60F555CE-20F7-42B7-ABA9-AA8E0EF53592}|Restaurant-POS-system\\Restaurant-POS-system.vbproj|solutionrelative:restaurant-pos-system\\login_form.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60F555CE-20F7-42B7-ABA9-AA8E0EF53592}|Restaurant-POS-system\\Restaurant-POS-system.vbproj|c:\\users\\administrator\\source\\repos\\restaurant-pos-system\\restaurant-pos-system\\settings.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form",
+      "RelativeMoniker": "D:0:0:{60F555CE-20F7-42B7-ABA9-AA8E0EF53592}|Restaurant-POS-system\\Restaurant-POS-system.vbproj|solutionrelative:restaurant-pos-system\\settings.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form"
     },
     {
       "AbsoluteMoniker": "D:0:0:{60F555CE-20F7-42B7-ABA9-AA8E0EF53592}|Restaurant-POS-system\\Restaurant-POS-system.vbproj|c:\\users\\administrator\\source\\repos\\restaurant-pos-system\\restaurant-pos-system\\settings.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
       "RelativeMoniker": "D:0:0:{60F555CE-20F7-42B7-ABA9-AA8E0EF53592}|Restaurant-POS-system\\Restaurant-POS-system.vbproj|solutionrelative:restaurant-pos-system\\settings.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{60F555CE-20F7-42B7-ABA9-AA8E0EF53592}|Restaurant-POS-system\\Restaurant-POS-system.vbproj|c:\\users\\administrator\\source\\repos\\restaurant-pos-system\\restaurant-pos-system\\ordering_form.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
-      "RelativeMoniker": "D:0:0:{60F555CE-20F7-42B7-ABA9-AA8E0EF53592}|Restaurant-POS-system\\Restaurant-POS-system.vbproj|solutionrelative:restaurant-pos-system\\ordering_form.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+      "AbsoluteMoniker": "D:0:0:{60F555CE-20F7-42B7-ABA9-AA8E0EF53592}|Restaurant-POS-system\\Restaurant-POS-system.vbproj|c:\\users\\administrator\\source\\repos\\restaurant-pos-system\\restaurant-pos-system\\applyvoucher.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{60F555CE-20F7-42B7-ABA9-AA8E0EF53592}|Restaurant-POS-system\\Restaurant-POS-system.vbproj|solutionrelative:restaurant-pos-system\\applyvoucher.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60F555CE-20F7-42B7-ABA9-AA8E0EF53592}|Restaurant-POS-system\\Restaurant-POS-system.vbproj|c:\\users\\administrator\\source\\repos\\restaurant-pos-system\\restaurant-pos-system\\databasehandler.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{60F555CE-20F7-42B7-ABA9-AA8E0EF53592}|Restaurant-POS-system\\Restaurant-POS-system.vbproj|solutionrelative:restaurant-pos-system\\databasehandler.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,36 +46,36 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ApplyVoucher.vb [Design]",
-              "DocumentMoniker": "C:\\Users\\Administrator\\source\\repos\\Restaurant-POS-system\\Restaurant-POS-system\\ApplyVoucher.vb",
-              "RelativeDocumentMoniker": "Restaurant-POS-system\\ApplyVoucher.vb",
-              "ToolTip": "C:\\Users\\Administrator\\source\\repos\\Restaurant-POS-system\\Restaurant-POS-system\\ApplyVoucher.vb [Design]",
-              "RelativeToolTip": "Restaurant-POS-system\\ApplyVoucher.vb [Design]",
+              "DocumentIndex": 2,
+              "Title": "Receipt.vb [Design]",
+              "DocumentMoniker": "C:\\Users\\Administrator\\source\\repos\\Restaurant-POS-system\\Restaurant-POS-system\\Receipt.vb",
+              "RelativeDocumentMoniker": "Restaurant-POS-system\\Receipt.vb",
+              "ToolTip": "C:\\Users\\Administrator\\source\\repos\\Restaurant-POS-system\\Restaurant-POS-system\\Receipt.vb [Design]",
+              "RelativeToolTip": "Restaurant-POS-system\\Receipt.vb [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2025-10-11T06:58:54.026Z",
+              "WhenOpened": "2025-10-12T17:59:31.723Z",
               "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ApplyVoucher.vb",
-              "DocumentMoniker": "C:\\Users\\Administrator\\source\\repos\\Restaurant-POS-system\\Restaurant-POS-system\\ApplyVoucher.vb",
-              "RelativeDocumentMoniker": "Restaurant-POS-system\\ApplyVoucher.vb",
-              "ToolTip": "C:\\Users\\Administrator\\source\\repos\\Restaurant-POS-system\\Restaurant-POS-system\\ApplyVoucher.vb",
-              "RelativeToolTip": "Restaurant-POS-system\\ApplyVoucher.vb",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC0AAAALAAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "Login_Form.vb",
+              "DocumentMoniker": "C:\\Users\\Administrator\\source\\repos\\Restaurant-POS-system\\Restaurant-POS-system\\Login_Form.vb",
+              "RelativeDocumentMoniker": "Restaurant-POS-system\\Login_Form.vb",
+              "ToolTip": "C:\\Users\\Administrator\\source\\repos\\Restaurant-POS-system\\Restaurant-POS-system\\Login_Form.vb",
+              "RelativeToolTip": "Restaurant-POS-system\\Login_Form.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADAAAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2025-10-11T06:58:26.275Z",
+              "WhenOpened": "2025-10-12T17:28:46.571Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "Settings.vb [Design]",
               "DocumentMoniker": "C:\\Users\\Administrator\\source\\repos\\Restaurant-POS-system\\Restaurant-POS-system\\Settings.vb",
               "RelativeDocumentMoniker": "Restaurant-POS-system\\Settings.vb",
@@ -79,7 +87,32 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 0,
+              "Title": "Ordering_form.vb",
+              "DocumentMoniker": "C:\\Users\\Administrator\\source\\repos\\Restaurant-POS-system\\Restaurant-POS-system\\Ordering_form.vb",
+              "RelativeDocumentMoniker": "Restaurant-POS-system\\Ordering_form.vb",
+              "ToolTip": "C:\\Users\\Administrator\\source\\repos\\Restaurant-POS-system\\Restaurant-POS-system\\Ordering_form.vb",
+              "RelativeToolTip": "Restaurant-POS-system\\Ordering_form.vb",
+              "ViewState": "AgIAAKoCAAAAAAAAAAAhwL8CAABoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-10-01T02:44:04.166Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Ordering_form.vb [Design]",
+              "DocumentMoniker": "C:\\Users\\Administrator\\source\\repos\\Restaurant-POS-system\\Restaurant-POS-system\\Ordering_form.vb",
+              "RelativeDocumentMoniker": "Restaurant-POS-system\\Ordering_form.vb",
+              "ToolTip": "C:\\Users\\Administrator\\source\\repos\\Restaurant-POS-system\\Restaurant-POS-system\\Ordering_form.vb [Design]",
+              "RelativeToolTip": "Restaurant-POS-system\\Ordering_form.vb [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-10-07T11:19:15.891Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "Settings.vb",
               "DocumentMoniker": "C:\\Users\\Administrator\\source\\repos\\Restaurant-POS-system\\Restaurant-POS-system\\Settings.vb",
               "RelativeDocumentMoniker": "Restaurant-POS-system\\Settings.vb",
@@ -92,38 +125,38 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Ordering_form.vb",
-              "DocumentMoniker": "C:\\Users\\Administrator\\source\\repos\\Restaurant-POS-system\\Restaurant-POS-system\\Ordering_form.vb",
-              "RelativeDocumentMoniker": "Restaurant-POS-system\\Ordering_form.vb",
-              "ToolTip": "C:\\Users\\Administrator\\source\\repos\\Restaurant-POS-system\\Restaurant-POS-system\\Ordering_form.vb",
-              "RelativeToolTip": "Restaurant-POS-system\\Ordering_form.vb",
-              "ViewState": "AgIAABMAAAAAAAAAAABgvRkAAAAoAAAAAAAAAA==",
+              "DocumentIndex": 7,
+              "Title": "ApplyVoucher.vb",
+              "DocumentMoniker": "C:\\Users\\Administrator\\source\\repos\\Restaurant-POS-system\\Restaurant-POS-system\\ApplyVoucher.vb",
+              "RelativeDocumentMoniker": "Restaurant-POS-system\\ApplyVoucher.vb",
+              "ToolTip": "C:\\Users\\Administrator\\source\\repos\\Restaurant-POS-system\\Restaurant-POS-system\\ApplyVoucher.vb",
+              "RelativeToolTip": "Restaurant-POS-system\\ApplyVoucher.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAE4AAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2025-10-01T02:44:04.166Z",
+              "WhenOpened": "2025-10-11T06:58:26.275Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "Ordering_form.vb [Design]",
-              "DocumentMoniker": "C:\\Users\\Administrator\\source\\repos\\Restaurant-POS-system\\Restaurant-POS-system\\Ordering_form.vb",
-              "RelativeDocumentMoniker": "Restaurant-POS-system\\Ordering_form.vb",
-              "ToolTip": "C:\\Users\\Administrator\\source\\repos\\Restaurant-POS-system\\Restaurant-POS-system\\Ordering_form.vb [Design]",
-              "RelativeToolTip": "Restaurant-POS-system\\Ordering_form.vb [Design]",
+              "Title": "ApplyVoucher.vb [Design]",
+              "DocumentMoniker": "C:\\Users\\Administrator\\source\\repos\\Restaurant-POS-system\\Restaurant-POS-system\\ApplyVoucher.vb",
+              "RelativeDocumentMoniker": "Restaurant-POS-system\\ApplyVoucher.vb",
+              "ToolTip": "C:\\Users\\Administrator\\source\\repos\\Restaurant-POS-system\\Restaurant-POS-system\\ApplyVoucher.vb [Design]",
+              "RelativeToolTip": "Restaurant-POS-system\\ApplyVoucher.vb [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2025-10-07T11:19:15.891Z",
+              "WhenOpened": "2025-10-11T06:58:54.026Z",
               "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 8,
               "Title": "DatabaseHandler.vb",
               "DocumentMoniker": "C:\\Users\\Administrator\\source\\repos\\Restaurant-POS-system\\Restaurant-POS-system\\DatabaseHandler.vb",
               "RelativeDocumentMoniker": "Restaurant-POS-system\\DatabaseHandler.vb",
               "ToolTip": "C:\\Users\\Administrator\\source\\repos\\Restaurant-POS-system\\Restaurant-POS-system\\DatabaseHandler.vb",
               "RelativeToolTip": "Restaurant-POS-system\\DatabaseHandler.vb",
-              "ViewState": "AgIAAB8AAACiZmZmZmYiwBwAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAB8AAABQMzMzMzM2wBwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
               "WhenOpened": "2025-09-27T03:08:12.162Z",
               "EditorCaption": ""

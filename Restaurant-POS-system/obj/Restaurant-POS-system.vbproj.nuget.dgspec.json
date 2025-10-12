@@ -50,10 +50,6 @@
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
           "dependencies": {
-            "CrystalReports.ReportAppServer.Controllers": {
-              "target": "Package",
-              "version": "[13.0.4003, )"
-            },
             "Font.Awesome": {
               "target": "Package",
               "version": "[5.13.0, )"
@@ -73,6 +69,14 @@
             "PDFsharp": {
               "target": "Package",
               "version": "[6.2.2, )"
+            },
+            "PdfiumViewer": {
+              "target": "Package",
+              "version": "[2.13.0, )"
+            },
+            "PdfiumViewer.Native.x86_64.v8-xfa": {
+              "target": "Package",
+              "version": "[2018.4.8.256, )"
             },
             "System.Data.OleDb": {
               "target": "Package",

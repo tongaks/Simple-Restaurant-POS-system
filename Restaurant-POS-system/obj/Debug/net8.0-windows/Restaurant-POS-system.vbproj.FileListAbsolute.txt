@@ -45,12 +45,6 @@ C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\
 C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\bin\Debug\net8.0-windows\runtimes\win-x64\native\krb5_64.dll
 C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\bin\Debug\net8.0-windows\runtimes\win-x64\native\krbcc64.dll
 C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\bin\Debug\net8.0-windows\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
-C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\bin\Debug\net8.0-windows\CrystalDecisions.ReportAppServer.CommLayer.dll
-C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\bin\Debug\net8.0-windows\CrystalDecisions.ReportAppServer.CommonObjectModel.dll
-C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\bin\Debug\net8.0-windows\CrystalDecisions.ReportAppServer.Controllers.dll
-C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\bin\Debug\net8.0-windows\CrystalDecisions.ReportAppServer.CubeDefModel.dll
-C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\bin\Debug\net8.0-windows\CrystalDecisions.ReportAppServer.DataDefModel.dll
-C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\bin\Debug\net8.0-windows\CrystalDecisions.ReportAppServer.ReportDefModel.dll
 C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\bin\Debug\net8.0-windows\Microsoft.Extensions.DependencyInjection.dll
 C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\bin\Debug\net8.0-windows\Microsoft.Extensions.DependencyInjection.Abstractions.dll
 C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\bin\Debug\net8.0-windows\Microsoft.Extensions.Logging.dll
@@ -72,3 +66,7 @@ C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\
 C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\obj\Debug\net8.0-windows\Restaurant_POS_system.ApplyVoucher.resources
 C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\obj\Debug\net8.0-windows\Restaurant_POS_system.Resources.resources
 C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\obj\Debug\net8.0-windows\Restaurant_POS_system.Settings.resources
+C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\bin\Debug\net8.0-windows\PdfiumViewer.dll
+C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\bin\Debug\net8.0-windows\nl\PdfiumViewer.resources.dll
+C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\bin\Debug\net8.0-windows\x64\pdfium.dll
+C:\Users\Administrator\source\repos\Restaurant-POS-system\Restaurant-POS-system\obj\Debug\net8.0-windows\Restaurant_POS_system.Receipt.resources
