@@ -11,6 +11,7 @@ Imports MySql.Data.MySqlClient
 Imports Mysqlx
 Imports Mysqlx.Resultset
 Imports Mysqlx.XDevAPI.Common
+Imports Org.BouncyCastle.Asn1.Cms
 Imports PdfiumViewer
 Imports PdfSharp.Drawing
 Imports PdfSharp.Fonts
@@ -60,7 +61,7 @@ Public Class Order
     End Sub
     Private Sub OrderForm_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
         If SettingsConfig.EnableShortcutKeys Then
-            HandleKeydown(sender, e)
+            HandleKeydownSelect(sender, e)
         End If
     End Sub
 
@@ -68,15 +69,27 @@ Public Class Order
 
     ' Form dialog for increasing/decreasing item amount
     ' WIP
-    Private Sub DisplayItemDialogForm(ByVal itemAmount As Integer)
+    Private Function DisplayItemDialogForm(ByVal itemAmount As Integer)
+        'Dim itemAmount As Integer = 1
+
         Dim itemDialog As New Form
         itemDialog.Size = New System.Drawing.Size(500, 150)
         itemDialog.StartPosition = FormStartPosition.CenterScreen
+        itemDialog.KeyPreview = True
+
+        Dim mainPanel As New FlowLayoutPanel
+        mainPanel.FlowDirection = FlowDirection.TopDown
+        mainPanel.AutoSize = True
 
         Dim itemButtonPanel As New FlowLayoutPanel()
         itemButtonPanel.FlowDirection = FlowDirection.LeftToRight
         itemButtonPanel.AutoSize = True
         itemButtonPanel.Margin = New Padding(30, 10, 0, 0)
+
+        Dim itemNameLabel As New Label()
+        itemNameLabel.Text = CurrentFocused.Text
+        itemNameLabel.Font = New Font("Arial", 30, FontStyle.Bold)
+        itemNameLabel.AutoSize = True
 
         Dim itemAmountLabel As New Label()
         itemAmountLabel.Text = itemAmount.ToString
@@ -85,7 +98,7 @@ Public Class Order
 
         Dim amountWrapper As New Panel()
         amountWrapper.Size = New Size(itemAmountLabel.PreferredWidth + 10, itemButtonPanel.Height)
-        itemAmountLabel.Location = New Point(0, ((itemButtonPanel.Height - itemAmountLabel.Height) \ 2))
+        itemAmountLabel.Location = New Point(0, ((itemButtonPanel.Height - itemAmountLabel.Height) \ 2) - 30)
         amountWrapper.Controls.Add(itemAmountLabel)
 
         Dim increaseButton As New Button()
@@ -93,7 +106,10 @@ Public Class Order
         increaseButton.Tag = CurrentFocusedItem
         increaseButton.BackColor = Color.Green
         increaseButton.Size = New Size(100, 100)
-        AddHandler increaseButton.Click, AddressOf IncreaseButtonHandler
+        AddHandler increaseButton.Click, Sub()
+                                             itemAmount += 1
+                                             itemAmountLabel.Text = itemAmount.ToString
+                                         End Sub
 
         Dim decreaseButton As New Button()
         decreaseButton.Text = "-"
@@ -101,19 +117,40 @@ Public Class Order
         decreaseButton.BackColor = Color.Red
         decreaseButton.ForeColor = Color.White
         decreaseButton.Size = New Size(100, 100)
-        AddHandler decreaseButton.Click, AddressOf DecreaseButtonHandler
+        AddHandler decreaseButton.Click, Sub()
+                                             itemAmount = If((itemAmount > 1), itemAmount - 1, itemAmount)
+                                             itemAmountLabel.Text = itemAmount.ToString
+                                         End Sub
 
         itemButtonPanel.Controls.Add(increaseButton)
         itemButtonPanel.Controls.Add(amountWrapper)
         itemButtonPanel.Controls.Add(decreaseButton)
 
-        itemDialog.Controls.Add(itemButtonPanel)
-        itemDialog.Size = New System.Drawing.Size(itemButtonPanel.Width + 20, 150)
+        mainPanel.Controls.Add(itemNameLabel)
+        mainPanel.Controls.Add(itemButtonPanel)
+        itemDialog.Controls.Add(mainPanel)
+        itemDialog.Size = New System.Drawing.Size(mainPanel.Width + 50, mainPanel.Height + 50)
+
+        AddHandler itemDialog.KeyDown, Sub(sender As Object, e As KeyEventArgs)
+                                           mainPanel.Focus()
+
+                                           If e.Control AndAlso e.KeyCode = Keys.Enter Then
+                                               itemDialog.DialogResult = DialogResult.OK
+                                               itemDialog.Close()
+                                           ElseIf e.KeyCode = Keys.Up Then
+                                               MsgBox("Left")
+                                           ElseIf e.KeyCode = Keys.Escape Then
+                                               itemDialog.DialogResult = DialogResult.Cancel
+                                               itemDialog.Close()
+                                           End If
+                                       End Sub
 
         If itemDialog.ShowDialog() = DialogResult.OK Then
-            MsgBox("wow")
+            Return itemAmount
+        Else
+            Return -1
         End If
-    End Sub
+    End Function
 
 
 
@@ -251,24 +288,37 @@ Public Class Order
     End Sub
 
 
-    ' TODO
-    ' need to copy or make the handle item click add item to order list
-    ' available for handle key down aswell
 
 
     ' Menu item/category click handlers
     Private Sub HandleItemClick(sender As Object, e As EventArgs)
         Dim button As Button = CType(sender, Button)
+        CurrentFocusedItem = button.Text
         CurrentFocused = button
+
+        Dim exists As Boolean = False
+        Dim itemAmount As Integer = 0
+        If DataGridView1.RowCount > 0 Then
+            For Each row As DataGridViewRow In DataGridView1.Rows
+                If row.Cells(1).Value = CurrentFocusedItem Then
+                    exists = True
+                    itemAmount = Integer.Parse(row.Cells(0).Value)
+                    Exit For
+                End If
+            Next
+        End If
+
+        itemAmount = DisplayItemDialogForm(If((exists), itemAmount, 1))
+        If itemAmount = -1 Then
+            Return
+        End If
 
         Dim itemName = button.Text
         Dim tagData As TagData = ExtractTag(button.Tag)
         Dim itemPrice As String = tagData.Price
         Dim itemImage As String = tagData.TagImagePath
-        HandleIfItemExistsInOrder(itemName, itemPrice, itemImage)
-        HandleDiscount(itemPrice)
-
-        CurrentFocusedItem = itemName
+        HandleIfItemExistsInOrder(itemName, itemPrice, itemImage, itemAmount)
+        Compute() ' compute total again
     End Sub
     Private Sub HandleCatClick(sender As Object, e As EventArgs)
         Dim catName = CType(sender, Button)
@@ -638,7 +688,7 @@ Public Class Order
 
         Return "0"
     End Function
-    Private Sub HandleKeydown(sender As Object, e As KeyEventArgs)
+    Private Sub HandleKeydownSelect(sender As Object, e As KeyEventArgs)
         If e.Control AndAlso e.KeyCode = Keys.Enter Then
             CreateOrderBtn_Click(sender, e)
         ElseIf e.KeyCode = Keys.Left Then
@@ -654,14 +704,8 @@ Public Class Order
             End If
 
         ElseIf e.KeyCode = Keys.Enter Then
-            ' Regular Enter (without Ctrl)
-            Dim itemName As String = CurrentFocused.Text
-            Dim tagData As TagData = ExtractTag(CurrentFocused.Tag)
-            Dim itemPrice As String = tagData.Price
-            Dim itemImage As String = tagData.TagImagePath
-            HandleIfItemExistsInOrder(itemName, itemPrice, itemImage)
-            HandleDiscount(itemPrice)
-            CurrentFocusedItem = itemName
+            Dim btnSelected As Button = MenuItems(currentIndex)
+            HandleItemClick(btnSelected, e)
         Else
             Me.Focus()
         End If
@@ -677,20 +721,14 @@ Public Class Order
             End If
         Next
     End Sub
-    Private Sub HandleIfItemExistsInOrder(ByVal itemName As String, ByVal itemPrice As String, ByVal tagImgPath As String)
+    Private Sub HandleIfItemExistsInOrder(ByVal itemName As String, ByVal itemPrice As String, ByVal tagImgPath As String, ByVal itemAmount As Integer)
         Dim nameExists As Boolean = False
-        Dim itemAmount As Integer = 0
 
         For Each row As DataGridViewRow In DataGridView1.Rows
             If row.Cells(1).Value IsNot Nothing AndAlso row.Cells(1).Value.ToString() = itemName Then
-                ' increment item amount
                 nameExists = True
-                row.Cells(0).Value = CInt(row.Cells(0).Value) + 1
-
-                ' get item amount
-                itemAmount = CInt(row.Cells(0).Value)
-
-                'row.Cells(3).Value = CInt(row.Cells(3).Value) + Integer.Parse(itemPrice)
+                row.Cells(0).Value = itemAmount ' set item amount
+                row.Cells(3).Value = CInt(row.Cells(3).Value) + Integer.Parse(itemPrice) ' set item total
                 Exit For
             End If
         Next
@@ -698,22 +736,37 @@ Public Class Order
         ' create new row if doesn't exists
         If Not nameExists Then
             Dim newRow As New DataGridViewRow()
-            newRow.CreateCells(DataGridView1, 1, itemName, itemPrice, itemPrice, tagImgPath)
+            newRow.CreateCells(DataGridView1, itemAmount, itemName, itemPrice, itemPrice * itemAmount, tagImgPath)
             DataGridView1.Rows.Add(newRow)
 
             Dim item As FlowLayoutPanel = AddItemToOrderList(itemName, itemPrice, itemAmount, tagImgPath)
             OrderPnl.Controls.Add(item)
             OrderPnl.ScrollControlIntoView(item)
         ElseIf nameExists Then
+            MsgBox(itemAmount)
             UpdateItemOrderList()  ' just update the order list if it exists
         End If
+
+    End Sub
+    Private Sub Compute()
+        ' reset for computation
+        CurrentTotal = 0
+        CurrentSubTotal = 0
+
+        For Each row As DataGridViewRow In DataGridView1.Rows
+            Dim itemAmount As Integer = Integer.Parse(row.Cells(0).Value) ' item amount
+            Dim itemPrice As Integer = Integer.Parse(row.Cells(2).Value) ' item price
+
+            HandleDiscount(itemPrice * itemAmount)
+        Next
+
     End Sub
     Private Sub HandleDiscount(ByVal itemPrice As String)
         CurrentSubTotal += Integer.Parse(itemPrice)
-        SubtotalLbl.Text = "₱" + CurrentSubTotal.ToString
+        SubtotalLbl.Text = "₱" & CurrentSubTotal
 
         Dim appliedDiscount = (DiscountValue * CurrentSubTotal)
         CurrentTotal = If((Not DiscountValue = 0), Integer.Abs(appliedDiscount - CurrentSubTotal), CurrentSubTotal)
-        TotalLbl.Text = "₱" & CurrentTotal.ToString
+        TotalLbl.Text = "₱" & CurrentTotal
     End Sub
 End Class
