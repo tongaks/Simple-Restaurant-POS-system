@@ -3,7 +3,7 @@
 Imports System.Windows.Forms
 Imports MySql.Data.MySqlClient
 
-Module GlobalFunctions
+Public Module DatabaseHandler
     Public Structure TagData
         Public Price As String
         Public TagImagePath As String
@@ -15,20 +15,17 @@ Module GlobalFunctions
         Public EnableShortcutKeys As Boolean
     End Structure
 
-    Public CurrentUser As String
-    Public IsAdmin As Boolean
     Public SettingsConfig As SettingsConfigStruct
 
 
     ' For mysqlconnection
     Public Function GetGlobalConnectionString() As String
+        'Return "server=localhost;userid=root;password=;database=restaurant;SslMode=none;"
         Return "server=localhost;user=root;database=restaurant;port=3306;password=washer22456;"
     End Function
 
 
-
-
-    ' CRUD (Login, Insert activity, get settings confonig)
+    ' CRUD  related
     Public Function Login(uname As String, passw As String, table As String)
         Dim Connection As New MySqlConnection(GetGlobalConnectionString)
         Dim Reader As MySqlDataReader
@@ -109,105 +106,222 @@ Module GlobalFunctions
             End If
         End Try
     End Sub
+    ' CRUD  Archive functions
+    Public Sub EnsureArchivedUsersTableExists()
+        Try
+            Using connection As New MySqlConnection(GetGlobalConnectionString())
+                connection.Open()
 
+                Dim createTableQuery As String = "
+                    CREATE TABLE IF NOT EXISTS archived_users (
+                        id INT AUTO_INCREMENT PRIMARY KEY,
+                        username VARCHAR(50) NOT NULL,
+                        password VARCHAR(255) NOT NULL,
+                        role VARCHAR(20) NOT NULL,
+                        date_created DATETIME NOT NULL,
+                        archived_date DATETIME DEFAULT CURRENT_TIMESTAMP
+                    )"
 
-    ' Textbox things
-    Public Sub TextHint(ByVal txtbox As TextBox, ByVal text As String)
-        If Not txtbox.Focused And String.IsNullOrEmpty(txtbox.Text) Then
-            txtbox.ForeColor = Color.Gray
-            txtbox.Text = text
-        Else
-            txtbox.ForeColor = Color.Black
-            txtbox.Clear()
-        End If
-    End Sub
-    Public Sub HandleNumberOnly(sender As Object, e As KeyPressEventArgs)
-        If Not Char.IsDigit(e.KeyChar) And Not Asc(e.KeyChar) = 8 Then
-            e.Handled = True
-        End If
-    End Sub
-
-
-    ' Image resize
-    Public Function ResizeImageFit(img As Image, btn As Button) As Image
-        Dim newWidth As Integer = btn.ClientSize.Width
-        Dim newHeight As Integer = btn.ClientSize.Height
-
-        Dim bmp As New Bitmap(newWidth, newHeight)
-        Using g As Graphics = Graphics.FromImage(bmp)
-            g.InterpolationMode = Drawing2D.InterpolationMode.HighQualityBicubic
-            g.DrawImage(img, 0, 0, newWidth, newHeight)
-        End Using
-        Return bmp
-    End Function
-    Public Sub FormCloseParent(sender As Object, e As EventArgs)
-        Form1.Dispose()
-    End Sub
-
-
-    ' random
-    Public Function CreateFoodItemButton(itemName As String, itemPrice As String, imgPath As String) As FlowLayoutPanel
-        ' Create the main button
-        Dim foodBtn As New Button With {
-            .Text = itemName,
-            .Size = New Size(100, 100),
-            .Margin = New Padding(0),
-            .Cursor = Cursors.Hand,
-            .FlatStyle = FlatStyle.Flat
-        }
-
-        ' Store data in Tag (use a consistent format or create a TagData class)
-        foodBtn.Tag = itemPrice
-        If Not String.IsNullOrEmpty(imgPath) AndAlso File.Exists(imgPath) Then
-            Try
-                Using image As Image = Image.FromFile(imgPath)
-                    foodBtn.BackgroundImage = ResizeImageFit(image, foodBtn)
-                    foodBtn.BackgroundImageLayout = ImageLayout.Stretch
+                Using cmd As New MySqlCommand(createTableQuery, connection)
+                    cmd.ExecuteNonQuery()
                 End Using
-                foodBtn.Tag &= "," & imgPath
-            Catch ex As Exception
-                MsgBox("Error loading image: " & ex.Message, MsgBoxStyle.Critical, "Image Load Error")
-            End Try
-        End If
+            End Using
+        Catch ex As Exception
+            ' Log error but don't throw - table might already exist
+            Console.WriteLine("EnsureArchivedUsersTableExists Error: " & ex.Message)
+        End Try
+    End Sub
+    Public Function GetAllUsers(Optional searchFilter As String = "") As List(Of UserAccount)
+        Dim users As New List(Of UserAccount)()
 
-        ' Price label
-        Dim foodPrice As New Label With {
-        .Text = "₱" & itemPrice,
-        .Font = New Font("Segoe UI", 12.0F, FontStyle.Bold),
-        .TextAlign = ContentAlignment.MiddleCenter,
-        .AutoSize = False,
-        .Width = 100,
-        .Height = 25
-    }
+        Try
+            Using connection As New MySqlConnection(GetGlobalConnectionString())
+                connection.Open()
 
-        ' Container panel for button + label
-        Dim container As New FlowLayoutPanel With {
-        .Size = New Size(100, 125),
-        .FlowDirection = FlowDirection.TopDown,
-        .WrapContents = False,
-        .AutoSize = False,
-        .Margin = New Padding(5)
-    }
+                'Dim query As String = "SELECT id, username, password, role, date_created FROM user WHERE 1=1"
+                Dim query As String = "SELECT * FROM restaurant.user WHERE 1=1"
 
-        container.Controls.Add(foodBtn)
-        container.Controls.Add(foodPrice)
+                If Not String.IsNullOrEmpty(searchFilter) Then
+                    query &= " AND (username LIKE @search OR role LIKE @search)"
+                End If
 
-        Return container
+                'query &= " ORDER BY date_created DESC"
+
+                Using cmd As New MySqlCommand(query, connection)
+                    If Not String.IsNullOrEmpty(searchFilter) Then
+                        cmd.Parameters.AddWithValue("@search", "%" & searchFilter & "%")
+                    End If
+
+                    Using reader As MySqlDataReader = cmd.ExecuteReader()
+                        While reader.Read()
+                            users.Add(New UserAccount With {
+                                .ID = Convert.ToInt32(reader("id")),
+                                .Username = reader("username").ToString(),
+                                .Password = reader("password").ToString(),
+                                .Role = "",
+                                .DateCreated = Date.Now
+                            })
+
+                            '.Role = reader("role").ToString(),
+                            '.DateCreated = Convert.ToDateTime(reader("date_created"))
+                        End While
+                    End Using
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Error loading users: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+
+        Return users
     End Function
+    Public Function CreateUser(username As String, password As String, role As String) As Boolean
+        Try
+            Using connection As New MySqlConnection(GetGlobalConnectionString())
+                connection.Open()
 
-    Public Function ExtractTag(tag As String) As TagData
-        Dim result As New TagData()
+                ' Check if username already exists
+                Dim checkQuery As String = "SELECT COUNT(*) FROM user WHERE username = @username"
+                Using checkCmd As New MySqlCommand(checkQuery, connection)
+                    checkCmd.Parameters.AddWithValue("@username", username)
+                    Dim count As Integer = Convert.ToInt32(checkCmd.ExecuteScalar())
 
-        If tag.Contains(",") Then
-            Dim tagInfo() As String = tag.Split(","c)
-            result.Price = tagInfo(0).Trim()
-            result.TagImagePath = tagInfo(1).Trim()
-        Else
-            result.Price = tag.Trim()
-            result.TagImagePath = String.Empty ' or Nothing
-        End If
+                    If count > 0 Then
+                        MessageBox.Show("Username already exists. Please choose a different username.", "Duplicate Username", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                        Return False
+                    End If
+                End Using
 
-        Return result
+                ' Insert new user
+                Dim insertQuery As String = "INSERT INTO user (username, password, role, date_created) VALUES (@username, @password, @role, @date)"
+                Using cmd As New MySqlCommand(insertQuery, connection)
+                    cmd.Parameters.AddWithValue("@username", username)
+                    cmd.Parameters.AddWithValue("@password", password) ' Note: In production, hash this password!
+                    cmd.Parameters.AddWithValue("@role", role)
+                    cmd.Parameters.AddWithValue("@date", DateTime.Now)
+
+                    Dim rowsAffected As Integer = cmd.ExecuteNonQuery()
+                    Return rowsAffected > 0
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Error creating user: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return False
+        End Try
+    End Function
+    Public Function UpdateUser(userId As Integer, username As String, password As String, role As String) As Boolean
+        Try
+            Using connection As New MySqlConnection(GetGlobalConnectionString())
+                connection.Open()
+
+                ' Check if new username already exists (excluding current user)
+                Dim checkQuery As String = "SELECT COUNT(*) FROM user WHERE username = @username AND id <> @id"
+                Using checkCmd As New MySqlCommand(checkQuery, connection)
+                    checkCmd.Parameters.AddWithValue("@username", username)
+                    checkCmd.Parameters.AddWithValue("@id", userId)
+                    Dim count As Integer = Convert.ToInt32(checkCmd.ExecuteScalar())
+
+                    If count > 0 Then
+                        MessageBox.Show("Username already exists. Please choose a different username.", "Duplicate Username", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                        Return False
+                    End If
+                End Using
+
+                ' Update user
+                Dim updateQuery As String = "UPDATE user SET username = @username, password = @password, role = @role WHERE id = @id"
+                Using cmd As New MySqlCommand(updateQuery, connection)
+                    cmd.Parameters.AddWithValue("@username", username)
+                    cmd.Parameters.AddWithValue("@password", password) ' Note: In production, hash this password!
+                    cmd.Parameters.AddWithValue("@role", role)
+                    cmd.Parameters.AddWithValue("@id", userId)
+
+                    Dim rowsAffected As Integer = cmd.ExecuteNonQuery()
+                    Return rowsAffected > 0
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Error updating user: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return False
+        End Try
+    End Function
+    Public Function DeleteUser(userId As Integer) As Boolean
+        Try
+            Using connection As New MySqlConnection(GetGlobalConnectionString())
+                connection.Open()
+
+                Dim deleteQuery As String = "DELETE FROM user WHERE id = @id"
+                Using cmd As New MySqlCommand(deleteQuery, connection)
+                    cmd.Parameters.AddWithValue("@id", userId)
+
+                    Dim rowsAffected As Integer = cmd.ExecuteNonQuery()
+                    Return rowsAffected > 0
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Error deleting user: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return False
+        End Try
+    End Function
+    Public Function ArchiveUser(userId As Integer) As Boolean
+        Try
+            Using connection As New MySqlConnection(GetGlobalConnectionString())
+                connection.Open()
+
+                ' Start transaction to ensure both operations succeed or fail together
+                Using transaction As MySqlTransaction = connection.BeginTransaction()
+                    Try
+                        ' Get user data
+                        Dim selectQuery As String = "SELECT username, password, role, date_created FROM user WHERE id = @id"
+                        Dim username As String = ""
+                        Dim password As String = ""
+                        Dim role As String = ""
+                        Dim dateCreated As DateTime
+
+                        Using selectCmd As New MySqlCommand(selectQuery, connection, transaction)
+                            selectCmd.Parameters.AddWithValue("@id", userId)
+
+                            Using reader As MySqlDataReader = selectCmd.ExecuteReader()
+                                If reader.Read() Then
+                                    username = reader("username").ToString()
+                                    password = reader("password").ToString()
+                                    role = reader("role").ToString()
+                                    dateCreated = Convert.ToDateTime(reader("date_created"))
+                                Else
+                                    Return False
+                                End If
+                            End Using
+                        End Using
+
+                        ' Insert into archived_users
+                        Dim insertQuery As String = "INSERT INTO archived_users (username, password, role, date_created, archived_date) VALUES (@username, @password, @role, @dateCreated, @archivedDate)"
+                        Using insertCmd As New MySqlCommand(insertQuery, connection, transaction)
+                            insertCmd.Parameters.AddWithValue("@username", username)
+                            insertCmd.Parameters.AddWithValue("@password", password)
+                            insertCmd.Parameters.AddWithValue("@role", role)
+                            insertCmd.Parameters.AddWithValue("@dateCreated", dateCreated)
+                            insertCmd.Parameters.AddWithValue("@archivedDate", DateTime.Now)
+                            insertCmd.ExecuteNonQuery()
+                        End Using
+
+                        ' Delete from user
+                        Dim deleteQuery As String = "DELETE FROM user WHERE id = @id"
+                        Using deleteCmd As New MySqlCommand(deleteQuery, connection, transaction)
+                            deleteCmd.Parameters.AddWithValue("@id", userId)
+                            deleteCmd.ExecuteNonQuery()
+                        End Using
+
+                        transaction.Commit()
+                        Return True
+
+                    Catch ex As Exception
+                        transaction.Rollback()
+                        Throw
+                    End Try
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Error archiving user: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return False
+        End Try
     End Function
 
 

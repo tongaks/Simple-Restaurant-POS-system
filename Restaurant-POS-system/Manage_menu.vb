@@ -9,13 +9,16 @@ Public Class Manage_menu
 
     Private Sub Manage_menu_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ' add this function so that when this form is closed, the parent form as well
-        AddHandler MyBase.FormClosed, AddressOf FormCloseParent
         Me.WindowState = FormWindowState.Maximized
 
         ' load menu items
         LoadMenuCategories()
         LoadMenuItems(CurrentTable)
     End Sub
+    Private Sub HandleFormClose(sender As Object, e As EventArgs) Handles MyBase.FormClosed
+        Form1.Dispose()
+    End Sub
+
     Private Sub ClearMenuItemForm()
         ItemNameTxtBox.Text = String.Empty
         PriceTxtBox.Text = String.Empty

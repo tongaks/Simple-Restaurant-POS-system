@@ -62,6 +62,10 @@
               "target": "Package",
               "version": "[6.6.0, )"
             },
+            "HIC.System.Windows.Forms.DataVisualization": {
+              "target": "Package",
+              "version": "[1.0.1, )"
+            },
             "MySql.Data": {
               "target": "Package",
               "version": "[9.4.0, )"

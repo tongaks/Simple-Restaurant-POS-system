@@ -1,10 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Compile Update="AccountCard.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="Admin.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="ApplyVoucher.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="CreateEditAccountForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Login_Form.vb">
@@ -17,6 +23,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Receipt.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="SalesReport.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Settings.vb">

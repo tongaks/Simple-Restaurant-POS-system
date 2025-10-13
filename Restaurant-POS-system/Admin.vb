@@ -1,17 +1,19 @@
-﻿' Admin Dashboard Form - OrderUp! System
-' Features: Audit Log, Sales Report, Menu Management, User Management
-' Database: MySQL
-
+﻿
 Imports System.Data.OleDb
 Imports System.IO
 Imports System.Text
 Imports MySql.Data
 Imports MySql.Data.MySqlClient
 Imports System.Windows.Forms
+Imports System.Windows.Forms.DataVisualization.Charting
+' Admin Dashboard Form - OrderUp! System
+' Features: Audit Log, Sales Report, Menu Management, User Management
+' Database: MySQL/MariaDB
 
 Public Class Admin
     Private currentUserRole As String = "Admin"
     Private navButtons As AdminNavButtons
+    Private currentActiveButton As Button = Nothing
 
     ' Simple PathManager helper class
     Public Class PathManager
@@ -39,16 +41,47 @@ Public Class Admin
     ''' </summary>
     Private Sub Admin_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ' Initialize navigation buttons with the buttons from Designer
-        ' For Admin, pass only logout, help, and instructions buttons (no back button)
         navButtons = New AdminNavButtons(Me, btnLogout, Nothing, btnHelp, btnInstructions)
 
         Me.WindowState = FormWindowState.Maximized
         LoadAuditLogs()
-        pnlSalesReport.Visible = False
         pnlManageAccounts.Visible = False
-        dtpFrom.Value = DateTime.Now.AddDays(-30)
-        dtpTo.Value = DateTime.Now
+
+        ' Initialize archived_users table if not exists
+        DatabaseHandler.EnsureArchivedUsersTableExists()
+
+        ' Set initial active button
+        SetActiveButton(btnAuditLog)
     End Sub
+
+    ''' <summary>
+    ''' Highlight the active dashboard button
+    ''' </summary>
+    Private Sub SetActiveButton(btn As Button)
+        ' Reset previous active button
+        If currentActiveButton IsNot Nothing Then
+            currentActiveButton.BackColor = GetOriginalButtonColor(currentActiveButton)
+            currentActiveButton.FlatAppearance.BorderSize = 1
+            currentActiveButton.FlatAppearance.BorderColor = Color.Black
+        End If
+
+        ' Set new active button
+        currentActiveButton = btn
+        currentActiveButton.BackColor = Color.FromArgb(100, 180, 100) ' Darker shade
+        currentActiveButton.FlatAppearance.BorderSize = 3
+        currentActiveButton.FlatAppearance.BorderColor = Color.DarkGreen
+    End Sub
+
+    ''' <summary>
+    ''' Get original button color based on button name
+    ''' </summary>
+    Private Function GetOriginalButtonColor(btn As Button) As Color
+        If btn Is btnAuditLog Then Return Color.LightCoral
+        If btn Is btnSalesReport Then Return Color.LightGreen
+        If btn Is btnManageAccounts Then Return Color.LightBlue
+        If btn Is btnManageMenu Then Return Color.LightSalmon
+        Return Color.LightGray
+    End Function
 
     ''' <summary>
     ''' Load audit logs with optional filters
@@ -112,49 +145,6 @@ Public Class Admin
     End Sub
 
     ''' <summary>
-    ''' Generate sales report for specified date range
-    ''' </summary>
-    Private Sub GenerateSalesReport()
-        Try
-            Using connection As New MySqlConnection(GetGlobalConnectionString())
-                connection.Open()
-
-                ' Get sales summary
-                Dim summaryQuery As String = "SELECT COUNT(*) AS OrderCount, SUM(total_amount) AS TotalSales FROM orders WHERE order_date >= @dateFrom AND order_date <= @dateTo"
-                Using cmd As New MySqlCommand(summaryQuery, connection)
-                    cmd.Parameters.AddWithValue("@dateFrom", dtpFrom.Value.Date)
-                    cmd.Parameters.AddWithValue("@dateTo", dtpTo.Value.Date.AddDays(1).AddSeconds(-1))
-
-                    Using reader As MySqlDataReader = cmd.ExecuteReader()
-                        If reader.Read() Then
-                            lblTotalSales.Text = "₱" & If(IsDBNull(reader("TotalSales")), 0, reader("TotalSales"))
-                            lblOrderCount.Text = If(IsDBNull(reader("OrderCount")), 0, reader("OrderCount")).ToString()
-                        End If
-                    End Using
-                End Using
-
-                ' Get detailed transactions
-                Dim detailQuery As String = "SELECT * FROM orders WHERE order_date >= @dateFrom AND order_date <= @dateTo ORDER BY order_date DESC"
-                Using cmd As New MySqlCommand(detailQuery, connection)
-                    cmd.Parameters.AddWithValue("@dateFrom", dtpFrom.Value.Date)
-                    cmd.Parameters.AddWithValue("@dateTo", dtpTo.Value.Date.AddDays(1).AddSeconds(-1))
-
-                    Dim adapter As New MySqlDataAdapter(cmd)
-                    Dim dt As New DataTable()
-                    adapter.Fill(dt)
-
-                    dgvSalesReport.DataSource = dt
-                    dgvSalesReport.AutoResizeColumns()
-                End Using
-
-            End Using
-        Catch ex As Exception
-            LogError("GenerateSalesReport", ex.Message)
-            MessageBox.Show("Error generating sales report: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-    End Sub
-
-    ''' <summary>
     ''' Export audit logs to CSV file
     ''' </summary>
     Private Sub ExportAuditLogsToCsv()
@@ -173,28 +163,6 @@ Public Class Admin
         Catch ex As Exception
             LogError("ExportAuditLogsToCsv", ex.Message)
             MessageBox.Show("Error exporting audit logs: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-    End Sub
-
-    ''' <summary>
-    ''' Export sales report to CSV file
-    ''' </summary>
-    Private Sub ExportSalesReportToCsv()
-        Try
-            If dgvSalesReport.Rows.Count = 0 Then
-                MessageBox.Show("No data to export. Please generate a report first.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                Return
-            End If
-
-            Dim fileName As String = $"SalesReport_{DateTime.Now:yyyyMMdd_HHmmss}.csv"
-            Dim filePath As String = Path.Combine(PathManager.GetExportsPath(), fileName)
-
-            ExportDataGridToCsv(dgvSalesReport, filePath)
-            MessageBox.Show($"Sales report exported to: {filePath}", "Export Complete", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
-        Catch ex As Exception
-            LogError("ExportSalesReportToCsv", ex.Message)
-            MessageBox.Show("Error exporting sales report: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
@@ -218,21 +186,70 @@ Public Class Admin
     End Sub
 
     ''' <summary>
-    ''' Load user accounts for management
+    ''' Load user accounts for management - card-based display
     ''' </summary>
-    Private Sub LoadUserAccounts()
+    Private Sub LoadUserAccounts(Optional searchFilter As String = "")
         Try
-            Using connection As New MySqlConnection(GetGlobalConnectionString())
-                connection.Open()
-                Dim query As String = "SELECT ID, Username, 'User' AS Role FROM user UNION ALL SELECT ID, Username, 'Admin' AS Role FROM Admin"
-                Using cmd As New MySqlCommand(query, connection)
-                    Dim adapter As New MySqlDataAdapter(cmd)
-                    Dim dt As New DataTable()
-                    adapter.Fill(dt)
-                    dgvUsers.DataSource = dt
-                    dgvUsers.AutoResizeColumns()
-                End Using
-            End Using
+            pnlAccountCards.Controls.Clear()
+
+            Dim accounts = DatabaseHandler.GetAllUsers(searchFilter)
+
+            Dim yPos As Integer = 10
+
+            For Each account In accounts
+                Dim card As New AccountCard()
+                card.Width = pnlAccountCards.ClientSize.Width - 40
+                card.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
+                card.SetAccount(account)
+
+                ' wire events
+                AddHandler card.EditRequested, Sub(a)
+                                                   Dim editForm As New CreateEditAccountForm(a)
+                                                   If editForm.ShowDialog() = DialogResult.OK Then
+                                                       LoadUserAccounts(txtSearchAccounts.Text.Trim())
+                                                   End If
+                                               End Sub
+
+                AddHandler card.DeleteRequested, Sub(a)
+                                                     Dim result = MessageBox.Show($"Are you sure you want to permanently delete user '{a.Username}'?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
+                                                     If result = DialogResult.Yes Then
+                                                         If DatabaseHandler.DeleteUser(a.ID) Then
+                                                             MessageBox.Show("Account deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                                                             LoadUserAccounts(txtSearchAccounts.Text.Trim())
+                                                         Else
+                                                             MessageBox.Show("Failed to delete account.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                                         End If
+                                                     End If
+                                                 End Sub
+
+                AddHandler card.ArchiveRequested, Sub(a)
+                                                      Dim result = MessageBox.Show($"Archive user '{a.Username}'? This will move the account to archived storage.", "Confirm Archive", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                                                      If result = DialogResult.Yes Then
+                                                          If DatabaseHandler.ArchiveUser(a.ID) Then
+                                                              MessageBox.Show("Account archived successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                                                              LoadUserAccounts(txtSearchAccounts.Text.Trim())
+                                                          Else
+                                                              MessageBox.Show("Failed to archive account.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                                          End If
+                                                      End If
+                                                  End Sub
+
+                ' layout
+                card.Location = New Point(10, yPos)
+                pnlAccountCards.Controls.Add(card)
+                yPos += card.Height + 10
+            Next
+
+            If accounts.Count = 0 Then
+                Dim lblNoData As New Label()
+                lblNoData.Text = "No accounts found."
+                lblNoData.Font = New Font("Segoe UI", 12, FontStyle.Italic)
+                lblNoData.ForeColor = Color.Gray
+                lblNoData.Location = New Point(10, 10)
+                lblNoData.AutoSize = True
+                pnlAccountCards.Controls.Add(lblNoData)
+            End If
+
         Catch ex As Exception
             LogError("LoadUserAccounts", ex.Message)
             MessageBox.Show("Error loading user accounts: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -264,22 +281,29 @@ Public Class Admin
     End Sub
 
     Private Sub btnAuditLog_Click(sender As Object, e As EventArgs) Handles btnAuditLog.Click
-        pnlSalesReport.Visible = False
         pnlManageAccounts.Visible = False
         pnlAuditLog.Visible = True
+        SetActiveButton(btnAuditLog)
         LoadAuditLogs()
     End Sub
 
+    ''' <summary>
+    ''' Open the new standalone Sales Report form
+    ''' </summary>
     Private Sub btnSalesReport_Click(sender As Object, e As EventArgs) Handles btnSalesReport.Click
-        pnlAuditLog.Visible = False
-        pnlManageAccounts.Visible = False
-        pnlSalesReport.Visible = True
+        Try
+            Dim salesReportForm As New SalesReport()
+            salesReportForm.Show()
+            SetActiveButton(btnSalesReport)
+        Catch ex As Exception
+            MessageBox.Show("Error opening sales report: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
     Private Sub btnManageAccounts_Click(sender As Object, e As EventArgs) Handles btnManageAccounts.Click
         pnlAuditLog.Visible = False
-        pnlSalesReport.Visible = False
         pnlManageAccounts.Visible = True
+        SetActiveButton(btnManageAccounts)
         LoadUserAccounts()
     End Sub
 
@@ -291,25 +315,20 @@ Public Class Admin
         ExportAuditLogsToCsv()
     End Sub
 
-    Private Sub btnGenerateReport_Click(sender As Object, e As EventArgs) Handles btnGenerateReport.Click
-        GenerateSalesReport()
+    Private Sub btnCreateAccount_Click(sender As Object, e As EventArgs) Handles btnCreateAccount.Click
+        Dim createForm As New CreateEditAccountForm()
+        If createForm.ShowDialog() = DialogResult.OK Then
+            LoadUserAccounts(txtSearchAccounts.Text.Trim())
+        End If
     End Sub
 
-    Private Sub btnExportSalesReport_Click(sender As Object, e As EventArgs) Handles btnExportSalesReport.Click
-        ExportSalesReportToCsv()
+    Private Sub txtSearchAccounts_TextChanged(sender As Object, e As EventArgs) Handles txtSearchAccounts.TextChanged
+        LoadUserAccounts(txtSearchAccounts.Text.Trim())
     End Sub
 
     Private Sub pnlHeader_Paint(sender As Object, e As PaintEventArgs) Handles pnlHeader.Paint
-        ' Empty handler - can be removed if not needed
     End Sub
 
-    Private Sub btnCreateAccount_Click(sender As Object, e As EventArgs) Handles btnCreateAccount.Click
-        ' To be implemented in future version
+    Private Sub pnlManageAccounts_Paint(sender As Object, e As PaintEventArgs) Handles pnlManageAccounts.Paint
     End Sub
 End Class
-
-''' <summary>
-''' Manages navigation buttons for Admin and related forms.
-''' Handles Logout, Back, Help, and Instructions functionality.
-''' Constructor accepts existing designer buttons (one or more) so logic lives here and forms stay clean.
-''' </summary>
