@@ -1,7 +1,4 @@
-﻿' Admin Dashboard Form - OrderUp! System
-' Features: Audit Log, Sales Report, Menu Management, User Management
-' Database: MySQL/MariaDB
-
+﻿
 Imports System.Data.OleDb
 Imports System.IO
 Imports System.Text
@@ -9,6 +6,9 @@ Imports MySql.Data
 Imports MySql.Data.MySqlClient
 Imports System.Windows.Forms
 Imports System.Windows.Forms.DataVisualization.Charting
+' Admin Dashboard Form - OrderUp! System
+' Features: Audit Log, Sales Report, Menu Management, User Management
+' Database: MySQL/MariaDB
 
 Public Class Admin
     Private currentUserRole As String = "Admin"
@@ -45,10 +45,7 @@ Public Class Admin
 
         Me.WindowState = FormWindowState.Maximized
         LoadAuditLogs()
-        pnlSalesReport.Visible = False
         pnlManageAccounts.Visible = False
-        dtpFrom.Value = DateTime.Now.AddDays(-30)
-        dtpTo.Value = DateTime.Now
 
         ' Initialize archived_users table if not exists
         DatabaseHandler.EnsureArchivedUsersTableExists()
@@ -148,115 +145,6 @@ Public Class Admin
     End Sub
 
     ''' <summary>
-    ''' Generate sales report for specified date range with charts
-    ''' </summary>
-    Private Sub GenerateSalesReport()
-        Try
-            Using connection As New MySqlConnection(GetGlobalConnectionString())
-                connection.Open()
-
-                ' Get sales summary
-                Dim summaryQuery As String = "SELECT COUNT(*) AS OrderCount, SUM(total_amount) AS TotalSales FROM orders WHERE order_date >= @dateFrom AND order_date <= @dateTo"
-                Using cmd As New MySqlCommand(summaryQuery, connection)
-                    cmd.Parameters.AddWithValue("@dateFrom", dtpFrom.Value.Date)
-                    cmd.Parameters.AddWithValue("@dateTo", dtpTo.Value.Date.AddDays(1).AddSeconds(-1))
-
-                    Using reader As MySqlDataReader = cmd.ExecuteReader()
-                        If reader.Read() Then
-                            lblTotalSales.Text = "₱" & If(IsDBNull(reader("TotalSales")), 0, reader("TotalSales")).ToString("N2")
-                            lblOrderCount.Text = If(IsDBNull(reader("OrderCount")), 0, reader("OrderCount")).ToString()
-                        End If
-                    End Using
-                End Using
-
-                ' Get detailed transactions
-                Dim detailQuery As String = "SELECT * FROM orders WHERE order_date >= @dateFrom AND order_date <= @dateTo ORDER BY order_date DESC"
-                Using cmd As New MySqlCommand(detailQuery, connection)
-                    cmd.Parameters.AddWithValue("@dateFrom", dtpFrom.Value.Date)
-                    cmd.Parameters.AddWithValue("@dateTo", dtpTo.Value.Date.AddDays(1).AddSeconds(-1))
-
-                    Dim adapter As New MySqlDataAdapter(cmd)
-                    Dim dt As New DataTable()
-                    adapter.Fill(dt)
-
-                    dgvSalesReport.DataSource = dt
-                    dgvSalesReport.AutoResizeColumns()
-                End Using
-
-                ' Generate charts
-                GenerateSalesCharts(connection)
-
-            End Using
-        Catch ex As Exception
-            LogError("GenerateSalesReport", ex.Message)
-            MessageBox.Show("Error generating sales report: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-    End Sub
-
-    ''' <summary>
-    ''' Generate sales charts - daily sales and top items
-    ''' </summary>
-    Private Sub GenerateSalesCharts(connection As MySqlConnection)
-        Try
-            ' Clear existing charts
-            chartDailySales.Series.Clear()
-            chartTopItems.Series.Clear()
-
-            ' Daily Sales Chart
-            Dim dailySalesQuery As String = "SELECT DATE(order_date) as OrderDate, SUM(total_amount) as DailySales FROM orders WHERE order_date >= @dateFrom AND order_date <= @dateTo GROUP BY DATE(order_date) ORDER BY OrderDate"
-            Using cmd As New MySqlCommand(dailySalesQuery, connection)
-                cmd.Parameters.AddWithValue("@dateFrom", dtpFrom.Value.Date)
-                cmd.Parameters.AddWithValue("@dateTo", dtpTo.Value.Date.AddDays(1).AddSeconds(-1))
-
-                Dim series As New Series("Daily Sales")
-                series.ChartType = SeriesChartType.Column
-                series.Color = Color.SteelBlue
-
-                Using reader As MySqlDataReader = cmd.ExecuteReader()
-                    While reader.Read()
-                        Dim orderDate As Date = Convert.ToDateTime(reader("OrderDate"))
-                        Dim sales As Decimal = If(IsDBNull(reader("DailySales")), 0, Convert.ToDecimal(reader("DailySales")))
-                        series.Points.AddXY(orderDate.ToString("MM/dd"), sales)
-                    End While
-                End Using
-
-                chartDailySales.Series.Add(series)
-                chartDailySales.ChartAreas(0).AxisX.Title = "Date"
-                chartDailySales.ChartAreas(0).AxisY.Title = "Sales (₱)"
-                chartDailySales.Titles.Clear()
-                chartDailySales.Titles.Add("Daily Sales Trend")
-            End Using
-
-            ' Top 5 Items Chart
-            Dim topItemsQuery As String = "SELECT item_name, SUM(quantity) as TotalQty FROM order_items oi JOIN orders o ON oi.order_id = o.id WHERE o.order_date >= @dateFrom AND o.order_date <= @dateTo GROUP BY item_name ORDER BY TotalQty DESC LIMIT 5"
-            Using cmd As New MySqlCommand(topItemsQuery, connection)
-                cmd.Parameters.AddWithValue("@dateFrom", dtpFrom.Value.Date)
-                cmd.Parameters.AddWithValue("@dateTo", dtpTo.Value.Date.AddDays(1).AddSeconds(-1))
-
-                Dim series As New Series("Top Items")
-                series.ChartType = SeriesChartType.Pie
-
-                Using reader As MySqlDataReader = cmd.ExecuteReader()
-                    While reader.Read()
-                        Dim itemName As String = reader("item_name").ToString()
-                        Dim qty As Integer = If(IsDBNull(reader("TotalQty")), 0, Convert.ToInt32(reader("TotalQty")))
-                        series.Points.AddXY(itemName, qty)
-                    End While
-                End Using
-
-                chartTopItems.Series.Add(series)
-                chartTopItems.Titles.Clear()
-                chartTopItems.Titles.Add("Top 5 Best Selling Items")
-                series.IsValueShownAsLabel = True
-            End Using
-
-        Catch ex As Exception
-            LogError("GenerateSalesCharts", ex.Message)
-            ' Don't show error - charts are optional enhancement
-        End Try
-    End Sub
-
-    ''' <summary>
     ''' Export audit logs to CSV file
     ''' </summary>
     Private Sub ExportAuditLogsToCsv()
@@ -275,28 +163,6 @@ Public Class Admin
         Catch ex As Exception
             LogError("ExportAuditLogsToCsv", ex.Message)
             MessageBox.Show("Error exporting audit logs: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-    End Sub
-
-    ''' <summary>
-    ''' Export sales report to CSV file
-    ''' </summary>
-    Private Sub ExportSalesReportToCsv()
-        Try
-            If dgvSalesReport.Rows.Count = 0 Then
-                MessageBox.Show("No data to export. Please generate a report first.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                Return
-            End If
-
-            Dim fileName As String = $"SalesReport_{DateTime.Now:yyyyMMdd_HHmmss}.csv"
-            Dim filePath As String = Path.Combine(PathManager.GetExportsPath(), fileName)
-
-            ExportDataGridToCsv(dgvSalesReport, filePath)
-            MessageBox.Show($"Sales report exported to: {filePath}", "Export Complete", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
-        Catch ex As Exception
-            LogError("ExportSalesReportToCsv", ex.Message)
-            MessageBox.Show("Error exporting sales report: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
@@ -415,23 +281,27 @@ Public Class Admin
     End Sub
 
     Private Sub btnAuditLog_Click(sender As Object, e As EventArgs) Handles btnAuditLog.Click
-        pnlSalesReport.Visible = False
         pnlManageAccounts.Visible = False
         pnlAuditLog.Visible = True
         SetActiveButton(btnAuditLog)
         LoadAuditLogs()
     End Sub
 
+    ''' <summary>
+    ''' Open the new standalone Sales Report form
+    ''' </summary>
     Private Sub btnSalesReport_Click(sender As Object, e As EventArgs) Handles btnSalesReport.Click
-        pnlAuditLog.Visible = False
-        pnlManageAccounts.Visible = False
-        pnlSalesReport.Visible = True
-        SetActiveButton(btnSalesReport)
+        Try
+            Dim salesReportForm As New SalesReport()
+            salesReportForm.Show()
+            SetActiveButton(btnSalesReport)
+        Catch ex As Exception
+            MessageBox.Show("Error opening sales report: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
     Private Sub btnManageAccounts_Click(sender As Object, e As EventArgs) Handles btnManageAccounts.Click
         pnlAuditLog.Visible = False
-        pnlSalesReport.Visible = False
         pnlManageAccounts.Visible = True
         SetActiveButton(btnManageAccounts)
         LoadUserAccounts()
@@ -443,14 +313,6 @@ Public Class Admin
 
     Private Sub btnExportAuditLogs_Click(sender As Object, e As EventArgs) Handles btnExportAuditLogs.Click
         ExportAuditLogsToCsv()
-    End Sub
-
-    Private Sub btnGenerateReport_Click(sender As Object, e As EventArgs) Handles btnGenerateReport.Click
-        GenerateSalesReport()
-    End Sub
-
-    Private Sub btnExportSalesReport_Click(sender As Object, e As EventArgs) Handles btnExportSalesReport.Click
-        ExportSalesReportToCsv()
     End Sub
 
     Private Sub btnCreateAccount_Click(sender As Object, e As EventArgs) Handles btnCreateAccount.Click
