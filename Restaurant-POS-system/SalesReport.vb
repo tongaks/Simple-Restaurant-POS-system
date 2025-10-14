@@ -217,7 +217,7 @@ Public Class SalesReport
                 GenerateRevenueTrendChart(connection)
 
                 ' Load detailed transaction grid
-                LoadTransactionDetails(connection)
+                LoadTransactionDetails(connection, pnlTransactions)
 
             End Using
         Catch ex As Exception
@@ -505,10 +505,10 @@ Public Class SalesReport
     ''' Load recent transactions and show as cards in the FlowLayoutPanel.
     ''' Replaces DataGridView visuals only; does NOT touch charts.
     ''' </summary>
-    Private Sub LoadTransactionDetails(connection As MySqlConnection)
+    Public Sub LoadTransactionDetails(connection As MySqlConnection, ByVal pnl As Panel)
         Try
             ' === 1️⃣ Title Label (Recent Transactions) ===
-            Dim lbl As Label = pnlTransactions.Controls.OfType(Of Label)().
+            Dim lbl As Label = pnl.Controls.OfType(Of Label)().
             FirstOrDefault(Function(l) l.Name = "lblTransactions")
 
             If lbl Is Nothing Then
@@ -523,11 +523,11 @@ Public Class SalesReport
                 .Padding = New Padding(10, 0, 0, 0),
                 .BackColor = Color.White
             }
-                pnlTransactions.Controls.Add(lbl)
+                pnl.Controls.Add(lbl)
             End If
 
             ' === 2️⃣ FlowLayoutPanel (cards container) ===
-            Dim flow As FlowLayoutPanel = pnlTransactions.Controls.OfType(Of FlowLayoutPanel)().
+            Dim flow As FlowLayoutPanel = pnl.Controls.OfType(Of FlowLayoutPanel)().
             FirstOrDefault(Function(f) f.Name = "flowRecentTransactions")
 
             If flow Is Nothing Then
@@ -540,7 +540,7 @@ Public Class SalesReport
                 .Padding = New Padding(50),
                 .BackColor = Color.WhiteSmoke
             }
-                pnlTransactions.Controls.Add(flow)
+                pnl.Controls.Add(flow)
                 flow.BringToFront()
             Else
                 flow.Controls.Clear()

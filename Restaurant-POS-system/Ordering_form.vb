@@ -6,6 +6,7 @@ Imports System.Reflection.Metadata
 Imports System.Transactions
 Imports System.Windows.Forms.Design
 Imports System.Xml
+Imports FontAwesome.Sharp
 Imports MySql.Data
 Imports MySql.Data.MySqlClient
 Imports Mysqlx
@@ -132,13 +133,9 @@ Public Class Order
         itemDialog.Size = New System.Drawing.Size(mainPanel.Width + 50, mainPanel.Height + 50)
 
         AddHandler itemDialog.KeyDown, Sub(sender As Object, e As KeyEventArgs)
-                                           mainPanel.Focus()
-
                                            If e.Control AndAlso e.KeyCode = Keys.Enter Then
                                                itemDialog.DialogResult = DialogResult.OK
                                                itemDialog.Close()
-                                           ElseIf e.KeyCode = Keys.Up Then
-                                               MsgBox("Left")
                                            ElseIf e.KeyCode = Keys.Escape Then
                                                itemDialog.DialogResult = DialogResult.Cancel
                                                itemDialog.Close()
@@ -151,7 +148,25 @@ Public Class Order
             Return -1
         End If
     End Function
+    Private Sub DisplayRecentOrders()
+        Dim recentDialog As New Form
+        recentDialog.Size = New System.Drawing.Size(1000, 500)
 
+        Dim pnlRecentOrders As New Panel
+        pnlRecentOrders.Size = New System.Drawing.Size(recentDialog.Width, recentDialog.Height)
+        pnlRecentOrders.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+
+        ' connection for loading the transactions to be passed on LoadTransactionDetails
+        Dim Connection As New MySqlConnection(GetGlobalConnectionString)
+        Connection.Open()
+
+        ' need to create an instance of SalesReport class to be able to use the LoadTrandsactionDetails
+        Dim salereport As New SalesReport
+        salereport.LoadTransactionDetails(Connection, pnlRecentOrders)
+
+        recentDialog.Controls.Add(pnlRecentOrders)
+        recentDialog.ShowDialog()
+    End Sub
 
 
     ' CRUD functions
@@ -336,9 +351,9 @@ Public Class Order
         mainPanel.FlowDirection = FlowDirection.LeftToRight
         mainPanel.WrapContents = False
         mainPanel.Width = OrderPnl.Width
-        mainPanel.Height = 100 ' Make sure the height is fixed for layout
+        mainPanel.Height = 100
         mainPanel.BackColor = Color.LightGray
-        mainPanel.Padding = New Padding(10)
+        'mainPanel.Padding = New Padding(10)
         mainPanel.AutoSize = False
 
         ' PictureBox
@@ -346,7 +361,7 @@ Public Class Order
         pictureBox.Size = New Size(80, 80)
         pictureBox.Image = If(String.IsNullOrEmpty(itemImage), Nothing, Image.FromFile(itemImage))
         pictureBox.SizeMode = PictureBoxSizeMode.StretchImage
-        pictureBox.Margin = New Padding(5)
+        'pictureBox.Margin = New Padding(5)
 
         ' Item amount label (wrapped in a Panel for vertical alignment)
         Dim itemAmountLabel As New Label()
@@ -363,7 +378,7 @@ Public Class Order
         Dim itemInfoPanel As New FlowLayoutPanel()
         itemInfoPanel.FlowDirection = FlowDirection.TopDown
         itemInfoPanel.AutoSize = True
-        itemInfoPanel.Margin = New Padding(10, 10, 10, 10)
+        'itemInfoPanel.Margin = New Padding(10, 10, 10, 10)
 
         ' Item name label
         Dim labelName As New Label()
@@ -380,39 +395,56 @@ Public Class Order
         itemInfoPanel.Controls.Add(labelName)
         itemInfoPanel.Controls.Add(labelPrice)
 
-        ' Spacer to push buttons to the right
-        Dim spacer As New Panel()
-        spacer.Width = mainPanel.Width - (amountWrapper.Width + pictureBox.Width + itemInfoPanel.PreferredSize.Width + 180)
-        spacer.Height = 10
-        spacer.Margin = New Padding(0)
-
         ' Buttons (increase/decrease)
         Dim itemButtonPanel As New FlowLayoutPanel()
         itemButtonPanel.FlowDirection = FlowDirection.LeftToRight
         itemButtonPanel.AutoSize = True
-        itemButtonPanel.Margin = New Padding(30, 10, 0, 0)
+        'itemButtonPanel.Margin = New Padding(30, 10, 0, 0)
 
-        Dim increaseButton As New Button()
-        increaseButton.Text = "+"
+        Dim increaseButton As New IconButton()
+        increaseButton.IconChar = IconChar.PlusCircle
+        increaseButton.IconSize = 25
+        increaseButton.IconColor = Color.White
         increaseButton.Tag = itemName
         increaseButton.BackColor = Color.Green
         increaseButton.Size = New Size(40, 40)
         AddHandler increaseButton.Click, AddressOf IncreaseButtonHandler
 
-        Dim decreaseButton As New Button()
-        decreaseButton.Text = "-"
+        Dim decreaseButton As New IconButton()
+        decreaseButton.IconChar = IconChar.MinusCircle
+        decreaseButton.IconSize = 25
+        decreaseButton.IconColor = Color.White
         decreaseButton.Tag = itemName
         decreaseButton.BackColor = Color.Red
         decreaseButton.ForeColor = Color.White
         decreaseButton.Size = New Size(40, 40)
         AddHandler decreaseButton.Click, AddressOf DecreaseButtonHandler
 
+        Dim deleteButton As New IconButton()
+        deleteButton.IconChar = IconChar.Trash
+        deleteButton.IconSize = 25
+        deleteButton.IconColor = Color.White
+        deleteButton.Tag = itemName
+        deleteButton.Tag = itemName
+        deleteButton.BackColor = Color.Red
+        deleteButton.ForeColor = Color.White
+        deleteButton.Size = New Size(40, 40)
+        AddHandler deleteButton.Click, AddressOf RemoveItemHandler
+
+        ' Spacer to push buttons to the right
+        Dim spacer As New Panel()
+        ' holy shit this took me hours to figure out (im so stupid)
+        Dim remainingWidth = mainPanel.Width - (pictureBox.Width + itemInfoPanel.PreferredSize.Width)
+        spacer.Width = Integer.Abs(remainingWidth - itemButtonPanel.Width)
+        spacer.Height = 10
+        spacer.Margin = New Padding(0)
+
         itemButtonPanel.Controls.Add(increaseButton)
         itemButtonPanel.Controls.Add(amountWrapper)
         itemButtonPanel.Controls.Add(decreaseButton)
+        itemButtonPanel.Controls.Add(deleteButton)
 
         ' Add controls to main panel
-        'mainPanel.Controls.Add(amountWrapper)
         mainPanel.Controls.Add(pictureBox)
         mainPanel.Controls.Add(itemInfoPanel)
         mainPanel.Controls.Add(spacer)
@@ -420,6 +452,7 @@ Public Class Order
 
         Return mainPanel
     End Function
+
     Private Sub UpdateItemOrderList()
         If OrderPnl.HasChildren Then
             OrderPnl.Controls.Clear()
@@ -446,6 +479,10 @@ Public Class Order
     Private Sub CreateOrderBtn_Click(sender As Object, e As EventArgs) Handles CreateOrderBtn.Click
         If Not DataGridView1.Rows.Count > 0 Then
             MsgBox("Please create an order first", MsgBoxStyle.Critical, "Warning")
+            Return
+        End If
+
+        If Not MsgBox("Create order?", MsgBoxStyle.YesNoCancel Or MsgBoxStyle.Information, "Attention") = MsgBoxResult.Yes Then
             Return
         End If
 
@@ -494,9 +531,9 @@ Public Class Order
                 CurrentSubTotal = 0
                 DiscountValue = 0
 
-                TotalLbl.Text = CurrentTotal
-                SubtotalLbl.Text = CurrentSubTotal
+                SubtotalLbl.Text = "₱" & CurrentSubTotal
                 DiscountLbl.Text = "%" & DiscountValue
+                TotalLbl.Text = "₱" & CurrentTotal
 
                 DataGridView1.Rows.Clear()
                 UpdateItemOrderList()
@@ -523,9 +560,7 @@ Public Class Order
         Dim price As String = HandleItemAmountUpdate(True, itemBtnName)
 
         UpdateItemOrderList()
-
-        CurrentTotal += Integer.Parse(price)
-        TotalLbl.Text = "₱" + CStr(CurrentTotal)
+        Compute()
     End Sub
     Private Sub DecreaseButtonHandler(sender As Object, e As EventArgs)
         Dim itemName As String = CType(sender, Button).Tag.ToString()
@@ -534,10 +569,9 @@ Public Class Order
         Dim price As String = HandleItemAmountUpdate(False, itemBtnName)
 
         UpdateItemOrderList()
-        CurrentTotal -= Integer.Parse(price)
-        TotalLbl.Text = "₱" + CStr(CurrentTotal)
+        Compute()
     End Sub
-    Private Sub ApplyVoucher_Click(sender As Object, e As EventArgs) Handles Button1.Click
+    Private Sub ApplyDiscount_Click(sender As Object, e As EventArgs) Handles DiscountBtn.Click
         Dim applyVoucherForm As New ApplyVoucher
 
         If applyVoucherForm.ShowDialog() = DialogResult.OK Then
@@ -581,6 +615,37 @@ Public Class Order
             FoodPnl.Controls.Clear()  ' reload the menu items
             LoadMenuItems("foods")
         End If
+    End Sub
+    Private Sub CancelBtn_Click(sender As Object, e As EventArgs) Handles CancelBtn.Click
+        If Not DataGridView1.Rows.Count > 0 Then
+            MsgBox("Cannot cancel, No order created.", MsgBoxStyle.Critical, "Error")
+            Return
+        End If
+
+        If Not MsgBox("Are you sure you want to cancel the order?", MsgBoxStyle.YesNoCancel, "Notice") = MsgBoxResult.Yes Then
+            Return
+        End If
+
+        DataGridView1.Rows.Clear()
+        OrderPnl.Controls.Clear()
+
+        CurrentTotal = 0
+        CurrentSubTotal = 0
+        DiscountValue = 0
+
+        SubtotalLbl.Text = "₱" & CurrentSubTotal
+        DiscountLbl.Text = "%" & DiscountValue
+        TotalLbl.Text = "₱" & CurrentTotal
+
+        'CurrentFocused = Nothing
+        'CurrentFocusedItem = ""
+    End Sub
+    Private Sub ShortcutKeys_Click(sender As Object, e As EventArgs) Handles IconButton2.Click
+        Dim msg As String = "For selecting menu items: Use arrow key left/right and press enter to select" & vbCrLf & vbCrLf & "For adjusting the item's quantity: Use arrow key left/right and press enter to increase/decrease and Ctrl + Enter to continue" & vbCrLf & vbCrLf & "Shortcut keys can be enabled/disabled in the settings"
+        MsgBox(msg, MsgBoxStyle.Information, "Shortcut keys")
+    End Sub
+    Private Sub RecentOrdersBtn_Click(sender As Object, e As EventArgs) Handles RecentOrdersBtn.Click
+        DisplayRecentOrders()
     End Sub
 
 
@@ -688,6 +753,21 @@ Public Class Order
 
         Return "0"
     End Function
+    Private Sub RemoveItemHandler(sender As Object, e As EventArgs)
+        Dim btn As Button = CType(sender, Button)
+
+        Dim index As Integer = 0
+        For Each row In DataGridView1.Rows
+            If row.cells(1).value = btn.Tag Then
+                DataGridView1.Rows.RemoveAt(index)
+                Exit For
+            Else index += 1
+            End If
+        Next
+
+        UpdateItemOrderList()
+        Compute()
+    End Sub
     Private Sub HandleKeydownSelect(sender As Object, e As KeyEventArgs)
         If e.Control AndAlso e.KeyCode = Keys.Enter Then
             CreateOrderBtn_Click(sender, e)
@@ -706,11 +786,17 @@ Public Class Order
         ElseIf e.KeyCode = Keys.Enter Then
             Dim btnSelected As Button = MenuItems(currentIndex)
             HandleItemClick(btnSelected, e)
+        ElseIf e.Control AndAlso e.KeyCode = Keys.C Then
+            CancelBtn_Click(sender, e) ' cancel order
+        ElseIf e.Control AndAlso e.KeyCode = Keys.D Then
+            ApplyDiscount_Click(sender, e)
+        ElseIf e.Control AndAlso e.KeyCode = Keys.O Then
+            RecentOrdersBtn_Click(sender, e)
         Else
             Me.Focus()
         End If
 
-
+        ' handle current focused item
         MenuItems(currentIndex).FlatAppearance.BorderColor = Color.Red
 
         ' get the currrent focused btn instead of using btn.focus()
@@ -752,6 +838,12 @@ Public Class Order
         ' reset for computation
         CurrentTotal = 0
         CurrentSubTotal = 0
+
+        If DataGridView1.Rows.Count = 0 Then
+            TotalLbl.Text = "₱" & CurrentTotal
+            SubtotalLbl.Text = "₱" & CurrentSubTotal
+            Return
+        End If
 
         For Each row As DataGridViewRow In DataGridView1.Rows
             Dim itemAmount As Integer = Integer.Parse(row.Cells(0).Value) ' item amount

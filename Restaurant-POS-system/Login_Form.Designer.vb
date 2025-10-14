@@ -30,8 +30,10 @@ Partial Class Form1
         LoginAsAdminBtn = New PictureBox()
         LoginBtn = New Button()
         Panel1 = New Panel()
+        PictureBox1 = New PictureBox()
         CType(LoginAsAdminBtn, ComponentModel.ISupportInitialize).BeginInit()
         Panel1.SuspendLayout()
+        CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' UsernameTxtBox
@@ -81,10 +83,10 @@ Partial Class Form1
         ' 
         Label3.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left
         Label3.AutoSize = True
-        Label3.Font = New Font("Segoe UI", 30F)
+        Label3.Font = New Font("Showcard Gothic", 36F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
         Label3.Location = New Point(45, 94)
         Label3.Name = "Label3"
-        Label3.Size = New Size(188, 54)
+        Label3.Size = New Size(272, 60)
         Label3.TabIndex = 4
         Label3.Text = "OrderUp!"
         ' 
@@ -113,7 +115,7 @@ Partial Class Form1
         ' Panel1
         ' 
         Panel1.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left
-        Panel1.BackColor = SystemColors.Control
+        Panel1.BackColor = Color.MediumSeaGreen
         Panel1.Controls.Add(LoginAsAdminBtn)
         Panel1.Controls.Add(UsernameTxtBox)
         Panel1.Controls.Add(PasswordTxtBox)
@@ -126,18 +128,31 @@ Partial Class Form1
         Panel1.Size = New Size(471, 608)
         Panel1.TabIndex = 8
         ' 
+        ' PictureBox1
+        ' 
+        PictureBox1.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        PictureBox1.Image = My.Resources.Resources.login_page_photo
+        PictureBox1.Location = New Point(471, 0)
+        PictureBox1.Name = "PictureBox1"
+        PictureBox1.Size = New Size(573, 606)
+        PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage
+        PictureBox1.TabIndex = 9
+        PictureBox1.TabStop = False
+        ' 
         ' Form1
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = SystemColors.ControlDark
         ClientSize = New Size(1041, 604)
+        Controls.Add(PictureBox1)
         Controls.Add(Panel1)
         Name = "Form1"
         Text = "OrderUp!"
         CType(LoginAsAdminBtn, ComponentModel.ISupportInitialize).EndInit()
         Panel1.ResumeLayout(False)
         Panel1.PerformLayout()
+        CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
     End Sub
 
@@ -149,5 +164,6 @@ Partial Class Form1
     Friend WithEvents LoginAsAdminBtn As PictureBox
     Friend WithEvents LoginBtn As Button
     Friend WithEvents Panel1 As Panel
+    Friend WithEvents PictureBox1 As PictureBox
 
 End Class
