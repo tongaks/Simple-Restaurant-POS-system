@@ -58,55 +58,109 @@ Public Module Globals
 
     ' for ordering form for menu panel
     Public Function CreateFoodItemButton(itemName As String, itemPrice As String, imgPath As String) As FlowLayoutPanel
-        ' Create the main button
-        Dim foodBtn As New Button With {
-            .Text = itemName,
-            .Size = New Size(100, 100),
-            .Margin = New Padding(0),
-            .Cursor = Cursors.Hand,
-            .FlatStyle = FlatStyle.Flat
-        }
+        Dim settingsSize = SettingsConfig.MenuItemButtonSize
 
-        ' Store data in Tag (use a consistent format or create a TagData class)
+        Dim foodBtn As New Button
+        foodBtn.Size = New System.Drawing.Size(settingsSize, settingsSize)
+        foodBtn.Margin = New Padding(0, 0, 0, 0)
+        foodBtn.Text = itemName
         foodBtn.Tag = itemPrice
-        If Not String.IsNullOrEmpty(imgPath) AndAlso File.Exists(imgPath) Then
-            Try
-                Using image As Image = Image.FromFile(imgPath)
-                    foodBtn.BackgroundImage = ResizeImageFit(image, foodBtn)
-                    foodBtn.BackgroundImageLayout = ImageLayout.Stretch
-                End Using
+        foodBtn.Cursor = Cursors.Hand
+        foodBtn.FlatStyle = FlatStyle.Flat
+        foodBtn.FlatAppearance.BorderSize = 3
+        foodBtn.FlatAppearance.BorderColor = Color.Gray
+        foodBtn.TabStop = True
+
+        If Not String.IsNullOrEmpty(imgPath) Then
+            If Not imgPath = "N/A" Then
+                Dim image As Image = Image.FromFile(imgPath)
+                foodBtn.Image = ResizeImageFit(image, foodBtn)
                 foodBtn.Tag &= "," & imgPath
-            Catch ex As Exception
-                MsgBox("Error loading image: " & ex.Message, MsgBoxStyle.Critical, "Image Load Error")
-            End Try
+                foodBtn.ForeColor = Color.Transparent
+            End If
         End If
 
-        ' Price label
-        Dim foodPrice As New Label With {
-        .Text = "₱" & itemPrice,
-        .Font = New Font("Segoe UI", 12.0F, FontStyle.Bold),
-        .TextAlign = ContentAlignment.MiddleCenter,
-        .AutoSize = False,
-        .Width = 100,
-        .Height = 25
-    }
+        'AddHandler foodBtn.Click, AddressOf HandleItemClick
 
-        ' Container panel for button + label
-        Dim container As New FlowLayoutPanel With {
-        .Size = New Size(100, 125),
-        .FlowDirection = FlowDirection.TopDown,
-        .WrapContents = False,
-        .AutoSize = False,
-        .Margin = New Padding(5)
-    }
+        Dim foodFont As New Font("Segue UI", SettingsConfig.MenuItemFontSize, FontStyle.Regular)
 
-        container.Controls.Add(foodBtn)
-        container.Controls.Add(foodPrice)
+        Dim foodName As New Label
+        foodName.Text = itemName
+        foodName.Font = foodFont
+        foodName.AutoSize = False
+        foodName.MinimumSize = New Size(foodName.PreferredWidth, foodName.PreferredHeight)
+        foodName.TextAlign = ContentAlignment.MiddleCenter
 
-        Return container
+        Dim foodPrice As New Label
+        foodPrice.Text = "₱" & itemPrice
+        foodPrice.Font = foodFont
+        foodName.AutoSize = False
+        foodPrice.TextAlign = ContentAlignment.MiddleCenter
+
+        Dim FoodContainerPnl As New FlowLayoutPanel
+        FoodContainerPnl.FlowDirection = FlowDirection.TopDown
+        FoodContainerPnl.Size = New System.Drawing.Size(settingsSize, settingsSize + foodName.Height + foodPrice.Height)
+        FoodContainerPnl.Controls.Add(foodBtn)
+        FoodContainerPnl.Controls.Add(foodName)
+        FoodContainerPnl.Controls.Add(foodPrice)
+
+        Return FoodContainerPnl
     End Function
+    'old 
+    'Public Function CreateFoodItemButton(itemName As String, itemPrice As String, imgPath As String) As FlowLayoutPanel
+    '    ' Create the main button
+    '    Dim foodBtn As New Button With {
+    '        .Text = itemName,
+    '        .Size = New Size(100, 100),
+    '        .Margin = New Padding(0),
+    '        .Cursor = Cursors.Hand,
+    '        .FlatStyle = FlatStyle.Flat
+    '    }
+
+    '    ' Store data in Tag (use a consistent format or create a TagData class)
+    '    foodBtn.Tag = itemPrice
+    '    If Not String.IsNullOrEmpty(imgPath) AndAlso File.Exists(imgPath) Then
+    '        Try
+    '            Using image As Image = Image.FromFile(imgPath)
+    '                foodBtn.BackgroundImage = ResizeImageFit(image, foodBtn)
+    '                foodBtn.BackgroundImageLayout = ImageLayout.Stretch
+    '            End Using
+    '            foodBtn.Tag &= "," & imgPath
+    '        Catch ex As Exception
+    '            MsgBox("Error loading image: " & ex.Message, MsgBoxStyle.Critical, "Image Load Error")
+    '        End Try
+    '    End If
+
+    '    ' Price label
+    '    Dim foodPrice As New Label With {
+    '    .Text = "₱" & itemPrice,
+    '    .Font = New Font("Segoe UI", 12.0F, FontStyle.Bold),
+    '    .TextAlign = ContentAlignment.MiddleCenter,
+    '    .AutoSize = False,
+    '    .Width = 100,
+    '    .Height = 25
+    '}
+
+    '    ' Container panel for button + label
+    '    Dim container As New FlowLayoutPanel With {
+    '    .Size = New Size(100, 125),
+    '    .FlowDirection = FlowDirection.TopDown,
+    '    .WrapContents = False,
+    '    .AutoSize = False,
+    '    .Margin = New Padding(5)
+    '}
+
+    '    container.Controls.Add(foodBtn)
+    '    container.Controls.Add(foodPrice)
+
+    '    Return container
+    'End Function
+
+
 
     ' for extracting tag from buttons
+
+
     Public Function ExtractTag(tag As String) As TagData
         Dim result As New TagData()
 

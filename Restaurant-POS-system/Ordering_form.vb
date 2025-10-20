@@ -74,9 +74,10 @@ Public Class Order
         'Dim itemAmount As Integer = 1
 
         Dim itemDialog As New Form
-        itemDialog.Size = New System.Drawing.Size(500, 150)
+        'itemDialog.Size = New System.Drawing.Size(500, 150)
         itemDialog.StartPosition = FormStartPosition.CenterScreen
         itemDialog.KeyPreview = True
+        itemDialog.AutoSize = True
 
         Dim mainPanel As New FlowLayoutPanel
         mainPanel.FlowDirection = FlowDirection.TopDown
@@ -127,10 +128,42 @@ Public Class Order
         itemButtonPanel.Controls.Add(amountWrapper)
         itemButtonPanel.Controls.Add(decreaseButton)
 
+        Dim buttonPnl As New FlowLayoutPanel
+        buttonPnl.FlowDirection = FlowDirection.LeftToRight
+        buttonPnl.Margin = New Padding(0, 30, 0, 0)
+        buttonPnl.Padding = New Padding(50, 0, 0, 0)
+        buttonPnl.AutoSize = True
+
+        Dim addItemBtn As New Button
+        addItemBtn.Text = "Add"
+        addItemBtn.Size = New Size(100, 60)
+        addItemBtn.FlatStyle = FlatStyle.Flat
+        addItemBtn.BackColor = Color.SpringGreen
+        'addItemBtn.Margin = New Padding(60, 30, 0, 0)
+        AddHandler addItemBtn.Click, Sub()
+                                         itemDialog.DialogResult = DialogResult.OK
+                                         itemDialog.Close()
+                                     End Sub
+
+        Dim cancelItemBtn As New Button
+        cancelItemBtn.Text = "Cancel"
+        cancelItemBtn.Size = New Size(100, 60)
+        cancelItemBtn.FlatStyle = FlatStyle.Flat
+        cancelItemBtn.BackColor = Color.Gray
+        'cancelItemBtn.Margin = New Padding(60, 30, 0, 0)
+        AddHandler cancelItemBtn.Click, Sub()
+                                            itemDialog.DialogResult = DialogResult.Cancel
+                                            itemDialog.Close()
+                                        End Sub
+
+        buttonPnl.Controls.Add(addItemBtn)
+        buttonPnl.Controls.Add(cancelItemBtn)
+
         mainPanel.Controls.Add(itemNameLabel)
         mainPanel.Controls.Add(itemButtonPanel)
+        mainPanel.Controls.Add(buttonPnl)
         itemDialog.Controls.Add(mainPanel)
-        itemDialog.Size = New System.Drawing.Size(mainPanel.Width + 50, mainPanel.Height + 50)
+        'itemDialog.Size = New System.Drawing.Size(mainPanel.Width + 50, mainPanel.Height + 50)
 
         AddHandler itemDialog.KeyDown, Sub(sender As Object, e As KeyEventArgs)
                                            If e.Control AndAlso e.KeyCode = Keys.Enter Then
@@ -224,13 +257,19 @@ Public Class Order
                 foodBtn.TabStop = True
 
                 If Not IsDBNull(Reader("ImagePath")) Then
-                    If Not Reader("ImagePath") = "N/A" Then
-                        Dim image As Image = Image.FromFile(Reader("ImagePath"))
+                    Dim imagePath As String = Reader("ImagePath").ToString()
+                    If imagePath <> "N/A" AndAlso Not String.IsNullOrEmpty(imagePath) Then
+                        Dim image As Image = Image.FromFile(imagePath)
                         foodBtn.Image = ResizeImageFit(image, foodBtn)
-                        foodBtn.Tag &= "," & Reader("ImagePath")
+                        foodBtn.Tag &= "," & imagePath
                         foodBtn.ForeColor = Color.Transparent
+                    Else
+                        foodBtn.Image = Nothing
                     End If
+                Else
+                    foodBtn.Image = Nothing
                 End If
+
 
                 AddHandler foodBtn.Click, AddressOf HandleItemClick
 
@@ -378,7 +417,7 @@ Public Class Order
         Dim itemInfoPanel As New FlowLayoutPanel()
         itemInfoPanel.FlowDirection = FlowDirection.TopDown
         itemInfoPanel.AutoSize = True
-        'itemInfoPanel.Margin = New Padding(10, 10, 10, 10)
+        itemInfoPanel.Margin = New Padding(0, 20, 0, 0)
 
         ' Item name label
         Dim labelName As New Label()
@@ -399,7 +438,7 @@ Public Class Order
         Dim itemButtonPanel As New FlowLayoutPanel()
         itemButtonPanel.FlowDirection = FlowDirection.LeftToRight
         itemButtonPanel.AutoSize = True
-        'itemButtonPanel.Margin = New Padding(30, 10, 0, 0)
+        itemButtonPanel.Margin = New Padding(0, 20, 0, 0)
 
         Dim increaseButton As New IconButton()
         increaseButton.IconChar = IconChar.PlusCircle
@@ -452,7 +491,6 @@ Public Class Order
 
         Return mainPanel
     End Function
-
     Private Sub UpdateItemOrderList()
         If OrderPnl.HasChildren Then
             OrderPnl.Controls.Clear()
@@ -472,6 +510,7 @@ Public Class Order
             OrderPnl.ScrollControlIntoView(item)
         Next row
     End Sub
+
 
 
 

@@ -60,7 +60,7 @@ Partial Class Order
         ' NavbarPnl
         ' 
         NavbarPnl.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
-        NavbarPnl.BackColor = Color.DarkSeaGreen
+        NavbarPnl.BackColor = Color.SteelBlue
         NavbarPnl.Controls.Add(IconButton3)
         NavbarPnl.Controls.Add(SearchBtn)
         NavbarPnl.Controls.Add(DataGridView1)
@@ -75,11 +75,11 @@ Partial Class Order
         ' IconButton3
         ' 
         IconButton3.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        IconButton3.BackColor = Color.DarkSeaGreen
+        IconButton3.BackColor = Color.SteelBlue
         IconButton3.FlatAppearance.BorderSize = 0
         IconButton3.FlatStyle = FlatStyle.Flat
         IconButton3.IconChar = FontAwesome.Sharp.IconChar.SignOut
-        IconButton3.IconColor = Color.Black
+        IconButton3.IconColor = Color.WhiteSmoke
         IconButton3.IconFont = FontAwesome.Sharp.IconFont.Auto
         IconButton3.IconSize = 40
         IconButton3.Location = New Point(599, 16)
@@ -124,11 +124,11 @@ Partial Class Order
         ' SettingsBtn
         ' 
         SettingsBtn.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        SettingsBtn.BackColor = Color.DarkSeaGreen
+        SettingsBtn.BackColor = Color.SteelBlue
         SettingsBtn.FlatAppearance.BorderSize = 0
         SettingsBtn.FlatStyle = FlatStyle.Flat
         SettingsBtn.IconChar = FontAwesome.Sharp.IconChar.Cog
-        SettingsBtn.IconColor = Color.Black
+        SettingsBtn.IconColor = Color.WhiteSmoke
         SettingsBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
         SettingsBtn.IconSize = 40
         SettingsBtn.Location = New Point(648, 16)
@@ -149,6 +149,7 @@ Partial Class Order
         ' 
         Label1.AutoSize = True
         Label1.Font = New Font("Segoe UI", 12F)
+        Label1.ForeColor = SystemColors.ControlLightLight
         Label1.Location = New Point(17, 22)
         Label1.Name = "Label1"
         Label1.Size = New Size(57, 21)

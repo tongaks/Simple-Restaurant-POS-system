@@ -23,6 +23,8 @@ Partial Class Manage_menu
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         NavbarPnl = New Panel()
+        BackBtn = New FontAwesome.Sharp.IconButton()
+        SettingsBtn = New FontAwesome.Sharp.IconButton()
         SearchTxtBox = New TextBox()
         Label1 = New Label()
         SearchBtn = New Button()
@@ -36,7 +38,6 @@ Partial Class Manage_menu
         SaveBtn = New Button()
         UpdateBtn = New Button()
         CancelBtn = New Button()
-        Label4 = New Label()
         PriceTxtBox = New TextBox()
         ItemNameTxtBox = New TextBox()
         DeleteBtn = New Button()
@@ -54,6 +55,8 @@ Partial Class Manage_menu
         ' 
         NavbarPnl.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
         NavbarPnl.BackColor = Color.DarkSeaGreen
+        NavbarPnl.Controls.Add(BackBtn)
+        NavbarPnl.Controls.Add(SettingsBtn)
         NavbarPnl.Controls.Add(SearchTxtBox)
         NavbarPnl.Controls.Add(Label1)
         NavbarPnl.Controls.Add(SearchBtn)
@@ -63,6 +66,38 @@ Partial Class Manage_menu
         NavbarPnl.Name = "NavbarPnl"
         NavbarPnl.Size = New Size(627, 68)
         NavbarPnl.TabIndex = 7
+        ' 
+        ' BackBtn
+        ' 
+        BackBtn.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        BackBtn.BackColor = Color.DarkSeaGreen
+        BackBtn.FlatAppearance.BorderSize = 0
+        BackBtn.FlatStyle = FlatStyle.Flat
+        BackBtn.IconChar = FontAwesome.Sharp.IconChar.SignOut
+        BackBtn.IconColor = Color.Black
+        BackBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
+        BackBtn.IconSize = 40
+        BackBtn.Location = New Point(523, 12)
+        BackBtn.Name = "BackBtn"
+        BackBtn.Size = New Size(43, 42)
+        BackBtn.TabIndex = 9
+        BackBtn.UseVisualStyleBackColor = False
+        ' 
+        ' SettingsBtn
+        ' 
+        SettingsBtn.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        SettingsBtn.BackColor = Color.DarkSeaGreen
+        SettingsBtn.FlatAppearance.BorderSize = 0
+        SettingsBtn.FlatStyle = FlatStyle.Flat
+        SettingsBtn.IconChar = FontAwesome.Sharp.IconChar.Cog
+        SettingsBtn.IconColor = Color.Black
+        SettingsBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
+        SettingsBtn.IconSize = 40
+        SettingsBtn.Location = New Point(572, 12)
+        SettingsBtn.Name = "SettingsBtn"
+        SettingsBtn.Size = New Size(43, 42)
+        SettingsBtn.TabIndex = 8
+        SettingsBtn.UseVisualStyleBackColor = False
         ' 
         ' SearchTxtBox
         ' 
@@ -159,7 +194,6 @@ Partial Class Manage_menu
         ItemInfoPnl.Controls.Add(SaveBtn)
         ItemInfoPnl.Controls.Add(UpdateBtn)
         ItemInfoPnl.Controls.Add(CancelBtn)
-        ItemInfoPnl.Controls.Add(Label4)
         ItemInfoPnl.Controls.Add(PriceTxtBox)
         ItemInfoPnl.Controls.Add(ItemNameTxtBox)
         ItemInfoPnl.Controls.Add(DeleteBtn)
@@ -210,16 +244,6 @@ Partial Class Manage_menu
         CancelBtn.Text = "Cancel"
         CancelBtn.UseVisualStyleBackColor = False
         CancelBtn.Visible = False
-        ' 
-        ' Label4
-        ' 
-        Label4.AutoSize = True
-        Label4.Font = New Font("Segoe UI", 15F)
-        Label4.Location = New Point(60, 34)
-        Label4.Name = "Label4"
-        Label4.Size = New Size(240, 28)
-        Label4.TabIndex = 9
-        Label4.Text = "Select an item to edit here"
         ' 
         ' PriceTxtBox
         ' 
@@ -336,8 +360,9 @@ Partial Class Manage_menu
     Friend WithEvents EditBtn As Button
     Friend WithEvents PriceTxtBox As TextBox
     Friend WithEvents ItemNameTxtBox As TextBox
-    Friend WithEvents Label4 As Label
     Friend WithEvents CancelBtn As Button
     Friend WithEvents UpdateBtn As Button
     Friend WithEvents SaveBtn As Button
+    Friend WithEvents BackBtn As FontAwesome.Sharp.IconButton
+    Friend WithEvents SettingsBtn As FontAwesome.Sharp.IconButton
 End Class

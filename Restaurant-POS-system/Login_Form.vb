@@ -8,10 +8,34 @@ Public Class Form1
     Public ConnectionString As String
 
     Private Sub Order_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        GetSettingsConfig()
         ConnectionString = GetGlobalConnectionString()
         Me.WindowState = WindowState.Maximized
         IsAdmin = False
+
+        If Not SettingsConfig.LoginImagePath = "" Then
+            PictureBox1.Image = Image.FromFile(SettingsConfig.LoginImagePath)
+        Else
+            PictureBox1.Image = Nothing
+        End If
     End Sub
+    Private Sub Order_Focus(sender As Object, e As EventArgs) Handles MyBase.GotFocus
+        GetSettingsConfig()
+
+        If IsAdmin Then
+            UsernameTxtBox.Clear()
+            PasswordTxtBox.Clear()
+            LoginAsAdmin_Click(sender, e)
+        End If
+
+        If Not SettingsConfig.LoginImagePath = "" Then
+            PictureBox1.Image = Image.FromFile(SettingsConfig.LoginImagePath)
+        Else
+            PictureBox1.Image = Nothing
+        End If
+    End Sub
+
+
 
 
     ' Button
@@ -29,7 +53,7 @@ Public Class Form1
         End If
     End Sub
     Private Sub LoginBtn_Click(sender As Object, e As EventArgs) Handles LoginBtn.Click
-        Dim table As String = If((IsAdmin), "admin", "user")
+        Dim table As String = If((IsAdmin), "Admin", "Cashier")
 
         If String.IsNullOrWhiteSpace(UsernameTxtBox.Text) Or String.IsNullOrWhiteSpace(PasswordTxtBox.Text) Then
             MsgBox("Please complete the user credentials.", MsgBoxStyle.Critical, "Attention")
@@ -40,10 +64,12 @@ Public Class Form1
     End Sub
 
 
+
+
     ' Handlers
     Private Sub HandleEnter(sender As Object, e As KeyPressEventArgs) Handles UsernameTxtBox.KeyPress, PasswordTxtBox.KeyPress
         If Asc(e.KeyChar) = 13 Then
-            Dim table As String = If((IsAdmin), "Admin", "User")
+            Dim table As String = If((IsAdmin), "Admin", "Cashier")
             HandleLogin(table)
         End If
     End Sub
@@ -59,7 +85,7 @@ Public Class Form1
                 Command.Parameters.AddWithValue("@uname", CurrentUser)
                 Command.Parameters.AddWithValue("@date", DateTime.Now.Date)
                 Command.Parameters.AddWithValue("@time", DateTime.Now.TimeOfDay)
-                Command.Parameters.AddWithValue("@role", If(IsAdmin, "admin", "cashier"))
+                Command.Parameters.AddWithValue("@role", If(IsAdmin, "Admin", "Cashier"))
 
                 If Command.ExecuteNonQuery() > 0 Then
                     If IsAdmin Then

@@ -41,7 +41,6 @@ Public Class CreateEditAccountForm
         cboRole.Items.Clear()
         cboRole.Items.Add("Admin")
         cboRole.Items.Add("Cashier")
-        cboRole.Items.Add("User")
 
         If Not _isEditMode Then
             cboRole.SelectedIndex = 2 ' Default to "User"
@@ -69,8 +68,8 @@ Public Class CreateEditAccountForm
         End If
 
         ' Validate password length
-        If txtPassword.Text.Length < 4 Then
-            MessageBox.Show("Password must be at least 4 characters long.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        If txtPassword.Text.Length < 8 Then
+            MessageBox.Show("Password must be at least 8 characters long.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             txtPassword.Focus()
             Return
         End If
@@ -109,132 +108,150 @@ Public Class CreateEditAccountForm
     End Sub
 
     Private Sub InitializeComponent()
-        Me.pnlMain = New Panel()
-        Me.lblFormTitle = New Label()
-        Me.lblUsername = New Label()
-        Me.txtUsername = New TextBox()
-        Me.lblPassword = New Label()
-        Me.txtPassword = New TextBox()
-        Me.lblRole = New Label()
-        Me.cboRole = New ComboBox()
-        Me.btnSave = New Button()
-        Me.btnCancel = New Button()
-        Me.pnlMain.SuspendLayout()
-        Me.SuspendLayout()
-
+        pnlMain = New Panel()
+        lblFormTitle = New Label()
+        lblUsername = New Label()
+        txtUsername = New TextBox()
+        lblPassword = New Label()
+        txtPassword = New TextBox()
+        lblRole = New Label()
+        cboRole = New ComboBox()
+        btnSave = New Button()
+        btnCancel = New Button()
+        pnlMain.SuspendLayout()
+        SuspendLayout()
+        ' 
         ' pnlMain
-        Me.pnlMain.BackColor = SystemColors.Control
-        Me.pnlMain.Controls.Add(Me.lblFormTitle)
-        Me.pnlMain.Controls.Add(Me.lblUsername)
-        Me.pnlMain.Controls.Add(Me.txtUsername)
-        Me.pnlMain.Controls.Add(Me.lblPassword)
-        Me.pnlMain.Controls.Add(Me.txtPassword)
-        Me.pnlMain.Controls.Add(Me.lblRole)
-        Me.pnlMain.Controls.Add(Me.cboRole)
-        Me.pnlMain.Controls.Add(Me.btnSave)
-        Me.pnlMain.Controls.Add(Me.btnCancel)
-        Me.pnlMain.Dock = DockStyle.Fill
-        Me.pnlMain.Location = New Point(0, 0)
-        Me.pnlMain.Name = "pnlMain"
-        Me.pnlMain.Size = New Size(450, 350)
-        Me.pnlMain.TabIndex = 0
-
+        ' 
+        pnlMain.BackColor = SystemColors.Control
+        pnlMain.Controls.Add(lblFormTitle)
+        pnlMain.Controls.Add(lblUsername)
+        pnlMain.Controls.Add(txtUsername)
+        pnlMain.Controls.Add(lblPassword)
+        pnlMain.Controls.Add(txtPassword)
+        pnlMain.Controls.Add(lblRole)
+        pnlMain.Controls.Add(cboRole)
+        pnlMain.Controls.Add(btnSave)
+        pnlMain.Controls.Add(btnCancel)
+        pnlMain.Dock = DockStyle.Fill
+        pnlMain.Location = New Point(0, 0)
+        pnlMain.Margin = New Padding(3, 2, 3, 2)
+        pnlMain.Name = "pnlMain"
+        pnlMain.Size = New Size(394, 270)
+        pnlMain.TabIndex = 0
+        ' 
         ' lblFormTitle
-        Me.lblFormTitle.AutoSize = True
-        Me.lblFormTitle.Font = New Font("Segoe UI", 16.0F, FontStyle.Bold)
-        Me.lblFormTitle.Location = New Point(30, 30)
-        Me.lblFormTitle.Name = "lblFormTitle"
-        Me.lblFormTitle.Size = New Size(250, 37)
-        Me.lblFormTitle.TabIndex = 0
-        Me.lblFormTitle.Text = "Create New Account"
-
+        ' 
+        lblFormTitle.AutoSize = True
+        lblFormTitle.Font = New Font("Segoe UI", 16.0F, FontStyle.Bold)
+        lblFormTitle.Location = New Point(26, 22)
+        lblFormTitle.Name = "lblFormTitle"
+        lblFormTitle.Size = New Size(225, 30)
+        lblFormTitle.TabIndex = 0
+        lblFormTitle.Text = "Create New Account"
+        ' 
         ' lblUsername
-        Me.lblUsername.AutoSize = True
-        Me.lblUsername.Font = New Font("Segoe UI", 10.0F)
-        Me.lblUsername.Location = New Point(30, 100)
-        Me.lblUsername.Name = "lblUsername"
-        Me.lblUsername.Size = New Size(87, 23)
-        Me.lblUsername.TabIndex = 1
-        Me.lblUsername.Text = "Username:"
-
+        ' 
+        lblUsername.AutoSize = True
+        lblUsername.Font = New Font("Segoe UI", 10.0F)
+        lblUsername.Location = New Point(26, 75)
+        lblUsername.Name = "lblUsername"
+        lblUsername.Size = New Size(74, 19)
+        lblUsername.TabIndex = 1
+        lblUsername.Text = "Username:"
+        ' 
         ' txtUsername
-        Me.txtUsername.Font = New Font("Segoe UI", 10.0F)
-        Me.txtUsername.Location = New Point(30, 130)
-        Me.txtUsername.Name = "txtUsername"
-        Me.txtUsername.Size = New Size(390, 30)
-        Me.txtUsername.TabIndex = 2
-
+        ' 
+        txtUsername.Font = New Font("Segoe UI", 10.0F)
+        txtUsername.Location = New Point(26, 98)
+        txtUsername.Margin = New Padding(3, 2, 3, 2)
+        txtUsername.Name = "txtUsername"
+        txtUsername.Size = New Size(342, 25)
+        txtUsername.TabIndex = 2
+        ' 
         ' lblPassword
-        Me.lblPassword.AutoSize = True
-        Me.lblPassword.Font = New Font("Segoe UI", 10.0F)
-        Me.lblPassword.Location = New Point(30, 170)
-        Me.lblPassword.Name = "lblPassword"
-        Me.lblPassword.Size = New Size(84, 23)
-        Me.lblPassword.TabIndex = 3
-        Me.lblPassword.Text = "Password:"
-
+        ' 
+        lblPassword.AutoSize = True
+        lblPassword.Font = New Font("Segoe UI", 10.0F)
+        lblPassword.Location = New Point(26, 128)
+        lblPassword.Name = "lblPassword"
+        lblPassword.Size = New Size(70, 19)
+        lblPassword.TabIndex = 3
+        lblPassword.Text = "Password:"
+        ' 
         ' txtPassword
-        Me.txtPassword.Font = New Font("Segoe UI", 10.0F)
-        Me.txtPassword.Location = New Point(30, 200)
-        Me.txtPassword.Name = "txtPassword"
-        Me.txtPassword.Size = New Size(390, 30)
-        Me.txtPassword.TabIndex = 4
-        Me.txtPassword.UseSystemPasswordChar = True
-
+        ' 
+        txtPassword.Font = New Font("Segoe UI", 10.0F)
+        txtPassword.Location = New Point(26, 150)
+        txtPassword.Margin = New Padding(3, 2, 3, 2)
+        txtPassword.Name = "txtPassword"
+        txtPassword.Size = New Size(342, 25)
+        txtPassword.TabIndex = 4
+        txtPassword.UseSystemPasswordChar = True
+        ' 
         ' lblRole
-        Me.lblRole.AutoSize = True
-        Me.lblRole.Font = New Font("Segoe UI", 10.0F)
-        Me.lblRole.Location = New Point(30, 240)
-        Me.lblRole.Name = "lblRole"
-        Me.lblRole.Size = New Size(46, 23)
-        Me.lblRole.TabIndex = 5
-        Me.lblRole.Text = "Role:"
-
+        ' 
+        lblRole.AutoSize = True
+        lblRole.Font = New Font("Segoe UI", 10.0F)
+        lblRole.Location = New Point(26, 180)
+        lblRole.Name = "lblRole"
+        lblRole.Size = New Size(38, 19)
+        lblRole.TabIndex = 5
+        lblRole.Text = "Role:"
+        ' 
         ' cboRole
-        Me.cboRole.DropDownStyle = ComboBoxStyle.DropDownList
-        Me.cboRole.Font = New Font("Segoe UI", 10.0F)
-        Me.cboRole.FormattingEnabled = True
-        Me.cboRole.Location = New Point(30, 270)
-        Me.cboRole.Name = "cboRole"
-        Me.cboRole.Size = New Size(390, 31)
-        Me.cboRole.TabIndex = 6
-
+        ' 
+        cboRole.DropDownStyle = ComboBoxStyle.DropDownList
+        cboRole.Font = New Font("Segoe UI", 10.0F)
+        cboRole.FormattingEnabled = True
+        cboRole.Location = New Point(26, 202)
+        cboRole.Margin = New Padding(3, 2, 3, 2)
+        cboRole.Name = "cboRole"
+        cboRole.Size = New Size(342, 25)
+        cboRole.TabIndex = 6
+        ' 
         ' btnSave
-        Me.btnSave.BackColor = Color.LightGreen
-        Me.btnSave.FlatStyle = FlatStyle.Flat
-        Me.btnSave.Font = New Font("Segoe UI", 10.0F)
-        Me.btnSave.Location = New Point(220, 310)
-        Me.btnSave.Name = "btnSave"
-        Me.btnSave.Size = New Size(100, 35)
-        Me.btnSave.TabIndex = 7
-        Me.btnSave.Text = "Save"
-        Me.btnSave.UseVisualStyleBackColor = False
-
+        ' 
+        btnSave.BackColor = Color.LightGreen
+        btnSave.FlatStyle = FlatStyle.Flat
+        btnSave.Font = New Font("Segoe UI", 10.0F)
+        btnSave.Location = New Point(192, 232)
+        btnSave.Margin = New Padding(3, 2, 3, 2)
+        btnSave.Name = "btnSave"
+        btnSave.Size = New Size(88, 26)
+        btnSave.TabIndex = 7
+        btnSave.Text = "Save"
+        btnSave.UseVisualStyleBackColor = False
+        ' 
         ' btnCancel
-        Me.btnCancel.BackColor = Color.LightCoral
-        Me.btnCancel.FlatStyle = FlatStyle.Flat
-        Me.btnCancel.Font = New Font("Segoe UI", 10.0F)
-        Me.btnCancel.Location = New Point(330, 310)
-        Me.btnCancel.Name = "btnCancel"
-        Me.btnCancel.Size = New Size(90, 35)
-        Me.btnCancel.TabIndex = 8
-        Me.btnCancel.Text = "Cancel"
-        Me.btnCancel.UseVisualStyleBackColor = False
-
+        ' 
+        btnCancel.BackColor = Color.LightCoral
+        btnCancel.FlatStyle = FlatStyle.Flat
+        btnCancel.Font = New Font("Segoe UI", 10.0F)
+        btnCancel.Location = New Point(289, 232)
+        btnCancel.Margin = New Padding(3, 2, 3, 2)
+        btnCancel.Name = "btnCancel"
+        btnCancel.Size = New Size(79, 26)
+        btnCancel.TabIndex = 8
+        btnCancel.Text = "Cancel"
+        btnCancel.UseVisualStyleBackColor = False
+        ' 
         ' CreateEditAccountForm
-        Me.AutoScaleDimensions = New SizeF(8.0F, 20.0F)
-        Me.AutoScaleMode = AutoScaleMode.Font
-        Me.ClientSize = New Size(450, 360)
-        Me.Controls.Add(Me.pnlMain)
-        Me.FormBorderStyle = FormBorderStyle.FixedDialog
-        Me.MaximizeBox = False
-        Me.MinimizeBox = False
-        Me.Name = "CreateEditAccountForm"
-        Me.StartPosition = FormStartPosition.CenterParent
-        Me.Text = "Create/Edit Account"
-        Me.pnlMain.ResumeLayout(False)
-        Me.pnlMain.PerformLayout()
-        Me.ResumeLayout(False)
+        ' 
+        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
+        AutoScaleMode = AutoScaleMode.Font
+        ClientSize = New Size(394, 270)
+        Controls.Add(pnlMain)
+        FormBorderStyle = FormBorderStyle.FixedDialog
+        Margin = New Padding(3, 2, 3, 2)
+        MaximizeBox = False
+        MinimizeBox = False
+        Name = "CreateEditAccountForm"
+        StartPosition = FormStartPosition.CenterParent
+        Text = "Create/Edit Account"
+        pnlMain.ResumeLayout(False)
+        pnlMain.PerformLayout()
+        ResumeLayout(False)
     End Sub
 
     Friend WithEvents pnlMain As Panel
@@ -247,4 +264,8 @@ Public Class CreateEditAccountForm
     Friend WithEvents cboRole As ComboBox
     Friend WithEvents btnSave As Button
     Friend WithEvents btnCancel As Button
+
+    Private Sub cboRole_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboRole.SelectedIndexChanged
+
+    End Sub
 End Class

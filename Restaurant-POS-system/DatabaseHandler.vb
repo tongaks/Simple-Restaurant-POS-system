@@ -13,6 +13,7 @@ Public Module DatabaseHandler
         Public MenuItemButtonSize As Integer
         Public MenuItemFontSize As Integer
         Public EnableShortcutKeys As Boolean
+        Public LoginImagePath As String
     End Structure
 
     Public SettingsConfig As SettingsConfigStruct
@@ -25,18 +26,21 @@ Public Module DatabaseHandler
     End Function
 
 
+
+
     ' CRUD  related
-    Public Function Login(uname As String, passw As String, table As String)
+    Public Function Login(uname As String, passw As String, role As String)
         Dim Connection As New MySqlConnection(GetGlobalConnectionString)
         Dim Reader As MySqlDataReader
 
         Try
             Connection.Open()
-            Dim Query As String = "SELECT * from " & table & " WHERE Username = @Username AND Password = @Password"
+            Dim Query As String = "SELECT * from user WHERE Username = @Username AND Password = @Password AND role = @role"
             Dim Command As New MySqlCommand(Query, Connection)
 
             Command.Parameters.AddWithValue("@Username", uname)
             Command.Parameters.AddWithValue("@Password", passw)
+            Command.Parameters.AddWithValue("@role", role)
 
             Reader = Command.ExecuteReader()
 
@@ -96,6 +100,7 @@ Public Module DatabaseHandler
                 SettingsConfig.MenuItemButtonSize = Reader("MenuItemButtonSize")
                 SettingsConfig.MenuItemFontSize = Reader("MenuItemFontSize")
                 SettingsConfig.EnableShortcutKeys = Reader("EnableShortcutKeys")
+                SettingsConfig.LoginImagePath = If(IsDBNull(Reader("LoginImagePath")), "", Reader("LoginImagePath"))
             End While
 
         Catch ex As Exception
@@ -106,6 +111,11 @@ Public Module DatabaseHandler
             End If
         End Try
     End Sub
+
+
+
+
+
     ' CRUD  Archive functions
     Public Sub EnsureArchivedUsersTableExists()
         Try
@@ -323,6 +333,4 @@ Public Module DatabaseHandler
             Return False
         End Try
     End Function
-
-
 End Module

@@ -1,4 +1,6 @@
-﻿Imports System.IO
+﻿Imports System.DirectoryServices.ActiveDirectory
+Imports System.IO
+'Imports System.Windows.Controls
 Imports MySql.Data.MySqlClient
 Imports Org.BouncyCastle.Tls
 
@@ -10,6 +12,7 @@ Public Class Manage_menu
     Private Sub Manage_menu_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ' add this function so that when this form is closed, the parent form as well
         Me.WindowState = FormWindowState.Maximized
+        ItemBtn.BackgroundImageLayout = BackgroundImageLayout.Stretch
 
         ' load menu items
         LoadMenuCategories()
@@ -68,6 +71,8 @@ Public Class Manage_menu
     End Sub
 
 
+
+
     ' Handlers for menu item/category clicks
     Private Sub HandleCategoryClick(sender As Object, e As EventArgs)
         Dim catName As String = CType(sender, Button).Text
@@ -75,31 +80,30 @@ Public Class Manage_menu
         LoadMenuItems(catName)
     End Sub
     Private Sub HandleItemClick(sender As Object, e As EventArgs)
-        EditBtn.Enabled = True
         SaveBtn.Enabled = False
+        EditBtn.Enabled = True
+
+        ItemNameTxtBox.Enabled = False
+        PriceTxtBox.Enabled = False
         ShowForm()
 
         Dim item As Button = CType(sender, Button)
-        Dim tag As String = item.Tag.ToString()
-        Dim price As String
-        Dim tagImgPath As String = ""
-
-        If tag.Contains(",") Then
-            Dim tagInfo() As String = tag.Split(","c)
-            price = tagInfo(0)
-            tagImgPath = tagInfo(1)
-        Else
-            price = tag
-        End If
+        Dim tagData As TagData = ExtractTag(item.Tag)
+        Dim itemPrice As String = tagData.Price
+        Dim itemImage As String = tagData.TagImagePath
+        MsgBox("item image: " & itemImage)
 
         ItemBtn.Text = item.Text
-        ImagePath = If(String.IsNullOrEmpty(tagImgPath), Nothing, tagImgPath)
-        ItemBtn.BackgroundImage = If(item.BackgroundImage IsNot Nothing AndAlso Not String.IsNullOrEmpty(ImagePath),
-                                 ResizeImageFit(item.BackgroundImage, ItemBtn),
-                                 Nothing)
+        ImagePath = If(String.IsNullOrEmpty(itemImage), Nothing, itemImage)
+
+        If Not String.IsNullOrEmpty(itemImage) Then
+            ItemBtn.BackgroundImage = ResizeImageFit(Image.FromFile(itemImage), ItemBtn)
+        Else
+            ItemBtn.BackgroundImage = Nothing
+        End If
 
         ItemNameTxtBox.Text = item.Text
-        PriceTxtBox.Text = price
+        PriceTxtBox.Text = itemPrice
     End Sub
     Private Sub HandleAddNewItem(sender As Object, e As EventArgs)
         ShowForm()
@@ -114,9 +118,11 @@ Public Class Manage_menu
         ItemBtn.Enabled = True
         SaveBtn.Enabled = True
         CancelBtn.Enabled = True
+        ImagePath = "N/A"
 
         ItemBtn.Text = "Click here to set the image"
     End Sub
+
 
 
 
@@ -297,17 +303,19 @@ Public Class Manage_menu
 
 
 
+
     ' Buttons
-    Private Sub ItemBtnSetImage(sender As Object, e As EventArgs) Handles ItemBtn.Click
+    Public Function ItemBtnSetImage(sender As Object, e As EventArgs) Handles ItemBtn.Click
         Using fileDialog As New OpenFileDialog()
             fileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp|All Files|*.*"
             If fileDialog.ShowDialog() = DialogResult.OK Then
                 ImagePath = fileDialog.FileName
                 Dim image As Image = Image.FromFile(ImagePath)
                 ItemBtn.BackgroundImage = ResizeImageFit(image, ItemBtn)
+                Return ImagePath
             End If
         End Using
-    End Sub
+    End Function
     Private Sub EditBtn_Click(sender As Object, e As EventArgs) Handles EditBtn.Click
         IsEdit = True
 
@@ -354,6 +362,20 @@ Public Class Manage_menu
     Private Sub SearchBtn_Click(sender As Object, e As EventArgs) Handles SearchBtn.Click
         If Not String.IsNullOrEmpty(SearchTxtBox.Text) Then
             SearchItem(SearchTxtBox.Text)
+        End If
+    End Sub
+    Private Sub SettingsBtn_Click(sender As Object, e As EventArgs) Handles SettingsBtn.Click
+        If Settings.ShowDialog() = DialogResult.OK Then
+            FoodPnl.Controls.Clear()  ' reload the menu items
+            LoadMenuItems("foods")
+        End If
+    End Sub
+    Private Sub BackBtn_Click(sender As Object, e As EventArgs) Handles BackBtn.Click
+        If Not MsgBox("Are you sure you want to go back?", MsgBoxStyle.YesNoCancel Or MsgBoxStyle.Information, "Notice") = DialogResult.Yes Then
+            Return
+        Else
+            Admin.Show()
+            Me.Hide()
         End If
     End Sub
 

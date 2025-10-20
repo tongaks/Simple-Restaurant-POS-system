@@ -9,6 +9,7 @@ Public Class Settings
         GetSettingsConfig()
         ItemBtnSizeTxtBox.Text = SettingsConfig.MenuItemButtonSize
         FontSizeTxtBtn.Text = SettingsConfig.MenuItemFontSize
+        ImagePathTxtBox.Text = SettingsConfig.LoginImagePath
         ShortcutKeyChckBox.Checked = SettingsConfig.EnableShortcutKeys
 
         Me.WindowState = WindowState.Maximized
@@ -25,6 +26,8 @@ Public Class Settings
         SaveBtn.Enabled = False
         ConfigPnl.Enabled = False
     End Sub
+
+
 
     ' buttons
     Private Sub EditButton_Click(sender As Object, e As EventArgs) Handles EditBtn.Click
@@ -49,10 +52,12 @@ Public Class Settings
 
         Try
             Connection.Open()
-            Dim Query As String = "UPDATE restaurant.settings SET MenuItemButtonSize = @btnsize, EnableShortcutKeys = @shrtky"
+            Dim Query As String = "UPDATE restaurant.settings SET MenuItemButtonSize = @btnsize, MenuItemFontSize = @fontsize, EnableShortcutKeys = @shrtky, LoginImagePath = @imgpath"
             Dim Command As New MySqlCommand(Query, Connection)
             Command.Parameters.AddWithValue("@btnsize", ItemBtnSizeTxtBox.Text)
+            Command.Parameters.AddWithValue("@fontsize", FontSizeTxtBtn.Text)
             Command.Parameters.AddWithValue("@shrtky", ShortcutKeyChckBox.Checked)
+            Command.Parameters.AddWithValue("@imgpath", ImagePathTxtBox.Text)
 
             If Command.ExecuteNonQuery > 0 Then
                 HasUpdate = True
@@ -64,11 +69,18 @@ Public Class Settings
             MsgBox("Failed to update the configurations", MsgBoxStyle.Critical, "Error")
         End Try
     End Sub
+    Private Sub SelectPictureBtn_Click(sender As Object, e As EventArgs) Handles SelectPictureBtn.Click
+        Dim mngMenuForm As New Manage_menu
+        Dim path As String = mngMenuForm.ItemBtnSetImage(sender, e)
+        If Not String.IsNullOrEmpty(path) Then
+            ImagePathTxtBox.Text = path
+        End If
+    End Sub
 
 
 
     ' handlers/listeners
-    Private Sub ConfigChanges(sender As Object, e As EventArgs) Handles ItemBtnSizeTxtBox.TextChanged, ShortcutKeyChckBox.Click
+    Private Sub ConfigChanges(sender As Object, e As EventArgs) Handles ItemBtnSizeTxtBox.TextChanged, ShortcutKeyChckBox.Click, ImagePathTxtBox.TextChanged
         If IsEdit Then
             SaveBtn.Enabled = True
         End If

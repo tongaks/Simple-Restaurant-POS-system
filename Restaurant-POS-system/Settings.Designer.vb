@@ -32,6 +32,9 @@ Partial Class Settings
         EditBtn = New FontAwesome.Sharp.IconButton()
         Label4 = New Label()
         ConfigPnl = New Panel()
+        SelectPictureBtn = New FontAwesome.Sharp.IconButton()
+        ImagePathTxtBox = New TextBox()
+        Label5 = New Label()
         FontSizeTxtBtn = New TextBox()
         Label2 = New Label()
         Panel1.SuspendLayout()
@@ -153,6 +156,9 @@ Partial Class Settings
         ' 
         ' ConfigPnl
         ' 
+        ConfigPnl.Controls.Add(SelectPictureBtn)
+        ConfigPnl.Controls.Add(ImagePathTxtBox)
+        ConfigPnl.Controls.Add(Label5)
         ConfigPnl.Controls.Add(FontSizeTxtBtn)
         ConfigPnl.Controls.Add(Label2)
         ConfigPnl.Controls.Add(ItemBtnSizeTxtBox)
@@ -164,6 +170,40 @@ Partial Class Settings
         ConfigPnl.Name = "ConfigPnl"
         ConfigPnl.Size = New Size(739, 214)
         ConfigPnl.TabIndex = 7
+        ' 
+        ' SelectPictureBtn
+        ' 
+        SelectPictureBtn.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        SelectPictureBtn.BackColor = Color.Khaki
+        SelectPictureBtn.FlatStyle = FlatStyle.Flat
+        SelectPictureBtn.IconChar = FontAwesome.Sharp.IconChar.PhotoFilm
+        SelectPictureBtn.IconColor = Color.Black
+        SelectPictureBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
+        SelectPictureBtn.IconSize = 20
+        SelectPictureBtn.ImageAlign = ContentAlignment.MiddleRight
+        SelectPictureBtn.Location = New Point(410, 135)
+        SelectPictureBtn.Name = "SelectPictureBtn"
+        SelectPictureBtn.Size = New Size(75, 23)
+        SelectPictureBtn.TabIndex = 11
+        SelectPictureBtn.Text = "Select"
+        SelectPictureBtn.TextAlign = ContentAlignment.MiddleLeft
+        SelectPictureBtn.UseVisualStyleBackColor = False
+        ' 
+        ' ImagePathTxtBox
+        ' 
+        ImagePathTxtBox.Location = New Point(151, 135)
+        ImagePathTxtBox.Name = "ImagePathTxtBox"
+        ImagePathTxtBox.Size = New Size(243, 23)
+        ImagePathTxtBox.TabIndex = 9
+        ' 
+        ' Label5
+        ' 
+        Label5.AutoSize = True
+        Label5.Location = New Point(3, 138)
+        Label5.Name = "Label5"
+        Label5.Size = New Size(147, 15)
+        Label5.TabIndex = 8
+        Label5.Text = "Change login page picture"
         ' 
         ' FontSizeTxtBtn
         ' 
@@ -209,4 +249,7 @@ Partial Class Settings
     Friend WithEvents ConfigPnl As Panel
     Friend WithEvents FontSizeTxtBtn As TextBox
     Friend WithEvents Label2 As Label
+    Friend WithEvents SelectPictureBtn As FontAwesome.Sharp.IconButton
+    Friend WithEvents ImagePathTxtBox As TextBox
+    Friend WithEvents Label5 As Label
 End Class
