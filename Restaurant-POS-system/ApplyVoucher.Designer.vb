@@ -62,7 +62,7 @@ Partial Class ApplyVoucher
         ' 
         lblSubtitle.AutoSize = True
         lblSubtitle.Dock = DockStyle.Top
-        lblSubtitle.Font = New Font("Segoe UI", 10.0F)
+        lblSubtitle.Font = New Font("Segoe UI", 10F)
         lblSubtitle.ForeColor = Color.White
         lblSubtitle.Location = New Point(30, 57)
         lblSubtitle.Name = "lblSubtitle"
@@ -75,7 +75,7 @@ Partial Class ApplyVoucher
         ' 
         lblTitle.AutoSize = True
         lblTitle.Dock = DockStyle.Top
-        lblTitle.Font = New Font("Segoe UI", 16.0F, FontStyle.Bold)
+        lblTitle.Font = New Font("Segoe UI", 16F, FontStyle.Bold)
         lblTitle.ForeColor = Color.White
         lblTitle.Location = New Point(30, 20)
         lblTitle.Name = "lblTitle"
@@ -117,7 +117,7 @@ Partial Class ApplyVoucher
         ApplyVoucherBtn.Dock = DockStyle.Bottom
         ApplyVoucherBtn.FlatAppearance.BorderSize = 0
         ApplyVoucherBtn.FlatStyle = FlatStyle.Flat
-        ApplyVoucherBtn.Font = New Font("Segoe UI Semibold", 10.0F, FontStyle.Bold)
+        ApplyVoucherBtn.Font = New Font("Segoe UI Semibold", 10F, FontStyle.Bold)
         ApplyVoucherBtn.ForeColor = Color.White
         ApplyVoucherBtn.IconChar = FontAwesome.Sharp.IconChar.Check
         ApplyVoucherBtn.IconColor = Color.White
@@ -147,7 +147,7 @@ Partial Class ApplyVoucher
         ' 
         ' DiscountTxtBox
         ' 
-        DiscountTxtBox.Font = New Font("Segoe UI", 11.0F)
+        DiscountTxtBox.Font = New Font("Segoe UI", 11F)
         DiscountTxtBox.Location = New Point(200, 53)
         DiscountTxtBox.Name = "DiscountTxtBox"
         DiscountTxtBox.Size = New Size(170, 32)
@@ -156,7 +156,7 @@ Partial Class ApplyVoucher
         ' Label4
         ' 
         Label4.AutoSize = True
-        Label4.Font = New Font("Segoe UI", 10.0F)
+        Label4.Font = New Font("Segoe UI", 10F)
         Label4.ForeColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
         Label4.Location = New Point(10, 55)
         Label4.Name = "Label4"
@@ -166,7 +166,7 @@ Partial Class ApplyVoucher
         ' 
         ' ComboBox1
         ' 
-        ComboBox1.Font = New Font("Segoe UI", 11.0F)
+        ComboBox1.Font = New Font("Segoe UI", 11F)
         ComboBox1.FormattingEnabled = True
         ComboBox1.Items.AddRange(New Object() {"Senior", "Student", "PWD"})
         ComboBox1.Location = New Point(200, 3)
@@ -178,7 +178,7 @@ Partial Class ApplyVoucher
         ' Label6
         ' 
         Label6.AutoSize = True
-        Label6.Font = New Font("Segoe UI", 10.0F)
+        Label6.Font = New Font("Segoe UI", 10F)
         Label6.ForeColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
         Label6.Location = New Point(10, 5)
         Label6.Name = "Label6"
@@ -206,7 +206,7 @@ Partial Class ApplyVoucher
         LoginBtn.Dock = DockStyle.Bottom
         LoginBtn.FlatAppearance.BorderSize = 0
         LoginBtn.FlatStyle = FlatStyle.Flat
-        LoginBtn.Font = New Font("Segoe UI Semibold", 10.0F, FontStyle.Bold)
+        LoginBtn.Font = New Font("Segoe UI Semibold", 10F, FontStyle.Bold)
         LoginBtn.ForeColor = Color.White
         LoginBtn.IconChar = FontAwesome.Sharp.IconChar.SignIn
         LoginBtn.IconColor = Color.White
@@ -236,7 +236,7 @@ Partial Class ApplyVoucher
         ' 
         ' PasswordTxtBox
         ' 
-        PasswordTxtBox.Font = New Font("Segoe UI", 11.0F)
+        PasswordTxtBox.Font = New Font("Segoe UI", 11F)
         PasswordTxtBox.Location = New Point(10, 95)
         PasswordTxtBox.Name = "PasswordTxtBox"
         PasswordTxtBox.PasswordChar = "●"c
@@ -246,7 +246,7 @@ Partial Class ApplyVoucher
         ' Label2
         ' 
         Label2.AutoSize = True
-        Label2.Font = New Font("Segoe UI", 10.0F)
+        Label2.Font = New Font("Segoe UI", 10F)
         Label2.ForeColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
         Label2.Location = New Point(10, 70)
         Label2.Name = "Label2"
@@ -256,7 +256,7 @@ Partial Class ApplyVoucher
         ' 
         ' UsernameTxtBox
         ' 
-        UsernameTxtBox.Font = New Font("Segoe UI", 11.0F)
+        UsernameTxtBox.Font = New Font("Segoe UI", 11F)
         UsernameTxtBox.Location = New Point(10, 30)
         UsernameTxtBox.Name = "UsernameTxtBox"
         UsernameTxtBox.Size = New Size(360, 32)
@@ -265,7 +265,7 @@ Partial Class ApplyVoucher
         ' Label1
         ' 
         Label1.AutoSize = True
-        Label1.Font = New Font("Segoe UI", 10.0F)
+        Label1.Font = New Font("Segoe UI", 10F)
         Label1.ForeColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
         Label1.Location = New Point(10, 5)
         Label1.Name = "Label1"
@@ -290,7 +290,7 @@ Partial Class ApplyVoucher
         CancelBtn.Dock = DockStyle.Fill
         CancelBtn.FlatAppearance.BorderSize = 0
         CancelBtn.FlatStyle = FlatStyle.Flat
-        CancelBtn.Font = New Font("Segoe UI Semibold", 10.0F, FontStyle.Bold)
+        CancelBtn.Font = New Font("Segoe UI Semibold", 10F, FontStyle.Bold)
         CancelBtn.ForeColor = Color.White
         CancelBtn.Location = New Point(0, 10)
         CancelBtn.Name = "CancelBtn"
@@ -301,13 +301,13 @@ Partial Class ApplyVoucher
         ' 
         ' ApplyVoucher
         ' 
-        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
+        AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.FromArgb(CByte(245), CByte(247), CByte(250))
         ClientSize = New Size(500, 550)
         Controls.Add(pnlMain)
         Controls.Add(pnlHeader)
-        Font = New Font("Segoe UI", 9.0F)
+        Font = New Font("Segoe UI", 9F)
         FormBorderStyle = FormBorderStyle.FixedDialog
         MaximizeBox = False
         MinimizeBox = False

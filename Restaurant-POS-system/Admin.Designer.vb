@@ -437,7 +437,7 @@ Partial Class Admin
         pnlManageAccounts.Name = "pnlManageAccounts"
         pnlManageAccounts.Size = New Size(1217, 908)
         pnlManageAccounts.TabIndex = 3
-        pnlManageAccounts.Visible = False
+        pnlManageAccounts.Visible = True
         ' 
         ' pnlAccountsContent
         ' 

@@ -59,7 +59,7 @@ Partial Class Settings
         ' 
         lblTitle.AutoSize = True
         lblTitle.Dock = DockStyle.Left
-        lblTitle.Font = New Font("Segoe UI", 20.0F, FontStyle.Bold)
+        lblTitle.Font = New Font("Segoe UI", 20F, FontStyle.Bold)
         lblTitle.ForeColor = Color.FromArgb(CByte(45), CByte(45), CByte(48))
         lblTitle.Location = New Point(30, 20)
         lblTitle.Name = "lblTitle"
@@ -99,7 +99,7 @@ Partial Class Settings
         CancelBtn.Enabled = False
         CancelBtn.FlatAppearance.BorderSize = 0
         CancelBtn.FlatStyle = FlatStyle.Flat
-        CancelBtn.Font = New Font("Segoe UI Semibold", 11.0F, FontStyle.Bold)
+        CancelBtn.Font = New Font("Segoe UI Semibold", 11F, FontStyle.Bold)
         CancelBtn.ForeColor = Color.White
         CancelBtn.Location = New Point(280, 20)
         CancelBtn.Name = "CancelBtn"
@@ -116,7 +116,7 @@ Partial Class Settings
         SaveBtn.Enabled = False
         SaveBtn.FlatAppearance.BorderSize = 0
         SaveBtn.FlatStyle = FlatStyle.Flat
-        SaveBtn.Font = New Font("Segoe UI Semibold", 11.0F, FontStyle.Bold)
+        SaveBtn.Font = New Font("Segoe UI Semibold", 11F, FontStyle.Bold)
         SaveBtn.ForeColor = Color.White
         SaveBtn.Location = New Point(430, 20)
         SaveBtn.Name = "SaveBtn"
@@ -132,7 +132,7 @@ Partial Class Settings
         EditBtn.Dock = DockStyle.Right
         EditBtn.FlatAppearance.BorderSize = 0
         EditBtn.FlatStyle = FlatStyle.Flat
-        EditBtn.Font = New Font("Segoe UI Semibold", 11.0F, FontStyle.Bold)
+        EditBtn.Font = New Font("Segoe UI Semibold", 11F, FontStyle.Bold)
         EditBtn.ForeColor = Color.White
         EditBtn.Location = New Point(580, 20)
         EditBtn.Name = "EditBtn"
@@ -181,7 +181,7 @@ Partial Class Settings
         ' lblShortcutKeys
         ' 
         lblShortcutKeys.AutoSize = True
-        lblShortcutKeys.Font = New Font("Segoe UI", 11.0F)
+        lblShortcutKeys.Font = New Font("Segoe UI", 11F)
         lblShortcutKeys.ForeColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
         lblShortcutKeys.Location = New Point(10, 15)
         lblShortcutKeys.Name = "lblShortcutKeys"
@@ -203,7 +203,7 @@ Partial Class Settings
         ' FontSizeTxtBtn
         ' 
         FontSizeTxtBtn.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        FontSizeTxtBtn.Font = New Font("Segoe UI", 11.0F)
+        FontSizeTxtBtn.Font = New Font("Segoe UI", 11F)
         FontSizeTxtBtn.Location = New Point(500, 12)
         FontSizeTxtBtn.Name = "FontSizeTxtBtn"
         FontSizeTxtBtn.Size = New Size(150, 32)
@@ -212,7 +212,7 @@ Partial Class Settings
         ' lblFontSize
         ' 
         lblFontSize.AutoSize = True
-        lblFontSize.Font = New Font("Segoe UI", 11.0F)
+        lblFontSize.Font = New Font("Segoe UI", 11F)
         lblFontSize.ForeColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
         lblFontSize.Location = New Point(10, 15)
         lblFontSize.Name = "lblFontSize"
@@ -234,7 +234,7 @@ Partial Class Settings
         ' ItemBtnSizeTxtBox
         ' 
         ItemBtnSizeTxtBox.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        ItemBtnSizeTxtBox.Font = New Font("Segoe UI", 11.0F)
+        ItemBtnSizeTxtBox.Font = New Font("Segoe UI", 11F)
         ItemBtnSizeTxtBox.Location = New Point(500, 12)
         ItemBtnSizeTxtBox.Name = "ItemBtnSizeTxtBox"
         ItemBtnSizeTxtBox.Size = New Size(150, 32)
@@ -243,7 +243,7 @@ Partial Class Settings
         ' lblButtonSize
         ' 
         lblButtonSize.AutoSize = True
-        lblButtonSize.Font = New Font("Segoe UI", 11.0F)
+        lblButtonSize.Font = New Font("Segoe UI", 11F)
         lblButtonSize.ForeColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
         lblButtonSize.Location = New Point(10, 15)
         lblButtonSize.Name = "lblButtonSize"
@@ -255,7 +255,7 @@ Partial Class Settings
         ' 
         lblConfigTitle.AutoSize = True
         lblConfigTitle.Dock = DockStyle.Top
-        lblConfigTitle.Font = New Font("Segoe UI Semibold", 14.0F, FontStyle.Bold)
+        lblConfigTitle.Font = New Font("Segoe UI Semibold", 14F, FontStyle.Bold)
         lblConfigTitle.ForeColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
         lblConfigTitle.Location = New Point(30, 20)
         lblConfigTitle.Name = "lblConfigTitle"
@@ -266,13 +266,13 @@ Partial Class Settings
         ' 
         ' Settings
         ' 
-        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
+        AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.FromArgb(CByte(245), CByte(247), CByte(250))
         ClientSize = New Size(800, 600)
         Controls.Add(pnlMain)
         Controls.Add(pnlHeader)
-        Font = New Font("Segoe UI", 9.0F)
+        Font = New Font("Segoe UI", 9F)
         FormBorderStyle = FormBorderStyle.FixedDialog
         MaximizeBox = False
         MinimizeBox = False

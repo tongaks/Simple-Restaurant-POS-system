@@ -159,7 +159,7 @@ Public Class CreateEditAccountForm
         ' 
         lblFormTitle.AutoSize = True
         lblFormTitle.Dock = DockStyle.Left
-        lblFormTitle.Font = New Font("Segoe UI", 16.0F, FontStyle.Bold)
+        lblFormTitle.Font = New Font("Segoe UI", 16F, FontStyle.Bold)
         lblFormTitle.ForeColor = Color.White
         lblFormTitle.Location = New Point(30, 20)
         lblFormTitle.Name = "lblFormTitle"
@@ -197,7 +197,7 @@ Public Class CreateEditAccountForm
         btnCancel.Dock = DockStyle.Right
         btnCancel.FlatAppearance.BorderSize = 0
         btnCancel.FlatStyle = FlatStyle.Flat
-        btnCancel.Font = New Font("Segoe UI Semibold", 10.0F, FontStyle.Bold)
+        btnCancel.Font = New Font("Segoe UI Semibold", 10F, FontStyle.Bold)
         btnCancel.ForeColor = Color.White
         btnCancel.Location = New Point(140, 10)
         btnCancel.Name = "btnCancel"
@@ -213,7 +213,7 @@ Public Class CreateEditAccountForm
         btnSave.Dock = DockStyle.Right
         btnSave.FlatAppearance.BorderSize = 0
         btnSave.FlatStyle = FlatStyle.Flat
-        btnSave.Font = New Font("Segoe UI Semibold", 10.0F, FontStyle.Bold)
+        btnSave.Font = New Font("Segoe UI Semibold", 10F, FontStyle.Bold)
         btnSave.ForeColor = Color.White
         btnSave.Location = New Point(290, 10)
         btnSave.Name = "btnSave"
@@ -242,7 +242,7 @@ Public Class CreateEditAccountForm
         ' cboRole
         ' 
         cboRole.DropDownStyle = ComboBoxStyle.DropDownList
-        cboRole.Font = New Font("Segoe UI", 11.0F)
+        cboRole.Font = New Font("Segoe UI", 11F)
         cboRole.FormattingEnabled = True
         cboRole.Location = New Point(30, 185)
         cboRole.Name = "cboRole"
@@ -252,7 +252,7 @@ Public Class CreateEditAccountForm
         ' lblRole
         ' 
         lblRole.AutoSize = True
-        lblRole.Font = New Font("Segoe UI", 10.0F)
+        lblRole.Font = New Font("Segoe UI", 10F)
         lblRole.ForeColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
         lblRole.Location = New Point(30, 160)
         lblRole.Name = "lblRole"
@@ -262,7 +262,7 @@ Public Class CreateEditAccountForm
         ' 
         ' txtPassword
         ' 
-        txtPassword.Font = New Font("Segoe UI", 11.0F)
+        txtPassword.Font = New Font("Segoe UI", 11F)
         txtPassword.Location = New Point(30, 115)
         txtPassword.Name = "txtPassword"
         txtPassword.Size = New Size(378, 32)
@@ -272,7 +272,7 @@ Public Class CreateEditAccountForm
         ' lblPassword
         ' 
         lblPassword.AutoSize = True
-        lblPassword.Font = New Font("Segoe UI", 10.0F)
+        lblPassword.Font = New Font("Segoe UI", 10F)
         lblPassword.ForeColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
         lblPassword.Location = New Point(30, 90)
         lblPassword.Name = "lblPassword"
@@ -282,7 +282,7 @@ Public Class CreateEditAccountForm
         ' 
         ' txtUsername
         ' 
-        txtUsername.Font = New Font("Segoe UI", 11.0F)
+        txtUsername.Font = New Font("Segoe UI", 11F)
         txtUsername.Location = New Point(30, 45)
         txtUsername.Name = "txtUsername"
         txtUsername.Size = New Size(378, 32)
@@ -291,7 +291,7 @@ Public Class CreateEditAccountForm
         ' lblUsername
         ' 
         lblUsername.AutoSize = True
-        lblUsername.Font = New Font("Segoe UI", 10.0F)
+        lblUsername.Font = New Font("Segoe UI", 10F)
         lblUsername.ForeColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
         lblUsername.Location = New Point(30, 20)
         lblUsername.Name = "lblUsername"
@@ -301,13 +301,13 @@ Public Class CreateEditAccountForm
         ' 
         ' CreateEditAccountForm
         ' 
-        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
+        AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.FromArgb(CByte(245), CByte(247), CByte(250))
         ClientSize = New Size(500, 450)
         Controls.Add(pnlMain)
         Controls.Add(pnlHeader)
-        Font = New Font("Segoe UI", 9.0F)
+        Font = New Font("Segoe UI", 9F)
         FormBorderStyle = FormBorderStyle.FixedDialog
         MaximizeBox = False
         MinimizeBox = False

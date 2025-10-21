@@ -1,22 +1,47 @@
 ﻿Imports System.IO
 Imports MySql.Data.MySqlClient
-Imports Org.BouncyCastle.Tls
 
 Public Class Manage_menu
     Private IsEdit As Boolean = False
     Private CurrentTable As String = "Foods"
     Private ImagePath As String = ""
+    Private navButtons As AdminNavButtons
 
     Private Sub Manage_menu_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ' add this function so that when this form is closed, the parent form as well
         Me.WindowState = FormWindowState.Maximized
 
-        ' load menu items
+        ' Initialize navigation buttons (pass Nothing for back button since Manage_menu handles it differently)
+        navButtons = New AdminNavButtons(Me, Nothing, Nothing, Nothing, Nothing)
+
+        ' Load menu items
         LoadMenuCategories()
         LoadMenuItems(CurrentTable)
+
+        ' Make sure the item info panel is visible but in default state
+        ItemInfoPnl.Visible = True
+        pnlItemActions.Visible = True
+        pnlItemFields.Visible = True
+
+        ' Set initial state - all buttons disabled until item selected
+        DisableForm()
+
+        ' Show the placeholder label
+        lblItemPreview.Visible = True
+        ItemBtn.Visible = False
     End Sub
+
     Private Sub HandleFormClose(sender As Object, e As EventArgs) Handles MyBase.FormClosed
-        Form1.Dispose()
+        ' Return to Admin form when closing
+        For Each f As Form In Application.OpenForms
+            If TypeOf f Is Admin Then
+                f.Show()
+                f.BringToFront()
+                Return
+            End If
+        Next
+        ' If no Admin form found, create one
+        Dim adminForm As New Admin()
+        adminForm.Show()
     End Sub
 
     Private Sub ClearMenuItemForm()
@@ -28,8 +53,11 @@ Public Class Manage_menu
             ItemBtn.BackgroundImage.Dispose()
             ItemBtn.BackgroundImage = Nothing
         End If
+
+        ImagePath = String.Empty
     End Sub
-    Private Function ValidateInputs()
+
+    Private Function ValidateInputs() As Boolean
         If String.IsNullOrEmpty(ItemNameTxtBox.Text) Then
             MsgBox("Item name is invalid", MsgBoxStyle.Critical, "Error")
             Return False
@@ -43,23 +71,39 @@ Public Class Manage_menu
 
         Return True
     End Function
+
     Private Sub DisableForm()
+        ' Disable input controls
         ItemNameTxtBox.Enabled = False
         PriceTxtBox.Enabled = False
         ItemBtn.Enabled = False
+
+        ' Disable action buttons
         EditBtn.Enabled = False
         UpdateBtn.Enabled = False
         DeleteBtn.Enabled = False
         SaveBtn.Enabled = False
         CancelBtn.Enabled = False
+
+        ' Keep panels visible but controls disabled
+        pnlItemFields.Visible = True
+        pnlItemActions.Visible = True
     End Sub
+
     Private Sub ShowForm()
-        Label4.Visible = False
+        ' Show all panels
+        pnlItemFields.Visible = True
+        pnlItemActions.Visible = True
+
+        ' Show labels and controls
+        lblItemPreview.Visible = False
         ItemBtn.Visible = True
         ItemNameLbl.Visible = True
         PriceLbl.Visible = True
         ItemNameTxtBox.Visible = True
         PriceTxtBox.Visible = True
+
+        ' Show action buttons
         EditBtn.Visible = True
         DeleteBtn.Visible = True
         UpdateBtn.Visible = True
@@ -67,13 +111,13 @@ Public Class Manage_menu
         SaveBtn.Visible = True
     End Sub
 
-
     ' Handlers for menu item/category clicks
     Private Sub HandleCategoryClick(sender As Object, e As EventArgs)
         Dim catName As String = CType(sender, Button).Text
         CurrentTable = catName
         LoadMenuItems(catName)
     End Sub
+
     Private Sub HandleItemClick(sender As Object, e As EventArgs)
         EditBtn.Enabled = True
         SaveBtn.Enabled = False
@@ -97,10 +141,12 @@ Public Class Manage_menu
         ItemBtn.BackgroundImage = If(item.BackgroundImage IsNot Nothing AndAlso Not String.IsNullOrEmpty(ImagePath),
                                  ResizeImageFit(item.BackgroundImage, ItemBtn),
                                  Nothing)
+        ItemBtn.BackgroundImageLayout = ImageLayout.Stretch
 
         ItemNameTxtBox.Text = item.Text
         PriceTxtBox.Text = price
     End Sub
+
     Private Sub HandleAddNewItem(sender As Object, e As EventArgs)
         ShowForm()
         ClearMenuItemForm()
@@ -118,18 +164,15 @@ Public Class Manage_menu
         ItemBtn.Text = "Click here to set the image"
     End Sub
 
-
-
     ' CRUD functions
     Private Sub AddNewMenuItem(itemName As String, itemPrice As String)
-
         Dim sqlQuery As String = "INSERT INTO `" & CurrentTable & "` (ItemName, ItemPrice, ImagePath) VALUES (@Name, @Price, @Path)"
 
         Using connection As New MySqlConnection(GetGlobalConnectionString())
             Using command As New MySqlCommand(sqlQuery, connection)
                 command.Parameters.AddWithValue("@Name", ItemNameTxtBox.Text)
                 command.Parameters.AddWithValue("@Price", itemPrice)
-                command.Parameters.AddWithValue("@Path", ImagePath)
+                command.Parameters.AddWithValue("@Path", If(String.IsNullOrEmpty(ImagePath), "N/A", ImagePath))
 
                 Try
                     connection.Open()
@@ -137,7 +180,9 @@ Public Class Manage_menu
                         MsgBox("Successfully added new item!", MsgBoxStyle.Information, "Success")
                         LoadMenuItems(CurrentTable)
                         ClearMenuItemForm()
-                        'DisableForm()
+                        DisableForm()
+                        lblItemPreview.Visible = True
+                        ItemBtn.Visible = False
                     End If
                 Catch ex As MySqlException
                     MessageBox.Show("Database Error: " & ex.Message, "SQL Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -147,12 +192,13 @@ Public Class Manage_menu
             End Using
         End Using
     End Sub
+
     Private Sub UpdateMenuItem(itemName As String, itemPrice As String)
         Dim sqlQuery As String = "UPDATE `" & CurrentTable & "` SET ItemName = @itemName, ItemPrice = @price, ImagePath = @imgpath WHERE ItemName = @itemOldName"
 
         Using connection As New MySqlConnection(GetGlobalConnectionString())
             Using command As New MySqlCommand(sqlQuery, connection)
-                command.Parameters.AddWithValue("@imgpath", ImagePath)
+                command.Parameters.AddWithValue("@imgpath", If(String.IsNullOrEmpty(ImagePath), "N/A", ImagePath))
                 command.Parameters.AddWithValue("@itemName", ItemNameTxtBox.Text)
                 command.Parameters.AddWithValue("@itemOldName", ItemBtn.Text)
                 command.Parameters.AddWithValue("@price", PriceTxtBox.Text)
@@ -166,15 +212,18 @@ Public Class Manage_menu
                         IsEdit = False
                         ClearMenuItemForm()
                         DisableForm()
+                        lblItemPreview.Visible = True
+                        ItemBtn.Visible = False
                     Else
                         MsgBox("Failed to update the item.", MsgBoxStyle.Critical, "Failed")
                     End If
                 Catch ex As Exception
-                    MsgBox("Error updating item image: " & ex.Message, MsgBoxStyle.Critical, "Error")
+                    MsgBox("Error updating item: " & ex.Message, MsgBoxStyle.Critical, "Error")
                 End Try
             End Using
         End Using
     End Sub
+
     Private Sub DeleteMenuItem(itemName As String)
         Dim result = MessageBox.Show($"Are you sure you want to permanently delete the item: '{itemName}'?", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
         If result = DialogResult.No Then Return
@@ -191,6 +240,9 @@ Public Class Manage_menu
                         MessageBox.Show($"Item '{itemName}' was successfully deleted.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
                         ClearMenuItemForm()
                         LoadMenuItems(CurrentTable)
+                        DisableForm()
+                        lblItemPreview.Visible = True
+                        ItemBtn.Visible = False
                     Else
                         MessageBox.Show($"Item '{itemName}' was not found or could not be deleted.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                     End If
@@ -202,6 +254,7 @@ Public Class Manage_menu
             End Using
         End Using
     End Sub
+
     Private Sub SearchItem(itemName As String)
         Dim Connection As New MySqlConnection(GetGlobalConnectionString)
         Dim Reader As MySqlDataReader
@@ -215,7 +268,8 @@ Public Class Manage_menu
 
             If Reader.HasRows Then
                 FoodPnl.Controls.Clear()
-            Else Return
+            Else
+                Return
             End If
 
             While Reader.Read
@@ -232,9 +286,14 @@ Public Class Manage_menu
             End While
 
         Catch ex As Exception
-
+            MessageBox.Show("Search error: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            If Connection.State = ConnectionState.Open Then
+                Connection.Close()
+            End If
         End Try
     End Sub
+
     Private Sub LoadMenuCategories()
         MenuCategoryPnl.Controls.Clear()
 
@@ -247,10 +306,15 @@ Public Class Manage_menu
                 Using reader As MySqlDataReader = command.ExecuteReader()
                     While reader.Read()
                         Dim catBtn As New Button With {
-                        .Text = reader("CategoryName").ToString(),
-                        .Size = New Size(100, 50),
-                        .FlatStyle = FlatStyle.Flat
-                    }
+                            .Text = reader("CategoryName").ToString(),
+                            .Size = New Size(100, 50),
+                            .FlatStyle = FlatStyle.Flat,
+                            .BackColor = Color.FromArgb(52, 152, 219),
+                            .ForeColor = Color.White,
+                            .Font = New Font("Segoe UI Semibold", 10, FontStyle.Bold),
+                            .Cursor = Cursors.Hand
+                        }
+                        catBtn.FlatAppearance.BorderSize = 0
                         AddHandler catBtn.Click, AddressOf HandleCategoryClick
                         MenuCategoryPnl.Controls.Add(catBtn)
                     End While
@@ -260,6 +324,7 @@ Public Class Manage_menu
             End Try
         End Using
     End Sub
+
     Private Sub LoadMenuItems(table As String)
         FoodPnl.Controls.Clear()
 
@@ -283,8 +348,11 @@ Public Class Manage_menu
 
                 ' Add "Add new item" button
                 Dim addNewPanel As FlowLayoutPanel = CreateFoodItemButton("Add new item", "0", String.Empty)
-                ' iterate through the panel's controls to get the button
+                ' Iterate through the panel's controls to get the button
                 For Each btn As Button In addNewPanel.Controls.OfType(Of Button)()
+                    btn.BackColor = Color.FromArgb(46, 204, 113)
+                    btn.ForeColor = Color.White
+                    btn.Font = New Font("Segoe UI", 11, FontStyle.Bold)
                     AddHandler btn.Click, AddressOf HandleAddNewItem
                 Next
                 FoodPnl.Controls.Add(addNewPanel)
@@ -295,8 +363,6 @@ Public Class Manage_menu
         End Using
     End Sub
 
-
-
     ' Buttons
     Private Sub ItemBtnSetImage(sender As Object, e As EventArgs) Handles ItemBtn.Click
         Using fileDialog As New OpenFileDialog()
@@ -305,28 +371,31 @@ Public Class Manage_menu
                 ImagePath = fileDialog.FileName
                 Dim image As Image = Image.FromFile(ImagePath)
                 ItemBtn.BackgroundImage = ResizeImageFit(image, ItemBtn)
+                ItemBtn.BackgroundImageLayout = ImageLayout.Stretch
             End If
         End Using
     End Sub
+
     Private Sub EditBtn_Click(sender As Object, e As EventArgs) Handles EditBtn.Click
         IsEdit = True
 
         EditBtn.Enabled = False
         CancelBtn.Enabled = True
         DeleteBtn.Enabled = True
+        UpdateBtn.Enabled = False
 
-        ' enable the form
+        ' Enable the form
         ItemBtn.Enabled = True
         PriceTxtBox.Enabled = True
         ItemNameTxtBox.Enabled = True
     End Sub
+
     Private Sub SaveBtn_Click(sender As Object, e As EventArgs) Handles SaveBtn.Click
         If ValidateInputs() Then
             AddNewMenuItem(ItemNameTxtBox.Text, PriceTxtBox.Text)
-            ClearMenuItemForm()
-            DisableForm()
         End If
     End Sub
+
     Private Sub DeleteBtn_Click(sender As Object, e As EventArgs) Handles DeleteBtn.Click
         If String.IsNullOrEmpty(ItemBtn.Text) Then
             MsgBox("Please select an item", MsgBoxStyle.Critical, "Error")
@@ -334,14 +403,14 @@ Public Class Manage_menu
         End If
 
         DeleteMenuItem(ItemBtn.Text)
-        ClearMenuItemForm()
-        DisableForm()
     End Sub
+
     Private Sub UpdateBtn_Click(sender As Object, e As EventArgs) Handles UpdateBtn.Click
         If ValidateInputs() Then
             UpdateMenuItem(ItemNameTxtBox.Text, PriceTxtBox.Text)
         End If
     End Sub
+
     Private Sub CancelBtn_Click(sender As Object, e As EventArgs) Handles CancelBtn.Click
         Dim res = MsgBox("Are you sure you want to cancel?", MsgBoxStyle.YesNo, "Notice")
 
@@ -349,43 +418,42 @@ Public Class Manage_menu
             IsEdit = False
             ClearMenuItemForm()
             DisableForm()
+            lblItemPreview.Visible = True
+            ItemBtn.Visible = False
         End If
     End Sub
+
     Private Sub SearchBtn_Click(sender As Object, e As EventArgs) Handles SearchBtn.Click
         If Not String.IsNullOrEmpty(SearchTxtBox.Text) Then
             SearchItem(SearchTxtBox.Text)
         End If
     End Sub
 
-
-
-    'listeners for events
-    Private Sub HandleFormInput(sender As Object, e As EventArgs) Handles ItemNameTxtBox.KeyPress, PriceTxtBox.KeyPress, ItemBtn.BackgroundImageChanged
+    ' Listeners for events
+    Private Sub HandleFormInput(sender As Object, e As EventArgs) Handles ItemNameTxtBox.TextChanged, PriceTxtBox.TextChanged
         If IsEdit Then
             UpdateBtn.Enabled = True
-        Else
-            UpdateBtn.Enabled = False
         End If
     End Sub
+
     Private Sub HandleLettersOnly(sender As Object, e As KeyPressEventArgs) Handles ItemNameTxtBox.KeyPress
-        If Char.IsDigit(e.KeyChar) AndAlso Not Char.IsControl(e.KeyChar) Then
+        ' Allow letters, spaces, and control characters
+        If Not Char.IsLetter(e.KeyChar) AndAlso Not Char.IsWhiteSpace(e.KeyChar) AndAlso Not Char.IsControl(e.KeyChar) Then
             e.Handled = True
         End If
     End Sub
+
     Private Sub HandleNumbersOnly(sender As Object, e As KeyPressEventArgs) Handles PriceTxtBox.KeyPress
         If Not Char.IsDigit(e.KeyChar) AndAlso Not Char.IsControl(e.KeyChar) Then
             e.Handled = True
         End If
     End Sub
+
     Private Sub HandleSearchTxtBoxEnter(sender As Object, e As KeyPressEventArgs) Handles SearchTxtBox.KeyPress
         If Asc(e.KeyChar) = 13 Then
             If Not String.IsNullOrEmpty(SearchTxtBox.Text) Then
                 SearchItem(SearchTxtBox.Text)
             End If
         End If
-    End Sub
-
-    Private Sub SearchTxtBox_TextChanged(sender As Object, e As EventArgs) Handles SearchTxtBox.TextChanged
-
     End Sub
 End Class

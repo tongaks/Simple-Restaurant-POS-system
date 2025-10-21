@@ -103,7 +103,7 @@ Partial Class AccountCard
         ' lblDate
         ' 
         lblDate.AutoSize = True
-        lblDate.Font = New Font("Segoe UI", 9.0F)
+        lblDate.Font = New Font("Segoe UI", 9F)
         lblDate.ForeColor = Color.Gray
         lblDate.Location = New Point(35, 93)
         lblDate.Name = "lblDate"
@@ -114,7 +114,7 @@ Partial Class AccountCard
         ' lblRole
         ' 
         lblRole.AutoSize = True
-        lblRole.Font = New Font("Segoe UI", 10.0F)
+        lblRole.Font = New Font("Segoe UI", 10F)
         lblRole.ForeColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
         lblRole.Location = New Point(35, 70)
         lblRole.Name = "lblRole"
@@ -137,7 +137,7 @@ Partial Class AccountCard
         ' 
         lblUsername.AutoSize = True
         lblUsername.Dock = DockStyle.Left
-        lblUsername.Font = New Font("Segoe UI Semibold", 12.0F, FontStyle.Bold)
+        lblUsername.Font = New Font("Segoe UI Semibold", 12F, FontStyle.Bold)
         lblUsername.ForeColor = Color.White
         lblUsername.Location = New Point(15, 10)
         lblUsername.Name = "lblUsername"

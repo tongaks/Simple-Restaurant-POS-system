@@ -33,6 +33,14 @@ Public Class Order
     Private Sub Order_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         GetSettingsConfig()
 
+        ' Defensive defaults: ensure settings produce valid sizes/fonts
+        If SettingsConfig.MenuItemButtonSize <= 0 Then
+            SettingsConfig.MenuItemButtonSize = 100
+        End If
+        If SettingsConfig.MenuItemFontSize <= 0 Then
+            SettingsConfig.MenuItemFontSize = 12
+        End If
+
         Me.KeyPreview = True
         GlobalFontSettings.UseWindowsFontsUnderWindows = True
         Me.WindowState = WindowState.Maximized
@@ -210,7 +218,9 @@ Public Class Order
             Reader = Command.ExecuteReader
 
             While Reader.Read
-                Dim settingsSize = SettingsConfig.MenuItemButtonSize
+                ' Use safe defaults if settings are invalid
+                Dim settingsSize As Integer = If(SettingsConfig.MenuItemButtonSize > 0, SettingsConfig.MenuItemButtonSize, 100)
+                Dim fontSize As Single = If(SettingsConfig.MenuItemFontSize > 0, CSng(SettingsConfig.MenuItemFontSize), 12.0F)
 
                 Dim foodBtn As New Button
                 foodBtn.Size = New System.Drawing.Size(settingsSize, settingsSize)
@@ -234,7 +244,8 @@ Public Class Order
 
                 AddHandler foodBtn.Click, AddressOf HandleItemClick
 
-                Dim foodFont As New Font("Segue UI", SettingsConfig.MenuItemFontSize, FontStyle.Regular)
+                ' Correct font family name and use validated font size
+                Dim foodFont As New Font("Segoe UI", fontSize, FontStyle.Regular)
 
                 Dim foodName As New Label
                 foodName.Text = Reader("ItemName")

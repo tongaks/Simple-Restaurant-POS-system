@@ -25,16 +25,25 @@ Public Class AdminNavButtons
         _instructionsBtn = instructionsBtn
 
         ' Style buttons for consistent UI at runtime (designer still shows them in designer)
-        StyleButton(_logoutBtn, Color.LightCoral)
-        If _backBtn IsNot Nothing Then StyleButton(_backBtn, Color.LightSkyBlue)
-        If _helpBtn IsNot Nothing Then StyleButton(_helpBtn, Color.LightGreen)
-        If _instructionsBtn IsNot Nothing Then StyleButton(_instructionsBtn, Color.LightYellow)
+        If _logoutBtn IsNot Nothing Then
+            StyleButton(_logoutBtn, Color.LightCoral)
+            AddHandler _logoutBtn.Click, AddressOf HandleLogout
+        End If
 
-        ' Wire up event handlers conditionally
-        AddHandler _logoutBtn.Click, AddressOf HandleLogout
-        If _backBtn IsNot Nothing Then AddHandler _backBtn.Click, AddressOf HandleBack
-        If _helpBtn IsNot Nothing Then AddHandler _helpBtn.Click, AddressOf HandleHelp
-        If _instructionsBtn IsNot Nothing Then AddHandler _instructionsBtn.Click, AddressOf HandleInstructions
+        If _backBtn IsNot Nothing Then
+            StyleButton(_backBtn, Color.LightSkyBlue)
+            AddHandler _backBtn.Click, AddressOf HandleBack
+        End If
+
+        If _helpBtn IsNot Nothing Then
+            StyleButton(_helpBtn, Color.LightGreen)
+            AddHandler _helpBtn.Click, AddressOf HandleHelp
+        End If
+
+        If _instructionsBtn IsNot Nothing Then
+            StyleButton(_instructionsBtn, Color.LightYellow)
+            AddHandler _instructionsBtn.Click, AddressOf HandleInstructions
+        End If
     End Sub
 
     Private Sub StyleButton(btn As Button, backColor As Color)
