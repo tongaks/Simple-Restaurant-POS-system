@@ -2,10 +2,11 @@
 Imports System.Data.OleDb
 Imports System.IO
 Imports System.Text
-Imports MySql.Data
-Imports MySql.Data.MySqlClient
 Imports System.Windows.Forms
 Imports System.Windows.Forms.DataVisualization.Charting
+Imports FontAwesome.Sharp
+Imports MySql.Data
+Imports MySql.Data.MySqlClient
 ' Admin Dashboard Form - OrderUp! System
 ' Features: Audit Log, Sales Report, Menu Management, User Management
 ' Database: MySQL/MariaDB
@@ -52,6 +53,11 @@ Public Class Admin
 
         ' Set initial active button
         SetActiveButton(btnAuditLog)
+
+        BackPanel = {pnlHeader}
+        FlowPanel = {}
+        SetTheme()
+
     End Sub
 
     ''' <summary>
@@ -330,5 +336,15 @@ Public Class Admin
     End Sub
 
     Private Sub pnlManageAccounts_Paint(sender As Object, e As PaintEventArgs) Handles pnlManageAccounts.Paint
+    End Sub
+
+    Private Sub SettingsBtn_Click(sender As Object, e As EventArgs) Handles SettingsBtn.Click
+        If Settings.ShowDialog() = DialogResult.OK Then
+            GetSettingsConfig()
+
+            BackPanel = {pnlHeader}
+            FlowPanel = {}
+            SetTheme()
+        End If
     End Sub
 End Class

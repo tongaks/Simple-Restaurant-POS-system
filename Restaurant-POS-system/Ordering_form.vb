@@ -55,6 +55,13 @@ Public Class Order
 
         DataGridView1.Columns(4).Name = "ImagePath"
         DataGridView1.Columns("ImagePath").ValueType = GetType(String)
+
+        BackPanel = {NavbarPnl, TotalPnl, CurrentFocusedPnl, Panel2}
+        FlowPanel = {OrderPnl, FoodPnl, MenuCategoryPnl}
+        SetTheme()
+
+        IconButton3.IconColor = ColorTranslator.FromHtml(SettingsConfig.FontColor)
+        SettingsBtn.IconColor = ColorTranslator.FromHtml(SettingsConfig.FontColor)
     End Sub
     Private Sub Order_Close(sender As Object, e As EventArgs) Handles MyBase.FormClosed
         ' close parent when child closes
@@ -78,6 +85,7 @@ Public Class Order
         itemDialog.StartPosition = FormStartPosition.CenterScreen
         itemDialog.KeyPreview = True
         itemDialog.AutoSize = True
+        itemDialog.Text = "Edit item quantity"
 
         Dim mainPanel As New FlowLayoutPanel
         mainPanel.FlowDirection = FlowDirection.TopDown
@@ -218,6 +226,7 @@ Public Class Order
                 catBtn.Text = Reader("CategoryName")
                 catBtn.Size = New System.Drawing.Size(100, 50)
                 catBtn.FlatStyle = FlatStyle.Flat
+                catBtn.BackColor = Color.WhiteSmoke
                 AddHandler catBtn.Click, AddressOf HandleCatClick
                 MenuCategoryPnl.Controls.Add(catBtn)
             End While
@@ -255,6 +264,7 @@ Public Class Order
                 foodBtn.FlatAppearance.BorderSize = 3
                 foodBtn.FlatAppearance.BorderColor = Color.Gray
                 foodBtn.TabStop = True
+                foodBtn.BackColor = Color.WhiteSmoke
 
                 If Not IsDBNull(Reader("ImagePath")) Then
                     Dim imagePath As String = Reader("ImagePath").ToString()
@@ -391,7 +401,7 @@ Public Class Order
         mainPanel.WrapContents = False
         mainPanel.Width = OrderPnl.Width
         mainPanel.Height = 100
-        mainPanel.BackColor = Color.LightGray
+        mainPanel.BackColor = Color.White
         'mainPanel.Padding = New Padding(10)
         mainPanel.AutoSize = False
 
@@ -651,8 +661,16 @@ Public Class Order
     End Sub
     Private Sub SettingsBtn_Click(sender As Object, e As EventArgs) Handles SettingsBtn.Click
         If Settings.ShowDialog() = DialogResult.OK Then
+            GetSettingsConfig()
             FoodPnl.Controls.Clear()  ' reload the menu items
             LoadMenuItems("foods")
+
+            BackPanel = {NavbarPnl, TotalPnl, CurrentFocusedPnl, Panel2}
+            FlowPanel = {OrderPnl, FoodPnl, MenuCategoryPnl}
+            SetTheme()
+
+            IconButton3.IconColor = ColorTranslator.FromHtml(SettingsConfig.FontColor)
+            SettingsBtn.IconColor = ColorTranslator.FromHtml(SettingsConfig.FontColor)
         End If
     End Sub
     Private Sub CancelBtn_Click(sender As Object, e As EventArgs) Handles CancelBtn.Click
@@ -736,10 +754,15 @@ Public Class Order
             MsgBox("Error from db: " & ex.ToString, MsgBoxStyle.Critical, "Error")
         End Try
 
-        Dim receiptPath = "C:\Users\Administrator\Documents\Receipts\"
+        Dim basePath As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) ' Using MyDocuments as a dynamic base path
+        Dim receiptsFolder As String = Path.Combine(basePath, "Receipts")
+
+        If Not Directory.Exists(receiptsFolder) Then
+            Directory.CreateDirectory(receiptsFolder)
+        End If
+
         Dim filename As String = "Receipt" & receiptID & ".pdf"
-        receiptPath &= filename
-        receipt.Save(receiptPath)
+        Dim receiptPath As String = Path.Combine(receiptsFolder, filename)
 
         MsgBox("A receipt has been created at: " & receiptPath)
         Return receiptPath
@@ -868,7 +891,6 @@ Public Class Order
             OrderPnl.Controls.Add(item)
             OrderPnl.ScrollControlIntoView(item)
         ElseIf nameExists Then
-            MsgBox(itemAmount)
             UpdateItemOrderList()  ' just update the order list if it exists
         End If
 

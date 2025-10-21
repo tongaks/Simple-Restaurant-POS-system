@@ -4,6 +4,10 @@ Public Class Settings
     Dim IsEdit As Boolean = False
     Dim HasUpdate As Boolean = False
 
+
+    ' SettingsConfigStruct are in DatabaseHandler
+
+
     Private Sub Settings_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ' load configs
         GetSettingsConfig()
@@ -11,12 +15,22 @@ Public Class Settings
         FontSizeTxtBtn.Text = SettingsConfig.MenuItemFontSize
         ImagePathTxtBox.Text = SettingsConfig.LoginImagePath
         ShortcutKeyChckBox.Checked = SettingsConfig.EnableShortcutKeys
+        ComboBox1.Text = SettingsConfig.Theme
+
+        If Not IsAdmin Then
+            ImagePathTxtBox.Enabled = False
+            SelectPictureBtn.Enabled = False
+        End If
 
         Me.WindowState = WindowState.Maximized
 
         ' add handlers for number only
         AddHandler ItemBtnSizeTxtBox.KeyPress, AddressOf HandleNumberOnly
         AddHandler FontSizeTxtBtn.KeyPress, AddressOf HandleNumberOnly
+
+        BackPanel = {Panel1}
+        FlowPanel = {}
+        SetTheme()
     End Sub
     Private Sub HandleFormClose(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         Me.DialogResult = If((HasUpdate), DialogResult.OK, DialogResult.Cancel)
@@ -52,12 +66,13 @@ Public Class Settings
 
         Try
             Connection.Open()
-            Dim Query As String = "UPDATE restaurant.settings SET MenuItemButtonSize = @btnsize, MenuItemFontSize = @fontsize, EnableShortcutKeys = @shrtky, LoginImagePath = @imgpath"
+            Dim Query As String = "UPDATE restaurant.settings SET MenuItemButtonSize = @btnsize, MenuItemFontSize = @fontsize, EnableShortcutKeys = @shrtky, LoginImagePath = @imgpath, Theme = @theme"
             Dim Command As New MySqlCommand(Query, Connection)
             Command.Parameters.AddWithValue("@btnsize", ItemBtnSizeTxtBox.Text)
             Command.Parameters.AddWithValue("@fontsize", FontSizeTxtBtn.Text)
             Command.Parameters.AddWithValue("@shrtky", ShortcutKeyChckBox.Checked)
             Command.Parameters.AddWithValue("@imgpath", ImagePathTxtBox.Text)
+            Command.Parameters.AddWithValue("@theme", ComboBox1.Text)
 
             If Command.ExecuteNonQuery > 0 Then
                 HasUpdate = True
@@ -80,7 +95,7 @@ Public Class Settings
 
 
     ' handlers/listeners
-    Private Sub ConfigChanges(sender As Object, e As EventArgs) Handles ItemBtnSizeTxtBox.TextChanged, ShortcutKeyChckBox.Click, ImagePathTxtBox.TextChanged
+    Private Sub ConfigChanges(sender As Object, e As EventArgs) Handles ItemBtnSizeTxtBox.TextChanged, ShortcutKeyChckBox.Click, ImagePathTxtBox.TextChanged, ComboBox1.TextChanged
         If IsEdit Then
             SaveBtn.Enabled = True
         End If

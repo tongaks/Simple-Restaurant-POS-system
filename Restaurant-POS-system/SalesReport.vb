@@ -57,7 +57,6 @@ Public Class SalesReport
         Try
             ' Clear existing controls
             pnlDailySalesChart.Controls.Clear()
-            pnlTopItemsChart.Controls.Clear()
             pnlRevenueChart.Controls.Clear()
 
             ' === 🌟 Daily Sales Chart (Professional Modern Style) ===
@@ -149,7 +148,6 @@ Public Class SalesReport
             topLegend.Docking = Docking.Right
             chartTopItems.Legends.Add(topLegend)
 
-            pnlTopItemsChart.Controls.Add(chartTopItems)
 
             ' === Revenue Trend Chart (Line Chart) ===
             chartRevenueTrend = New Chart()
@@ -213,7 +211,7 @@ Public Class SalesReport
 
                 ' Generate all charts
                 GenerateDailySalesChart(connection)
-                GenerateTopItemsChart(connection)
+                'GenerateTopItemsChart(connection)
                 GenerateRevenueTrendChart(connection)
 
                 ' Load detailed transaction grid
@@ -685,11 +683,11 @@ Public Class SalesReport
 
     End Sub
 
-    Private Sub pnlTopItemsChart_Paint(sender As Object, e As PaintEventArgs) Handles pnlTopItemsChart.Paint
+    Private Sub pnlTopItemsChart_Paint(sender As Object, e As PaintEventArgs)
 
     End Sub
 
-    Private Sub Label5_Click(sender As Object, e As EventArgs) Handles Label5.Click
+    Private Sub Label5_Click(sender As Object, e As EventArgs)
 
     End Sub
 

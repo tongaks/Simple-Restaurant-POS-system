@@ -32,6 +32,8 @@ Partial Class Settings
         EditBtn = New FontAwesome.Sharp.IconButton()
         Label4 = New Label()
         ConfigPnl = New Panel()
+        Label6 = New Label()
+        ComboBox1 = New ComboBox()
         SelectPictureBtn = New FontAwesome.Sharp.IconButton()
         ImagePathTxtBox = New TextBox()
         Label5 = New Label()
@@ -156,6 +158,8 @@ Partial Class Settings
         ' 
         ' ConfigPnl
         ' 
+        ConfigPnl.Controls.Add(Label6)
+        ConfigPnl.Controls.Add(ComboBox1)
         ConfigPnl.Controls.Add(SelectPictureBtn)
         ConfigPnl.Controls.Add(ImagePathTxtBox)
         ConfigPnl.Controls.Add(Label5)
@@ -168,8 +172,26 @@ Partial Class Settings
         ConfigPnl.Enabled = False
         ConfigPnl.Location = New Point(21, 85)
         ConfigPnl.Name = "ConfigPnl"
-        ConfigPnl.Size = New Size(739, 214)
+        ConfigPnl.Size = New Size(739, 314)
         ConfigPnl.TabIndex = 7
+        ' 
+        ' Label6
+        ' 
+        Label6.AutoSize = True
+        Label6.Location = New Point(62, 178)
+        Label6.Name = "Label6"
+        Label6.Size = New Size(85, 15)
+        Label6.TabIndex = 13
+        Label6.Text = "Change theme"
+        ' 
+        ' ComboBox1
+        ' 
+        ComboBox1.FormattingEnabled = True
+        ComboBox1.Items.AddRange(New Object() {"Blue", "Green", "Pink", "Red"})
+        ComboBox1.Location = New Point(150, 174)
+        ComboBox1.Name = "ComboBox1"
+        ComboBox1.Size = New Size(172, 23)
+        ComboBox1.TabIndex = 12
         ' 
         ' SelectPictureBtn
         ' 
@@ -252,4 +274,6 @@ Partial Class Settings
     Friend WithEvents SelectPictureBtn As FontAwesome.Sharp.IconButton
     Friend WithEvents ImagePathTxtBox As TextBox
     Friend WithEvents Label5 As Label
+    Friend WithEvents Label6 As Label
+    Friend WithEvents ComboBox1 As ComboBox
 End Class

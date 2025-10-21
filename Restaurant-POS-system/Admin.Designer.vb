@@ -58,6 +58,7 @@ Partial Class Admin
         lblSearchAccounts = New Label()
         btnCreateAccount = New Button()
         lblAccountsTitle = New Label()
+        SettingsBtn = New FontAwesome.Sharp.IconButton()
         pnlHeader.SuspendLayout()
         pnlDashboard.SuspendLayout()
         pnlAuditLog.SuspendLayout()
@@ -77,19 +78,18 @@ Partial Class Admin
         pnlHeader.Controls.Add(btnInstructions)
         pnlHeader.Dock = DockStyle.Top
         pnlHeader.Location = New Point(0, 0)
-        pnlHeader.Margin = New Padding(3, 4, 3, 4)
         pnlHeader.Name = "pnlHeader"
-        pnlHeader.Size = New Size(1467, 107)
+        pnlHeader.Size = New Size(1284, 80)
         pnlHeader.TabIndex = 0
         ' 
         ' lblTitle
         ' 
         lblTitle.AutoSize = True
-        lblTitle.Font = New Font("Segoe UI", 24.0F, FontStyle.Bold)
+        lblTitle.Font = New Font("Segoe UI", 24F, FontStyle.Bold)
         lblTitle.ForeColor = Color.White
-        lblTitle.Location = New Point(34, 27)
+        lblTitle.Location = New Point(30, 20)
         lblTitle.Name = "lblTitle"
-        lblTitle.Size = New Size(365, 54)
+        lblTitle.Size = New Size(293, 45)
         lblTitle.TabIndex = 0
         lblTitle.Text = "Admin Dashboard"
         ' 
@@ -98,11 +98,10 @@ Partial Class Admin
         btnLogout.Anchor = AnchorStyles.Top Or AnchorStyles.Right
         btnLogout.BackColor = Color.LightCoral
         btnLogout.FlatStyle = FlatStyle.Flat
-        btnLogout.Font = New Font("Segoe UI", 10.0F)
-        btnLogout.Location = New Point(1320, 30)
-        btnLogout.Margin = New Padding(3, 4, 3, 4)
+        btnLogout.Font = New Font("Segoe UI", 10F)
+        btnLogout.Location = New Point(1155, 22)
         btnLogout.Name = "btnLogout"
-        btnLogout.Size = New Size(100, 51)
+        btnLogout.Size = New Size(88, 38)
         btnLogout.TabIndex = 5
         btnLogout.Text = "Logout"
         btnLogout.UseVisualStyleBackColor = False
@@ -112,11 +111,10 @@ Partial Class Admin
         btnHelp.Anchor = AnchorStyles.Top Or AnchorStyles.Right
         btnHelp.BackColor = Color.LightGreen
         btnHelp.FlatStyle = FlatStyle.Flat
-        btnHelp.Font = New Font("Segoe UI", 10.0F)
-        btnHelp.Location = New Point(1091, 30)
-        btnHelp.Margin = New Padding(3, 4, 3, 4)
+        btnHelp.Font = New Font("Segoe UI", 10F)
+        btnHelp.Location = New Point(955, 22)
         btnHelp.Name = "btnHelp"
-        btnHelp.Size = New Size(100, 51)
+        btnHelp.Size = New Size(88, 38)
         btnHelp.TabIndex = 6
         btnHelp.Text = "Help"
         btnHelp.UseVisualStyleBackColor = False
@@ -126,11 +124,10 @@ Partial Class Admin
         btnInstructions.Anchor = AnchorStyles.Top Or AnchorStyles.Right
         btnInstructions.BackColor = Color.LightYellow
         btnInstructions.FlatStyle = FlatStyle.Flat
-        btnInstructions.Font = New Font("Segoe UI", 10.0F)
-        btnInstructions.Location = New Point(1197, 30)
-        btnInstructions.Margin = New Padding(3, 4, 3, 4)
+        btnInstructions.Font = New Font("Segoe UI", 10F)
+        btnInstructions.Location = New Point(1047, 22)
         btnInstructions.Name = "btnInstructions"
-        btnInstructions.Size = New Size(118, 51)
+        btnInstructions.Size = New Size(103, 38)
         btnInstructions.TabIndex = 7
         btnInstructions.Text = "Instructions"
         btnInstructions.UseVisualStyleBackColor = False
@@ -138,26 +135,25 @@ Partial Class Admin
         ' pnlDashboard
         ' 
         pnlDashboard.BackColor = SystemColors.Control
+        pnlDashboard.Controls.Add(SettingsBtn)
         pnlDashboard.Controls.Add(btnManageAccounts)
         pnlDashboard.Controls.Add(btnSalesReport)
         pnlDashboard.Controls.Add(btnAuditLog)
         pnlDashboard.Controls.Add(btnManageMenu)
         pnlDashboard.Dock = DockStyle.Left
-        pnlDashboard.Location = New Point(0, 107)
-        pnlDashboard.Margin = New Padding(3, 4, 3, 4)
+        pnlDashboard.Location = New Point(0, 80)
         pnlDashboard.Name = "pnlDashboard"
-        pnlDashboard.Size = New Size(286, 881)
+        pnlDashboard.Size = New Size(250, 581)
         pnlDashboard.TabIndex = 1
         ' 
         ' btnManageAccounts
         ' 
         btnManageAccounts.BackColor = Color.LightBlue
         btnManageAccounts.FlatStyle = FlatStyle.Flat
-        btnManageAccounts.Font = New Font("Segoe UI", 12.0F)
-        btnManageAccounts.Location = New Point(23, 373)
-        btnManageAccounts.Margin = New Padding(3, 4, 3, 4)
+        btnManageAccounts.Font = New Font("Segoe UI", 12F)
+        btnManageAccounts.Location = New Point(20, 280)
         btnManageAccounts.Name = "btnManageAccounts"
-        btnManageAccounts.Size = New Size(240, 80)
+        btnManageAccounts.Size = New Size(210, 60)
         btnManageAccounts.TabIndex = 3
         btnManageAccounts.Text = "Manage Accounts"
         btnManageAccounts.UseVisualStyleBackColor = False
@@ -166,11 +162,10 @@ Partial Class Admin
         ' 
         btnSalesReport.BackColor = Color.LightGreen
         btnSalesReport.FlatStyle = FlatStyle.Flat
-        btnSalesReport.Font = New Font("Segoe UI", 12.0F)
-        btnSalesReport.Location = New Point(23, 267)
-        btnSalesReport.Margin = New Padding(3, 4, 3, 4)
+        btnSalesReport.Font = New Font("Segoe UI", 12F)
+        btnSalesReport.Location = New Point(20, 200)
         btnSalesReport.Name = "btnSalesReport"
-        btnSalesReport.Size = New Size(240, 80)
+        btnSalesReport.Size = New Size(210, 60)
         btnSalesReport.TabIndex = 2
         btnSalesReport.Text = "Sales Report"
         btnSalesReport.UseVisualStyleBackColor = False
@@ -179,11 +174,10 @@ Partial Class Admin
         ' 
         btnAuditLog.BackColor = Color.LightCoral
         btnAuditLog.FlatStyle = FlatStyle.Flat
-        btnAuditLog.Font = New Font("Segoe UI", 12.0F)
-        btnAuditLog.Location = New Point(23, 160)
-        btnAuditLog.Margin = New Padding(3, 4, 3, 4)
+        btnAuditLog.Font = New Font("Segoe UI", 12F)
+        btnAuditLog.Location = New Point(20, 120)
         btnAuditLog.Name = "btnAuditLog"
-        btnAuditLog.Size = New Size(240, 80)
+        btnAuditLog.Size = New Size(210, 60)
         btnAuditLog.TabIndex = 1
         btnAuditLog.Text = "Audit Log"
         btnAuditLog.UseVisualStyleBackColor = False
@@ -192,11 +186,10 @@ Partial Class Admin
         ' 
         btnManageMenu.BackColor = Color.LightSalmon
         btnManageMenu.FlatStyle = FlatStyle.Flat
-        btnManageMenu.Font = New Font("Segoe UI", 12.0F)
-        btnManageMenu.Location = New Point(23, 53)
-        btnManageMenu.Margin = New Padding(3, 4, 3, 4)
+        btnManageMenu.Font = New Font("Segoe UI", 12F)
+        btnManageMenu.Location = New Point(20, 40)
         btnManageMenu.Name = "btnManageMenu"
-        btnManageMenu.Size = New Size(240, 80)
+        btnManageMenu.Size = New Size(210, 60)
         btnManageMenu.TabIndex = 0
         btnManageMenu.Text = "Manage Menu Items"
         btnManageMenu.UseVisualStyleBackColor = False
@@ -214,20 +207,18 @@ Partial Class Admin
         pnlAuditLog.Controls.Add(dgvAuditLogs)
         pnlAuditLog.Controls.Add(lblAuditTitle)
         pnlAuditLog.Dock = DockStyle.Fill
-        pnlAuditLog.Location = New Point(286, 107)
-        pnlAuditLog.Margin = New Padding(3, 4, 3, 4)
+        pnlAuditLog.Location = New Point(250, 80)
         pnlAuditLog.Name = "pnlAuditLog"
-        pnlAuditLog.Size = New Size(1181, 881)
+        pnlAuditLog.Size = New Size(1034, 581)
         pnlAuditLog.TabIndex = 2
         ' 
         ' btnExportAuditLogs
         ' 
         btnExportAuditLogs.BackColor = Color.Gold
         btnExportAuditLogs.FlatStyle = FlatStyle.Flat
-        btnExportAuditLogs.Location = New Point(949, 80)
-        btnExportAuditLogs.Margin = New Padding(3, 4, 3, 4)
+        btnExportAuditLogs.Location = New Point(830, 60)
         btnExportAuditLogs.Name = "btnExportAuditLogs"
-        btnExportAuditLogs.Size = New Size(137, 40)
+        btnExportAuditLogs.Size = New Size(120, 30)
         btnExportAuditLogs.TabIndex = 8
         btnExportAuditLogs.Text = "Export to CSV"
         btnExportAuditLogs.UseVisualStyleBackColor = False
@@ -236,10 +227,9 @@ Partial Class Admin
         ' 
         btnFilterAuditLogs.BackColor = Color.SpringGreen
         btnFilterAuditLogs.FlatStyle = FlatStyle.Flat
-        btnFilterAuditLogs.Location = New Point(800, 80)
-        btnFilterAuditLogs.Margin = New Padding(3, 4, 3, 4)
+        btnFilterAuditLogs.Location = New Point(700, 60)
         btnFilterAuditLogs.Name = "btnFilterAuditLogs"
-        btnFilterAuditLogs.Size = New Size(114, 40)
+        btnFilterAuditLogs.Size = New Size(100, 30)
         btnFilterAuditLogs.TabIndex = 7
         btnFilterAuditLogs.Text = "Filter"
         btnFilterAuditLogs.UseVisualStyleBackColor = False
@@ -247,48 +237,44 @@ Partial Class Admin
         ' dtpAuditTo
         ' 
         dtpAuditTo.Enabled = False
-        dtpAuditTo.Location = New Point(651, 87)
-        dtpAuditTo.Margin = New Padding(3, 4, 3, 4)
+        dtpAuditTo.Location = New Point(570, 65)
         dtpAuditTo.Name = "dtpAuditTo"
-        dtpAuditTo.Size = New Size(137, 27)
+        dtpAuditTo.Size = New Size(120, 23)
         dtpAuditTo.TabIndex = 6
         ' 
         ' dtpAuditFrom
         ' 
         dtpAuditFrom.Enabled = False
-        dtpAuditFrom.Location = New Point(503, 87)
-        dtpAuditFrom.Margin = New Padding(3, 4, 3, 4)
+        dtpAuditFrom.Location = New Point(440, 65)
         dtpAuditFrom.Name = "dtpAuditFrom"
-        dtpAuditFrom.Size = New Size(137, 27)
+        dtpAuditFrom.Size = New Size(120, 23)
         dtpAuditFrom.TabIndex = 5
         ' 
         ' chkDateFilter
         ' 
         chkDateFilter.AutoSize = True
-        chkDateFilter.Location = New Point(400, 91)
-        chkDateFilter.Margin = New Padding(3, 4, 3, 4)
+        chkDateFilter.Location = New Point(350, 68)
         chkDateFilter.Name = "chkDateFilter"
-        chkDateFilter.Size = New Size(109, 24)
+        chkDateFilter.Size = New Size(86, 19)
         chkDateFilter.TabIndex = 4
         chkDateFilter.Text = "Date Range"
         chkDateFilter.UseVisualStyleBackColor = True
         ' 
         ' txtUsernameFilter
         ' 
-        txtUsernameFilter.Location = New Point(171, 87)
-        txtUsernameFilter.Margin = New Padding(3, 4, 3, 4)
+        txtUsernameFilter.Location = New Point(150, 65)
         txtUsernameFilter.Name = "txtUsernameFilter"
         txtUsernameFilter.PlaceholderText = "Enter username..."
-        txtUsernameFilter.Size = New Size(205, 27)
+        txtUsernameFilter.Size = New Size(180, 23)
         txtUsernameFilter.TabIndex = 3
         ' 
         ' lblUsernameFilter
         ' 
         lblUsernameFilter.AutoSize = True
-        lblUsernameFilter.Font = New Font("Segoe UI", 10.0F)
-        lblUsernameFilter.Location = New Point(34, 91)
+        lblUsernameFilter.Font = New Font("Segoe UI", 10F)
+        lblUsernameFilter.Location = New Point(30, 68)
         lblUsernameFilter.Name = "lblUsernameFilter"
-        lblUsernameFilter.Size = New Size(133, 23)
+        lblUsernameFilter.Size = New Size(108, 19)
         lblUsernameFilter.TabIndex = 2
         lblUsernameFilter.Text = "Filter Username:"
         ' 
@@ -299,21 +285,20 @@ Partial Class Admin
         dgvAuditLogs.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
         dgvAuditLogs.BackgroundColor = Color.White
         dgvAuditLogs.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        dgvAuditLogs.Location = New Point(34, 147)
-        dgvAuditLogs.Margin = New Padding(3, 4, 3, 4)
+        dgvAuditLogs.Location = New Point(30, 110)
         dgvAuditLogs.Name = "dgvAuditLogs"
         dgvAuditLogs.ReadOnly = True
         dgvAuditLogs.RowHeadersWidth = 51
-        dgvAuditLogs.Size = New Size(1119, 707)
+        dgvAuditLogs.Size = New Size(980, 450)
         dgvAuditLogs.TabIndex = 1
         ' 
         ' lblAuditTitle
         ' 
         lblAuditTitle.AutoSize = True
-        lblAuditTitle.Font = New Font("Segoe UI", 18.0F, FontStyle.Bold)
-        lblAuditTitle.Location = New Point(34, 27)
+        lblAuditTitle.Font = New Font("Segoe UI", 18F, FontStyle.Bold)
+        lblAuditTitle.Location = New Point(30, 20)
         lblAuditTitle.Name = "lblAuditTitle"
-        lblAuditTitle.Size = New Size(157, 41)
+        lblAuditTitle.Size = New Size(126, 32)
         lblAuditTitle.TabIndex = 0
         lblAuditTitle.Text = "Audit Log"
         ' 
@@ -331,29 +316,28 @@ Partial Class Admin
         pnlSalesReport.Controls.Add(Label1)
         pnlSalesReport.Controls.Add(lblSalesTitle)
         pnlSalesReport.Dock = DockStyle.Fill
-        pnlSalesReport.Location = New Point(286, 107)
-        pnlSalesReport.Margin = New Padding(3, 4, 3, 4)
+        pnlSalesReport.Location = New Point(250, 80)
         pnlSalesReport.Name = "pnlSalesReport"
-        pnlSalesReport.Size = New Size(1181, 881)
+        pnlSalesReport.Size = New Size(1034, 581)
         pnlSalesReport.TabIndex = 3
         pnlSalesReport.Visible = False
         ' 
         ' pnlCharts
         ' 
         pnlCharts.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
-        pnlCharts.Location = New Point(34, 290)
+        pnlCharts.Location = New Point(30, 218)
+        pnlCharts.Margin = New Padding(3, 2, 3, 2)
         pnlCharts.Name = "pnlCharts"
-        pnlCharts.Size = New Size(1119, 300)
+        pnlCharts.Size = New Size(980, 225)
         pnlCharts.TabIndex = 9
         ' 
         ' btnExportSalesReport
         ' 
         btnExportSalesReport.BackColor = Color.Gold
         btnExportSalesReport.FlatStyle = FlatStyle.Flat
-        btnExportSalesReport.Location = New Point(949, 600)
-        btnExportSalesReport.Margin = New Padding(3, 4, 3, 4)
+        btnExportSalesReport.Location = New Point(830, 450)
         btnExportSalesReport.Name = "btnExportSalesReport"
-        btnExportSalesReport.Size = New Size(137, 40)
+        btnExportSalesReport.Size = New Size(120, 30)
         btnExportSalesReport.TabIndex = 8
         btnExportSalesReport.Text = "Export to CSV"
         btnExportSalesReport.UseVisualStyleBackColor = False
@@ -365,12 +349,11 @@ Partial Class Admin
         dgvSalesReport.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
         dgvSalesReport.BackgroundColor = Color.White
         dgvSalesReport.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        dgvSalesReport.Location = New Point(34, 650)
-        dgvSalesReport.Margin = New Padding(3, 4, 3, 4)
+        dgvSalesReport.Location = New Point(30, 488)
         dgvSalesReport.Name = "dgvSalesReport"
         dgvSalesReport.ReadOnly = True
         dgvSalesReport.RowHeadersWidth = 51
-        dgvSalesReport.Size = New Size(1119, 204)
+        dgvSalesReport.Size = New Size(980, 73)
         dgvSalesReport.TabIndex = 7
         ' 
         ' pnlSummary
@@ -381,49 +364,48 @@ Partial Class Admin
         pnlSummary.Controls.Add(lblTotalSales)
         pnlSummary.Controls.Add(Label4)
         pnlSummary.Controls.Add(Label3)
-        pnlSummary.Location = New Point(34, 160)
-        pnlSummary.Margin = New Padding(3, 4, 3, 4)
+        pnlSummary.Location = New Point(30, 120)
         pnlSummary.Name = "pnlSummary"
-        pnlSummary.Size = New Size(457, 106)
+        pnlSummary.Size = New Size(400, 80)
         pnlSummary.TabIndex = 6
         ' 
         ' lblOrderCount
         ' 
         lblOrderCount.AutoSize = True
-        lblOrderCount.Font = New Font("Segoe UI", 14.0F, FontStyle.Bold)
-        lblOrderCount.Location = New Point(366, 53)
+        lblOrderCount.Font = New Font("Segoe UI", 14F, FontStyle.Bold)
+        lblOrderCount.Location = New Point(320, 40)
         lblOrderCount.Name = "lblOrderCount"
-        lblOrderCount.Size = New Size(28, 32)
+        lblOrderCount.Size = New Size(23, 25)
         lblOrderCount.TabIndex = 3
         lblOrderCount.Text = "0"
         ' 
         ' lblTotalSales
         ' 
         lblTotalSales.AutoSize = True
-        lblTotalSales.Font = New Font("Segoe UI", 14.0F, FontStyle.Bold)
-        lblTotalSales.Location = New Point(137, 53)
+        lblTotalSales.Font = New Font("Segoe UI", 14F, FontStyle.Bold)
+        lblTotalSales.Location = New Point(120, 40)
         lblTotalSales.Name = "lblTotalSales"
-        lblTotalSales.Size = New Size(43, 32)
+        lblTotalSales.Size = New Size(35, 25)
         lblTotalSales.TabIndex = 2
         lblTotalSales.Text = "₱0"
         ' 
         ' Label4
         ' 
         Label4.AutoSize = True
-        Label4.Font = New Font("Segoe UI", 10.0F)
-        Label4.Location = New Point(251, 20)
+        Label4.Font = New Font("Segoe UI", 10F)
+        Label4.Location = New Point(220, 15)
         Label4.Name = "Label4"
-        Label4.Size = New Size(110, 23)
+        Label4.Size = New Size(90, 19)
         Label4.TabIndex = 1
         Label4.Text = "Order Count:"
         ' 
         ' Label3
         ' 
         Label3.AutoSize = True
-        Label3.Font = New Font("Segoe UI", 10.0F)
-        Label3.Location = New Point(23, 20)
+        Label3.Font = New Font("Segoe UI", 10F)
+        Label3.Location = New Point(20, 15)
         Label3.Name = "Label3"
-        Label3.Size = New Size(93, 23)
+        Label3.Size = New Size(75, 19)
         Label3.TabIndex = 0
         Label3.Text = "Total Sales:"
         ' 
@@ -431,58 +413,55 @@ Partial Class Admin
         ' 
         btnGenerateReport.BackColor = Color.SpringGreen
         btnGenerateReport.FlatStyle = FlatStyle.Flat
-        btnGenerateReport.Font = New Font("Segoe UI", 10.0F)
-        btnGenerateReport.Location = New Point(400, 87)
-        btnGenerateReport.Margin = New Padding(3, 4, 3, 4)
+        btnGenerateReport.Font = New Font("Segoe UI", 10F)
+        btnGenerateReport.Location = New Point(350, 65)
         btnGenerateReport.Name = "btnGenerateReport"
-        btnGenerateReport.Size = New Size(137, 40)
+        btnGenerateReport.Size = New Size(120, 30)
         btnGenerateReport.TabIndex = 5
         btnGenerateReport.Text = "Generate Report"
         btnGenerateReport.UseVisualStyleBackColor = False
         ' 
         ' dtpTo
         ' 
-        dtpTo.Location = New Point(229, 93)
-        dtpTo.Margin = New Padding(3, 4, 3, 4)
+        dtpTo.Location = New Point(200, 70)
         dtpTo.Name = "dtpTo"
-        dtpTo.Size = New Size(137, 27)
+        dtpTo.Size = New Size(120, 23)
         dtpTo.TabIndex = 4
         ' 
         ' dtpFrom
         ' 
-        dtpFrom.Location = New Point(80, 93)
-        dtpFrom.Margin = New Padding(3, 4, 3, 4)
+        dtpFrom.Location = New Point(70, 70)
         dtpFrom.Name = "dtpFrom"
-        dtpFrom.Size = New Size(137, 27)
+        dtpFrom.Size = New Size(120, 23)
         dtpFrom.TabIndex = 3
         ' 
         ' Label2
         ' 
         Label2.AutoSize = True
-        Label2.Font = New Font("Segoe UI", 10.0F)
-        Label2.Location = New Point(229, 64)
+        Label2.Font = New Font("Segoe UI", 10F)
+        Label2.Location = New Point(200, 48)
         Label2.Name = "Label2"
-        Label2.Size = New Size(31, 23)
+        Label2.Size = New Size(26, 19)
         Label2.TabIndex = 2
         Label2.Text = "To:"
         ' 
         ' Label1
         ' 
         Label1.AutoSize = True
-        Label1.Font = New Font("Segoe UI", 10.0F)
-        Label1.Location = New Point(80, 64)
+        Label1.Font = New Font("Segoe UI", 10F)
+        Label1.Location = New Point(70, 48)
         Label1.Name = "Label1"
-        Label1.Size = New Size(53, 23)
+        Label1.Size = New Size(44, 19)
         Label1.TabIndex = 1
         Label1.Text = "From:"
         ' 
         ' lblSalesTitle
         ' 
         lblSalesTitle.AutoSize = True
-        lblSalesTitle.Font = New Font("Segoe UI", 18.0F, FontStyle.Bold)
-        lblSalesTitle.Location = New Point(34, 27)
+        lblSalesTitle.Font = New Font("Segoe UI", 18F, FontStyle.Bold)
+        lblSalesTitle.Location = New Point(30, 20)
         lblSalesTitle.Name = "lblSalesTitle"
-        lblSalesTitle.Size = New Size(194, 41)
+        lblSalesTitle.Size = New Size(156, 32)
         lblSalesTitle.TabIndex = 0
         lblSalesTitle.Text = "Sales Report"
         ' 
@@ -495,10 +474,9 @@ Partial Class Admin
         pnlManageAccounts.Controls.Add(btnCreateAccount)
         pnlManageAccounts.Controls.Add(lblAccountsTitle)
         pnlManageAccounts.Dock = DockStyle.Fill
-        pnlManageAccounts.Location = New Point(286, 107)
-        pnlManageAccounts.Margin = New Padding(3, 4, 3, 4)
+        pnlManageAccounts.Location = New Point(250, 80)
         pnlManageAccounts.Name = "pnlManageAccounts"
-        pnlManageAccounts.Size = New Size(1181, 881)
+        pnlManageAccounts.Size = New Size(1034, 581)
         pnlManageAccounts.TabIndex = 4
         pnlManageAccounts.Visible = False
         ' 
@@ -508,26 +486,28 @@ Partial Class Admin
         pnlAccountCards.AutoScroll = True
         pnlAccountCards.BackColor = Color.WhiteSmoke
         pnlAccountCards.BorderStyle = BorderStyle.FixedSingle
-        pnlAccountCards.Location = New Point(34, 160)
+        pnlAccountCards.Location = New Point(30, 120)
+        pnlAccountCards.Margin = New Padding(3, 2, 3, 2)
         pnlAccountCards.Name = "pnlAccountCards"
-        pnlAccountCards.Size = New Size(1119, 693)
+        pnlAccountCards.Size = New Size(980, 440)
         pnlAccountCards.TabIndex = 4
         ' 
         ' txtSearchAccounts
         ' 
-        txtSearchAccounts.Location = New Point(405, 100)
+        txtSearchAccounts.Location = New Point(354, 75)
+        txtSearchAccounts.Margin = New Padding(3, 2, 3, 2)
         txtSearchAccounts.Name = "txtSearchAccounts"
         txtSearchAccounts.PlaceholderText = "Search by username or role..."
-        txtSearchAccounts.Size = New Size(300, 27)
+        txtSearchAccounts.Size = New Size(263, 23)
         txtSearchAccounts.TabIndex = 3
         ' 
         ' lblSearchAccounts
         ' 
         lblSearchAccounts.AutoSize = True
-        lblSearchAccounts.Font = New Font("Segoe UI", 10.0F)
-        lblSearchAccounts.Location = New Point(318, 101)
+        lblSearchAccounts.Font = New Font("Segoe UI", 10F)
+        lblSearchAccounts.Location = New Point(278, 76)
         lblSearchAccounts.Name = "lblSearchAccounts"
-        lblSearchAccounts.Size = New Size(65, 23)
+        lblSearchAccounts.Size = New Size(52, 19)
         lblSearchAccounts.TabIndex = 2
         lblSearchAccounts.Text = "Search:"
         ' 
@@ -535,11 +515,10 @@ Partial Class Admin
         ' 
         btnCreateAccount.BackColor = Color.LightGreen
         btnCreateAccount.FlatStyle = FlatStyle.Flat
-        btnCreateAccount.Font = New Font("Segoe UI", 10.0F)
-        btnCreateAccount.Location = New Point(34, 93)
-        btnCreateAccount.Margin = New Padding(3, 4, 3, 4)
+        btnCreateAccount.Font = New Font("Segoe UI", 10F)
+        btnCreateAccount.Location = New Point(30, 70)
         btnCreateAccount.Name = "btnCreateAccount"
-        btnCreateAccount.Size = New Size(226, 40)
+        btnCreateAccount.Size = New Size(198, 30)
         btnCreateAccount.TabIndex = 1
         btnCreateAccount.Text = "➕ Create New Account"
         btnCreateAccount.UseVisualStyleBackColor = False
@@ -547,24 +526,43 @@ Partial Class Admin
         ' lblAccountsTitle
         ' 
         lblAccountsTitle.AutoSize = True
-        lblAccountsTitle.Font = New Font("Segoe UI", 18.0F, FontStyle.Bold)
-        lblAccountsTitle.Location = New Point(34, 27)
+        lblAccountsTitle.Font = New Font("Segoe UI", 18F, FontStyle.Bold)
+        lblAccountsTitle.Location = New Point(30, 20)
         lblAccountsTitle.Name = "lblAccountsTitle"
-        lblAccountsTitle.Size = New Size(268, 41)
+        lblAccountsTitle.Size = New Size(219, 32)
         lblAccountsTitle.TabIndex = 0
         lblAccountsTitle.Text = "Manage Accounts"
         ' 
+        ' SettingsBtn
+        ' 
+        SettingsBtn.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        SettingsBtn.BackColor = Color.Gray
+        SettingsBtn.FlatAppearance.BorderColor = Color.Black
+        SettingsBtn.FlatStyle = FlatStyle.Flat
+        SettingsBtn.Font = New Font("Segoe UI", 12F)
+        SettingsBtn.ForeColor = SystemColors.ControlLightLight
+        SettingsBtn.IconChar = FontAwesome.Sharp.IconChar.Cog
+        SettingsBtn.IconColor = Color.Black
+        SettingsBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
+        SettingsBtn.IconSize = 50
+        SettingsBtn.ImageAlign = ContentAlignment.MiddleLeft
+        SettingsBtn.Location = New Point(20, 363)
+        SettingsBtn.Name = "SettingsBtn"
+        SettingsBtn.Size = New Size(210, 60)
+        SettingsBtn.TabIndex = 4
+        SettingsBtn.Text = "Settings"
+        SettingsBtn.UseVisualStyleBackColor = False
+        ' 
         ' Admin
         ' 
-        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
+        AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(1467, 988)
+        ClientSize = New Size(1284, 661)
         Controls.Add(pnlManageAccounts)
         Controls.Add(pnlSalesReport)
         Controls.Add(pnlAuditLog)
         Controls.Add(pnlDashboard)
         Controls.Add(pnlHeader)
-        Margin = New Padding(3, 4, 3, 4)
         Name = "Admin"
         Text = "Admin Dashboard - OrderUp!"
         pnlHeader.ResumeLayout(False)
@@ -626,4 +624,5 @@ Partial Class Admin
     Friend WithEvents pnlCharts As Panel
     Friend WithEvents chartDailySales As DataVisualization.Charting.Chart
     Friend WithEvents chartTopItems As DataVisualization.Charting.Chart
+    Friend WithEvents SettingsBtn As FontAwesome.Sharp.IconButton
 End Class

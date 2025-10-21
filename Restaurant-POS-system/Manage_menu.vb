@@ -8,11 +8,21 @@ Public Class Manage_menu
     Private IsEdit As Boolean = False
     Private CurrentTable As String = "Foods"
     Private ImagePath As String = ""
+    Private ImageFileName As String = ""
+
 
     Private Sub Manage_menu_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ' add this function so that when this form is closed, the parent form as well
+        EnsureItemPictureDirectoryExists()
+
         Me.WindowState = FormWindowState.Maximized
         ItemBtn.BackgroundImageLayout = BackgroundImageLayout.Stretch
+
+        BackPanel = {NavbarPnl, Panel2}
+        FlowPanel = {FoodPnl, MenuCategoryPnl, ItemInfoPnl}
+
+        GetSettingsConfig()
+        SetBackTheme(BackPanel)
+        SetFlowTheme(FlowPanel)
 
         ' load menu items
         LoadMenuCategories()
@@ -57,7 +67,7 @@ Public Class Manage_menu
         CancelBtn.Enabled = False
     End Sub
     Private Sub ShowForm()
-        Label4.Visible = False
+        'Label4.Visible = False
         ItemBtn.Visible = True
         ItemNameLbl.Visible = True
         PriceLbl.Visible = True
@@ -91,7 +101,7 @@ Public Class Manage_menu
         Dim tagData As TagData = ExtractTag(item.Tag)
         Dim itemPrice As String = tagData.Price
         Dim itemImage As String = tagData.TagImagePath
-        MsgBox("item image: " & itemImage)
+        ImageFileName = Path.GetFileName(itemImage)
 
         ItemBtn.Text = item.Text
         ImagePath = If(String.IsNullOrEmpty(itemImage), Nothing, itemImage)
@@ -129,13 +139,18 @@ Public Class Manage_menu
     ' CRUD functions
     Private Sub AddNewMenuItem(itemName As String, itemPrice As String)
 
+        Dim documentsPath As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+        Dim copyImagePath As String = Path.Combine(documentsPath, "OrderUp", "ItemPicture")
+        File.Copy(ImagePath, copyImagePath & "\" & ImageFileName)
+
+
         Dim sqlQuery As String = "INSERT INTO `" & CurrentTable & "` (ItemName, ItemPrice, ImagePath) VALUES (@Name, @Price, @Path)"
 
         Using connection As New MySqlConnection(GetGlobalConnectionString())
             Using command As New MySqlCommand(sqlQuery, connection)
                 command.Parameters.AddWithValue("@Name", ItemNameTxtBox.Text)
                 command.Parameters.AddWithValue("@Price", itemPrice)
-                command.Parameters.AddWithValue("@Path", ImagePath)
+                command.Parameters.AddWithValue("@Path", copyImagePath)
 
                 Try
                     connection.Open()
@@ -154,11 +169,17 @@ Public Class Manage_menu
         End Using
     End Sub
     Private Sub UpdateMenuItem(itemName As String, itemPrice As String)
+        Dim documentsPath As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+        Dim copyImagePath As String = Path.Combine(documentsPath, "OrderUp", "ItemPicture") & "\" & ImageFileName
+        If Not Path.Exists(copyImagePath) Then
+            File.Copy(ImagePath, copyImagePath)
+        End If
+
         Dim sqlQuery As String = "UPDATE `" & CurrentTable & "` SET ItemName = @itemName, ItemPrice = @price, ImagePath = @imgpath WHERE ItemName = @itemOldName"
 
         Using connection As New MySqlConnection(GetGlobalConnectionString())
             Using command As New MySqlCommand(sqlQuery, connection)
-                command.Parameters.AddWithValue("@imgpath", ImagePath)
+                command.Parameters.AddWithValue("@imgpath", copyImagePath)
                 command.Parameters.AddWithValue("@itemName", ItemNameTxtBox.Text)
                 command.Parameters.AddWithValue("@itemOldName", ItemBtn.Text)
                 command.Parameters.AddWithValue("@price", PriceTxtBox.Text)
@@ -255,7 +276,8 @@ Public Class Manage_menu
                         Dim catBtn As New Button With {
                         .Text = reader("CategoryName").ToString(),
                         .Size = New Size(100, 50),
-                        .FlatStyle = FlatStyle.Flat
+                        .FlatStyle = FlatStyle.Flat,
+                        .BackColor = Color.WhiteSmoke
                     }
                         AddHandler catBtn.Click, AddressOf HandleCategoryClick
                         MenuCategoryPnl.Controls.Add(catBtn)
@@ -310,6 +332,8 @@ Public Class Manage_menu
             fileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp|All Files|*.*"
             If fileDialog.ShowDialog() = DialogResult.OK Then
                 ImagePath = fileDialog.FileName
+                ImageFileName = Path.GetFileName(ImagePath)
+                MsgBox(ImageFileName)
                 Dim image As Image = Image.FromFile(ImagePath)
                 ItemBtn.BackgroundImage = ResizeImageFit(image, ItemBtn)
                 Return ImagePath
@@ -366,8 +390,11 @@ Public Class Manage_menu
     End Sub
     Private Sub SettingsBtn_Click(sender As Object, e As EventArgs) Handles SettingsBtn.Click
         If Settings.ShowDialog() = DialogResult.OK Then
+            GetSettingsConfig()
             FoodPnl.Controls.Clear()  ' reload the menu items
             LoadMenuItems("foods")
+
+            SetTheme()
         End If
     End Sub
     Private Sub BackBtn_Click(sender As Object, e As EventArgs) Handles BackBtn.Click

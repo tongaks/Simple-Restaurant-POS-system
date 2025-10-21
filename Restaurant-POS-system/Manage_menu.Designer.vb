@@ -70,11 +70,11 @@ Partial Class Manage_menu
         ' BackBtn
         ' 
         BackBtn.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        BackBtn.BackColor = Color.DarkSeaGreen
+        BackBtn.BackColor = Color.Transparent
         BackBtn.FlatAppearance.BorderSize = 0
         BackBtn.FlatStyle = FlatStyle.Flat
         BackBtn.IconChar = FontAwesome.Sharp.IconChar.SignOut
-        BackBtn.IconColor = Color.Black
+        BackBtn.IconColor = Color.WhiteSmoke
         BackBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
         BackBtn.IconSize = 40
         BackBtn.Location = New Point(523, 12)
@@ -86,11 +86,11 @@ Partial Class Manage_menu
         ' SettingsBtn
         ' 
         SettingsBtn.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        SettingsBtn.BackColor = Color.DarkSeaGreen
+        SettingsBtn.BackColor = Color.Transparent
         SettingsBtn.FlatAppearance.BorderSize = 0
         SettingsBtn.FlatStyle = FlatStyle.Flat
         SettingsBtn.IconChar = FontAwesome.Sharp.IconChar.Cog
-        SettingsBtn.IconColor = Color.Black
+        SettingsBtn.IconColor = Color.WhiteSmoke
         SettingsBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
         SettingsBtn.IconSize = 40
         SettingsBtn.Location = New Point(572, 12)
@@ -217,7 +217,6 @@ Partial Class Manage_menu
         SaveBtn.TabIndex = 12
         SaveBtn.Text = "Add"
         SaveBtn.UseVisualStyleBackColor = False
-        SaveBtn.Visible = False
         ' 
         ' UpdateBtn
         ' 
@@ -230,7 +229,6 @@ Partial Class Manage_menu
         UpdateBtn.TabIndex = 11
         UpdateBtn.Text = "Update"
         UpdateBtn.UseVisualStyleBackColor = False
-        UpdateBtn.Visible = False
         ' 
         ' CancelBtn
         ' 
@@ -243,7 +241,6 @@ Partial Class Manage_menu
         CancelBtn.TabIndex = 10
         CancelBtn.Text = "Cancel"
         CancelBtn.UseVisualStyleBackColor = False
-        CancelBtn.Visible = False
         ' 
         ' PriceTxtBox
         ' 
@@ -252,7 +249,6 @@ Partial Class Manage_menu
         PriceTxtBox.Name = "PriceTxtBox"
         PriceTxtBox.Size = New Size(71, 23)
         PriceTxtBox.TabIndex = 8
-        PriceTxtBox.Visible = False
         ' 
         ' ItemNameTxtBox
         ' 
@@ -261,7 +257,6 @@ Partial Class Manage_menu
         ItemNameTxtBox.Name = "ItemNameTxtBox"
         ItemNameTxtBox.Size = New Size(169, 23)
         ItemNameTxtBox.TabIndex = 7
-        ItemNameTxtBox.Visible = False
         ' 
         ' DeleteBtn
         ' 
@@ -274,7 +269,6 @@ Partial Class Manage_menu
         DeleteBtn.TabIndex = 6
         DeleteBtn.Text = "Delete"
         DeleteBtn.UseVisualStyleBackColor = False
-        DeleteBtn.Visible = False
         ' 
         ' EditBtn
         ' 
@@ -287,7 +281,6 @@ Partial Class Manage_menu
         EditBtn.TabIndex = 5
         EditBtn.Text = "Edit"
         EditBtn.UseVisualStyleBackColor = False
-        EditBtn.Visible = False
         ' 
         ' ItemBtn
         ' 
@@ -298,7 +291,6 @@ Partial Class Manage_menu
         ItemBtn.TabIndex = 2
         ItemBtn.Text = "Button1"
         ItemBtn.UseVisualStyleBackColor = True
-        ItemBtn.Visible = False
         ' 
         ' PriceLbl
         ' 
@@ -309,7 +301,6 @@ Partial Class Manage_menu
         PriceLbl.Size = New Size(54, 28)
         PriceLbl.TabIndex = 1
         PriceLbl.Text = "Price"
-        PriceLbl.Visible = False
         ' 
         ' ItemNameLbl
         ' 
@@ -320,7 +311,6 @@ Partial Class Manage_menu
         ItemNameLbl.Size = New Size(104, 28)
         ItemNameLbl.TabIndex = 0
         ItemNameLbl.Text = "Item name"
-        ItemNameLbl.Visible = False
         ' 
         ' Manage_menu
         ' 

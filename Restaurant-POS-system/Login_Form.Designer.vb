@@ -26,13 +26,14 @@ Partial Class Form1
         PasswordTxtBox = New TextBox()
         UsernameLbl = New Label()
         PasswordLbl = New Label()
-        Label3 = New Label()
         LoginAsAdminBtn = New PictureBox()
         LoginBtn = New Button()
         Panel1 = New Panel()
+        PictureBox2 = New PictureBox()
         PictureBox1 = New PictureBox()
         CType(LoginAsAdminBtn, ComponentModel.ISupportInitialize).BeginInit()
         Panel1.SuspendLayout()
+        CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
@@ -79,17 +80,6 @@ Partial Class Form1
         PasswordLbl.TabIndex = 3
         PasswordLbl.Text = "Password"
         ' 
-        ' Label3
-        ' 
-        Label3.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left
-        Label3.AutoSize = True
-        Label3.Font = New Font("Showcard Gothic", 36F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
-        Label3.Location = New Point(45, 94)
-        Label3.Name = "Label3"
-        Label3.Size = New Size(272, 60)
-        Label3.TabIndex = 4
-        Label3.Text = "OrderUp!"
-        ' 
         ' LoginAsAdminBtn
         ' 
         LoginAsAdminBtn.Anchor = AnchorStyles.Top
@@ -122,11 +112,21 @@ Partial Class Form1
         Panel1.Controls.Add(UsernameLbl)
         Panel1.Controls.Add(LoginBtn)
         Panel1.Controls.Add(PasswordLbl)
-        Panel1.Controls.Add(Label3)
+        Panel1.Controls.Add(PictureBox2)
         Panel1.Location = New Point(-1, -1)
         Panel1.Name = "Panel1"
         Panel1.Size = New Size(471, 608)
         Panel1.TabIndex = 8
+        ' 
+        ' PictureBox2
+        ' 
+        PictureBox2.Image = My.Resources.Resources.BOLD_removebg_preview
+        PictureBox2.Location = New Point(23, -17)
+        PictureBox2.Name = "PictureBox2"
+        PictureBox2.Size = New Size(426, 248)
+        PictureBox2.SizeMode = PictureBoxSizeMode.StretchImage
+        PictureBox2.TabIndex = 7
+        PictureBox2.TabStop = False
         ' 
         ' PictureBox1
         ' 
@@ -152,6 +152,7 @@ Partial Class Form1
         CType(LoginAsAdminBtn, ComponentModel.ISupportInitialize).EndInit()
         Panel1.ResumeLayout(False)
         Panel1.PerformLayout()
+        CType(PictureBox2, ComponentModel.ISupportInitialize).EndInit()
         CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
     End Sub
@@ -160,10 +161,10 @@ Partial Class Form1
     Friend WithEvents PasswordTxtBox As TextBox
     Friend WithEvents UsernameLbl As Label
     Friend WithEvents PasswordLbl As Label
-    Friend WithEvents Label3 As Label
     Friend WithEvents LoginAsAdminBtn As PictureBox
     Friend WithEvents LoginBtn As Button
     Friend WithEvents Panel1 As Panel
     Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents PictureBox2 As PictureBox
 
 End Class

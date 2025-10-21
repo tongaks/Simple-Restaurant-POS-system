@@ -50,11 +50,14 @@ Partial Class Order
         MenuCategoryPnl = New FlowLayoutPanel()
         FoodPnl = New FlowLayoutPanel()
         OrderPnl = New FlowLayoutPanel()
+        Panel2 = New Panel()
+        Label9 = New Label()
         NavbarPnl.SuspendLayout()
         CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
         TotalPnl.SuspendLayout()
         Panel1.SuspendLayout()
         CurrentFocusedPnl.SuspendLayout()
+        Panel2.SuspendLayout()
         SuspendLayout()
         ' 
         ' NavbarPnl
@@ -75,7 +78,7 @@ Partial Class Order
         ' IconButton3
         ' 
         IconButton3.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        IconButton3.BackColor = Color.SteelBlue
+        IconButton3.BackColor = Color.Transparent
         IconButton3.FlatAppearance.BorderSize = 0
         IconButton3.FlatStyle = FlatStyle.Flat
         IconButton3.IconChar = FontAwesome.Sharp.IconChar.SignOut
@@ -124,7 +127,7 @@ Partial Class Order
         ' SettingsBtn
         ' 
         SettingsBtn.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        SettingsBtn.BackColor = Color.SteelBlue
+        SettingsBtn.BackColor = Color.Transparent
         SettingsBtn.FlatAppearance.BorderSize = 0
         SettingsBtn.FlatStyle = FlatStyle.Flat
         SettingsBtn.IconChar = FontAwesome.Sharp.IconChar.Cog
@@ -196,6 +199,7 @@ Partial Class Order
         ' 
         DiscountLbl.AutoSize = True
         DiscountLbl.Font = New Font("Segoe UI", 15F)
+        DiscountLbl.ForeColor = Color.Red
         DiscountLbl.Location = New Point(354, 42)
         DiscountLbl.Name = "DiscountLbl"
         DiscountLbl.Size = New Size(39, 28)
@@ -216,6 +220,7 @@ Partial Class Order
         ' 
         TotalLbl.AutoSize = True
         TotalLbl.Font = New Font("Segoe UI", 20F)
+        TotalLbl.ForeColor = Color.Green
         TotalLbl.Location = New Point(350, 72)
         TotalLbl.Name = "TotalLbl"
         TotalLbl.Size = New Size(48, 37)
@@ -236,17 +241,17 @@ Partial Class Order
         ' 
         CreateOrderBtn.BackColor = Color.SpringGreen
         CreateOrderBtn.FlatStyle = FlatStyle.Flat
-        CreateOrderBtn.IconChar = FontAwesome.Sharp.IconChar.ArrowRight
+        CreateOrderBtn.IconChar = FontAwesome.Sharp.IconChar.CheckCircle
         CreateOrderBtn.IconColor = Color.Black
         CreateOrderBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
-        CreateOrderBtn.IconSize = 40
-        CreateOrderBtn.ImageAlign = ContentAlignment.MiddleRight
+        CreateOrderBtn.IconSize = 35
+        CreateOrderBtn.ImageAlign = ContentAlignment.MiddleLeft
         CreateOrderBtn.Location = New Point(15, 42)
         CreateOrderBtn.Name = "CreateOrderBtn"
         CreateOrderBtn.Size = New Size(123, 38)
         CreateOrderBtn.TabIndex = 1
         CreateOrderBtn.Text = "Create order"
-        CreateOrderBtn.TextAlign = ContentAlignment.MiddleLeft
+        CreateOrderBtn.TextAlign = ContentAlignment.MiddleRight
         CreateOrderBtn.UseVisualStyleBackColor = False
         ' 
         ' DiscountBtn
@@ -304,14 +309,14 @@ Partial Class Order
         ' 
         RecentOrdersBtn.BackColor = Color.CornflowerBlue
         RecentOrdersBtn.FlatStyle = FlatStyle.Flat
-        RecentOrdersBtn.IconChar = FontAwesome.Sharp.IconChar.Buffer
+        RecentOrdersBtn.IconChar = FontAwesome.Sharp.IconChar.ClockRotateLeft
         RecentOrdersBtn.IconColor = Color.Black
         RecentOrdersBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
         RecentOrdersBtn.IconSize = 30
         RecentOrdersBtn.ImageAlign = ContentAlignment.MiddleLeft
-        RecentOrdersBtn.Location = New Point(440, 42)
+        RecentOrdersBtn.Location = New Point(433, 42)
         RecentOrdersBtn.Name = "RecentOrdersBtn"
-        RecentOrdersBtn.Size = New Size(114, 36)
+        RecentOrdersBtn.Size = New Size(121, 36)
         RecentOrdersBtn.TabIndex = 13
         RecentOrdersBtn.Text = "Recent orders"
         RecentOrdersBtn.TextAlign = ContentAlignment.MiddleRight
@@ -384,7 +389,7 @@ Partial Class Order
         ' MenuCategoryPnl
         ' 
         MenuCategoryPnl.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
-        MenuCategoryPnl.BackColor = Color.WhiteSmoke
+        MenuCategoryPnl.BackColor = SystemColors.ControlLightLight
         MenuCategoryPnl.Location = New Point(3, 3)
         MenuCategoryPnl.Name = "MenuCategoryPnl"
         MenuCategoryPnl.Padding = New Padding(0, 0, 0, 20)
@@ -395,7 +400,7 @@ Partial Class Order
         ' 
         FoodPnl.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
         FoodPnl.AutoScroll = True
-        FoodPnl.BackColor = SystemColors.Control
+        FoodPnl.BackColor = SystemColors.ControlLightLight
         FoodPnl.Location = New Point(2, 60)
         FoodPnl.Name = "FoodPnl"
         FoodPnl.Size = New Size(701, 381)
@@ -405,13 +410,32 @@ Partial Class Order
         ' 
         OrderPnl.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left
         OrderPnl.AutoScroll = True
-        OrderPnl.BackColor = SystemColors.Control
+        OrderPnl.BackColor = SystemColors.ControlLightLight
         OrderPnl.FlowDirection = FlowDirection.TopDown
-        OrderPnl.Location = New Point(0, 0)
+        OrderPnl.Location = New Point(0, 66)
         OrderPnl.Name = "OrderPnl"
-        OrderPnl.Size = New Size(452, 478)
+        OrderPnl.Size = New Size(452, 412)
         OrderPnl.TabIndex = 6
         OrderPnl.WrapContents = False
+        ' 
+        ' Panel2
+        ' 
+        Panel2.BackColor = SystemColors.Control
+        Panel2.Controls.Add(Label9)
+        Panel2.Location = New Point(0, 1)
+        Panel2.Name = "Panel2"
+        Panel2.Size = New Size(452, 67)
+        Panel2.TabIndex = 0
+        ' 
+        ' Label9
+        ' 
+        Label9.AutoSize = True
+        Label9.Font = New Font("Segoe UI", 30F)
+        Label9.Location = New Point(122, 5)
+        Label9.Name = "Label9"
+        Label9.Size = New Size(188, 54)
+        Label9.TabIndex = 0
+        Label9.Text = "Order list"
         ' 
         ' Order
         ' 
@@ -419,6 +443,7 @@ Partial Class Order
         AutoScaleMode = AutoScaleMode.Font
         BackColor = SystemColors.ControlDark
         ClientSize = New Size(1161, 604)
+        Controls.Add(Panel2)
         Controls.Add(OrderPnl)
         Controls.Add(NavbarPnl)
         Controls.Add(Panel1)
@@ -433,6 +458,8 @@ Partial Class Order
         Panel1.ResumeLayout(False)
         CurrentFocusedPnl.ResumeLayout(False)
         CurrentFocusedPnl.PerformLayout()
+        Panel2.ResumeLayout(False)
+        Panel2.PerformLayout()
         ResumeLayout(False)
     End Sub
     Friend WithEvents NavbarPnl As Panel
@@ -464,4 +491,6 @@ Partial Class Order
     Friend WithEvents Label4 As Label
     Friend WithEvents RecentOrdersBtn As FontAwesome.Sharp.IconButton
     Friend WithEvents Label8 As Label
+    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Label9 As Label
 End Class

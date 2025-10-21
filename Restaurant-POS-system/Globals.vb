@@ -15,6 +15,48 @@ Public Module Globals
         Public Property DateCreated As DateTime
     End Structure
 
+    ' for theme
+    Public BackPanel() As Panel
+    Public FlowPanel() As Panel
+
+    Public Sub SetTheme()
+        If BackPanel.Length > 0 Or FlowPanel.Length > 0 Then
+            SetBackTheme(BackPanel)
+            SetFlowTheme(FlowPanel)
+        Else
+            MsgBox("Panels are empty", MsgBoxStyle.Critical, "Error")
+            Return
+        End If
+    End Sub
+    Public Sub SetBackTheme(panels() As Panel)
+        For Each pnl As Panel In panels
+            If pnl IsNot Nothing Then
+                pnl.BackColor = ColorTranslator.FromHtml(SettingsConfig.BarTheme)
+            End If
+        Next
+    End Sub
+    Public Sub SetFlowTheme(panels() As Panel)
+        For Each pnl As Panel In panels
+            If pnl IsNot Nothing Then
+                pnl.BackColor = ColorTranslator.FromHtml(SettingsConfig.BackgroundTheme)
+            End If
+        Next
+    End Sub
+
+
+    Public Sub EnsureItemPictureDirectoryExists()
+        Dim documentsPath As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+
+        Dim itemPicturePath As String = Path.Combine(documentsPath, "OrderUp", "ItemPicture")
+
+        If Not Directory.Exists(itemPicturePath) Then
+            Directory.CreateDirectory(itemPicturePath)
+        End If
+    End Sub
+
+
+
+
     ' Resize an Image to fit inside a control preserving aspect ratio
     Public Function ResizeImageFit(img As Image, ctrl As Control) As Image
         If img Is Nothing OrElse ctrl Is Nothing OrElse ctrl.Width = 0 OrElse ctrl.Height = 0 Then
@@ -70,6 +112,7 @@ Public Module Globals
         foodBtn.FlatAppearance.BorderSize = 3
         foodBtn.FlatAppearance.BorderColor = Color.Gray
         foodBtn.TabStop = True
+        foodBtn.BackColor = Color.WhiteSmoke
 
         If Not String.IsNullOrEmpty(imgPath) Then
             If Not imgPath = "N/A" Then

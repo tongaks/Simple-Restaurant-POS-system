@@ -13,6 +13,8 @@ Public Class Form1
         Me.WindowState = WindowState.Maximized
         IsAdmin = False
 
+        Panel1.BackColor = ColorTranslator.FromHtml(SettingsConfig.BarTheme)
+
         If Not SettingsConfig.LoginImagePath = "" Then
             PictureBox1.Image = Image.FromFile(SettingsConfig.LoginImagePath)
         Else

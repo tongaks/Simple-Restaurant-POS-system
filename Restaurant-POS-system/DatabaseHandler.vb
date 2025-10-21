@@ -14,11 +14,69 @@ Public Module DatabaseHandler
         Public MenuItemFontSize As Integer
         Public EnableShortcutKeys As Boolean
         Public LoginImagePath As String
+        Public Theme As String
+        Public BarTheme As String
+        Public BackgroundTheme As String
+        Public FontColor As String
     End Structure
 
+    Public Sub GetSettingsConfig()
+        Dim Connection As New MySqlConnection(GetGlobalConnectionString)
+
+        Try
+            Connection.Open()
+            Dim Query As String = "SELECT * FROM restaurant.settings"
+            Dim Command As New MySqlCommand(Query, Connection)
+            Dim Reader As MySqlDataReader
+            Reader = Command.ExecuteReader
+
+            If Reader.HasRows = False Then
+                MsgBox("Settings configuration is unitialized", MsgBoxStyle.Critical, "Error")
+                Return
+            End If
+
+            While Reader.Read
+                SettingsConfig.MenuItemButtonSize = Reader("MenuItemButtonSize")
+                SettingsConfig.MenuItemFontSize = Reader("MenuItemFontSize")
+                SettingsConfig.EnableShortcutKeys = Reader("EnableShortcutKeys")
+                SettingsConfig.LoginImagePath = If(IsDBNull(Reader("LoginImagePath")), "", Reader("LoginImagePath"))
+
+                If Not IsDBNull(Reader("Theme")) Then
+                    SettingsConfig.Theme = Reader("Theme")
+
+                    Dim theme As String = CStr(Reader("Theme"))
+
+                    SettingsConfig.FontColor = "#FDFDF6"
+                    Select Case theme.ToLowerInvariant()
+                        Case "blue"
+                            SettingsConfig.BarTheme = "#9EC6F3"
+                            SettingsConfig.FontColor = "#41444B"
+                        Case "green"
+                            SettingsConfig.BarTheme = "#A3DC9A"
+                        Case "pink"
+                            SettingsConfig.BarTheme = "#F7CFD8"
+                            SettingsConfig.FontColor = "#41444B"
+                        Case "red"
+                            SettingsConfig.FontColor = "#41444B"
+                            SettingsConfig.BarTheme = "#FF9F9F"
+                        Case Else
+                            SettingsConfig.BarTheme = "#A8E6A1"
+                    End Select
+
+                    SettingsConfig.BackgroundTheme = "#F7F5EB"
+                End If
+            End While
+
+        Catch ex As Exception
+            MsgBox("Failed to get the settings configureations", MsgBoxStyle.Critical, "Error")
+        Finally
+            If Connection.State = ConnectionState.Open Then
+                Connection.Close()
+            End If
+        End Try
+    End Sub
+
     Public SettingsConfig As SettingsConfigStruct
-
-
     ' For mysqlconnection
     Public Function GetGlobalConnectionString() As String
         'Return "server=localhost;userid=root;password=;database=restaurant;SslMode=none;"
@@ -79,36 +137,6 @@ Public Module DatabaseHandler
             End If
         Catch ex As Exception
             MsgBox("Failed to insert activity log: " & ex.ToString, MsgBoxStyle.Critical, "Error")
-        End Try
-    End Sub
-    Public Sub GetSettingsConfig()
-        Dim Connection As New MySqlConnection(GetGlobalConnectionString)
-
-        Try
-            Connection.Open()
-            Dim Query As String = "SELECT * FROM restaurant.settings"
-            Dim Command As New MySqlCommand(Query, Connection)
-            Dim Reader As MySqlDataReader
-            Reader = Command.ExecuteReader
-
-            If Reader.HasRows = False Then
-                MsgBox("Settings configuration is unitialized", MsgBoxStyle.Critical, "Error")
-                Return
-            End If
-
-            While Reader.Read
-                SettingsConfig.MenuItemButtonSize = Reader("MenuItemButtonSize")
-                SettingsConfig.MenuItemFontSize = Reader("MenuItemFontSize")
-                SettingsConfig.EnableShortcutKeys = Reader("EnableShortcutKeys")
-                SettingsConfig.LoginImagePath = If(IsDBNull(Reader("LoginImagePath")), "", Reader("LoginImagePath"))
-            End While
-
-        Catch ex As Exception
-            MsgBox("Failed to get the settings configureations", MsgBoxStyle.Critical, "Error")
-        Finally
-            If Connection.State = ConnectionState.Open Then
-                Connection.Close()
-            End If
         End Try
     End Sub
 
