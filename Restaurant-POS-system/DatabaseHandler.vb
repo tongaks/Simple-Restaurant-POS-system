@@ -21,7 +21,7 @@ Public Module DatabaseHandler
     ' For mysqlconnection
     Public Function GetGlobalConnectionString() As String
         'Return "server=localhost;userid=root;password=;database=restaurant;SslMode=none;"
-        Return "server=localhost;user=root;database=restaurant;port=3306;password=washer22456;"
+        Return "server=localhost;user=root;database=restaurant;port=3306;password=;"
     End Function
 
 

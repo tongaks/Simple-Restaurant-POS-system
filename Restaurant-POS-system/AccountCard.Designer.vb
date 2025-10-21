@@ -10,110 +10,154 @@ Partial Class AccountCard
     Friend WithEvents btnEdit As Button
     Friend WithEvents btnDelete As Button
     Friend WithEvents btnArchive As Button
+    Friend WithEvents pnlHeader As Panel
+    Friend WithEvents pnlActions As Panel
 
     <System.Diagnostics.DebuggerNonUserCode()>
     Private Sub InitializeComponent()
-        Me.pnlMain = New Panel()
-        Me.btnArchive = New Button()
-        Me.btnDelete = New Button()
-        Me.btnEdit = New Button()
-        Me.lblDate = New Label()
-        Me.lblRole = New Label()
-        Me.lblUsername = New Label()
-        Me.pnlMain.SuspendLayout()
-        Me.SuspendLayout()
-        '
+        pnlMain = New Panel()
+        pnlActions = New Panel()
+        btnArchive = New Button()
+        btnDelete = New Button()
+        btnEdit = New Button()
+        lblDate = New Label()
+        lblRole = New Label()
+        pnlHeader = New Panel()
+        lblUsername = New Label()
+        pnlMain.SuspendLayout()
+        pnlActions.SuspendLayout()
+        pnlHeader.SuspendLayout()
+        SuspendLayout()
+        ' 
         ' pnlMain
-        '
-        Me.pnlMain.BackColor = Color.White
-        Me.pnlMain.BorderStyle = BorderStyle.FixedSingle
-        Me.pnlMain.Controls.Add(Me.btnArchive)
-        Me.pnlMain.Controls.Add(Me.btnDelete)
-        Me.pnlMain.Controls.Add(Me.btnEdit)
-        Me.pnlMain.Controls.Add(Me.lblDate)
-        Me.pnlMain.Controls.Add(Me.lblRole)
-        Me.pnlMain.Controls.Add(Me.lblUsername)
-        Me.pnlMain.Dock = DockStyle.Fill
-        Me.pnlMain.Location = New Point(0, 0)
-        Me.pnlMain.Name = "pnlMain"
-        Me.pnlMain.Size = New Size(500, 80)
-        Me.pnlMain.TabIndex = 0
-        '
+        ' 
+        pnlMain.BackColor = Color.White
+        pnlMain.Controls.Add(pnlActions)
+        pnlMain.Controls.Add(lblDate)
+        pnlMain.Controls.Add(lblRole)
+        pnlMain.Controls.Add(pnlHeader)
+        pnlMain.Dock = DockStyle.Fill
+        pnlMain.Location = New Point(0, 0)
+        pnlMain.Margin = New Padding(10)
+        pnlMain.Name = "pnlMain"
+        pnlMain.Padding = New Padding(20, 15, 20, 15)
+        pnlMain.Size = New Size(600, 120)
+        pnlMain.TabIndex = 0
+        ' 
+        ' pnlActions
+        ' 
+        pnlActions.Controls.Add(btnArchive)
+        pnlActions.Controls.Add(btnDelete)
+        pnlActions.Controls.Add(btnEdit)
+        pnlActions.Dock = DockStyle.Right
+        pnlActions.Location = New Point(310, 60)
+        pnlActions.Name = "pnlActions"
+        pnlActions.Size = New Size(270, 45)
+        pnlActions.TabIndex = 5
+        ' 
         ' btnArchive
-        '
-        Me.btnArchive.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        Me.btnArchive.BackColor = Color.LightGoldenrodYellow
-        Me.btnArchive.FlatStyle = FlatStyle.Flat
-        Me.btnArchive.Location = New Point(390, 25)
-        Me.btnArchive.Name = "btnArchive"
-        Me.btnArchive.Size = New Size(75, 30)
-        Me.btnArchive.TabIndex = 5
-        Me.btnArchive.Text = "Archive"
-        Me.btnArchive.UseVisualStyleBackColor = False
-        '
+        ' 
+        btnArchive.BackColor = Color.FromArgb(CByte(241), CByte(196), CByte(15))
+        btnArchive.Cursor = Cursors.Hand
+        btnArchive.FlatAppearance.BorderSize = 0
+        btnArchive.FlatStyle = FlatStyle.Flat
+        btnArchive.Font = New Font("Segoe UI Semibold", 9.5F, FontStyle.Bold)
+        btnArchive.ForeColor = Color.White
+        btnArchive.Location = New Point(180, 5)
+        btnArchive.Name = "btnArchive"
+        btnArchive.Size = New Size(85, 35)
+        btnArchive.TabIndex = 5
+        btnArchive.Text = "Archive"
+        btnArchive.UseVisualStyleBackColor = False
+        ' 
         ' btnDelete
-        '
-        Me.btnDelete.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        Me.btnDelete.BackColor = Color.LightCoral
-        Me.btnDelete.FlatStyle = FlatStyle.Flat
-        Me.btnDelete.Location = New Point(310, 25)
-        Me.btnDelete.Name = "btnDelete"
-        Me.btnDelete.Size = New Size(75, 30)
-        Me.btnDelete.TabIndex = 4
-        Me.btnDelete.Text = "Delete"
-        Me.btnDelete.UseVisualStyleBackColor = False
-        '
+        ' 
+        btnDelete.BackColor = Color.FromArgb(CByte(231), CByte(76), CByte(60))
+        btnDelete.Cursor = Cursors.Hand
+        btnDelete.FlatAppearance.BorderSize = 0
+        btnDelete.FlatStyle = FlatStyle.Flat
+        btnDelete.Font = New Font("Segoe UI Semibold", 9.5F, FontStyle.Bold)
+        btnDelete.ForeColor = Color.White
+        btnDelete.Location = New Point(90, 5)
+        btnDelete.Name = "btnDelete"
+        btnDelete.Size = New Size(80, 35)
+        btnDelete.TabIndex = 4
+        btnDelete.Text = "Delete"
+        btnDelete.UseVisualStyleBackColor = False
+        ' 
         ' btnEdit
-        '
-        Me.btnEdit.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        Me.btnEdit.BackColor = Color.LightBlue
-        Me.btnEdit.FlatStyle = FlatStyle.Flat
-        Me.btnEdit.Location = New Point(230, 25)
-        Me.btnEdit.Name = "btnEdit"
-        Me.btnEdit.Size = New Size(75, 30)
-        Me.btnEdit.TabIndex = 3
-        Me.btnEdit.Text = "Edit"
-        Me.btnEdit.UseVisualStyleBackColor = False
-        '
+        ' 
+        btnEdit.BackColor = Color.FromArgb(CByte(52), CByte(152), CByte(219))
+        btnEdit.Cursor = Cursors.Hand
+        btnEdit.FlatAppearance.BorderSize = 0
+        btnEdit.FlatStyle = FlatStyle.Flat
+        btnEdit.Font = New Font("Segoe UI Semibold", 9.5F, FontStyle.Bold)
+        btnEdit.ForeColor = Color.White
+        btnEdit.Location = New Point(0, 5)
+        btnEdit.Name = "btnEdit"
+        btnEdit.Size = New Size(80, 35)
+        btnEdit.TabIndex = 3
+        btnEdit.Text = "Edit"
+        btnEdit.UseVisualStyleBackColor = False
+        ' 
         ' lblDate
-        '
-        Me.lblDate.AutoSize = True
-        Me.lblDate.Font = New Font("Segoe UI", 8.0F)
-        Me.lblDate.ForeColor = Color.DimGray
-        Me.lblDate.Location = New Point(10, 45)
-        Me.lblDate.Name = "lblDate"
-        Me.lblDate.Size = New Size(140, 19)
-        Me.lblDate.TabIndex = 2
-        Me.lblDate.Text = "Created: 0000-00-00"
-        '
+        ' 
+        lblDate.AutoSize = True
+        lblDate.Font = New Font("Segoe UI", 9.0F)
+        lblDate.ForeColor = Color.Gray
+        lblDate.Location = New Point(35, 93)
+        lblDate.Name = "lblDate"
+        lblDate.Size = New Size(144, 20)
+        lblDate.TabIndex = 2
+        lblDate.Text = "Created: 0000-00-00"
+        ' 
         ' lblRole
-        '
-        Me.lblRole.AutoSize = True
-        Me.lblRole.Font = New Font("Segoe UI", 9.0F)
-        Me.lblRole.Location = New Point(10, 30)
-        Me.lblRole.Name = "lblRole"
-        Me.lblRole.Size = New Size(40, 20)
-        Me.lblRole.TabIndex = 1
-        Me.lblRole.Text = "Role:"
-        '
+        ' 
+        lblRole.AutoSize = True
+        lblRole.Font = New Font("Segoe UI", 10.0F)
+        lblRole.ForeColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        lblRole.Location = New Point(35, 70)
+        lblRole.Name = "lblRole"
+        lblRole.Size = New Size(47, 23)
+        lblRole.TabIndex = 1
+        lblRole.Text = "Role:"
+        ' 
+        ' pnlHeader
+        ' 
+        pnlHeader.BackColor = Color.FromArgb(CByte(72), CByte(118), CByte(255))
+        pnlHeader.Controls.Add(lblUsername)
+        pnlHeader.Dock = DockStyle.Top
+        pnlHeader.Location = New Point(20, 15)
+        pnlHeader.Name = "pnlHeader"
+        pnlHeader.Padding = New Padding(15, 10, 15, 10)
+        pnlHeader.Size = New Size(560, 45)
+        pnlHeader.TabIndex = 0
+        ' 
         ' lblUsername
-        '
-        Me.lblUsername.AutoSize = True
-        Me.lblUsername.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
-        Me.lblUsername.Location = New Point(10, 8)
-        Me.lblUsername.Name = "lblUsername"
-        Me.lblUsername.Size = New Size(135, 25)
-        Me.lblUsername.TabIndex = 0
-        Me.lblUsername.Text = "Username: x"
-        '
+        ' 
+        lblUsername.AutoSize = True
+        lblUsername.Dock = DockStyle.Left
+        lblUsername.Font = New Font("Segoe UI Semibold", 12.0F, FontStyle.Bold)
+        lblUsername.ForeColor = Color.White
+        lblUsername.Location = New Point(15, 10)
+        lblUsername.Name = "lblUsername"
+        lblUsername.Size = New Size(125, 28)
+        lblUsername.TabIndex = 0
+        lblUsername.Text = "Username: x"
+        ' 
         ' AccountCard
-        '
-        Me.AutoScaleMode = AutoScaleMode.None
-        Me.Controls.Add(Me.pnlMain)
-        Me.Name = "AccountCard"
-        Me.Size = New Size(500, 80)
-        Me.pnlMain.ResumeLayout(False)
-        Me.pnlMain.PerformLayout()
-        Me.ResumeLayout(False)
+        ' 
+        AutoScaleMode = AutoScaleMode.None
+        BackColor = Color.FromArgb(CByte(245), CByte(247), CByte(250))
+        Controls.Add(pnlMain)
+        Margin = New Padding(10)
+        Name = "AccountCard"
+        Size = New Size(600, 120)
+        pnlMain.ResumeLayout(False)
+        pnlMain.PerformLayout()
+        pnlActions.ResumeLayout(False)
+        pnlHeader.ResumeLayout(False)
+        pnlHeader.PerformLayout()
+        ResumeLayout(False)
     End Sub
 End Class

@@ -1,9 +1,8 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Settings
     Inherits System.Windows.Forms.Form
 
-    'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -14,199 +13,303 @@ Partial Class Settings
         End Try
     End Sub
 
-    'Required by the Windows Form Designer
     Private components As System.ComponentModel.IContainer
 
-    'NOTE: The following procedure is required by the Windows Form Designer
-    'It can be modified using the Windows Form Designer.  
-    'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Label1 = New Label()
-        ItemBtnSizeTxtBox = New TextBox()
-        Label3 = New Label()
-        ShortcutKeyChckBox = New CheckBox()
-        Panel1 = New Panel()
-        SaveBtn = New FontAwesome.Sharp.IconButton()
-        CancelBtn = New FontAwesome.Sharp.IconButton()
-        EditBtn = New FontAwesome.Sharp.IconButton()
-        Label4 = New Label()
+        pnlHeader = New Panel()
+        lblTitle = New Label()
+        pnlMain = New Panel()
+        pnlActions = New Panel()
+        CancelBtn = New Button()
+        SaveBtn = New Button()
+        EditBtn = New Button()
         ConfigPnl = New Panel()
+        pnlShortcutKeys = New Panel()
+        ShortcutKeyChckBox = New CheckBox()
+        lblShortcutKeys = New Label()
+        pnlFontSize = New Panel()
         FontSizeTxtBtn = New TextBox()
-        Label2 = New Label()
-        Panel1.SuspendLayout()
+        lblFontSize = New Label()
+        pnlButtonSize = New Panel()
+        ItemBtnSizeTxtBox = New TextBox()
+        lblButtonSize = New Label()
+        lblConfigTitle = New Label()
+        pnlHeader.SuspendLayout()
+        pnlMain.SuspendLayout()
+        pnlActions.SuspendLayout()
         ConfigPnl.SuspendLayout()
+        pnlShortcutKeys.SuspendLayout()
+        pnlFontSize.SuspendLayout()
+        pnlButtonSize.SuspendLayout()
         SuspendLayout()
         ' 
-        ' Label1
+        ' pnlHeader
         ' 
-        Label1.AutoSize = True
-        Label1.Location = New Point(17, 27)
-        Label1.Name = "Label1"
-        Label1.Size = New Size(126, 15)
-        Label1.TabIndex = 0
-        Label1.Text = "Menu item button size"
+        pnlHeader.BackColor = Color.White
+        pnlHeader.Controls.Add(lblTitle)
+        pnlHeader.Dock = DockStyle.Top
+        pnlHeader.Location = New Point(0, 0)
+        pnlHeader.Name = "pnlHeader"
+        pnlHeader.Padding = New Padding(30, 20, 30, 20)
+        pnlHeader.Size = New Size(800, 80)
+        pnlHeader.TabIndex = 0
         ' 
-        ' ItemBtnSizeTxtBox
+        ' lblTitle
         ' 
-        ItemBtnSizeTxtBox.Location = New Point(150, 24)
-        ItemBtnSizeTxtBox.Name = "ItemBtnSizeTxtBox"
-        ItemBtnSizeTxtBox.Size = New Size(100, 23)
-        ItemBtnSizeTxtBox.TabIndex = 1
+        lblTitle.AutoSize = True
+        lblTitle.Dock = DockStyle.Left
+        lblTitle.Font = New Font("Segoe UI", 20.0F, FontStyle.Bold)
+        lblTitle.ForeColor = Color.FromArgb(CByte(45), CByte(45), CByte(48))
+        lblTitle.Location = New Point(30, 20)
+        lblTitle.Name = "lblTitle"
+        lblTitle.Size = New Size(150, 46)
+        lblTitle.TabIndex = 0
+        lblTitle.Text = "Settings"
         ' 
-        ' Label3
+        ' pnlMain
         ' 
-        Label3.AutoSize = True
-        Label3.Location = New Point(27, 98)
-        Label3.Name = "Label3"
-        Label3.Size = New Size(115, 15)
-        Label3.TabIndex = 4
-        Label3.Text = "Enable shortcut keys"
+        pnlMain.BackColor = Color.FromArgb(CByte(245), CByte(247), CByte(250))
+        pnlMain.Controls.Add(pnlActions)
+        pnlMain.Controls.Add(ConfigPnl)
+        pnlMain.Dock = DockStyle.Fill
+        pnlMain.Location = New Point(0, 80)
+        pnlMain.Name = "pnlMain"
+        pnlMain.Padding = New Padding(40)
+        pnlMain.Size = New Size(800, 520)
+        pnlMain.TabIndex = 1
         ' 
-        ' ShortcutKeyChckBox
+        ' pnlActions
         ' 
-        ShortcutKeyChckBox.AutoSize = True
-        ShortcutKeyChckBox.Location = New Point(150, 101)
-        ShortcutKeyChckBox.Name = "ShortcutKeyChckBox"
-        ShortcutKeyChckBox.Size = New Size(15, 14)
-        ShortcutKeyChckBox.TabIndex = 5
-        ShortcutKeyChckBox.UseVisualStyleBackColor = True
-        ' 
-        ' Panel1
-        ' 
-        Panel1.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
-        Panel1.BackColor = Color.DarkSeaGreen
-        Panel1.Controls.Add(SaveBtn)
-        Panel1.Controls.Add(CancelBtn)
-        Panel1.Controls.Add(EditBtn)
-        Panel1.Controls.Add(Label4)
-        Panel1.Location = New Point(0, 0)
-        Panel1.Name = "Panel1"
-        Panel1.Size = New Size(803, 64)
-        Panel1.TabIndex = 6
-        ' 
-        ' SaveBtn
-        ' 
-        SaveBtn.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        SaveBtn.BackColor = Color.SpringGreen
-        SaveBtn.Enabled = False
-        SaveBtn.FlatStyle = FlatStyle.Flat
-        SaveBtn.IconChar = FontAwesome.Sharp.IconChar.Save
-        SaveBtn.IconColor = Color.Black
-        SaveBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
-        SaveBtn.IconSize = 30
-        SaveBtn.ImageAlign = ContentAlignment.MiddleRight
-        SaveBtn.Location = New Point(519, 12)
-        SaveBtn.Name = "SaveBtn"
-        SaveBtn.Size = New Size(75, 38)
-        SaveBtn.TabIndex = 10
-        SaveBtn.Text = "Save"
-        SaveBtn.TextAlign = ContentAlignment.MiddleLeft
-        SaveBtn.UseVisualStyleBackColor = False
+        pnlActions.Controls.Add(CancelBtn)
+        pnlActions.Controls.Add(SaveBtn)
+        pnlActions.Controls.Add(EditBtn)
+        pnlActions.Dock = DockStyle.Bottom
+        pnlActions.Location = New Point(40, 380)
+        pnlActions.Name = "pnlActions"
+        pnlActions.Padding = New Padding(0, 20, 0, 0)
+        pnlActions.Size = New Size(720, 100)
+        pnlActions.TabIndex = 1
         ' 
         ' CancelBtn
         ' 
-        CancelBtn.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        CancelBtn.BackColor = SystemColors.AppWorkspace
+        CancelBtn.BackColor = Color.FromArgb(CByte(149), CByte(165), CByte(166))
+        CancelBtn.Cursor = Cursors.Hand
+        CancelBtn.Dock = DockStyle.Right
+        CancelBtn.Enabled = False
+        CancelBtn.FlatAppearance.BorderSize = 0
         CancelBtn.FlatStyle = FlatStyle.Flat
-        CancelBtn.IconChar = FontAwesome.Sharp.IconChar.LongArrowAltRight
-        CancelBtn.IconColor = Color.Black
-        CancelBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
-        CancelBtn.IconSize = 30
-        CancelBtn.ImageAlign = ContentAlignment.MiddleRight
-        CancelBtn.Location = New Point(707, 13)
+        CancelBtn.Font = New Font("Segoe UI Semibold", 11.0F, FontStyle.Bold)
+        CancelBtn.ForeColor = Color.White
+        CancelBtn.Location = New Point(280, 20)
         CancelBtn.Name = "CancelBtn"
-        CancelBtn.Size = New Size(81, 38)
-        CancelBtn.TabIndex = 9
+        CancelBtn.Size = New Size(150, 80)
+        CancelBtn.TabIndex = 2
         CancelBtn.Text = "Cancel"
-        CancelBtn.TextAlign = ContentAlignment.MiddleLeft
         CancelBtn.UseVisualStyleBackColor = False
+        ' 
+        ' SaveBtn
+        ' 
+        SaveBtn.BackColor = Color.FromArgb(CByte(46), CByte(204), CByte(113))
+        SaveBtn.Cursor = Cursors.Hand
+        SaveBtn.Dock = DockStyle.Right
+        SaveBtn.Enabled = False
+        SaveBtn.FlatAppearance.BorderSize = 0
+        SaveBtn.FlatStyle = FlatStyle.Flat
+        SaveBtn.Font = New Font("Segoe UI Semibold", 11.0F, FontStyle.Bold)
+        SaveBtn.ForeColor = Color.White
+        SaveBtn.Location = New Point(430, 20)
+        SaveBtn.Name = "SaveBtn"
+        SaveBtn.Size = New Size(150, 80)
+        SaveBtn.TabIndex = 1
+        SaveBtn.Text = "Save Changes"
+        SaveBtn.UseVisualStyleBackColor = False
         ' 
         ' EditBtn
         ' 
-        EditBtn.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        EditBtn.BackColor = Color.Khaki
+        EditBtn.BackColor = Color.FromArgb(CByte(52), CByte(152), CByte(219))
+        EditBtn.Cursor = Cursors.Hand
+        EditBtn.Dock = DockStyle.Right
+        EditBtn.FlatAppearance.BorderSize = 0
         EditBtn.FlatStyle = FlatStyle.Flat
-        EditBtn.IconChar = FontAwesome.Sharp.IconChar.Pencil
-        EditBtn.IconColor = Color.Black
-        EditBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
-        EditBtn.IconSize = 30
-        EditBtn.ImageAlign = ContentAlignment.MiddleRight
-        EditBtn.Location = New Point(614, 13)
+        EditBtn.Font = New Font("Segoe UI Semibold", 11.0F, FontStyle.Bold)
+        EditBtn.ForeColor = Color.White
+        EditBtn.Location = New Point(580, 20)
         EditBtn.Name = "EditBtn"
-        EditBtn.Size = New Size(75, 38)
-        EditBtn.TabIndex = 8
+        EditBtn.Size = New Size(140, 80)
+        EditBtn.TabIndex = 0
         EditBtn.Text = "Edit"
-        EditBtn.TextAlign = ContentAlignment.MiddleLeft
         EditBtn.UseVisualStyleBackColor = False
-        ' 
-        ' Label4
-        ' 
-        Label4.AutoSize = True
-        Label4.Font = New Font("Segoe UI", 20F)
-        Label4.ForeColor = SystemColors.ButtonFace
-        Label4.Location = New Point(12, 13)
-        Label4.Name = "Label4"
-        Label4.Size = New Size(112, 37)
-        Label4.TabIndex = 7
-        Label4.Text = "Settings"
         ' 
         ' ConfigPnl
         ' 
-        ConfigPnl.Controls.Add(FontSizeTxtBtn)
-        ConfigPnl.Controls.Add(Label2)
-        ConfigPnl.Controls.Add(ItemBtnSizeTxtBox)
-        ConfigPnl.Controls.Add(Label1)
-        ConfigPnl.Controls.Add(ShortcutKeyChckBox)
-        ConfigPnl.Controls.Add(Label3)
+        ConfigPnl.BackColor = Color.White
+        ConfigPnl.BorderStyle = BorderStyle.FixedSingle
+        ConfigPnl.Controls.Add(pnlShortcutKeys)
+        ConfigPnl.Controls.Add(pnlFontSize)
+        ConfigPnl.Controls.Add(pnlButtonSize)
+        ConfigPnl.Controls.Add(lblConfigTitle)
+        ConfigPnl.Dock = DockStyle.Top
         ConfigPnl.Enabled = False
-        ConfigPnl.Location = New Point(21, 85)
+        ConfigPnl.Location = New Point(40, 40)
         ConfigPnl.Name = "ConfigPnl"
-        ConfigPnl.Size = New Size(739, 214)
-        ConfigPnl.TabIndex = 7
+        ConfigPnl.Padding = New Padding(30, 20, 30, 20)
+        ConfigPnl.Size = New Size(720, 320)
+        ConfigPnl.TabIndex = 0
+        ' 
+        ' pnlShortcutKeys
+        ' 
+        pnlShortcutKeys.Controls.Add(ShortcutKeyChckBox)
+        pnlShortcutKeys.Controls.Add(lblShortcutKeys)
+        pnlShortcutKeys.Dock = DockStyle.Top
+        pnlShortcutKeys.Location = New Point(30, 207)
+        pnlShortcutKeys.Name = "pnlShortcutKeys"
+        pnlShortcutKeys.Padding = New Padding(0, 10, 0, 10)
+        pnlShortcutKeys.Size = New Size(658, 70)
+        pnlShortcutKeys.TabIndex = 3
+        ' 
+        ' ShortcutKeyChckBox
+        ' 
+        ShortcutKeyChckBox.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        ShortcutKeyChckBox.AutoSize = True
+        ShortcutKeyChckBox.Location = New Point(618, 18)
+        ShortcutKeyChckBox.Name = "ShortcutKeyChckBox"
+        ShortcutKeyChckBox.Size = New Size(18, 17)
+        ShortcutKeyChckBox.TabIndex = 1
+        ShortcutKeyChckBox.UseVisualStyleBackColor = True
+        ' 
+        ' lblShortcutKeys
+        ' 
+        lblShortcutKeys.AutoSize = True
+        lblShortcutKeys.Font = New Font("Segoe UI", 11.0F)
+        lblShortcutKeys.ForeColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        lblShortcutKeys.Location = New Point(10, 15)
+        lblShortcutKeys.Name = "lblShortcutKeys"
+        lblShortcutKeys.Size = New Size(188, 25)
+        lblShortcutKeys.TabIndex = 0
+        lblShortcutKeys.Text = "Enable Shortcut Keys"
+        ' 
+        ' pnlFontSize
+        ' 
+        pnlFontSize.Controls.Add(FontSizeTxtBtn)
+        pnlFontSize.Controls.Add(lblFontSize)
+        pnlFontSize.Dock = DockStyle.Top
+        pnlFontSize.Location = New Point(30, 137)
+        pnlFontSize.Name = "pnlFontSize"
+        pnlFontSize.Padding = New Padding(0, 10, 0, 10)
+        pnlFontSize.Size = New Size(658, 70)
+        pnlFontSize.TabIndex = 2
         ' 
         ' FontSizeTxtBtn
         ' 
-        FontSizeTxtBtn.Location = New Point(150, 59)
+        FontSizeTxtBtn.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        FontSizeTxtBtn.Font = New Font("Segoe UI", 11.0F)
+        FontSizeTxtBtn.Location = New Point(500, 12)
         FontSizeTxtBtn.Name = "FontSizeTxtBtn"
-        FontSizeTxtBtn.Size = New Size(100, 23)
-        FontSizeTxtBtn.TabIndex = 7
+        FontSizeTxtBtn.Size = New Size(150, 32)
+        FontSizeTxtBtn.TabIndex = 1
         ' 
-        ' Label2
+        ' lblFontSize
         ' 
-        Label2.AutoSize = True
-        Label2.Location = New Point(30, 62)
-        Label2.Name = "Label2"
-        Label2.Size = New Size(112, 15)
-        Label2.TabIndex = 6
-        Label2.Text = "Menu item font size"
+        lblFontSize.AutoSize = True
+        lblFontSize.Font = New Font("Segoe UI", 11.0F)
+        lblFontSize.ForeColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        lblFontSize.Location = New Point(10, 15)
+        lblFontSize.Name = "lblFontSize"
+        lblFontSize.Size = New Size(184, 25)
+        lblFontSize.TabIndex = 0
+        lblFontSize.Text = "Menu Item Font Size"
+        ' 
+        ' pnlButtonSize
+        ' 
+        pnlButtonSize.Controls.Add(ItemBtnSizeTxtBox)
+        pnlButtonSize.Controls.Add(lblButtonSize)
+        pnlButtonSize.Dock = DockStyle.Top
+        pnlButtonSize.Location = New Point(30, 67)
+        pnlButtonSize.Name = "pnlButtonSize"
+        pnlButtonSize.Padding = New Padding(0, 10, 0, 10)
+        pnlButtonSize.Size = New Size(658, 70)
+        pnlButtonSize.TabIndex = 1
+        ' 
+        ' ItemBtnSizeTxtBox
+        ' 
+        ItemBtnSizeTxtBox.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        ItemBtnSizeTxtBox.Font = New Font("Segoe UI", 11.0F)
+        ItemBtnSizeTxtBox.Location = New Point(500, 12)
+        ItemBtnSizeTxtBox.Name = "ItemBtnSizeTxtBox"
+        ItemBtnSizeTxtBox.Size = New Size(150, 32)
+        ItemBtnSizeTxtBox.TabIndex = 1
+        ' 
+        ' lblButtonSize
+        ' 
+        lblButtonSize.AutoSize = True
+        lblButtonSize.Font = New Font("Segoe UI", 11.0F)
+        lblButtonSize.ForeColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        lblButtonSize.Location = New Point(10, 15)
+        lblButtonSize.Name = "lblButtonSize"
+        lblButtonSize.Size = New Size(203, 25)
+        lblButtonSize.TabIndex = 0
+        lblButtonSize.Text = "Menu Item Button Size"
+        ' 
+        ' lblConfigTitle
+        ' 
+        lblConfigTitle.AutoSize = True
+        lblConfigTitle.Dock = DockStyle.Top
+        lblConfigTitle.Font = New Font("Segoe UI Semibold", 14.0F, FontStyle.Bold)
+        lblConfigTitle.ForeColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        lblConfigTitle.Location = New Point(30, 20)
+        lblConfigTitle.Name = "lblConfigTitle"
+        lblConfigTitle.Padding = New Padding(0, 0, 0, 15)
+        lblConfigTitle.Size = New Size(234, 47)
+        lblConfigTitle.TabIndex = 0
+        lblConfigTitle.Text = "Menu Configuration"
         ' 
         ' Settings
         ' 
-        AutoScaleDimensions = New SizeF(7F, 15F)
+        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(800, 450)
-        Controls.Add(ConfigPnl)
-        Controls.Add(Panel1)
+        BackColor = Color.FromArgb(CByte(245), CByte(247), CByte(250))
+        ClientSize = New Size(800, 600)
+        Controls.Add(pnlMain)
+        Controls.Add(pnlHeader)
+        Font = New Font("Segoe UI", 9.0F)
+        FormBorderStyle = FormBorderStyle.FixedDialog
+        MaximizeBox = False
+        MinimizeBox = False
         Name = "Settings"
-        Text = "Settings"
-        Panel1.ResumeLayout(False)
-        Panel1.PerformLayout()
+        StartPosition = FormStartPosition.CenterScreen
+        Text = "Settings - OrderUp!"
+        pnlHeader.ResumeLayout(False)
+        pnlHeader.PerformLayout()
+        pnlMain.ResumeLayout(False)
+        pnlActions.ResumeLayout(False)
         ConfigPnl.ResumeLayout(False)
         ConfigPnl.PerformLayout()
+        pnlShortcutKeys.ResumeLayout(False)
+        pnlShortcutKeys.PerformLayout()
+        pnlFontSize.ResumeLayout(False)
+        pnlFontSize.PerformLayout()
+        pnlButtonSize.ResumeLayout(False)
+        pnlButtonSize.PerformLayout()
         ResumeLayout(False)
     End Sub
 
-    Friend WithEvents Label1 As Label
-    Friend WithEvents ItemBtnSizeTxtBox As TextBox
-    Friend WithEvents Label3 As Label
-    Friend WithEvents ShortcutKeyChckBox As CheckBox
-    Friend WithEvents Panel1 As Panel
-    Friend WithEvents CancelBtn As FontAwesome.Sharp.IconButton
-    Friend WithEvents EditBtn As FontAwesome.Sharp.IconButton
-    Friend WithEvents Label4 As Label
-    Friend WithEvents SaveBtn As FontAwesome.Sharp.IconButton
+    Friend WithEvents pnlHeader As Panel
+    Friend WithEvents lblTitle As Label
+    Friend WithEvents pnlMain As Panel
     Friend WithEvents ConfigPnl As Panel
+    Friend WithEvents lblConfigTitle As Label
+    Friend WithEvents pnlButtonSize As Panel
+    Friend WithEvents ItemBtnSizeTxtBox As TextBox
+    Friend WithEvents lblButtonSize As Label
+    Friend WithEvents pnlFontSize As Panel
     Friend WithEvents FontSizeTxtBtn As TextBox
-    Friend WithEvents Label2 As Label
+    Friend WithEvents lblFontSize As Label
+    Friend WithEvents pnlShortcutKeys As Panel
+    Friend WithEvents ShortcutKeyChckBox As CheckBox
+    Friend WithEvents lblShortcutKeys As Label
+    Friend WithEvents pnlActions As Panel
+    Friend WithEvents CancelBtn As Button
+    Friend WithEvents SaveBtn As Button
+    Friend WithEvents EditBtn As Button
 End Class

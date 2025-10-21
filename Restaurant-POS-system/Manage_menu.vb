@@ -384,4 +384,8 @@ Public Class Manage_menu
             End If
         End If
     End Sub
+
+    Private Sub SearchTxtBox_TextChanged(sender As Object, e As EventArgs) Handles SearchTxtBox.TextChanged
+
+    End Sub
 End Class

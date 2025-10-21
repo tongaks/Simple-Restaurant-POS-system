@@ -1,9 +1,8 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Manage_menu
     Inherits System.Windows.Forms.Form
 
-    'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -14,330 +13,457 @@ Partial Class Manage_menu
         End Try
     End Sub
 
-    'Required by the Windows Form Designer
     Private components As System.ComponentModel.IContainer
 
-    'NOTE: The following procedure is required by the Windows Form Designer
-    'It can be modified using the Windows Form Designer.  
-    'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        NavbarPnl = New Panel()
+        pnlHeader = New Panel()
+        pnlSearch = New Panel()
+        SearchBtn = New FontAwesome.Sharp.IconButton()
         SearchTxtBox = New TextBox()
-        Label1 = New Label()
-        SearchBtn = New Button()
-        Button3 = New Button()
-        Button2 = New Button()
-        Panel1 = New Panel()
-        MenuCategoryPnl = New FlowLayoutPanel()
-        FoodPnl = New FlowLayoutPanel()
-        Panel2 = New Panel()
+        lblTitle = New Label()
+        lblHeaderIcon = New Label()
+        pnlSidebar = New Panel()
         ItemInfoPnl = New Panel()
-        SaveBtn = New Button()
-        UpdateBtn = New Button()
-        CancelBtn = New Button()
-        Label4 = New Label()
+        pnlItemActions = New Panel()
+        UpdateBtn = New FontAwesome.Sharp.IconButton()
+        CancelBtn = New FontAwesome.Sharp.IconButton()
+        DeleteBtn = New FontAwesome.Sharp.IconButton()
+        EditBtn = New FontAwesome.Sharp.IconButton()
+        SaveBtn = New FontAwesome.Sharp.IconButton()
+        pnlItemFields = New Panel()
         PriceTxtBox = New TextBox()
-        ItemNameTxtBox = New TextBox()
-        DeleteBtn = New Button()
-        EditBtn = New Button()
-        ItemBtn = New Button()
         PriceLbl = New Label()
+        ItemNameTxtBox = New TextBox()
         ItemNameLbl = New Label()
-        NavbarPnl.SuspendLayout()
-        Panel1.SuspendLayout()
-        Panel2.SuspendLayout()
+        lblItemPreview = New Label()
+        ItemBtn = New Button()
+        Label4 = New Label()
+        pnlMain = New Panel()
+        FoodPnl = New FlowLayoutPanel()
+        MenuCategoryPnl = New FlowLayoutPanel()
+        pnlHeader.SuspendLayout()
+        pnlSearch.SuspendLayout()
+        pnlSidebar.SuspendLayout()
         ItemInfoPnl.SuspendLayout()
+        pnlItemActions.SuspendLayout()
+        pnlItemFields.SuspendLayout()
+        pnlMain.SuspendLayout()
         SuspendLayout()
         ' 
-        ' NavbarPnl
+        ' pnlHeader
         ' 
-        NavbarPnl.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
-        NavbarPnl.BackColor = Color.DarkSeaGreen
-        NavbarPnl.Controls.Add(SearchTxtBox)
-        NavbarPnl.Controls.Add(Label1)
-        NavbarPnl.Controls.Add(SearchBtn)
-        NavbarPnl.Controls.Add(Button3)
-        NavbarPnl.Controls.Add(Button2)
-        NavbarPnl.Location = New Point(414, 0)
-        NavbarPnl.Name = "NavbarPnl"
-        NavbarPnl.Size = New Size(627, 68)
-        NavbarPnl.TabIndex = 7
+        pnlHeader.BackColor = Color.FromArgb(CByte(41), CByte(128), CByte(185))
+        pnlHeader.Controls.Add(pnlSearch)
+        pnlHeader.Controls.Add(lblTitle)
+        pnlHeader.Controls.Add(lblHeaderIcon)
+        pnlHeader.Dock = DockStyle.Top
+        pnlHeader.Location = New Point(0, 0)
+        pnlHeader.Name = "pnlHeader"
+        pnlHeader.Size = New Size(1600, 90)
+        pnlHeader.TabIndex = 0
         ' 
-        ' SearchTxtBox
+        ' pnlSearch
         ' 
-        SearchTxtBox.Font = New Font("Segoe UI", 15F)
-        SearchTxtBox.Location = New Point(80, 19)
-        SearchTxtBox.Name = "SearchTxtBox"
-        SearchTxtBox.Size = New Size(255, 34)
-        SearchTxtBox.TabIndex = 7
-        ' 
-        ' Label1
-        ' 
-        Label1.AutoSize = True
-        Label1.Font = New Font("Segoe UI", 12F)
-        Label1.Location = New Point(17, 22)
-        Label1.Name = "Label1"
-        Label1.Size = New Size(57, 21)
-        Label1.TabIndex = 6
-        Label1.Text = "Search"
+        pnlSearch.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        pnlSearch.BackColor = Color.FromArgb(CByte(52), CByte(152), CByte(219))
+        pnlSearch.Controls.Add(SearchBtn)
+        pnlSearch.Controls.Add(SearchTxtBox)
+        pnlSearch.Location = New Point(1150, 20)
+        pnlSearch.Name = "pnlSearch"
+        pnlSearch.Size = New Size(420, 50)
+        pnlSearch.TabIndex = 2
         ' 
         ' SearchBtn
         ' 
-        SearchBtn.BackColor = Color.FromArgb(CByte(128), CByte(255), CByte(128))
+        SearchBtn.BackColor = Color.FromArgb(CByte(39), CByte(174), CByte(96))
+        SearchBtn.Cursor = Cursors.Hand
+        SearchBtn.Dock = DockStyle.Right
+        SearchBtn.FlatAppearance.BorderSize = 0
         SearchBtn.FlatStyle = FlatStyle.Flat
-        SearchBtn.Location = New Point(352, 21)
+        SearchBtn.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
+        SearchBtn.ForeColor = Color.White
+        SearchBtn.IconChar = FontAwesome.Sharp.IconChar.Search
+        SearchBtn.IconColor = Color.White
+        SearchBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
+        SearchBtn.IconSize = 24
+        SearchBtn.Location = New Point(300, 0)
         SearchBtn.Name = "SearchBtn"
-        SearchBtn.Size = New Size(75, 34)
-        SearchBtn.TabIndex = 5
+        SearchBtn.Size = New Size(120, 50)
+        SearchBtn.TabIndex = 1
         SearchBtn.Text = "Search"
+        SearchBtn.TextImageRelation = TextImageRelation.ImageBeforeText
         SearchBtn.UseVisualStyleBackColor = False
         ' 
-        ' Button3
+        ' SearchTxtBox
         ' 
-        Button3.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        Button3.Location = New Point(969, 27)
-        Button3.Name = "Button3"
-        Button3.Size = New Size(75, 23)
-        Button3.TabIndex = 3
-        Button3.Text = "Settings"
-        Button3.UseVisualStyleBackColor = True
+        SearchTxtBox.BorderStyle = BorderStyle.None
+        SearchTxtBox.Dock = DockStyle.Fill
+        SearchTxtBox.Font = New Font("Segoe UI", 12.0F)
+        SearchTxtBox.Location = New Point(0, 0)
+        SearchTxtBox.Multiline = True
+        SearchTxtBox.Name = "SearchTxtBox"
+        SearchTxtBox.PlaceholderText = "🔍 Search menu items..."
+        SearchTxtBox.Size = New Size(420, 50)
+        SearchTxtBox.TabIndex = 0
         ' 
-        ' Button2
+        ' lblTitle
         ' 
-        Button2.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        Button2.Location = New Point(888, 27)
-        Button2.Name = "Button2"
-        Button2.Size = New Size(75, 23)
-        Button2.TabIndex = 2
-        Button2.Text = "Account"
-        Button2.UseVisualStyleBackColor = True
+        lblTitle.AutoSize = True
+        lblTitle.Font = New Font("Segoe UI", 22.0F, FontStyle.Bold)
+        lblTitle.ForeColor = Color.White
+        lblTitle.Location = New Point(110, 28)
+        lblTitle.Name = "lblTitle"
+        lblTitle.Size = New Size(271, 50)
+        lblTitle.TabIndex = 1
+        lblTitle.Text = "Manage Menu"
         ' 
-        ' Panel1
+        ' lblHeaderIcon
         ' 
-        Panel1.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
-        Panel1.BackColor = Color.DarkGray
-        Panel1.Controls.Add(MenuCategoryPnl)
-        Panel1.Controls.Add(FoodPnl)
-        Panel1.Location = New Point(414, 66)
-        Panel1.Name = "Panel1"
-        Panel1.Size = New Size(628, 538)
-        Panel1.TabIndex = 9
+        lblHeaderIcon.AutoSize = True
+        lblHeaderIcon.Font = New Font("Segoe UI", 28.0F, FontStyle.Bold)
+        lblHeaderIcon.ForeColor = Color.White
+        lblHeaderIcon.Location = New Point(30, 20)
+        lblHeaderIcon.Name = "lblHeaderIcon"
+        lblHeaderIcon.Size = New Size(87, 62)
+        lblHeaderIcon.TabIndex = 0
+        lblHeaderIcon.Text = "🍽️"
         ' 
-        ' MenuCategoryPnl
+        ' pnlSidebar
         ' 
-        MenuCategoryPnl.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
-        MenuCategoryPnl.BackColor = Color.WhiteSmoke
-        MenuCategoryPnl.Location = New Point(3, 3)
-        MenuCategoryPnl.Name = "MenuCategoryPnl"
-        MenuCategoryPnl.Padding = New Padding(0, 0, 0, 20)
-        MenuCategoryPnl.Size = New Size(628, 60)
-        MenuCategoryPnl.TabIndex = 1
-        ' 
-        ' FoodPnl
-        ' 
-        FoodPnl.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
-        FoodPnl.BackColor = SystemColors.Control
-        FoodPnl.Location = New Point(3, 60)
-        FoodPnl.Name = "FoodPnl"
-        FoodPnl.Size = New Size(625, 480)
-        FoodPnl.TabIndex = 2
-        ' 
-        ' Panel2
-        ' 
-        Panel2.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left
-        Panel2.BackColor = SystemColors.ControlLight
-        Panel2.Controls.Add(ItemInfoPnl)
-        Panel2.Location = New Point(1, 1)
-        Panel2.Name = "Panel2"
-        Panel2.Size = New Size(405, 603)
-        Panel2.TabIndex = 10
+        pnlSidebar.BackColor = Color.FromArgb(CByte(236), CByte(240), CByte(245))
+        pnlSidebar.Controls.Add(ItemInfoPnl)
+        pnlSidebar.Dock = DockStyle.Left
+        pnlSidebar.Location = New Point(0, 90)
+        pnlSidebar.Name = "pnlSidebar"
+        pnlSidebar.Padding = New Padding(25)
+        pnlSidebar.Size = New Size(450, 920)
+        pnlSidebar.TabIndex = 1
         ' 
         ' ItemInfoPnl
         ' 
-        ItemInfoPnl.BackColor = SystemColors.ButtonFace
-        ItemInfoPnl.Controls.Add(SaveBtn)
-        ItemInfoPnl.Controls.Add(UpdateBtn)
-        ItemInfoPnl.Controls.Add(CancelBtn)
-        ItemInfoPnl.Controls.Add(Label4)
-        ItemInfoPnl.Controls.Add(PriceTxtBox)
-        ItemInfoPnl.Controls.Add(ItemNameTxtBox)
-        ItemInfoPnl.Controls.Add(DeleteBtn)
-        ItemInfoPnl.Controls.Add(EditBtn)
+        ItemInfoPnl.BackColor = Color.White
+        ItemInfoPnl.Controls.Add(pnlItemActions)
+        ItemInfoPnl.Controls.Add(pnlItemFields)
+        ItemInfoPnl.Controls.Add(lblItemPreview)
         ItemInfoPnl.Controls.Add(ItemBtn)
-        ItemInfoPnl.Controls.Add(PriceLbl)
-        ItemInfoPnl.Controls.Add(ItemNameLbl)
-        ItemInfoPnl.Location = New Point(23, 65)
+        ItemInfoPnl.Controls.Add(Label4)
+        ItemInfoPnl.Dock = DockStyle.Fill
+        ItemInfoPnl.Location = New Point(25, 25)
         ItemInfoPnl.Name = "ItemInfoPnl"
-        ItemInfoPnl.Size = New Size(359, 507)
+        ItemInfoPnl.Padding = New Padding(25)
+        ItemInfoPnl.Size = New Size(400, 870)
         ItemInfoPnl.TabIndex = 0
         ' 
-        ' SaveBtn
+        ' pnlItemActions
         ' 
-        SaveBtn.BackColor = Color.SpringGreen
-        SaveBtn.Enabled = False
-        SaveBtn.FlatStyle = FlatStyle.Flat
-        SaveBtn.Location = New Point(13, 388)
-        SaveBtn.Name = "SaveBtn"
-        SaveBtn.Size = New Size(106, 44)
-        SaveBtn.TabIndex = 12
-        SaveBtn.Text = "Add"
-        SaveBtn.UseVisualStyleBackColor = False
-        SaveBtn.Visible = False
+        pnlItemActions.Controls.Add(UpdateBtn)
+        pnlItemActions.Controls.Add(CancelBtn)
+        pnlItemActions.Controls.Add(DeleteBtn)
+        pnlItemActions.Controls.Add(EditBtn)
+        pnlItemActions.Controls.Add(SaveBtn)
+        pnlItemActions.Location = New Point(25, 550)
+        pnlItemActions.Name = "pnlItemActions"
+        pnlItemActions.Size = New Size(350, 280)
+        pnlItemActions.TabIndex = 4
+        pnlItemActions.Visible = False
         ' 
         ' UpdateBtn
         ' 
-        UpdateBtn.BackColor = Color.LightBlue
+        UpdateBtn.BackColor = Color.FromArgb(CByte(241), CByte(196), CByte(15))
+        UpdateBtn.Cursor = Cursors.Hand
         UpdateBtn.Enabled = False
+        UpdateBtn.FlatAppearance.BorderSize = 0
         UpdateBtn.FlatStyle = FlatStyle.Flat
-        UpdateBtn.Location = New Point(71, 449)
+        UpdateBtn.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
+        UpdateBtn.ForeColor = Color.White
+        UpdateBtn.IconChar = FontAwesome.Sharp.IconChar.Refresh
+        UpdateBtn.IconColor = Color.White
+        UpdateBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
+        UpdateBtn.IconSize = 32
+        UpdateBtn.ImageAlign = ContentAlignment.MiddleLeft
+        UpdateBtn.Location = New Point(10, 205)
         UpdateBtn.Name = "UpdateBtn"
-        UpdateBtn.Size = New Size(106, 44)
-        UpdateBtn.TabIndex = 11
-        UpdateBtn.Text = "Update"
+        UpdateBtn.Padding = New Padding(10, 0, 10, 0)
+        UpdateBtn.Size = New Size(160, 50)
+        UpdateBtn.TabIndex = 4
+        UpdateBtn.Text = "  Update"
+        UpdateBtn.TextAlign = ContentAlignment.MiddleLeft
+        UpdateBtn.TextImageRelation = TextImageRelation.ImageBeforeText
         UpdateBtn.UseVisualStyleBackColor = False
-        UpdateBtn.Visible = False
         ' 
         ' CancelBtn
         ' 
-        CancelBtn.BackColor = SystemColors.ControlDark
+        CancelBtn.BackColor = Color.FromArgb(CByte(149), CByte(165), CByte(166))
+        CancelBtn.Cursor = Cursors.Hand
         CancelBtn.Enabled = False
+        CancelBtn.FlatAppearance.BorderSize = 0
         CancelBtn.FlatStyle = FlatStyle.Flat
-        CancelBtn.Location = New Point(190, 449)
+        CancelBtn.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
+        CancelBtn.ForeColor = Color.White
+        CancelBtn.IconChar = FontAwesome.Sharp.IconChar.Close
+        CancelBtn.IconColor = Color.White
+        CancelBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
+        CancelBtn.IconSize = 32
+        CancelBtn.ImageAlign = ContentAlignment.MiddleLeft
+        CancelBtn.Location = New Point(180, 205)
         CancelBtn.Name = "CancelBtn"
-        CancelBtn.Size = New Size(106, 44)
-        CancelBtn.TabIndex = 10
-        CancelBtn.Text = "Cancel"
+        CancelBtn.Padding = New Padding(10, 0, 10, 0)
+        CancelBtn.Size = New Size(160, 50)
+        CancelBtn.TabIndex = 3
+        CancelBtn.Text = "   Cancel"
+        CancelBtn.TextAlign = ContentAlignment.MiddleLeft
+        CancelBtn.TextImageRelation = TextImageRelation.ImageBeforeText
         CancelBtn.UseVisualStyleBackColor = False
-        CancelBtn.Visible = False
-        ' 
-        ' Label4
-        ' 
-        Label4.AutoSize = True
-        Label4.Font = New Font("Segoe UI", 15F)
-        Label4.Location = New Point(60, 34)
-        Label4.Name = "Label4"
-        Label4.Size = New Size(240, 28)
-        Label4.TabIndex = 9
-        Label4.Text = "Select an item to edit here"
-        ' 
-        ' PriceTxtBox
-        ' 
-        PriceTxtBox.Enabled = False
-        PriceTxtBox.Location = New Point(127, 275)
-        PriceTxtBox.Name = "PriceTxtBox"
-        PriceTxtBox.Size = New Size(71, 23)
-        PriceTxtBox.TabIndex = 8
-        PriceTxtBox.Visible = False
-        ' 
-        ' ItemNameTxtBox
-        ' 
-        ItemNameTxtBox.Enabled = False
-        ItemNameTxtBox.Location = New Point(127, 226)
-        ItemNameTxtBox.Name = "ItemNameTxtBox"
-        ItemNameTxtBox.Size = New Size(169, 23)
-        ItemNameTxtBox.TabIndex = 7
-        ItemNameTxtBox.Visible = False
         ' 
         ' DeleteBtn
         ' 
-        DeleteBtn.BackColor = Color.IndianRed
+        DeleteBtn.BackColor = Color.FromArgb(CByte(231), CByte(76), CByte(60))
+        DeleteBtn.Cursor = Cursors.Hand
         DeleteBtn.Enabled = False
+        DeleteBtn.FlatAppearance.BorderSize = 0
         DeleteBtn.FlatStyle = FlatStyle.Flat
-        DeleteBtn.Location = New Point(241, 388)
+        DeleteBtn.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
+        DeleteBtn.ForeColor = Color.White
+        DeleteBtn.IconChar = FontAwesome.Sharp.IconChar.TrashAlt
+        DeleteBtn.IconColor = Color.White
+        DeleteBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
+        DeleteBtn.IconSize = 32
+        DeleteBtn.ImageAlign = ContentAlignment.MiddleLeft
+        DeleteBtn.Location = New Point(10, 140)
         DeleteBtn.Name = "DeleteBtn"
-        DeleteBtn.Size = New Size(106, 44)
-        DeleteBtn.TabIndex = 6
-        DeleteBtn.Text = "Delete"
+        DeleteBtn.Padding = New Padding(15, 0, 15, 0)
+        DeleteBtn.Size = New Size(330, 50)
+        DeleteBtn.TabIndex = 2
+        DeleteBtn.Text = "    Delete Item"
+        DeleteBtn.TextAlign = ContentAlignment.MiddleLeft
+        DeleteBtn.TextImageRelation = TextImageRelation.ImageBeforeText
         DeleteBtn.UseVisualStyleBackColor = False
-        DeleteBtn.Visible = False
         ' 
         ' EditBtn
         ' 
-        EditBtn.BackColor = Color.Gold
+        EditBtn.BackColor = Color.FromArgb(CByte(52), CByte(152), CByte(219))
+        EditBtn.Cursor = Cursors.Hand
         EditBtn.Enabled = False
+        EditBtn.FlatAppearance.BorderSize = 0
         EditBtn.FlatStyle = FlatStyle.Flat
-        EditBtn.Location = New Point(129, 388)
+        EditBtn.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
+        EditBtn.ForeColor = Color.White
+        EditBtn.IconChar = FontAwesome.Sharp.IconChar.Edit
+        EditBtn.IconColor = Color.White
+        EditBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
+        EditBtn.IconSize = 32
+        EditBtn.ImageAlign = ContentAlignment.MiddleLeft
+        EditBtn.Location = New Point(10, 75)
         EditBtn.Name = "EditBtn"
-        EditBtn.Size = New Size(106, 44)
-        EditBtn.TabIndex = 5
-        EditBtn.Text = "Edit"
+        EditBtn.Padding = New Padding(15, 0, 15, 0)
+        EditBtn.Size = New Size(330, 50)
+        EditBtn.TabIndex = 1
+        EditBtn.Text = "    Edit Item"
+        EditBtn.TextAlign = ContentAlignment.MiddleLeft
+        EditBtn.TextImageRelation = TextImageRelation.ImageBeforeText
         EditBtn.UseVisualStyleBackColor = False
-        EditBtn.Visible = False
         ' 
-        ' ItemBtn
+        ' SaveBtn
         ' 
-        ItemBtn.Enabled = False
-        ItemBtn.Location = New Point(103, 34)
-        ItemBtn.Name = "ItemBtn"
-        ItemBtn.Size = New Size(148, 138)
-        ItemBtn.TabIndex = 2
-        ItemBtn.Text = "Button1"
-        ItemBtn.UseVisualStyleBackColor = True
-        ItemBtn.Visible = False
+        SaveBtn.BackColor = Color.FromArgb(CByte(46), CByte(204), CByte(113))
+        SaveBtn.Cursor = Cursors.Hand
+        SaveBtn.Enabled = False
+        SaveBtn.FlatAppearance.BorderSize = 0
+        SaveBtn.FlatStyle = FlatStyle.Flat
+        SaveBtn.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
+        SaveBtn.ForeColor = Color.White
+        SaveBtn.IconChar = FontAwesome.Sharp.IconChar.Save
+        SaveBtn.IconColor = Color.White
+        SaveBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
+        SaveBtn.IconSize = 32
+        SaveBtn.ImageAlign = ContentAlignment.MiddleLeft
+        SaveBtn.Location = New Point(10, 10)
+        SaveBtn.Name = "SaveBtn"
+        SaveBtn.Padding = New Padding(15, 0, 15, 0)
+        SaveBtn.Size = New Size(330, 50)
+        SaveBtn.TabIndex = 0
+        SaveBtn.Text = "    Save Item"
+        SaveBtn.TextAlign = ContentAlignment.MiddleLeft
+        SaveBtn.TextImageRelation = TextImageRelation.ImageBeforeText
+        SaveBtn.UseVisualStyleBackColor = False
+        ' 
+        ' pnlItemFields
+        ' 
+        pnlItemFields.Controls.Add(PriceTxtBox)
+        pnlItemFields.Controls.Add(PriceLbl)
+        pnlItemFields.Controls.Add(ItemNameTxtBox)
+        pnlItemFields.Controls.Add(ItemNameLbl)
+        pnlItemFields.Location = New Point(25, 350)
+        pnlItemFields.Name = "pnlItemFields"
+        pnlItemFields.Size = New Size(350, 180)
+        pnlItemFields.TabIndex = 3
+        pnlItemFields.Visible = False
+        ' 
+        ' PriceTxtBox
+        ' 
+        PriceTxtBox.BorderStyle = BorderStyle.FixedSingle
+        PriceTxtBox.Enabled = False
+        PriceTxtBox.Font = New Font("Segoe UI", 11.0F)
+        PriceTxtBox.Location = New Point(10, 125)
+        PriceTxtBox.Name = "PriceTxtBox"
+        PriceTxtBox.Size = New Size(170, 32)
+        PriceTxtBox.TabIndex = 3
         ' 
         ' PriceLbl
         ' 
         PriceLbl.AutoSize = True
-        PriceLbl.Font = New Font("Segoe UI", 15F)
-        PriceLbl.Location = New Point(67, 270)
+        PriceLbl.Font = New Font("Segoe UI Semibold", 11.0F, FontStyle.Bold)
+        PriceLbl.ForeColor = Color.FromArgb(CByte(52), CByte(73), CByte(94))
+        PriceLbl.Location = New Point(10, 95)
         PriceLbl.Name = "PriceLbl"
-        PriceLbl.Size = New Size(54, 28)
-        PriceLbl.TabIndex = 1
-        PriceLbl.Text = "Price"
-        PriceLbl.Visible = False
+        PriceLbl.Size = New Size(77, 25)
+        PriceLbl.TabIndex = 2
+        PriceLbl.Text = "💰 Price"
+        ' 
+        ' ItemNameTxtBox
+        ' 
+        ItemNameTxtBox.BorderStyle = BorderStyle.FixedSingle
+        ItemNameTxtBox.Enabled = False
+        ItemNameTxtBox.Font = New Font("Segoe UI", 11.0F)
+        ItemNameTxtBox.Location = New Point(10, 40)
+        ItemNameTxtBox.Name = "ItemNameTxtBox"
+        ItemNameTxtBox.Size = New Size(330, 32)
+        ItemNameTxtBox.TabIndex = 1
         ' 
         ' ItemNameLbl
         ' 
         ItemNameLbl.AutoSize = True
-        ItemNameLbl.Font = New Font("Segoe UI", 15F)
-        ItemNameLbl.Location = New Point(17, 218)
+        ItemNameLbl.Font = New Font("Segoe UI Semibold", 11.0F, FontStyle.Bold)
+        ItemNameLbl.ForeColor = Color.FromArgb(CByte(52), CByte(73), CByte(94))
+        ItemNameLbl.Location = New Point(10, 10)
         ItemNameLbl.Name = "ItemNameLbl"
-        ItemNameLbl.Size = New Size(104, 28)
+        ItemNameLbl.Size = New Size(136, 25)
         ItemNameLbl.TabIndex = 0
-        ItemNameLbl.Text = "Item name"
-        ItemNameLbl.Visible = False
+        ItemNameLbl.Text = "📌 Item Name"
+        ' 
+        ' lblItemPreview
+        ' 
+        lblItemPreview.AutoSize = True
+        lblItemPreview.Font = New Font("Segoe UI", 10.0F, FontStyle.Italic)
+        lblItemPreview.ForeColor = Color.Gray
+        lblItemPreview.Location = New Point(25, 65)
+        lblItemPreview.Name = "lblItemPreview"
+        lblItemPreview.Size = New Size(228, 23)
+        lblItemPreview.TabIndex = 1
+        lblItemPreview.Text = "Select an item from the menu"
+        ' 
+        ' ItemBtn
+        ' 
+        ItemBtn.BackColor = Color.FromArgb(CByte(245), CByte(247), CByte(250))
+        ItemBtn.Cursor = Cursors.Hand
+        ItemBtn.Enabled = False
+        ItemBtn.FlatAppearance.BorderColor = Color.FromArgb(CByte(189), CByte(195), CByte(199))
+        ItemBtn.FlatAppearance.BorderSize = 3
+        ItemBtn.FlatAppearance.MouseOverBackColor = Color.FromArgb(CByte(236), CByte(240), CByte(245))
+        ItemBtn.FlatStyle = FlatStyle.Flat
+        ItemBtn.Font = New Font("Segoe UI", 11.0F)
+        ItemBtn.ForeColor = Color.FromArgb(CByte(127), CByte(140), CByte(141))
+        ItemBtn.Location = New Point(75, 110)
+        ItemBtn.Name = "ItemBtn"
+        ItemBtn.Size = New Size(250, 220)
+        ItemBtn.TabIndex = 2
+        ItemBtn.Text = "📷" & vbCrLf & vbCrLf & "Click to set image"
+        ItemBtn.UseVisualStyleBackColor = False
+        ItemBtn.Visible = False
+        ' 
+        ' Label4
+        ' 
+        Label4.AutoSize = True
+        Label4.Font = New Font("Segoe UI", 15.0F, FontStyle.Bold)
+        Label4.ForeColor = Color.FromArgb(CByte(52), CByte(73), CByte(94))
+        Label4.Location = New Point(25, 25)
+        Label4.Name = "Label4"
+        Label4.Size = New Size(189, 35)
+        Label4.TabIndex = 0
+        Label4.Text = "📝 Item Editor"
+        ' 
+        ' pnlMain
+        ' 
+        pnlMain.BackColor = Color.FromArgb(CByte(236), CByte(240), CByte(245))
+        pnlMain.Controls.Add(FoodPnl)
+        pnlMain.Controls.Add(MenuCategoryPnl)
+        pnlMain.Dock = DockStyle.Fill
+        pnlMain.Location = New Point(450, 90)
+        pnlMain.Name = "pnlMain"
+        pnlMain.Size = New Size(1150, 920)
+        pnlMain.TabIndex = 2
+        ' 
+        ' FoodPnl
+        ' 
+        FoodPnl.AutoScroll = True
+        FoodPnl.BackColor = Color.White
+        FoodPnl.Dock = DockStyle.Fill
+        FoodPnl.Location = New Point(0, 80)
+        FoodPnl.Name = "FoodPnl"
+        FoodPnl.Padding = New Padding(25)
+        FoodPnl.Size = New Size(1150, 840)
+        FoodPnl.TabIndex = 1
+        ' 
+        ' MenuCategoryPnl
+        ' 
+        MenuCategoryPnl.BackColor = Color.White
+        MenuCategoryPnl.Dock = DockStyle.Top
+        MenuCategoryPnl.Location = New Point(0, 0)
+        MenuCategoryPnl.Name = "MenuCategoryPnl"
+        MenuCategoryPnl.Padding = New Padding(20, 15, 20, 15)
+        MenuCategoryPnl.Size = New Size(1150, 80)
+        MenuCategoryPnl.TabIndex = 0
         ' 
         ' Manage_menu
         ' 
-        AutoScaleDimensions = New SizeF(7F, 15F)
+        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
         AutoScaleMode = AutoScaleMode.Font
-        BackColor = SystemColors.ControlDark
-        ClientSize = New Size(1041, 604)
-        Controls.Add(NavbarPnl)
-        Controls.Add(Panel1)
-        Controls.Add(Panel2)
+        BackColor = Color.FromArgb(CByte(236), CByte(240), CByte(245))
+        ClientSize = New Size(1600, 1010)
+        Controls.Add(pnlMain)
+        Controls.Add(pnlSidebar)
+        Controls.Add(pnlHeader)
+        Font = New Font("Segoe UI", 9.0F)
         Name = "Manage_menu"
-        Text = "Manage menu"
-        NavbarPnl.ResumeLayout(False)
-        NavbarPnl.PerformLayout()
-        Panel1.ResumeLayout(False)
-        Panel2.ResumeLayout(False)
+        Text = "🍽️ Manage Menu - OrderUp!"
+        pnlHeader.ResumeLayout(False)
+        pnlHeader.PerformLayout()
+        pnlSearch.ResumeLayout(False)
+        pnlSearch.PerformLayout()
+        pnlSidebar.ResumeLayout(False)
         ItemInfoPnl.ResumeLayout(False)
         ItemInfoPnl.PerformLayout()
+        pnlItemActions.ResumeLayout(False)
+        pnlItemFields.ResumeLayout(False)
+        pnlItemFields.PerformLayout()
+        pnlMain.ResumeLayout(False)
         ResumeLayout(False)
     End Sub
 
-    Friend WithEvents NavbarPnl As Panel
+    Friend WithEvents pnlHeader As Panel
+    Friend WithEvents lblHeaderIcon As Label
+    Friend WithEvents lblTitle As Label
+    Friend WithEvents pnlSearch As Panel
+    Friend WithEvents SearchBtn As FontAwesome.Sharp.IconButton
     Friend WithEvents SearchTxtBox As TextBox
-    Friend WithEvents Label1 As Label
-    Friend WithEvents SearchBtn As Button
-    Friend WithEvents Button3 As Button
-    Friend WithEvents Button2 As Button
-    Friend WithEvents Panel1 As Panel
-    Friend WithEvents MenuCategoryPnl As FlowLayoutPanel
-    Friend WithEvents FoodPnl As FlowLayoutPanel
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents pnlSidebar As Panel
     Friend WithEvents ItemInfoPnl As Panel
-    Friend WithEvents ItemBtn As Button
-    Friend WithEvents PriceLbl As Label
-    Friend WithEvents ItemNameLbl As Label
-    Friend WithEvents DeleteBtn As Button
-    Friend WithEvents EditBtn As Button
-    Friend WithEvents PriceTxtBox As TextBox
-    Friend WithEvents ItemNameTxtBox As TextBox
     Friend WithEvents Label4 As Label
-    Friend WithEvents CancelBtn As Button
-    Friend WithEvents UpdateBtn As Button
-    Friend WithEvents SaveBtn As Button
+    Friend WithEvents lblItemPreview As Label
+    Friend WithEvents ItemBtn As Button
+    Friend WithEvents pnlItemFields As Panel
+    Friend WithEvents PriceTxtBox As TextBox
+    Friend WithEvents PriceLbl As Label
+    Friend WithEvents ItemNameTxtBox As TextBox
+    Friend WithEvents ItemNameLbl As Label
+    Friend WithEvents pnlItemActions As Panel
+    Friend WithEvents UpdateBtn As FontAwesome.Sharp.IconButton
+    Friend WithEvents CancelBtn As FontAwesome.Sharp.IconButton
+    Friend WithEvents DeleteBtn As FontAwesome.Sharp.IconButton
+    Friend WithEvents EditBtn As FontAwesome.Sharp.IconButton
+    Friend WithEvents SaveBtn As FontAwesome.Sharp.IconButton
+    Friend WithEvents pnlMain As Panel
+    Friend WithEvents FoodPnl As FlowLayoutPanel
+    Friend WithEvents MenuCategoryPnl As FlowLayoutPanel
 End Class
