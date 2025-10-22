@@ -213,10 +213,10 @@ Partial Class ApplyVoucher
         LoginBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
         LoginBtn.IconSize = 24
         LoginBtn.ImageAlign = ContentAlignment.MiddleLeft
-        LoginBtn.Location = New Point(30, 138)
+        LoginBtn.Location = New Point(30, 140)
         LoginBtn.Name = "LoginBtn"
         LoginBtn.Padding = New Padding(10, 0, 10, 0)
-        LoginBtn.Size = New Size(378, 40)
+        LoginBtn.Size = New Size(378, 38)
         LoginBtn.TabIndex = 1
         LoginBtn.Text = "Login as Admin"
         LoginBtn.TextImageRelation = TextImageRelation.ImageBeforeText
@@ -236,8 +236,8 @@ Partial Class ApplyVoucher
         ' 
         ' PasswordTxtBox
         ' 
-        PasswordTxtBox.Font = New Font("Segoe UI", 11F)
-        PasswordTxtBox.Location = New Point(10, 95)
+        PasswordTxtBox.Font = New Font("Segoe UI", 11.0F)
+        PasswordTxtBox.Location = New Point(10, 85)
         PasswordTxtBox.Name = "PasswordTxtBox"
         PasswordTxtBox.PasswordChar = "●"c
         PasswordTxtBox.Size = New Size(360, 32)
@@ -246,9 +246,9 @@ Partial Class ApplyVoucher
         ' Label2
         ' 
         Label2.AutoSize = True
-        Label2.Font = New Font("Segoe UI", 10F)
+        Label2.Font = New Font("Segoe UI", 10.0F)
         Label2.ForeColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        Label2.Location = New Point(10, 70)
+        Label2.Location = New Point(10, 62)
         Label2.Name = "Label2"
         Label2.Size = New Size(135, 23)
         Label2.TabIndex = 2

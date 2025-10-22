@@ -10,8 +10,8 @@ Public Class Manage_menu
     Private Sub Manage_menu_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.WindowState = FormWindowState.Maximized
 
-        ' Initialize navigation buttons (pass Nothing for back button since Manage_menu handles it differently)
-        navButtons = New AdminNavButtons(Me, Nothing, Nothing, Nothing, Nothing)
+        ' Initialize navigation buttons with BACK button support
+        navButtons = New AdminNavButtons(Me, btnLogout, btnBack, btnHelp, Nothing)
 
         ' Load menu items
         LoadMenuCategories()
@@ -307,12 +307,13 @@ Public Class Manage_menu
                     While reader.Read()
                         Dim catBtn As New Button With {
                             .Text = reader("CategoryName").ToString(),
-                            .Size = New Size(100, 50),
+                            .Size = New Size(120, 50),
                             .FlatStyle = FlatStyle.Flat,
-                            .BackColor = Color.FromArgb(52, 152, 219),
+                            .BackColor = Color.FromArgb(72, 118, 255),
                             .ForeColor = Color.White,
-                            .Font = New Font("Segoe UI Semibold", 10, FontStyle.Bold),
-                            .Cursor = Cursors.Hand
+                            .Font = New Font("Segoe UI Semibold", 11, FontStyle.Bold),
+                            .Cursor = Cursors.Hand,
+                            .Margin = New Padding(5)
                         }
                         catBtn.FlatAppearance.BorderSize = 0
                         AddHandler catBtn.Click, AddressOf HandleCategoryClick
@@ -346,13 +347,12 @@ Public Class Manage_menu
                     End While
                 End Using
 
-                ' Add "Add new item" button
-                Dim addNewPanel As FlowLayoutPanel = CreateFoodItemButton("Add new item", "0", String.Empty)
-                ' Iterate through the panel's controls to get the button
+                ' Add "Add new item" button with modern style
+                Dim addNewPanel As FlowLayoutPanel = CreateFoodItemButton("➕ Add New", "0", String.Empty)
                 For Each btn As Button In addNewPanel.Controls.OfType(Of Button)()
                     btn.BackColor = Color.FromArgb(46, 204, 113)
                     btn.ForeColor = Color.White
-                    btn.Font = New Font("Segoe UI", 11, FontStyle.Bold)
+                    btn.Font = New Font("Segoe UI Semibold", 12, FontStyle.Bold)
                     AddHandler btn.Click, AddressOf HandleAddNewItem
                 Next
                 FoodPnl.Controls.Add(addNewPanel)

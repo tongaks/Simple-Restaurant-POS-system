@@ -18,6 +18,8 @@ Partial Class Order
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         pnlHeader = New Panel()
+        lblHeaderTitle = New Label()
+        lblHeaderSubtitle = New Label()
         pnlHeaderActions = New Panel()
         IconButton3 = New FontAwesome.Sharp.IconButton()
         SettingsBtn = New FontAwesome.Sharp.IconButton()
@@ -28,20 +30,25 @@ Partial Class Order
         pnlOrderSidebar = New Panel()
         OrderPnl = New FlowLayoutPanel()
         pnlTotal = New Panel()
-        pnlTotalValues = New Panel()
+        pnlTotalContent = New Panel()
+        pnlTotalRow = New Panel()
         TotalLbl = New Label()
         Label2 = New Label()
+        pnlDiscountRow = New Panel()
         DiscountLbl = New Label()
         Label3 = New Label()
+        pnlSubtotalRow = New Panel()
         SubtotalLbl = New Label()
         Label6 = New Label()
+        pnlOrderHeader = New Panel()
+        lblOrderTitle = New Label()
         pnlMenu = New Panel()
         FoodPnl = New FlowLayoutPanel()
         pnlMenuActions = New Panel()
         IconButton2 = New FontAwesome.Sharp.IconButton()
         RecentOrdersBtn = New FontAwesome.Sharp.IconButton()
         CancelBtn = New FontAwesome.Sharp.IconButton()
-        DiscountBtn = New Button()
+        DiscountBtn = New FontAwesome.Sharp.IconButton()
         CreateOrderBtn = New FontAwesome.Sharp.IconButton()
         MenuCategoryPnl = New FlowLayoutPanel()
         pnlHeader.SuspendLayout()
@@ -50,102 +57,136 @@ Partial Class Order
         CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
         pnlOrderSidebar.SuspendLayout()
         pnlTotal.SuspendLayout()
-        pnlTotalValues.SuspendLayout()
+        pnlTotalContent.SuspendLayout()
+        pnlTotalRow.SuspendLayout()
+        pnlDiscountRow.SuspendLayout()
+        pnlSubtotalRow.SuspendLayout()
+        pnlOrderHeader.SuspendLayout()
         pnlMenu.SuspendLayout()
         pnlMenuActions.SuspendLayout()
         SuspendLayout()
         ' 
         ' pnlHeader
         ' 
-        pnlHeader.BackColor = Color.White
+        pnlHeader.BackColor = Color.FromArgb(37, 42, 52)
+        pnlHeader.Controls.Add(lblHeaderTitle)
+        pnlHeader.Controls.Add(lblHeaderSubtitle)
         pnlHeader.Controls.Add(pnlHeaderActions)
         pnlHeader.Controls.Add(pnlSearch)
         pnlHeader.Dock = DockStyle.Top
         pnlHeader.Location = New Point(0, 0)
         pnlHeader.Name = "pnlHeader"
-        pnlHeader.Size = New Size(1600, 80)
+        pnlHeader.Size = New Size(1600, 90)
         pnlHeader.TabIndex = 0
+        ' 
+        ' lblHeaderTitle
+        ' 
+        lblHeaderTitle.AutoSize = True
+        lblHeaderTitle.Font = New Font("Segoe UI", 20.0F, FontStyle.Bold)
+        lblHeaderTitle.ForeColor = Color.White
+        lblHeaderTitle.Location = New Point(30, 20)
+        lblHeaderTitle.Name = "lblHeaderTitle"
+        lblHeaderTitle.Size = New Size(159, 46)
+        lblHeaderTitle.TabIndex = 0
+        lblHeaderTitle.Text = "OrderUp"
+        ' 
+        ' lblHeaderSubtitle
+        ' 
+        lblHeaderSubtitle.AutoSize = True
+        lblHeaderSubtitle.Font = New Font("Segoe UI", 10.0F)
+        lblHeaderSubtitle.ForeColor = Color.FromArgb(148, 163, 184)
+        lblHeaderSubtitle.Location = New Point(35, 63)
+        lblHeaderSubtitle.Name = "lblHeaderSubtitle"
+        lblHeaderSubtitle.Size = New Size(105, 23)
+        lblHeaderSubtitle.TabIndex = 1
+        lblHeaderSubtitle.Text = "Point of Sale"
         ' 
         ' pnlHeaderActions
         ' 
         pnlHeaderActions.Controls.Add(IconButton3)
         pnlHeaderActions.Controls.Add(SettingsBtn)
         pnlHeaderActions.Dock = DockStyle.Right
-        pnlHeaderActions.Location = New Point(1400, 0)
+        pnlHeaderActions.Location = New Point(1500, 0)
         pnlHeaderActions.Name = "pnlHeaderActions"
-        pnlHeaderActions.Padding = New Padding(10, 15, 30, 15)
-        pnlHeaderActions.Size = New Size(200, 80)
-        pnlHeaderActions.TabIndex = 1
+        pnlHeaderActions.Padding = New Padding(10, 20, 20, 20)
+        pnlHeaderActions.Size = New Size(100, 90)
+        pnlHeaderActions.TabIndex = 3
         ' 
         ' IconButton3
         ' 
-        IconButton3.BackColor = Color.Transparent
+        IconButton3.BackColor = Color.FromArgb(220, 38, 38)
         IconButton3.Cursor = Cursors.Hand
         IconButton3.Dock = DockStyle.Right
         IconButton3.FlatAppearance.BorderSize = 0
         IconButton3.FlatStyle = FlatStyle.Flat
-        IconButton3.IconChar = FontAwesome.Sharp.IconChar.SignOut
-        IconButton3.IconColor = Color.FromArgb(CByte(231), CByte(76), CByte(60))
+        IconButton3.IconChar = FontAwesome.Sharp.IconChar.SignOutAlt
+        IconButton3.IconColor = Color.White
         IconButton3.IconFont = FontAwesome.Sharp.IconFont.Auto
-        IconButton3.IconSize = 32
-        IconButton3.Location = New Point(10, 15)
+        IconButton3.IconSize = 24
+        IconButton3.Location = New Point(10, 20)
         IconButton3.Name = "IconButton3"
-        IconButton3.Size = New Size(80, 50)
+        IconButton3.Size = New Size(35, 50)
         IconButton3.TabIndex = 1
         IconButton3.UseVisualStyleBackColor = False
         ' 
         ' SettingsBtn
         ' 
-        SettingsBtn.BackColor = Color.Transparent
+        SettingsBtn.BackColor = Color.FromArgb(71, 85, 105)
         SettingsBtn.Cursor = Cursors.Hand
         SettingsBtn.Dock = DockStyle.Right
         SettingsBtn.FlatAppearance.BorderSize = 0
         SettingsBtn.FlatStyle = FlatStyle.Flat
         SettingsBtn.IconChar = FontAwesome.Sharp.IconChar.Cog
-        SettingsBtn.IconColor = Color.FromArgb(CByte(52), CByte(73), CByte(94))
+        SettingsBtn.IconColor = Color.White
         SettingsBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
-        SettingsBtn.IconSize = 32
-        SettingsBtn.Location = New Point(90, 15)
+        SettingsBtn.IconSize = 24
+        SettingsBtn.Location = New Point(45, 20)
         SettingsBtn.Name = "SettingsBtn"
-        SettingsBtn.Size = New Size(80, 50)
+        SettingsBtn.Size = New Size(35, 50)
         SettingsBtn.TabIndex = 0
         SettingsBtn.UseVisualStyleBackColor = False
         ' 
         ' pnlSearch
         ' 
+        pnlSearch.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
+        pnlSearch.BackColor = Color.FromArgb(45, 55, 72)
         pnlSearch.Controls.Add(SearchTxtBox)
         pnlSearch.Controls.Add(SearchBtn)
-        pnlSearch.Dock = DockStyle.Left
-        pnlSearch.Location = New Point(0, 0)
+        pnlSearch.Location = New Point(550, 20)
         pnlSearch.Name = "pnlSearch"
-        pnlSearch.Padding = New Padding(30, 20, 20, 20)
-        pnlSearch.Size = New Size(500, 80)
-        pnlSearch.TabIndex = 0
+        pnlSearch.Size = New Size(500, 50)
+        pnlSearch.TabIndex = 2
         ' 
         ' SearchTxtBox
         ' 
+        SearchTxtBox.BackColor = Color.FromArgb(45, 55, 72)
+        SearchTxtBox.BorderStyle = BorderStyle.None
         SearchTxtBox.Dock = DockStyle.Fill
-        SearchTxtBox.Font = New Font("Segoe UI", 12F)
-        SearchTxtBox.Location = New Point(30, 20)
+        SearchTxtBox.Font = New Font("Segoe UI", 12.0F)
+        SearchTxtBox.ForeColor = Color.White
+        SearchTxtBox.Location = New Point(0, 0)
+        SearchTxtBox.Multiline = True
         SearchTxtBox.Name = "SearchTxtBox"
-        SearchTxtBox.PlaceholderText = "Search menu items..."
-        SearchTxtBox.Size = New Size(350, 34)
+        SearchTxtBox.PlaceholderText = "🔍 Search menu items..."
+        SearchTxtBox.Size = New Size(380, 50)
         SearchTxtBox.TabIndex = 0
         ' 
         ' SearchBtn
         ' 
-        SearchBtn.BackColor = Color.FromArgb(CByte(52), CByte(152), CByte(219))
+        SearchBtn.BackColor = Color.FromArgb(16, 185, 129)
         SearchBtn.Cursor = Cursors.Hand
         SearchBtn.Dock = DockStyle.Right
         SearchBtn.FlatAppearance.BorderSize = 0
         SearchBtn.FlatStyle = FlatStyle.Flat
+        SearchBtn.Font = New Font("Segoe UI Semibold", 10.0F, FontStyle.Bold)
+        SearchBtn.ForeColor = Color.White
         SearchBtn.IconChar = FontAwesome.Sharp.IconChar.Search
         SearchBtn.IconColor = Color.White
         SearchBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
-        SearchBtn.IconSize = 24
-        SearchBtn.Location = New Point(380, 20)
+        SearchBtn.IconSize = 20
+        SearchBtn.Location = New Point(380, 0)
         SearchBtn.Name = "SearchBtn"
-        SearchBtn.Size = New Size(100, 40)
+        SearchBtn.Size = New Size(120, 50)
         SearchBtn.TabIndex = 1
         SearchBtn.Text = "Search"
         SearchBtn.TextImageRelation = TextImageRelation.ImageBeforeText
@@ -165,13 +206,14 @@ Partial Class Order
         ' 
         ' pnlOrderSidebar
         ' 
-        pnlOrderSidebar.BackColor = Color.FromArgb(CByte(245), CByte(247), CByte(250))
+        pnlOrderSidebar.BackColor = Color.FromArgb(247, 250, 252)
         pnlOrderSidebar.Controls.Add(OrderPnl)
         pnlOrderSidebar.Controls.Add(pnlTotal)
+        pnlOrderSidebar.Controls.Add(pnlOrderHeader)
         pnlOrderSidebar.Dock = DockStyle.Left
-        pnlOrderSidebar.Location = New Point(0, 80)
+        pnlOrderSidebar.Location = New Point(0, 90)
         pnlOrderSidebar.Name = "pnlOrderSidebar"
-        pnlOrderSidebar.Size = New Size(450, 920)
+        pnlOrderSidebar.Size = New Size(480, 920)
         pnlOrderSidebar.TabIndex = 1
         ' 
         ' OrderPnl
@@ -180,115 +222,174 @@ Partial Class Order
         OrderPnl.BackColor = Color.White
         OrderPnl.Dock = DockStyle.Fill
         OrderPnl.FlowDirection = FlowDirection.TopDown
-        OrderPnl.Location = New Point(0, 0)
+        OrderPnl.Location = New Point(0, 70)
         OrderPnl.Name = "OrderPnl"
-        OrderPnl.Padding = New Padding(10)
-        OrderPnl.Size = New Size(450, 700)
-        OrderPnl.TabIndex = 0
+        OrderPnl.Padding = New Padding(15)
+        OrderPnl.Size = New Size(480, 600)
+        OrderPnl.TabIndex = 1
         OrderPnl.WrapContents = False
         ' 
         ' pnlTotal
         ' 
-        pnlTotal.BackColor = Color.White
-        pnlTotal.BorderStyle = BorderStyle.FixedSingle
-        pnlTotal.Controls.Add(pnlTotalValues)
+        pnlTotal.BackColor = Color.FromArgb(26, 32, 44)
+        pnlTotal.Controls.Add(pnlTotalContent)
         pnlTotal.Dock = DockStyle.Bottom
-        pnlTotal.Location = New Point(0, 700)
+        pnlTotal.Location = New Point(0, 670)
         pnlTotal.Name = "pnlTotal"
-        pnlTotal.Padding = New Padding(20)
-        pnlTotal.Size = New Size(450, 220)
-        pnlTotal.TabIndex = 1
+        pnlTotal.Padding = New Padding(25)
+        pnlTotal.Size = New Size(480, 250)
+        pnlTotal.TabIndex = 2
         ' 
-        ' pnlTotalValues
+        ' pnlTotalContent
         ' 
-        pnlTotalValues.Controls.Add(TotalLbl)
-        pnlTotalValues.Controls.Add(Label2)
-        pnlTotalValues.Controls.Add(DiscountLbl)
-        pnlTotalValues.Controls.Add(Label3)
-        pnlTotalValues.Controls.Add(SubtotalLbl)
-        pnlTotalValues.Controls.Add(Label6)
-        pnlTotalValues.Dock = DockStyle.Fill
-        pnlTotalValues.Location = New Point(20, 20)
-        pnlTotalValues.Name = "pnlTotalValues"
-        pnlTotalValues.Size = New Size(408, 178)
-        pnlTotalValues.TabIndex = 0
+        pnlTotalContent.Controls.Add(pnlTotalRow)
+        pnlTotalContent.Controls.Add(pnlDiscountRow)
+        pnlTotalContent.Controls.Add(pnlSubtotalRow)
+        pnlTotalContent.Dock = DockStyle.Fill
+        pnlTotalContent.Location = New Point(25, 25)
+        pnlTotalContent.Name = "pnlTotalContent"
+        pnlTotalContent.Size = New Size(430, 200)
+        pnlTotalContent.TabIndex = 0
+        ' 
+        ' pnlTotalRow
+        ' 
+        pnlTotalRow.BackColor = Color.FromArgb(16, 185, 129)
+        pnlTotalRow.Controls.Add(TotalLbl)
+        pnlTotalRow.Controls.Add(Label2)
+        pnlTotalRow.Dock = DockStyle.Bottom
+        pnlTotalRow.Location = New Point(0, 116)
+        pnlTotalRow.Name = "pnlTotalRow"
+        pnlTotalRow.Padding = New Padding(20, 15, 20, 15)
+        pnlTotalRow.Size = New Size(430, 84)
+        pnlTotalRow.TabIndex = 2
         ' 
         ' TotalLbl
         ' 
-        TotalLbl.AutoSize = True
-        TotalLbl.Font = New Font("Segoe UI", 20F, FontStyle.Bold)
-        TotalLbl.ForeColor = Color.FromArgb(CByte(46), CByte(204), CByte(113))
-        TotalLbl.Location = New Point(260, 105)
+        TotalLbl.Dock = DockStyle.Right
+        TotalLbl.Font = New Font("Segoe UI", 24.0F, FontStyle.Bold)
+        TotalLbl.ForeColor = Color.White
+        TotalLbl.Location = New Point(230, 15)
         TotalLbl.Name = "TotalLbl"
-        TotalLbl.Size = New Size(62, 46)
-        TotalLbl.TabIndex = 5
+        TotalLbl.Size = New Size(180, 54)
+        TotalLbl.TabIndex = 1
         TotalLbl.Text = "₱0"
+        TotalLbl.TextAlign = ContentAlignment.MiddleRight
         ' 
         ' Label2
         ' 
         Label2.AutoSize = True
-        Label2.Font = New Font("Segoe UI", 16F, FontStyle.Bold)
-        Label2.ForeColor = Color.FromArgb(CByte(45), CByte(45), CByte(48))
-        Label2.Location = New Point(10, 110)
+        Label2.Dock = DockStyle.Left
+        Label2.Font = New Font("Segoe UI", 18.0F, FontStyle.Bold)
+        Label2.ForeColor = Color.White
+        Label2.Location = New Point(20, 15)
         Label2.Name = "Label2"
-        Label2.Size = New Size(82, 37)
-        Label2.TabIndex = 4
-        Label2.Text = "Total"
+        Label2.Size = New Size(109, 41)
+        Label2.TabIndex = 0
+        Label2.Text = "TOTAL"
+        ' 
+        ' pnlDiscountRow
+        ' 
+        pnlDiscountRow.Controls.Add(DiscountLbl)
+        pnlDiscountRow.Controls.Add(Label3)
+        pnlDiscountRow.Dock = DockStyle.Top
+        pnlDiscountRow.Location = New Point(0, 60)
+        pnlDiscountRow.Name = "pnlDiscountRow"
+        pnlDiscountRow.Padding = New Padding(20, 10, 20, 10)
+        pnlDiscountRow.Size = New Size(430, 50)
+        pnlDiscountRow.TabIndex = 1
         ' 
         ' DiscountLbl
         ' 
-        DiscountLbl.AutoSize = True
-        DiscountLbl.Font = New Font("Segoe UI", 12F, FontStyle.Bold)
-        DiscountLbl.ForeColor = Color.FromArgb(CByte(231), CByte(76), CByte(60))
-        DiscountLbl.Location = New Point(300, 50)
+        DiscountLbl.Dock = DockStyle.Right
+        DiscountLbl.Font = New Font("Segoe UI", 13.0F, FontStyle.Bold)
+        DiscountLbl.ForeColor = Color.FromArgb(245, 101, 101)
+        DiscountLbl.Location = New Point(310, 10)
         DiscountLbl.Name = "DiscountLbl"
-        DiscountLbl.Size = New Size(41, 28)
-        DiscountLbl.TabIndex = 3
+        DiscountLbl.Size = New Size(100, 30)
+        DiscountLbl.TabIndex = 1
         DiscountLbl.Text = "%0"
+        DiscountLbl.TextAlign = ContentAlignment.MiddleRight
         ' 
         ' Label3
         ' 
         Label3.AutoSize = True
-        Label3.Font = New Font("Segoe UI", 12F)
-        Label3.ForeColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        Label3.Location = New Point(10, 50)
+        Label3.Dock = DockStyle.Left
+        Label3.Font = New Font("Segoe UI", 12.0F)
+        Label3.ForeColor = Color.FromArgb(226, 232, 240)
+        Label3.Location = New Point(20, 10)
         Label3.Name = "Label3"
         Label3.Size = New Size(89, 28)
-        Label3.TabIndex = 2
+        Label3.TabIndex = 0
         Label3.Text = "Discount"
+        ' 
+        ' pnlSubtotalRow
+        ' 
+        pnlSubtotalRow.Controls.Add(SubtotalLbl)
+        pnlSubtotalRow.Controls.Add(Label6)
+        pnlSubtotalRow.Dock = DockStyle.Top
+        pnlSubtotalRow.Location = New Point(0, 0)
+        pnlSubtotalRow.Name = "pnlSubtotalRow"
+        pnlSubtotalRow.Padding = New Padding(20, 10, 20, 10)
+        pnlSubtotalRow.Size = New Size(430, 60)
+        pnlSubtotalRow.TabIndex = 0
         ' 
         ' SubtotalLbl
         ' 
-        SubtotalLbl.AutoSize = True
-        SubtotalLbl.Font = New Font("Segoe UI", 12F, FontStyle.Bold)
-        SubtotalLbl.ForeColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        SubtotalLbl.Location = New Point(300, 10)
+        SubtotalLbl.Dock = DockStyle.Right
+        SubtotalLbl.Font = New Font("Segoe UI", 14.0F, FontStyle.Bold)
+        SubtotalLbl.ForeColor = Color.White
+        SubtotalLbl.Location = New Point(260, 10)
         SubtotalLbl.Name = "SubtotalLbl"
-        SubtotalLbl.Size = New Size(37, 28)
+        SubtotalLbl.Size = New Size(150, 40)
         SubtotalLbl.TabIndex = 1
         SubtotalLbl.Text = "₱0"
+        SubtotalLbl.TextAlign = ContentAlignment.MiddleRight
         ' 
         ' Label6
         ' 
         Label6.AutoSize = True
-        Label6.Font = New Font("Segoe UI", 12F)
-        Label6.ForeColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        Label6.Location = New Point(10, 10)
+        Label6.Dock = DockStyle.Left
+        Label6.Font = New Font("Segoe UI", 12.0F)
+        Label6.ForeColor = Color.FromArgb(226, 232, 240)
+        Label6.Location = New Point(20, 10)
         Label6.Name = "Label6"
         Label6.Size = New Size(87, 28)
         Label6.TabIndex = 0
         Label6.Text = "Subtotal"
         ' 
+        ' pnlOrderHeader
+        ' 
+        pnlOrderHeader.BackColor = Color.FromArgb(37, 42, 52)
+        pnlOrderHeader.Controls.Add(lblOrderTitle)
+        pnlOrderHeader.Dock = DockStyle.Top
+        pnlOrderHeader.Location = New Point(0, 0)
+        pnlOrderHeader.Name = "pnlOrderHeader"
+        pnlOrderHeader.Padding = New Padding(25, 20, 25, 20)
+        pnlOrderHeader.Size = New Size(480, 70)
+        pnlOrderHeader.TabIndex = 0
+        ' 
+        ' lblOrderTitle
+        ' 
+        lblOrderTitle.AutoSize = True
+        lblOrderTitle.Dock = DockStyle.Left
+        lblOrderTitle.Font = New Font("Segoe UI", 14.0F, FontStyle.Bold)
+        lblOrderTitle.ForeColor = Color.White
+        lblOrderTitle.Location = New Point(25, 20)
+        lblOrderTitle.Name = "lblOrderTitle"
+        lblOrderTitle.Size = New Size(215, 32)
+        lblOrderTitle.TabIndex = 0
+        lblOrderTitle.Text = ChrW(55357) + ChrW(57042) + " Current Order"
+        ' 
         ' pnlMenu
         ' 
-        pnlMenu.BackColor = Color.FromArgb(CByte(245), CByte(247), CByte(250))
+        pnlMenu.BackColor = Color.FromArgb(247, 250, 252)
         pnlMenu.Controls.Add(FoodPnl)
         pnlMenu.Controls.Add(pnlMenuActions)
         pnlMenu.Controls.Add(MenuCategoryPnl)
         pnlMenu.Dock = DockStyle.Fill
-        pnlMenu.Location = New Point(450, 80)
+        pnlMenu.Location = New Point(480, 90)
         pnlMenu.Name = "pnlMenu"
-        pnlMenu.Size = New Size(1150, 920)
+        pnlMenu.Size = New Size(1120, 920)
         pnlMenu.TabIndex = 2
         ' 
         ' FoodPnl
@@ -296,10 +397,10 @@ Partial Class Order
         FoodPnl.AutoScroll = True
         FoodPnl.BackColor = Color.White
         FoodPnl.Dock = DockStyle.Fill
-        FoodPnl.Location = New Point(0, 70)
+        FoodPnl.Location = New Point(0, 80)
         FoodPnl.Name = "FoodPnl"
-        FoodPnl.Padding = New Padding(20)
-        FoodPnl.Size = New Size(1150, 730)
+        FoodPnl.Padding = New Padding(25)
+        FoodPnl.Size = New Size(1120, 730)
         FoodPnl.TabIndex = 1
         ' 
         ' pnlMenuActions
@@ -312,116 +413,120 @@ Partial Class Order
         pnlMenuActions.Controls.Add(DiscountBtn)
         pnlMenuActions.Controls.Add(CreateOrderBtn)
         pnlMenuActions.Dock = DockStyle.Bottom
-        pnlMenuActions.Location = New Point(0, 800)
+        pnlMenuActions.Location = New Point(0, 810)
         pnlMenuActions.Name = "pnlMenuActions"
-        pnlMenuActions.Padding = New Padding(20, 15, 20, 15)
-        pnlMenuActions.Size = New Size(1150, 120)
+        pnlMenuActions.Padding = New Padding(20)
+        pnlMenuActions.Size = New Size(1120, 110)
         pnlMenuActions.TabIndex = 2
         ' 
         ' IconButton2
         ' 
-        IconButton2.BackColor = Color.FromArgb(CByte(149), CByte(165), CByte(166))
+        IconButton2.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        IconButton2.BackColor = Color.FromArgb(113, 128, 150)
         IconButton2.Cursor = Cursors.Hand
         IconButton2.FlatAppearance.BorderSize = 0
         IconButton2.FlatStyle = FlatStyle.Flat
-        IconButton2.Font = New Font("Segoe UI Semibold", 10F, FontStyle.Bold)
+        IconButton2.Font = New Font("Segoe UI Semibold", 10.0F, FontStyle.Bold)
         IconButton2.ForeColor = Color.White
         IconButton2.IconChar = FontAwesome.Sharp.IconChar.Keyboard
         IconButton2.IconColor = Color.White
         IconButton2.IconFont = FontAwesome.Sharp.IconFont.Auto
-        IconButton2.IconSize = 24
+        IconButton2.IconSize = 22
         IconButton2.ImageAlign = ContentAlignment.MiddleLeft
-        IconButton2.Location = New Point(770, 30)
+        IconButton2.Location = New Point(914, 25)
         IconButton2.Name = "IconButton2"
-        IconButton2.Padding = New Padding(5, 0, 5, 0)
-        IconButton2.Size = New Size(170, 55)
+        IconButton2.Padding = New Padding(8, 0, 8, 0)
+        IconButton2.Size = New Size(175, 58)
         IconButton2.TabIndex = 4
-        IconButton2.Text = "Shortcut Keys"
-        IconButton2.TextAlign = ContentAlignment.MiddleRight
+        IconButton2.Text = "Shortcuts"
         IconButton2.TextImageRelation = TextImageRelation.ImageBeforeText
         IconButton2.UseVisualStyleBackColor = False
         ' 
         ' RecentOrdersBtn
         ' 
-        RecentOrdersBtn.BackColor = Color.FromArgb(CByte(52), CByte(152), CByte(219))
+        RecentOrdersBtn.BackColor = Color.FromArgb(59, 130, 246)
         RecentOrdersBtn.Cursor = Cursors.Hand
         RecentOrdersBtn.FlatAppearance.BorderSize = 0
         RecentOrdersBtn.FlatStyle = FlatStyle.Flat
-        RecentOrdersBtn.Font = New Font("Segoe UI Semibold", 10F, FontStyle.Bold)
+        RecentOrdersBtn.Font = New Font("Segoe UI Semibold", 10.0F, FontStyle.Bold)
         RecentOrdersBtn.ForeColor = Color.White
         RecentOrdersBtn.IconChar = FontAwesome.Sharp.IconChar.ClockRotateLeft
         RecentOrdersBtn.IconColor = Color.White
         RecentOrdersBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
-        RecentOrdersBtn.IconSize = 24
+        RecentOrdersBtn.IconSize = 22
         RecentOrdersBtn.ImageAlign = ContentAlignment.MiddleLeft
-        RecentOrdersBtn.Location = New Point(580, 30)
+        RecentOrdersBtn.Location = New Point(690, 25)
         RecentOrdersBtn.Name = "RecentOrdersBtn"
-        RecentOrdersBtn.Padding = New Padding(5, 0, 5, 0)
-        RecentOrdersBtn.Size = New Size(170, 55)
+        RecentOrdersBtn.Padding = New Padding(8, 0, 8, 0)
+        RecentOrdersBtn.Size = New Size(200, 58)
         RecentOrdersBtn.TabIndex = 3
         RecentOrdersBtn.Text = "Recent Orders"
-        RecentOrdersBtn.TextAlign = ContentAlignment.MiddleRight
         RecentOrdersBtn.TextImageRelation = TextImageRelation.ImageBeforeText
         RecentOrdersBtn.UseVisualStyleBackColor = False
         ' 
         ' CancelBtn
         ' 
-        CancelBtn.BackColor = Color.FromArgb(CByte(231), CByte(76), CByte(60))
+        CancelBtn.BackColor = Color.FromArgb(220, 38, 38)
         CancelBtn.Cursor = Cursors.Hand
         CancelBtn.FlatAppearance.BorderSize = 0
         CancelBtn.FlatStyle = FlatStyle.Flat
-        CancelBtn.Font = New Font("Segoe UI Semibold", 10F, FontStyle.Bold)
+        CancelBtn.Font = New Font("Segoe UI Semibold", 10.0F, FontStyle.Bold)
         CancelBtn.ForeColor = Color.White
         CancelBtn.IconChar = FontAwesome.Sharp.IconChar.Close
         CancelBtn.IconColor = Color.White
         CancelBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
-        CancelBtn.IconSize = 24
+        CancelBtn.IconSize = 22
         CancelBtn.ImageAlign = ContentAlignment.MiddleLeft
-        CancelBtn.Location = New Point(400, 30)
+        CancelBtn.Location = New Point(485, 25)
         CancelBtn.Name = "CancelBtn"
-        CancelBtn.Padding = New Padding(5, 0, 5, 0)
-        CancelBtn.Size = New Size(160, 55)
+        CancelBtn.Padding = New Padding(8, 0, 8, 0)
+        CancelBtn.Size = New Size(180, 58)
         CancelBtn.TabIndex = 2
         CancelBtn.Text = "Cancel Order"
-        CancelBtn.TextAlign = ContentAlignment.MiddleRight
         CancelBtn.TextImageRelation = TextImageRelation.ImageBeforeText
         CancelBtn.UseVisualStyleBackColor = False
         ' 
         ' DiscountBtn
         ' 
-        DiscountBtn.BackColor = Color.FromArgb(CByte(241), CByte(196), CByte(15))
+        DiscountBtn.BackColor = Color.FromArgb(251, 191, 36)
         DiscountBtn.Cursor = Cursors.Hand
         DiscountBtn.FlatAppearance.BorderSize = 0
         DiscountBtn.FlatStyle = FlatStyle.Flat
-        DiscountBtn.Font = New Font("Segoe UI Semibold", 10F, FontStyle.Bold)
+        DiscountBtn.Font = New Font("Segoe UI Semibold", 10.0F, FontStyle.Bold)
         DiscountBtn.ForeColor = Color.White
-        DiscountBtn.Location = New Point(220, 30)
+        DiscountBtn.IconChar = FontAwesome.Sharp.IconChar.Tag
+        DiscountBtn.IconColor = Color.White
+        DiscountBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
+        DiscountBtn.IconSize = 22
+        DiscountBtn.ImageAlign = ContentAlignment.MiddleLeft
+        DiscountBtn.Location = New Point(270, 25)
         DiscountBtn.Name = "DiscountBtn"
-        DiscountBtn.Size = New Size(160, 55)
+        DiscountBtn.Padding = New Padding(8, 0, 8, 0)
+        DiscountBtn.Size = New Size(190, 58)
         DiscountBtn.TabIndex = 1
         DiscountBtn.Text = "Apply Discount"
+        DiscountBtn.TextImageRelation = TextImageRelation.ImageBeforeText
         DiscountBtn.UseVisualStyleBackColor = False
         ' 
         ' CreateOrderBtn
         ' 
-        CreateOrderBtn.BackColor = Color.FromArgb(CByte(46), CByte(204), CByte(113))
+        CreateOrderBtn.BackColor = Color.FromArgb(16, 185, 129)
         CreateOrderBtn.Cursor = Cursors.Hand
         CreateOrderBtn.FlatAppearance.BorderSize = 0
         CreateOrderBtn.FlatStyle = FlatStyle.Flat
-        CreateOrderBtn.Font = New Font("Segoe UI Semibold", 11F, FontStyle.Bold)
+        CreateOrderBtn.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
         CreateOrderBtn.ForeColor = Color.White
         CreateOrderBtn.IconChar = FontAwesome.Sharp.IconChar.CheckCircle
         CreateOrderBtn.IconColor = Color.White
         CreateOrderBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
-        CreateOrderBtn.IconSize = 28
+        CreateOrderBtn.IconSize = 26
         CreateOrderBtn.ImageAlign = ContentAlignment.MiddleLeft
-        CreateOrderBtn.Location = New Point(20, 30)
+        CreateOrderBtn.Location = New Point(25, 25)
         CreateOrderBtn.Name = "CreateOrderBtn"
-        CreateOrderBtn.Padding = New Padding(10, 0, 10, 0)
-        CreateOrderBtn.Size = New Size(180, 55)
+        CreateOrderBtn.Padding = New Padding(12, 0, 12, 0)
+        CreateOrderBtn.Size = New Size(220, 58)
         CreateOrderBtn.TabIndex = 0
         CreateOrderBtn.Text = "Create Order"
-        CreateOrderBtn.TextAlign = ContentAlignment.MiddleRight
         CreateOrderBtn.TextImageRelation = TextImageRelation.ImageBeforeText
         CreateOrderBtn.UseVisualStyleBackColor = False
         ' 
@@ -431,62 +536,77 @@ Partial Class Order
         MenuCategoryPnl.Dock = DockStyle.Top
         MenuCategoryPnl.Location = New Point(0, 0)
         MenuCategoryPnl.Name = "MenuCategoryPnl"
-        MenuCategoryPnl.Padding = New Padding(15, 10, 15, 10)
-        MenuCategoryPnl.Size = New Size(1150, 70)
+        MenuCategoryPnl.Padding = New Padding(20, 15, 20, 15)
+        MenuCategoryPnl.Size = New Size(1120, 80)
         MenuCategoryPnl.TabIndex = 0
         ' 
         ' Order
         ' 
-        AutoScaleDimensions = New SizeF(8F, 20F)
+        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
         AutoScaleMode = AutoScaleMode.Font
-        BackColor = Color.FromArgb(CByte(245), CByte(247), CByte(250))
-        ClientSize = New Size(1600, 1000)
+        BackColor = Color.FromArgb(247, 250, 252)
+        ClientSize = New Size(1600, 1010)
         Controls.Add(pnlMenu)
         Controls.Add(pnlOrderSidebar)
         Controls.Add(pnlHeader)
         Controls.Add(DataGridView1)
-        Font = New Font("Segoe UI", 9F)
+        Font = New Font("Segoe UI", 9.0F)
         Name = "Order"
-        Text = "Order - OrderUp!"
+        Text = "OrderUp! - Point of Sale"
         pnlHeader.ResumeLayout(False)
+        pnlHeader.PerformLayout()
         pnlHeaderActions.ResumeLayout(False)
         pnlSearch.ResumeLayout(False)
         pnlSearch.PerformLayout()
         CType(DataGridView1, ComponentModel.ISupportInitialize).EndInit()
         pnlOrderSidebar.ResumeLayout(False)
         pnlTotal.ResumeLayout(False)
-        pnlTotalValues.ResumeLayout(False)
-        pnlTotalValues.PerformLayout()
+        pnlTotalContent.ResumeLayout(False)
+        pnlTotalRow.ResumeLayout(False)
+        pnlTotalRow.PerformLayout()
+        pnlDiscountRow.ResumeLayout(False)
+        pnlDiscountRow.PerformLayout()
+        pnlSubtotalRow.ResumeLayout(False)
+        pnlSubtotalRow.PerformLayout()
+        pnlOrderHeader.ResumeLayout(False)
+        pnlOrderHeader.PerformLayout()
         pnlMenu.ResumeLayout(False)
         pnlMenuActions.ResumeLayout(False)
         ResumeLayout(False)
     End Sub
 
     Friend WithEvents pnlHeader As Panel
+    Friend WithEvents lblHeaderTitle As Label
+    Friend WithEvents lblHeaderSubtitle As Label
+    Friend WithEvents pnlHeaderActions As Panel
+    Friend WithEvents IconButton3 As FontAwesome.Sharp.IconButton
+    Friend WithEvents SettingsBtn As FontAwesome.Sharp.IconButton
     Friend WithEvents pnlSearch As Panel
     Friend WithEvents SearchTxtBox As TextBox
     Friend WithEvents SearchBtn As FontAwesome.Sharp.IconButton
-    Friend WithEvents pnlHeaderActions As Panel
-    Friend WithEvents SettingsBtn As FontAwesome.Sharp.IconButton
-    Friend WithEvents IconButton3 As FontAwesome.Sharp.IconButton
     Friend WithEvents DataGridView1 As DataGridView
     Friend WithEvents pnlOrderSidebar As Panel
     Friend WithEvents OrderPnl As FlowLayoutPanel
     Friend WithEvents pnlTotal As Panel
-    Friend WithEvents pnlTotalValues As Panel
+    Friend WithEvents pnlTotalContent As Panel
+    Friend WithEvents pnlTotalRow As Panel
     Friend WithEvents TotalLbl As Label
     Friend WithEvents Label2 As Label
+    Friend WithEvents pnlDiscountRow As Panel
     Friend WithEvents DiscountLbl As Label
     Friend WithEvents Label3 As Label
+    Friend WithEvents pnlSubtotalRow As Panel
     Friend WithEvents SubtotalLbl As Label
     Friend WithEvents Label6 As Label
+    Friend WithEvents pnlOrderHeader As Panel
+    Friend WithEvents lblOrderTitle As Label
     Friend WithEvents pnlMenu As Panel
     Friend WithEvents FoodPnl As FlowLayoutPanel
     Friend WithEvents pnlMenuActions As Panel
     Friend WithEvents IconButton2 As FontAwesome.Sharp.IconButton
     Friend WithEvents RecentOrdersBtn As FontAwesome.Sharp.IconButton
     Friend WithEvents CancelBtn As FontAwesome.Sharp.IconButton
-    Friend WithEvents DiscountBtn As Button
+    Friend WithEvents DiscountBtn As FontAwesome.Sharp.IconButton
     Friend WithEvents CreateOrderBtn As FontAwesome.Sharp.IconButton
     Friend WithEvents MenuCategoryPnl As FlowLayoutPanel
 End Class

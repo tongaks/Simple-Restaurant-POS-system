@@ -89,4 +89,8 @@ Public Class ApplyVoucher
 
         Return True
     End Function
+
+    Private Sub PasswordTxtBox_TextChanged(sender As Object, e As EventArgs) Handles PasswordTxtBox.TextChanged
+
+    End Sub
 End Class

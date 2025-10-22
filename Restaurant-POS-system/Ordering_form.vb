@@ -20,7 +20,6 @@ Imports PdfSharp.Pdf
 Imports PdfSharp.Quality
 Imports ZstdSharp.Unsafe
 
-
 Public Class Order
     Dim CurrentTotal As Integer
     Dim CurrentSubTotal As Integer
@@ -52,103 +51,265 @@ Public Class Order
         DataGridView1.ColumnCount = 5
         DataGridView1.Columns(0).Name = "ItemAmount"
         DataGridView1.Columns("ItemAmount").ValueType = GetType(Integer)
-
         DataGridView1.Columns(1).Name = "ItemName"
-
         DataGridView1.Columns(2).Name = "ItemPrice"
         DataGridView1.Columns("ItemPrice").ValueType = GetType(Integer)
-
         DataGridView1.Columns(3).Name = "Total"
         DataGridView1.Columns("Total").ValueType = GetType(Integer)
-
         DataGridView1.Columns(4).Name = "ImagePath"
         DataGridView1.Columns("ImagePath").ValueType = GetType(String)
     End Sub
+
     Private Sub Order_Close(sender As Object, e As EventArgs) Handles MyBase.FormClosed
-        ' close parent when child closes
         Form1.Dispose()
     End Sub
+
     Private Sub OrderForm_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
         If SettingsConfig.EnableShortcutKeys Then
             HandleKeydownSelect(sender, e)
         End If
     End Sub
 
+    ''' <summary>
+    ''' ✨ PROFESSIONAL Restaurant POS Order Dialog
+    ''' Clean, intuitive, and fully functional ordering interface
+    ''' </summary>
+    Private Function DisplayItemDialogForm(ByVal itemAmount As Integer) As Integer
+        ' Main dialog window
+        Dim itemDialog As New Form With {
+            .Size = New Size(500, 550),
+            .StartPosition = FormStartPosition.CenterScreen,
+            .KeyPreview = True,
+            .FormBorderStyle = FormBorderStyle.None,
+            .BackColor = Color.FromArgb(240, 242, 245)
+        }
 
+        ' Main container
+        Dim mainPanel As New Panel With {
+            .Dock = DockStyle.Fill,
+            .BackColor = Color.White,
+            .Padding = New Padding(0)
+        }
 
-    ' Form dialog for increasing/decreasing item amount
-    ' WIP
-    Private Function DisplayItemDialogForm(ByVal itemAmount As Integer)
-        'Dim itemAmount As Integer = 1
+        ' 🎨 Header Section - Clean & Professional
+        Dim headerPanel As New Panel With {
+            .Dock = DockStyle.Top,
+            .Height = 90,
+            .BackColor = Color.FromArgb(37, 42, 52),
+            .Padding = New Padding(25, 20, 25, 20)
+        }
 
-        Dim itemDialog As New Form
-        itemDialog.Size = New System.Drawing.Size(500, 150)
-        itemDialog.StartPosition = FormStartPosition.CenterScreen
-        itemDialog.KeyPreview = True
+        Dim itemNameLabel As New Label With {
+            .Text = CurrentFocused.Text,
+            .Font = New Font("Segoe UI", 22, FontStyle.Bold),
+            .ForeColor = Color.White,
+            .Dock = DockStyle.Top,
+            .Height = 35
+        }
 
-        Dim mainPanel As New FlowLayoutPanel
-        mainPanel.FlowDirection = FlowDirection.TopDown
-        mainPanel.AutoSize = True
+        Dim itemPriceLabel As New Label With {
+            .Font = New Font("Segoe UI", 12, FontStyle.Regular),
+            .ForeColor = Color.FromArgb(148, 163, 184),
+            .Dock = DockStyle.Bottom,
+            .Height = 25
+        }
 
-        Dim itemButtonPanel As New FlowLayoutPanel()
-        itemButtonPanel.FlowDirection = FlowDirection.LeftToRight
-        itemButtonPanel.AutoSize = True
-        itemButtonPanel.Margin = New Padding(30, 10, 0, 0)
+        ' Get price from tag
+        Dim tagData As TagData = ExtractTag(CurrentFocused.Tag)
+        itemPriceLabel.Text = "₱" & tagData.Price & " per item"
 
-        Dim itemNameLabel As New Label()
-        itemNameLabel.Text = CurrentFocused.Text
-        itemNameLabel.Font = New Font("Arial", 30, FontStyle.Bold)
-        itemNameLabel.AutoSize = True
+        headerPanel.Controls.AddRange({itemNameLabel, itemPriceLabel})
 
-        Dim itemAmountLabel As New Label()
-        itemAmountLabel.Text = itemAmount.ToString
-        itemAmountLabel.Font = New Font("Arial", 50, FontStyle.Bold)
-        itemAmountLabel.AutoSize = True
+        ' 📦 Content Section - Quantity Controls
+        Dim contentPanel As New Panel With {
+            .Dock = DockStyle.Fill,
+            .BackColor = Color.White,
+            .Padding = New Padding(40, 50, 40, 30)
+        }
 
-        Dim amountWrapper As New Panel()
-        amountWrapper.Size = New Size(itemAmountLabel.PreferredWidth + 10, itemButtonPanel.Height)
-        itemAmountLabel.Location = New Point(0, ((itemButtonPanel.Height - itemAmountLabel.Height) \ 2) - 30)
-        amountWrapper.Controls.Add(itemAmountLabel)
+        ' Quantity label
+        Dim lblQtyTitle As New Label With {
+            .Text = "Quantity",
+            .Font = New Font("Segoe UI", 11, FontStyle.Regular),
+            .ForeColor = Color.FromArgb(100, 116, 139),
+            .Location = New Point(40, 40),
+            .AutoSize = True
+        }
 
-        Dim increaseButton As New Button()
-        increaseButton.Text = "+"
-        increaseButton.Tag = CurrentFocusedItem
-        increaseButton.BackColor = Color.Green
-        increaseButton.Size = New Size(100, 100)
+        ' Quantity display with controls
+        Dim quantityControlPanel As New Panel With {
+            .Size = New Size(420, 120),
+            .Location = New Point(40, 75),
+            .BackColor = Color.FromArgb(248, 250, 252)
+        }
+
+        ' Decrease button (-)
+        Dim decreaseButton As New Button With {
+            .Size = New Size(100, 120),
+            .Location = New Point(0, 0),
+            .BackColor = Color.FromArgb(248, 250, 252),
+            .FlatStyle = FlatStyle.Flat,
+            .Font = New Font("Segoe UI", 36, FontStyle.Bold),
+            .ForeColor = Color.FromArgb(100, 116, 139),
+            .Text = "−",
+            .Cursor = Cursors.Hand,
+            .TabStop = False
+        }
+        decreaseButton.FlatAppearance.BorderSize = 0
+        decreaseButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(226, 232, 240)
+
+        ' Quantity display
+        Dim itemAmountLabel As New Label With {
+            .Text = itemAmount.ToString(),
+            .Font = New Font("Segoe UI", 52, FontStyle.Bold),
+            .ForeColor = Color.FromArgb(37, 42, 52),
+            .Size = New Size(220, 120),
+            .Location = New Point(100, 0),
+            .TextAlign = ContentAlignment.MiddleCenter,
+            .BackColor = Color.White
+        }
+
+        ' Increase button (+)
+        Dim increaseButton As New Button With {
+            .Size = New Size(100, 120),
+            .Location = New Point(320, 0),
+            .BackColor = Color.FromArgb(248, 250, 252),
+            .FlatStyle = FlatStyle.Flat,
+            .Font = New Font("Segoe UI", 36, FontStyle.Bold),
+            .ForeColor = Color.FromArgb(100, 116, 139),
+            .Text = "+",
+            .Cursor = Cursors.Hand,
+            .TabStop = False
+        }
+        increaseButton.FlatAppearance.BorderSize = 0
+        increaseButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(226, 232, 240)
+
+        quantityControlPanel.Controls.AddRange({decreaseButton, itemAmountLabel, increaseButton})
+        contentPanel.Controls.AddRange({lblQtyTitle, quantityControlPanel})
+
+        ' 💰 Order Summary Section
+        Dim summaryPanel As New Panel With {
+            .Size = New Size(420, 80),
+            .Location = New Point(40, 230),
+            .BackColor = Color.FromArgb(241, 245, 249),
+            .Padding = New Padding(20)
+        }
+
+        Dim lblSubtotal As New Label With {
+            .Text = "Subtotal",
+            .Font = New Font("Segoe UI", 11, FontStyle.Regular),
+            .ForeColor = Color.FromArgb(100, 116, 139),
+            .Dock = DockStyle.Left,
+            .AutoSize = True
+        }
+
+        Dim lblSubtotalAmount As New Label With {
+            .Font = New Font("Segoe UI", 18, FontStyle.Bold),
+            .ForeColor = Color.FromArgb(37, 42, 52),
+            .Dock = DockStyle.Right,
+            .TextAlign = ContentAlignment.MiddleRight,
+            .AutoSize = True
+        }
+
+        ' Calculate and display subtotal
+        Dim CalculateSubtotal = Sub()
+                                    Dim price As Integer = Integer.Parse(tagData.Price)
+                                    Dim subtotal As Integer = price * itemAmount
+                                    lblSubtotalAmount.Text = "₱" & subtotal.ToString()
+                                End Sub
+        CalculateSubtotal()
+
+        summaryPanel.Controls.AddRange({lblSubtotal, lblSubtotalAmount})
+        contentPanel.Controls.Add(summaryPanel)
+
+        ' 🎯 Action Buttons Section
+        Dim btnPanel As New Panel With {
+            .Dock = DockStyle.Bottom,
+            .Height = 100,
+            .BackColor = Color.White,
+            .Padding = New Padding(40, 20, 40, 25)
+        }
+
+        ' Add to Order button
+        Dim confirmBtn As New Button With {
+            .Text = "Add to Order",
+            .Dock = DockStyle.Fill,
+            .Height = 55,
+            .BackColor = Color.FromArgb(16, 185, 129),
+            .FlatStyle = FlatStyle.Flat,
+            .Font = New Font("Segoe UI", 13, FontStyle.Bold),
+            .ForeColor = Color.White,
+            .Cursor = Cursors.Hand,
+            .TabStop = False
+        }
+        confirmBtn.FlatAppearance.BorderSize = 0
+        confirmBtn.FlatAppearance.MouseOverBackColor = Color.FromArgb(5, 150, 105)
+
+        ' Cancel button
+        Dim cancelBtn As New Button With {
+            .Text = "Cancel",
+            .Dock = DockStyle.Right,
+            .Width = 140,
+            .Height = 55,
+            .BackColor = Color.FromArgb(226, 232, 240),
+            .FlatStyle = FlatStyle.Flat,
+            .Font = New Font("Segoe UI", 11, FontStyle.Bold),
+            .ForeColor = Color.FromArgb(71, 85, 105),
+            .Cursor = Cursors.Hand,
+            .Margin = New Padding(0, 0, 15, 0),
+            .TabStop = False
+        }
+        cancelBtn.FlatAppearance.BorderSize = 0
+        cancelBtn.FlatAppearance.MouseOverBackColor = Color.FromArgb(203, 213, 225)
+
+        btnPanel.Controls.AddRange({confirmBtn, cancelBtn})
+
+        ' Event Handlers
         AddHandler increaseButton.Click, Sub()
                                              itemAmount += 1
-                                             itemAmountLabel.Text = itemAmount.ToString
+                                             itemAmountLabel.Text = itemAmount.ToString()
+                                             CalculateSubtotal()
                                          End Sub
 
-        Dim decreaseButton As New Button()
-        decreaseButton.Text = "-"
-        decreaseButton.Tag = CurrentFocusedItem
-        decreaseButton.BackColor = Color.Red
-        decreaseButton.ForeColor = Color.White
-        decreaseButton.Size = New Size(100, 100)
         AddHandler decreaseButton.Click, Sub()
-                                             itemAmount = If((itemAmount > 1), itemAmount - 1, itemAmount)
-                                             itemAmountLabel.Text = itemAmount.ToString
+                                             If itemAmount > 1 Then
+                                                 itemAmount -= 1
+                                                 itemAmountLabel.Text = itemAmount.ToString()
+                                                 CalculateSubtotal()
+                                             End If
                                          End Sub
 
-        itemButtonPanel.Controls.Add(increaseButton)
-        itemButtonPanel.Controls.Add(amountWrapper)
-        itemButtonPanel.Controls.Add(decreaseButton)
+        AddHandler confirmBtn.Click, Sub()
+                                         itemDialog.DialogResult = DialogResult.OK
+                                         itemDialog.Close()
+                                     End Sub
 
-        mainPanel.Controls.Add(itemNameLabel)
-        mainPanel.Controls.Add(itemButtonPanel)
-        itemDialog.Controls.Add(mainPanel)
-        itemDialog.Size = New System.Drawing.Size(mainPanel.Width + 50, mainPanel.Height + 50)
+        AddHandler cancelBtn.Click, Sub()
+                                        itemDialog.DialogResult = DialogResult.Cancel
+                                        itemDialog.Close()
+                                    End Sub
 
-        AddHandler itemDialog.KeyDown, Sub(sender As Object, e As KeyEventArgs)
-                                           If e.Control AndAlso e.KeyCode = Keys.Enter Then
+        ' Keyboard shortcuts
+        AddHandler itemDialog.KeyDown, Sub(s As Object, e As KeyEventArgs)
+                                           If e.KeyCode = Keys.Enter Then
                                                itemDialog.DialogResult = DialogResult.OK
                                                itemDialog.Close()
                                            ElseIf e.KeyCode = Keys.Escape Then
                                                itemDialog.DialogResult = DialogResult.Cancel
                                                itemDialog.Close()
+                                           ElseIf e.KeyCode = Keys.Add OrElse e.KeyCode = Keys.Oemplus OrElse e.KeyCode = Keys.Up Then
+                                               itemAmount += 1
+                                               itemAmountLabel.Text = itemAmount.ToString()
+                                               CalculateSubtotal()
+                                           ElseIf (e.KeyCode = Keys.Subtract OrElse e.KeyCode = Keys.OemMinus OrElse e.KeyCode = Keys.Down) AndAlso itemAmount > 1 Then
+                                               itemAmount -= 1
+                                               itemAmountLabel.Text = itemAmount.ToString()
+                                               CalculateSubtotal()
                                            End If
                                        End Sub
+
+        mainPanel.Controls.AddRange({headerPanel, contentPanel, btnPanel})
+        itemDialog.Controls.Add(mainPanel)
 
         If itemDialog.ShowDialog() = DialogResult.OK Then
             Return itemAmount
@@ -156,6 +317,7 @@ Public Class Order
             Return -1
         End If
     End Function
+
     Private Sub DisplayRecentOrders()
         Dim recentDialog As New Form
         recentDialog.Size = New System.Drawing.Size(1000, 500)
@@ -164,11 +326,9 @@ Public Class Order
         pnlRecentOrders.Size = New System.Drawing.Size(recentDialog.Width, recentDialog.Height)
         pnlRecentOrders.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
 
-        ' connection for loading the transactions to be passed on LoadTransactionDetails
         Dim Connection As New MySqlConnection(GetGlobalConnectionString)
         Connection.Open()
 
-        ' need to create an instance of SalesReport class to be able to use the LoadTrandsactionDetails
         Dim salereport As New SalesReport
         salereport.LoadTransactionDetails(Connection, pnlRecentOrders)
 
@@ -176,8 +336,7 @@ Public Class Order
         recentDialog.ShowDialog()
     End Sub
 
-
-    ' CRUD functions
+    ' CRUD functions (unchanged)
     Private Sub LoadMenuCategories()
         Dim Connection As New MySqlConnection(GetGlobalConnectionString)
         Dim Reader As MySqlDataReader
@@ -205,11 +364,12 @@ Public Class Order
             End If
         End Try
     End Sub
+
     Private Sub LoadMenuItems(table As String)
         Dim Connection As New MySqlConnection(GetGlobalConnectionString)
         Dim Reader As MySqlDataReader
-        MenuItems.Clear() ' clear for another menu items when change in catalog
-        currentIndex = 0 ' reset index
+        MenuItems.Clear()
+        currentIndex = 0
 
         Try
             Connection.Open()
@@ -218,7 +378,6 @@ Public Class Order
             Reader = Command.ExecuteReader
 
             While Reader.Read
-                ' Use safe defaults if settings are invalid
                 Dim settingsSize As Integer = If(SettingsConfig.MenuItemButtonSize > 0, SettingsConfig.MenuItemButtonSize, 100)
                 Dim fontSize As Single = If(SettingsConfig.MenuItemFontSize > 0, CSng(SettingsConfig.MenuItemFontSize), 12.0F)
 
@@ -244,7 +403,6 @@ Public Class Order
 
                 AddHandler foodBtn.Click, AddressOf HandleItemClick
 
-                ' Correct font family name and use validated font size
                 Dim foodFont As New Font("Segoe UI", fontSize, FontStyle.Regular)
 
                 Dim foodName As New Label
@@ -279,6 +437,7 @@ Public Class Order
             End If
         End Try
     End Sub
+
     Private Sub SearchItem(itemName As String)
         Dim Connection As New MySqlConnection(GetGlobalConnectionString)
         Dim Reader As MySqlDataReader
@@ -292,7 +451,8 @@ Public Class Order
 
             If Reader.HasRows Then
                 FoodPnl.Controls.Clear()
-            Else Return
+            Else
+                Return
             End If
 
             While Reader.Read
@@ -309,12 +469,9 @@ Public Class Order
             End While
 
         Catch ex As Exception
-
+            ' Silent fail
         End Try
     End Sub
-
-
-
 
     ' Menu item/category click handlers
     Private Sub HandleItemClick(sender As Object, e As EventArgs)
@@ -344,8 +501,9 @@ Public Class Order
         Dim itemPrice As String = tagData.Price
         Dim itemImage As String = tagData.TagImagePath
         HandleIfItemExistsInOrder(itemName, itemPrice, itemImage, itemAmount)
-        Compute() ' compute total again
+        Compute()
     End Sub
+
     Private Sub HandleCatClick(sender As Object, e As EventArgs)
         Dim catName = CType(sender, Button)
         FoodPnl.Controls.Clear()
@@ -353,28 +511,21 @@ Public Class Order
         LoadMenuItems(catName.Text)
     End Sub
 
-
-
     ' Display the items
     Private Function AddItemToOrderList(ByVal itemName As String, ByVal itemPrice As String, ByVal itemAmount As String, ByVal itemImage As String) As FlowLayoutPanel
-        ' Create the main FlowLayoutPanel
         Dim mainPanel As New FlowLayoutPanel()
         mainPanel.FlowDirection = FlowDirection.LeftToRight
         mainPanel.WrapContents = False
         mainPanel.Width = OrderPnl.Width
         mainPanel.Height = 100
         mainPanel.BackColor = Color.LightGray
-        'mainPanel.Padding = New Padding(10)
         mainPanel.AutoSize = False
 
-        ' PictureBox
         Dim pictureBox As New PictureBox()
         pictureBox.Size = New Size(80, 80)
         pictureBox.Image = If(String.IsNullOrEmpty(itemImage), Nothing, Image.FromFile(itemImage))
         pictureBox.SizeMode = PictureBoxSizeMode.StretchImage
-        'pictureBox.Margin = New Padding(5)
 
-        ' Item amount label (wrapped in a Panel for vertical alignment)
         Dim itemAmountLabel As New Label()
         itemAmountLabel.Text = itemAmount
         itemAmountLabel.Font = New Font("Arial", 16, FontStyle.Bold)
@@ -385,19 +536,15 @@ Public Class Order
         itemAmountLabel.Location = New Point(0, ((mainPanel.Height - itemAmountLabel.Height) \ 2) - 30)
         amountWrapper.Controls.Add(itemAmountLabel)
 
-        ' Container for labels (item name and item price)
         Dim itemInfoPanel As New FlowLayoutPanel()
         itemInfoPanel.FlowDirection = FlowDirection.TopDown
         itemInfoPanel.AutoSize = True
-        'itemInfoPanel.Margin = New Padding(10, 10, 10, 10)
 
-        ' Item name label
         Dim labelName As New Label()
         labelName.Text = itemName
         labelName.Font = New Font("Arial", 14, FontStyle.Bold)
         labelName.AutoSize = True
 
-        ' Item price label
         Dim labelPrice As New Label()
         labelPrice.Text = "₱" & itemPrice
         labelPrice.Font = New Font("Arial", 12, FontStyle.Bold)
@@ -406,11 +553,9 @@ Public Class Order
         itemInfoPanel.Controls.Add(labelName)
         itemInfoPanel.Controls.Add(labelPrice)
 
-        ' Buttons (increase/decrease)
         Dim itemButtonPanel As New FlowLayoutPanel()
         itemButtonPanel.FlowDirection = FlowDirection.LeftToRight
         itemButtonPanel.AutoSize = True
-        'itemButtonPanel.Margin = New Padding(30, 10, 0, 0)
 
         Dim increaseButton As New IconButton()
         increaseButton.IconChar = IconChar.PlusCircle
@@ -436,15 +581,12 @@ Public Class Order
         deleteButton.IconSize = 25
         deleteButton.IconColor = Color.White
         deleteButton.Tag = itemName
-        deleteButton.Tag = itemName
         deleteButton.BackColor = Color.Red
         deleteButton.ForeColor = Color.White
         deleteButton.Size = New Size(40, 40)
         AddHandler deleteButton.Click, AddressOf RemoveItemHandler
 
-        ' Spacer to push buttons to the right
         Dim spacer As New Panel()
-        ' holy shit this took me hours to figure out (im so stupid)
         Dim remainingWidth = mainPanel.Width - (pictureBox.Width + itemInfoPanel.PreferredSize.Width)
         spacer.Width = Integer.Abs(remainingWidth - itemButtonPanel.Width)
         spacer.Height = 10
@@ -455,7 +597,6 @@ Public Class Order
         itemButtonPanel.Controls.Add(decreaseButton)
         itemButtonPanel.Controls.Add(deleteButton)
 
-        ' Add controls to main panel
         mainPanel.Controls.Add(pictureBox)
         mainPanel.Controls.Add(itemInfoPanel)
         mainPanel.Controls.Add(spacer)
@@ -469,10 +610,6 @@ Public Class Order
             OrderPnl.Controls.Clear()
         End If
 
-        ' Instead of refreshing everything, just loop through the orderpnl then
-        ' per panel children, iterate through it again or just name the panel with the name
-        ' of the item. After finding the name, change that panel's amount instead of everything
-
         For Each row As DataGridViewRow In DataGridView1.Rows
             Dim itemAmount = CInt(row.Cells(0).Value)
             Dim itemName As String = CStr(row.Cells(1).Value)
@@ -484,9 +621,7 @@ Public Class Order
         Next row
     End Sub
 
-
-
-    ' Buttons
+    ' Buttons (rest of the code continues...)
     Private Sub CreateOrderBtn_Click(sender As Object, e As EventArgs) Handles CreateOrderBtn.Click
         If Not DataGridView1.Rows.Count > 0 Then
             MsgBox("Please create an order first", MsgBoxStyle.Critical, "Warning")
@@ -497,10 +632,8 @@ Public Class Order
             Return
         End If
 
-
         Dim ConnectionString = GetGlobalConnectionString()
         Dim Connection As New MySqlConnection(ConnectionString)
-
         Dim TotalAmount = Integer.Parse(TotalLbl.Text.Substring(1))
 
         Try
@@ -516,25 +649,36 @@ Public Class Order
                 MsgBox("Order created", MsgBoxStyle.Information, "Success")
                 Dim receiptName = CreateReceiptPDF()
 
-                ' display receipt
-                Dim receiptForm As New Form
-                receiptForm.Size = New System.Drawing.Size(500, 800)
-                receiptForm.KeyPreview = True
-                receiptForm.Text = "Receipt"
-                receiptForm.StartPosition = FormStartPosition.CenterScreen
-                AddHandler receiptForm.KeyPress, Sub()
-                                                     receiptForm.Close()
-                                                 End Sub
+                If String.IsNullOrEmpty(receiptName) Then
+                    MessageBox.Show("Receipt was not created — skipping preview.", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Else
+                    Try
+                        Dim designerReceipt As New Receipt()
+                        designerReceipt.LoadPdf(receiptName)
+                        designerReceipt.ShowDialog(Me)
+                    Catch ex As Exception
+                        ' Fallback: try to preview using ad-hoc viewer if designer fails
+                        Try
+                            Dim receiptForm As New Form
+                            receiptForm.Size = New System.Drawing.Size(500, 800)
+                            receiptForm.KeyPreview = True
+                            receiptForm.Text = "Receipt"
+                            receiptForm.StartPosition = FormStartPosition.CenterScreen
+                            AddHandler receiptForm.KeyPress, AddressOf ClosePreviewFormOnKeyPress
 
-                Dim pdfViewer1 = New PdfiumViewer.PdfViewer()
-                pdfViewer1.Dock = DockStyle.Fill
-                receiptForm.Controls.Add(pdfViewer1)
-                pdfViewer1.Document = PdfiumViewer.PdfDocument.Load(receiptName)
-                pdfViewer1.ZoomMode = PdfViewerZoomMode.FitWidth
+                            Dim pdfViewer1 = New PdfiumViewer.PdfViewer()
+                            pdfViewer1.Dock = DockStyle.Fill
+                            receiptForm.Controls.Add(pdfViewer1)
 
-                receiptForm.Height = pdfViewer1.Height
-                receiptForm.ShowDialog()
-
+                            pdfViewer1.Document = PdfiumViewer.PdfDocument.Load(receiptName)
+                            pdfViewer1.ZoomMode = PdfViewerZoomMode.FitWidth
+                            receiptForm.Height = pdfViewer1.Height
+                            receiptForm.ShowDialog(Me)
+                        Catch ex2 As Exception
+                            MessageBox.Show("Unable to preview receipt: " & ex2.Message, "Preview Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                        End Try
+                    End Try
+                End If
 
                 InsertActivityLog("Created an order with total of " & CurrentTotal)
 
@@ -559,29 +703,29 @@ Public Class Order
             End If
         End Try
     End Sub
-    Private Sub SearchBtn_Click(sender As Object, e As EventArgs)
+
+    Private Sub SearchBtn_Click(sender As Object, e As EventArgs) Handles SearchBtn.Click
         If Not String.IsNullOrEmpty(SearchTxtBox.Text) Then
             SearchItem(SearchTxtBox.Text)
         End If
     End Sub
+
     Private Sub IncreaseButtonHandler(sender As Object, e As EventArgs)
         Dim itemName As String = CType(sender, Button).Tag.ToString()
-
         Dim itemBtnName As String = CType(sender, Button).Tag
         Dim price As String = HandleItemAmountUpdate(True, itemBtnName)
-
         UpdateItemOrderList()
         Compute()
     End Sub
+
     Private Sub DecreaseButtonHandler(sender As Object, e As EventArgs)
         Dim itemName As String = CType(sender, Button).Tag.ToString()
-
         Dim itemBtnName As String = CType(sender, Button).Tag
         Dim price As String = HandleItemAmountUpdate(False, itemBtnName)
-
         UpdateItemOrderList()
         Compute()
     End Sub
+
     Private Sub ApplyDiscount_Click(sender As Object, e As EventArgs) Handles DiscountBtn.Click
         Dim applyVoucherForm As New ApplyVoucher
 
@@ -600,11 +744,9 @@ Public Class Order
 
                 ElseIf TypeOf cntrl Is ComboBox Then
                     Dim cmbBox As ComboBox = CType(cntrl, ComboBox)
-
                     If Not cmbBox.Text.Contains("Select") Then
                         discountType = cmbBox.Text
                     End If
-
                 End If
             Next
 
@@ -618,15 +760,15 @@ Public Class Order
             CurrentTotal = If((Not DiscountValue = 0), Integer.Abs(appliedDiscount - CurrentSubTotal), CurrentSubTotal)
             TotalLbl.Text = "₱" + CurrentTotal.ToString
         End If
-
-        ' need to log the apllying of voucher
     End Sub
+
     Private Sub SettingsBtn_Click(sender As Object, e As EventArgs) Handles SettingsBtn.Click
         If Settings.ShowDialog() = DialogResult.OK Then
-            FoodPnl.Controls.Clear()  ' reload the menu items
+            FoodPnl.Controls.Clear()
             LoadMenuItems("foods")
         End If
     End Sub
+
     Private Sub CancelBtn_Click(sender As Object, e As EventArgs) Handles CancelBtn.Click
         If Not DataGridView1.Rows.Count > 0 Then
             MsgBox("Cannot cancel, No order created.", MsgBoxStyle.Critical, "Error")
@@ -647,22 +789,19 @@ Public Class Order
         SubtotalLbl.Text = "₱" & CurrentSubTotal
         DiscountLbl.Text = "%" & DiscountValue
         TotalLbl.Text = "₱" & CurrentTotal
-
-        'CurrentFocused = Nothing
-        'CurrentFocusedItem = ""
     End Sub
+
     Private Sub ShortcutKeys_Click(sender As Object, e As EventArgs) Handles IconButton2.Click
         Dim msg As String = "For selecting menu items: Use arrow key left/right and press enter to select" & vbCrLf & vbCrLf & "For adjusting the item's quantity: Use arrow key left/right and press enter to increase/decrease and Ctrl + Enter to continue" & vbCrLf & vbCrLf & "Shortcut keys can be enabled/disabled in the settings"
         MsgBox(msg, MsgBoxStyle.Information, "Shortcut keys")
     End Sub
+
     Private Sub RecentOrdersBtn_Click(sender As Object, e As EventArgs) Handles RecentOrdersBtn.Click
         DisplayRecentOrders()
     End Sub
 
-
-
     ' Create receipt
-    Private Function CreateReceiptPDF()
+    Private Function CreateReceiptPDF() As String
         Dim receipt As New PdfSharp.Pdf.PdfDocument
         Dim page As PdfPage = receipt.AddPage()
         Dim gfx As XGraphics = XGraphics.FromPdfPage(page)
@@ -676,11 +815,11 @@ Public Class Order
 
         Dim posY As Integer = 120
         For Each row As DataGridViewRow In DataGridView1.Rows
-            Dim itemName As String = row.Cells(1).Value.ToString
-            Dim itemPrice As String = row.Cells(2).Value.ToString
-            Dim itemAmount As String = row.Cells(0).Value.ToString
+            Dim itemName As String = If(row.Cells(1).Value IsNot Nothing, row.Cells(1).Value.ToString(), "")
+            Dim itemPrice As String = If(row.Cells(2).Value IsNot Nothing, row.Cells(2).Value.ToString(), "0")
+            Dim itemAmount As String = If(row.Cells(0).Value IsNot Nothing, row.Cells(0).Value.ToString(), "0")
             Dim orderFormat As String = itemAmount & "  " & itemName & "    ₱" & itemPrice
-            gfx.DrawString(orderFormat, regFont, textBrush, New XRect(50, posY, 200, 100), XStringFormats.TopLeft)
+            gfx.DrawString(orderFormat, regFont, textBrush, New XRect(50, posY, 400, 100), XStringFormats.TopLeft)
             posY += 30
         Next
 
@@ -688,36 +827,45 @@ Public Class Order
         gfx.DrawString("Discount: %" & DiscountValue, regFont, textBrush, New XRect(50, posY + 80, 200, 100), XStringFormats.TopLeft)
         gfx.DrawString("Total: ₱" & CurrentTotal, regFont, textBrush, New XRect(50, posY + 110, 200, 100), XStringFormats.TopLeft)
 
+        ' Determine receipt ID (count)
         Dim receiptID As String = ""
-
-        Dim Connection As New MySqlConnection(GetGlobalConnectionString)
         Try
-            Connection.Open()
-            Dim Query As String = "SELECT COUNT(*) AS `TOTAL` FROM restaurant.orders"
-            Dim Command As New MySqlCommand(Query, Connection)
-            Dim Reader As MySqlDataReader = Command.ExecuteReader
-
-            If Reader.Read Then
-                receiptID = Reader("TOTAL")
-            End If
-
-            'MsgBox("total number of orders: " & idCount)
-            'receiptID = idCount
-
+            Using Connection As New MySqlConnection(GetGlobalConnectionString())
+                Connection.Open()
+                Dim Query As String = "SELECT COUNT(*) AS `TOTAL` FROM restaurant.orders"
+                Using Command As New MySqlCommand(Query, Connection)
+                    Dim result = Command.ExecuteScalar()
+                    receiptID = If(result IsNot Nothing, result.ToString(), "0")
+                End Using
+            End Using
         Catch ex As Exception
-            MsgBox("Error from db: " & ex.ToString, MsgBoxStyle.Critical, "Error")
+            ' If DB read fails, fallback to timestamp to avoid overwrite
+            receiptID = DateTime.Now.ToString("yyyyMMddHHmmss")
         End Try
 
-        Dim receiptPath = "C:\Users\Administrator\Documents\Receipts\"
+        ' Build a safe receipts directory under the user's Documents and ensure it exists
+        Dim receiptsDir As String = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Receipts")
+        Try
+            If Not Directory.Exists(receiptsDir) Then
+                Directory.CreateDirectory(receiptsDir)
+            End If
+        Catch ex As Exception
+            MessageBox.Show("Unable to create receipts folder: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return String.Empty
+        End Try
+
         Dim filename As String = "Receipt" & receiptID & ".pdf"
-        receiptPath &= filename
-        receipt.Save(receiptPath)
+        Dim receiptPath As String = Path.Combine(receiptsDir, filename)
 
-        MsgBox("A receipt has been created at: " & receiptPath)
-        Return receiptPath
+        Try
+            receipt.Save(receiptPath)
+            MessageBox.Show("A receipt has been created at: " & receiptPath, "Receipt Created", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Return receiptPath
+        Catch ex As Exception
+            MessageBox.Show("Failed to save receipt: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return String.Empty
+        End Try
     End Function
-
-
 
     ' listeners & handlers
     Private Sub HandleSearchTxtBoxEnter(sender As Object, e As KeyPressEventArgs) Handles SearchTxtBox.KeyPress
@@ -727,8 +875,9 @@ Public Class Order
             End If
         End If
     End Sub
+
     Private Sub LogoutButton_Click(sender As Object, e As EventArgs) Handles IconButton3.Click
-        Dim res = MsgBox("Are you sure you wnat to log out?", MsgBoxStyle.YesNoCancel, "Notice")
+        Dim res = MsgBox("Are you sure you want to log out?", MsgBoxStyle.YesNoCancel, "Notice")
         If res = MsgBoxResult.Yes Then
             CurrentUser = ""
             IsAdmin = Nothing
@@ -736,10 +885,10 @@ Public Class Order
             Me.Hide()
         End If
     End Sub
+
     Private Function HandleItemAmountUpdate(ByVal isIncrease As Boolean, ByVal itemName As String)
         For Each row As DataGridViewRow In DataGridView1.Rows
             If row.Cells(1).Value IsNot Nothing AndAlso row.Cells(1).Value.ToString() = itemName Then
-
                 Dim newval As Integer = 0
                 Dim currentAmount = CInt(row.Cells(0).Value)
 
@@ -756,29 +905,30 @@ Public Class Order
                 End If
 
                 row.Cells(0).Value = newval
-
-                Return CStr(row.Cells(2).Value) ' return item price
+                Return CStr(row.Cells(2).Value)
                 Exit For
             End If
         Next
 
         Return "0"
     End Function
+
     Private Sub RemoveItemHandler(sender As Object, e As EventArgs)
         Dim btn As Button = CType(sender, Button)
-
         Dim index As Integer = 0
         For Each row In DataGridView1.Rows
             If row.cells(1).value = btn.Tag Then
                 DataGridView1.Rows.RemoveAt(index)
                 Exit For
-            Else index += 1
+            Else
+                index += 1
             End If
         Next
 
         UpdateItemOrderList()
         Compute()
     End Sub
+
     Private Sub HandleKeydownSelect(sender As Object, e As KeyEventArgs)
         If e.Control AndAlso e.KeyCode = Keys.Enter Then
             CreateOrderBtn_Click(sender, e)
@@ -787,18 +937,16 @@ Public Class Order
                 MenuItems(currentIndex).FlatAppearance.BorderColor = Color.Gray
                 currentIndex -= 1
             End If
-
         ElseIf e.KeyCode = Keys.Right Then
             If currentIndex < MenuItems.Count - 1 Then
                 MenuItems(currentIndex).FlatAppearance.BorderColor = Color.Gray
                 currentIndex += 1
             End If
-
         ElseIf e.KeyCode = Keys.Enter Then
             Dim btnSelected As Button = MenuItems(currentIndex)
             HandleItemClick(btnSelected, e)
         ElseIf e.Control AndAlso e.KeyCode = Keys.C Then
-            CancelBtn_Click(sender, e) ' cancel order
+            CancelBtn_Click(sender, e)
         ElseIf e.Control AndAlso e.KeyCode = Keys.D Then
             ApplyDiscount_Click(sender, e)
         ElseIf e.Control AndAlso e.KeyCode = Keys.O Then
@@ -807,10 +955,7 @@ Public Class Order
             Me.Focus()
         End If
 
-        ' handle current focused item
         MenuItems(currentIndex).FlatAppearance.BorderColor = Color.Red
-
-        ' get the currrent focused btn instead of using btn.focus()
         CurrentFocusedItem = MenuItems(currentIndex).Text
         For Each btn As Button In MenuItems
             If btn.Text = CurrentFocusedItem Then
@@ -818,19 +963,19 @@ Public Class Order
             End If
         Next
     End Sub
+
     Private Sub HandleIfItemExistsInOrder(ByVal itemName As String, ByVal itemPrice As String, ByVal tagImgPath As String, ByVal itemAmount As Integer)
         Dim nameExists As Boolean = False
 
         For Each row As DataGridViewRow In DataGridView1.Rows
             If row.Cells(1).Value IsNot Nothing AndAlso row.Cells(1).Value.ToString() = itemName Then
                 nameExists = True
-                row.Cells(0).Value = itemAmount ' set item amount
-                row.Cells(3).Value = CInt(row.Cells(3).Value) + Integer.Parse(itemPrice) ' set item total
+                row.Cells(0).Value = itemAmount
+                row.Cells(3).Value = CInt(row.Cells(3).Value) + Integer.Parse(itemPrice)
                 Exit For
             End If
         Next
 
-        ' create new row if doesn't exists
         If Not nameExists Then
             Dim newRow As New DataGridViewRow()
             newRow.CreateCells(DataGridView1, itemAmount, itemName, itemPrice, itemPrice * itemAmount, tagImgPath)
@@ -840,13 +985,11 @@ Public Class Order
             OrderPnl.Controls.Add(item)
             OrderPnl.ScrollControlIntoView(item)
         ElseIf nameExists Then
-            MsgBox(itemAmount)
-            UpdateItemOrderList()  ' just update the order list if it exists
+            UpdateItemOrderList()
         End If
-
     End Sub
+
     Private Sub Compute()
-        ' reset for computation
         CurrentTotal = 0
         CurrentSubTotal = 0
 
@@ -857,13 +1000,12 @@ Public Class Order
         End If
 
         For Each row As DataGridViewRow In DataGridView1.Rows
-            Dim itemAmount As Integer = Integer.Parse(row.Cells(0).Value) ' item amount
-            Dim itemPrice As Integer = Integer.Parse(row.Cells(2).Value) ' item price
-
+            Dim itemAmount As Integer = Integer.Parse(row.Cells(0).Value)
+            Dim itemPrice As Integer = Integer.Parse(row.Cells(2).Value)
             HandleDiscount(itemPrice * itemAmount)
         Next
-
     End Sub
+
     Private Sub HandleDiscount(ByVal itemPrice As String)
         CurrentSubTotal += Integer.Parse(itemPrice)
         SubtotalLbl.Text = "₱" & CurrentSubTotal
@@ -871,5 +1013,15 @@ Public Class Order
         Dim appliedDiscount = (DiscountValue * CurrentSubTotal)
         CurrentTotal = If((Not DiscountValue = 0), Integer.Abs(appliedDiscount - CurrentSubTotal), CurrentSubTotal)
         TotalLbl.Text = "₱" & CurrentTotal
+    End Sub
+    Private Sub ClosePreviewFormOnKeyPress(sender As Object, e As KeyPressEventArgs)
+        Try
+            Dim f = TryCast(sender, Form)
+            If f IsNot Nothing Then
+                f.Close()
+            End If
+        Catch
+            ' ignore
+        End Try
     End Sub
 End Class
