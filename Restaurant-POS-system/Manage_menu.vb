@@ -48,8 +48,8 @@ Public Class Manage_menu
             Return False
         End If
 
-        Dim itemPrice As Integer
-        If Not Integer.TryParse(PriceTxtBox.Text, itemPrice) Then
+        Dim itemPrice As Double
+        If Not Double.TryParse(PriceTxtBox.Text, itemPrice) Then
             MsgBox("Item price is invalid", MsgBoxStyle.Critical, "Error")
             Return False
         End If
@@ -416,13 +416,13 @@ Public Class Manage_menu
             UpdateBtn.Enabled = False
         End If
     End Sub
-    Private Sub HandleLettersOnly(sender As Object, e As KeyPressEventArgs) Handles ItemNameTxtBox.KeyPress
+    Private Sub HandleLettersOnly(sender As Object, e As KeyPressEventArgs)
         If Char.IsDigit(e.KeyChar) AndAlso Not Char.IsControl(e.KeyChar) Then
             e.Handled = True
         End If
     End Sub
-    Private Sub HandleNumbersOnly(sender As Object, e As KeyPressEventArgs) Handles PriceTxtBox.KeyPress
-        If Not Char.IsDigit(e.KeyChar) AndAlso Not Char.IsControl(e.KeyChar) Then
+    Private Sub HandleNumbersOnly(sender As Object, e As KeyPressEventArgs)
+        If Not Char.IsDigit(e.KeyChar) AndAlso Not Char.IsControl(e.KeyChar) AndAlso Not Asc(e.KeyChar) = 46 Then
             e.Handled = True
         End If
     End Sub

@@ -169,7 +169,7 @@ Public Module DatabaseHandler
             Console.WriteLine("EnsureArchivedUsersTableExists Error: " & ex.Message)
         End Try
     End Sub
-    Public Function GetAllUsers(Optional searchFilter As String = "") As List(Of UserAccount)
+    Public Function GetAllUsers(Optional searchFilter As String = "", Optional table As String = "") As List(Of UserAccount)
         Dim users As New List(Of UserAccount)()
 
         Try
@@ -177,7 +177,14 @@ Public Module DatabaseHandler
                 connection.Open()
 
                 'Dim query As String = "SELECT id, username, password, role, date_created FROM user WHERE 1=1"
+                'Dim query As String = "SELECT * FROM restaurant.user WHERE 1=1"
+
                 Dim query As String = "SELECT * FROM restaurant.user WHERE 1=1"
+
+                If Not String.IsNullOrEmpty(table) And table = "archived_users" Then
+                    query = "SELECT * FROM restaurant.archived_users WHERE 1=1"
+                End If
+
 
                 If Not String.IsNullOrEmpty(searchFilter) Then
                     query &= " AND (username LIKE @search OR role LIKE @search)"

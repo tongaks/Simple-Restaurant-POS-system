@@ -11,9 +11,14 @@ Public Class ApplyVoucher
         End If
     End Sub
     Private Sub ApplyVoucher_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        GetSettingsConfig()
         AddHandler DiscountTxtBox.KeyPress, AddressOf HandleNumberOnly
 
         UsernameTxtBox.Focus()
+
+        BackPanel = {Panel1}
+        FlowPanel = {}
+        SetTheme()
     End Sub
 
 

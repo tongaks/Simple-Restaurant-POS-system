@@ -42,9 +42,9 @@ Public Class CreateEditAccountForm
         cboRole.Items.Add("Admin")
         cboRole.Items.Add("Cashier")
 
-        If Not _isEditMode Then
-            cboRole.SelectedIndex = 2 ' Default to "User"
-        End If
+        'If Not _isEditMode Then
+        '    cboRole.SelectedIndex = cboRole.Items.Count ' Default to "User"
+        'End If
     End Sub
 
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click

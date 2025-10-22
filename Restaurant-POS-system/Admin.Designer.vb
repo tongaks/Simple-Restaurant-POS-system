@@ -54,6 +54,8 @@ Partial Class Admin
         Label1 = New Label()
         lblSalesTitle = New Label()
         pnlManageAccounts = New Panel()
+        Button2 = New Button()
+        Button1 = New Button()
         pnlAccountCards = New Panel()
         txtSearchAccounts = New TextBox()
         lblSearchAccounts = New Label()
@@ -85,7 +87,7 @@ Partial Class Admin
         ' lblTitle
         ' 
         lblTitle.AutoSize = True
-        lblTitle.Font = New Font("Segoe UI", 24.0F, FontStyle.Bold)
+        lblTitle.Font = New Font("Segoe UI", 24F, FontStyle.Bold)
         lblTitle.ForeColor = Color.White
         lblTitle.Location = New Point(30, 20)
         lblTitle.Name = "lblTitle"
@@ -98,7 +100,7 @@ Partial Class Admin
         btnLogout.Anchor = AnchorStyles.Top Or AnchorStyles.Right
         btnLogout.BackColor = Color.LightCoral
         btnLogout.FlatStyle = FlatStyle.Flat
-        btnLogout.Font = New Font("Segoe UI", 10.0F)
+        btnLogout.Font = New Font("Segoe UI", 10F)
         btnLogout.Location = New Point(1155, 22)
         btnLogout.Name = "btnLogout"
         btnLogout.Size = New Size(88, 38)
@@ -111,7 +113,7 @@ Partial Class Admin
         btnHelp.Anchor = AnchorStyles.Top Or AnchorStyles.Right
         btnHelp.BackColor = Color.LightGreen
         btnHelp.FlatStyle = FlatStyle.Flat
-        btnHelp.Font = New Font("Segoe UI", 10.0F)
+        btnHelp.Font = New Font("Segoe UI", 10F)
         btnHelp.Location = New Point(955, 22)
         btnHelp.Name = "btnHelp"
         btnHelp.Size = New Size(88, 38)
@@ -124,7 +126,7 @@ Partial Class Admin
         btnInstructions.Anchor = AnchorStyles.Top Or AnchorStyles.Right
         btnInstructions.BackColor = Color.LightYellow
         btnInstructions.FlatStyle = FlatStyle.Flat
-        btnInstructions.Font = New Font("Segoe UI", 10.0F)
+        btnInstructions.Font = New Font("Segoe UI", 10F)
         btnInstructions.Location = New Point(1047, 22)
         btnInstructions.Name = "btnInstructions"
         btnInstructions.Size = New Size(103, 38)
@@ -152,7 +154,7 @@ Partial Class Admin
         btnManageMenu.BackColor = Color.LightSalmon
         btnManageMenu.FlatAppearance.BorderColor = Color.Black
         btnManageMenu.FlatStyle = FlatStyle.Flat
-        btnManageMenu.Font = New Font("Segoe UI", 12.0F)
+        btnManageMenu.Font = New Font("Segoe UI", 12F)
         btnManageMenu.ForeColor = SystemColors.ActiveCaptionText
         btnManageMenu.IconChar = FontAwesome.Sharp.IconChar.HardHat
         btnManageMenu.IconColor = Color.Black
@@ -172,7 +174,7 @@ Partial Class Admin
         btnAuditLog.BackColor = Color.LightCoral
         btnAuditLog.FlatAppearance.BorderColor = Color.Black
         btnAuditLog.FlatStyle = FlatStyle.Flat
-        btnAuditLog.Font = New Font("Segoe UI", 12.0F)
+        btnAuditLog.Font = New Font("Segoe UI", 12F)
         btnAuditLog.ForeColor = SystemColors.ActiveCaptionText
         btnAuditLog.IconChar = FontAwesome.Sharp.IconChar.ClockFour
         btnAuditLog.IconColor = Color.Black
@@ -192,7 +194,7 @@ Partial Class Admin
         btnSalesReport.BackColor = Color.LightGreen
         btnSalesReport.FlatAppearance.BorderColor = Color.Black
         btnSalesReport.FlatStyle = FlatStyle.Flat
-        btnSalesReport.Font = New Font("Segoe UI", 12.0F)
+        btnSalesReport.Font = New Font("Segoe UI", 12F)
         btnSalesReport.ForeColor = SystemColors.ActiveCaptionText
         btnSalesReport.IconChar = FontAwesome.Sharp.IconChar.SackDollar
         btnSalesReport.IconColor = Color.Black
@@ -211,7 +213,7 @@ Partial Class Admin
         btnManageAccounts.BackColor = Color.LightBlue
         btnManageAccounts.FlatAppearance.BorderColor = Color.Black
         btnManageAccounts.FlatStyle = FlatStyle.Flat
-        btnManageAccounts.Font = New Font("Segoe UI", 12.0F)
+        btnManageAccounts.Font = New Font("Segoe UI", 12F)
         btnManageAccounts.ForeColor = SystemColors.ActiveCaptionText
         btnManageAccounts.IconChar = FontAwesome.Sharp.IconChar.PeopleLine
         btnManageAccounts.IconColor = Color.Black
@@ -232,7 +234,7 @@ Partial Class Admin
         SettingsBtn.BackColor = Color.Gray
         SettingsBtn.FlatAppearance.BorderColor = Color.Black
         SettingsBtn.FlatStyle = FlatStyle.Flat
-        SettingsBtn.Font = New Font("Segoe UI", 12.0F)
+        SettingsBtn.Font = New Font("Segoe UI", 12F)
         SettingsBtn.ForeColor = SystemColors.ControlLightLight
         SettingsBtn.IconChar = FontAwesome.Sharp.IconChar.Cog
         SettingsBtn.IconColor = Color.Black
@@ -323,7 +325,7 @@ Partial Class Admin
         ' lblUsernameFilter
         ' 
         lblUsernameFilter.AutoSize = True
-        lblUsernameFilter.Font = New Font("Segoe UI", 10.0F)
+        lblUsernameFilter.Font = New Font("Segoe UI", 10F)
         lblUsernameFilter.Location = New Point(30, 68)
         lblUsernameFilter.Name = "lblUsernameFilter"
         lblUsernameFilter.Size = New Size(108, 19)
@@ -347,7 +349,7 @@ Partial Class Admin
         ' lblAuditTitle
         ' 
         lblAuditTitle.AutoSize = True
-        lblAuditTitle.Font = New Font("Segoe UI", 18.0F, FontStyle.Bold)
+        lblAuditTitle.Font = New Font("Segoe UI", 18F, FontStyle.Bold)
         lblAuditTitle.Location = New Point(30, 20)
         lblAuditTitle.Name = "lblAuditTitle"
         lblAuditTitle.Size = New Size(126, 32)
@@ -424,7 +426,7 @@ Partial Class Admin
         ' lblOrderCount
         ' 
         lblOrderCount.AutoSize = True
-        lblOrderCount.Font = New Font("Segoe UI", 14.0F, FontStyle.Bold)
+        lblOrderCount.Font = New Font("Segoe UI", 14F, FontStyle.Bold)
         lblOrderCount.Location = New Point(320, 40)
         lblOrderCount.Name = "lblOrderCount"
         lblOrderCount.Size = New Size(23, 25)
@@ -434,7 +436,7 @@ Partial Class Admin
         ' lblTotalSales
         ' 
         lblTotalSales.AutoSize = True
-        lblTotalSales.Font = New Font("Segoe UI", 14.0F, FontStyle.Bold)
+        lblTotalSales.Font = New Font("Segoe UI", 14F, FontStyle.Bold)
         lblTotalSales.Location = New Point(120, 40)
         lblTotalSales.Name = "lblTotalSales"
         lblTotalSales.Size = New Size(35, 25)
@@ -444,7 +446,7 @@ Partial Class Admin
         ' Label4
         ' 
         Label4.AutoSize = True
-        Label4.Font = New Font("Segoe UI", 10.0F)
+        Label4.Font = New Font("Segoe UI", 10F)
         Label4.Location = New Point(220, 15)
         Label4.Name = "Label4"
         Label4.Size = New Size(90, 19)
@@ -454,7 +456,7 @@ Partial Class Admin
         ' Label3
         ' 
         Label3.AutoSize = True
-        Label3.Font = New Font("Segoe UI", 10.0F)
+        Label3.Font = New Font("Segoe UI", 10F)
         Label3.Location = New Point(20, 15)
         Label3.Name = "Label3"
         Label3.Size = New Size(75, 19)
@@ -465,7 +467,7 @@ Partial Class Admin
         ' 
         btnGenerateReport.BackColor = Color.SpringGreen
         btnGenerateReport.FlatStyle = FlatStyle.Flat
-        btnGenerateReport.Font = New Font("Segoe UI", 10.0F)
+        btnGenerateReport.Font = New Font("Segoe UI", 10F)
         btnGenerateReport.Location = New Point(350, 65)
         btnGenerateReport.Name = "btnGenerateReport"
         btnGenerateReport.Size = New Size(120, 30)
@@ -490,7 +492,7 @@ Partial Class Admin
         ' Label2
         ' 
         Label2.AutoSize = True
-        Label2.Font = New Font("Segoe UI", 10.0F)
+        Label2.Font = New Font("Segoe UI", 10F)
         Label2.Location = New Point(200, 48)
         Label2.Name = "Label2"
         Label2.Size = New Size(26, 19)
@@ -500,7 +502,7 @@ Partial Class Admin
         ' Label1
         ' 
         Label1.AutoSize = True
-        Label1.Font = New Font("Segoe UI", 10.0F)
+        Label1.Font = New Font("Segoe UI", 10F)
         Label1.Location = New Point(70, 48)
         Label1.Name = "Label1"
         Label1.Size = New Size(44, 19)
@@ -510,7 +512,7 @@ Partial Class Admin
         ' lblSalesTitle
         ' 
         lblSalesTitle.AutoSize = True
-        lblSalesTitle.Font = New Font("Segoe UI", 18.0F, FontStyle.Bold)
+        lblSalesTitle.Font = New Font("Segoe UI", 18F, FontStyle.Bold)
         lblSalesTitle.Location = New Point(30, 20)
         lblSalesTitle.Name = "lblSalesTitle"
         lblSalesTitle.Size = New Size(156, 32)
@@ -520,6 +522,8 @@ Partial Class Admin
         ' pnlManageAccounts
         ' 
         pnlManageAccounts.BackColor = SystemColors.Control
+        pnlManageAccounts.Controls.Add(Button2)
+        pnlManageAccounts.Controls.Add(Button1)
         pnlManageAccounts.Controls.Add(pnlAccountCards)
         pnlManageAccounts.Controls.Add(txtSearchAccounts)
         pnlManageAccounts.Controls.Add(lblSearchAccounts)
@@ -532,16 +536,42 @@ Partial Class Admin
         pnlManageAccounts.TabIndex = 4
         pnlManageAccounts.Visible = False
         ' 
+        ' Button2
+        ' 
+        Button2.BackColor = Color.MediumSpringGreen
+        Button2.FlatStyle = FlatStyle.Flat
+        Button2.Font = New Font("Segoe UI", 10F)
+        Button2.Location = New Point(659, 29)
+        Button2.Name = "Button2"
+        Button2.Size = New Size(198, 30)
+        Button2.TabIndex = 6
+        Button2.Text = "View active users"
+        Button2.UseVisualStyleBackColor = False
+        Button2.Visible = False
+        ' 
+        ' Button1
+        ' 
+        Button1.BackColor = Color.LightYellow
+        Button1.FlatStyle = FlatStyle.Flat
+        Button1.Font = New Font("Segoe UI", 10F)
+        Button1.Location = New Point(659, 70)
+        Button1.Name = "Button1"
+        Button1.Size = New Size(198, 30)
+        Button1.TabIndex = 5
+        Button1.Text = "View archive users"
+        Button1.UseVisualStyleBackColor = False
+        Button1.Visible = False
+        ' 
         ' pnlAccountCards
         ' 
         pnlAccountCards.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
         pnlAccountCards.AutoScroll = True
         pnlAccountCards.BackColor = Color.WhiteSmoke
         pnlAccountCards.BorderStyle = BorderStyle.FixedSingle
-        pnlAccountCards.Location = New Point(30, 120)
+        pnlAccountCards.Location = New Point(30, 123)
         pnlAccountCards.Margin = New Padding(3, 2, 3, 2)
         pnlAccountCards.Name = "pnlAccountCards"
-        pnlAccountCards.Size = New Size(980, 440)
+        pnlAccountCards.Size = New Size(980, 437)
         pnlAccountCards.TabIndex = 4
         ' 
         ' txtSearchAccounts
@@ -556,7 +586,7 @@ Partial Class Admin
         ' lblSearchAccounts
         ' 
         lblSearchAccounts.AutoSize = True
-        lblSearchAccounts.Font = New Font("Segoe UI", 10.0F)
+        lblSearchAccounts.Font = New Font("Segoe UI", 10F)
         lblSearchAccounts.Location = New Point(278, 76)
         lblSearchAccounts.Name = "lblSearchAccounts"
         lblSearchAccounts.Size = New Size(52, 19)
@@ -567,7 +597,7 @@ Partial Class Admin
         ' 
         btnCreateAccount.BackColor = Color.LightGreen
         btnCreateAccount.FlatStyle = FlatStyle.Flat
-        btnCreateAccount.Font = New Font("Segoe UI", 10.0F)
+        btnCreateAccount.Font = New Font("Segoe UI", 10F)
         btnCreateAccount.Location = New Point(30, 70)
         btnCreateAccount.Name = "btnCreateAccount"
         btnCreateAccount.Size = New Size(198, 30)
@@ -578,7 +608,7 @@ Partial Class Admin
         ' lblAccountsTitle
         ' 
         lblAccountsTitle.AutoSize = True
-        lblAccountsTitle.Font = New Font("Segoe UI", 18.0F, FontStyle.Bold)
+        lblAccountsTitle.Font = New Font("Segoe UI", 18F, FontStyle.Bold)
         lblAccountsTitle.Location = New Point(30, 20)
         lblAccountsTitle.Name = "lblAccountsTitle"
         lblAccountsTitle.Size = New Size(219, 32)
@@ -587,7 +617,7 @@ Partial Class Admin
         ' 
         ' Admin
         ' 
-        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
+        AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1284, 661)
         Controls.Add(pnlManageAccounts)
@@ -658,5 +688,7 @@ Partial Class Admin
     Friend WithEvents btnAuditLog As FontAwesome.Sharp.IconButton
     Friend WithEvents btnManageMenu As FontAwesome.Sharp.IconButton
     Friend WithEvents btnSalesReport As FontAwesome.Sharp.IconButton
+    Friend WithEvents Button1 As Button
+    Friend WithEvents Button2 As Button
     'Friend WithEvents btnManageMenu As FontAwesome.Sharp.IconButton
 End Class

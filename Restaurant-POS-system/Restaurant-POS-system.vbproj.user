@@ -13,6 +13,9 @@
     <Compile Update="CreateEditAccountForm.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="ItemDialogForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Login_Form.vb">
       <SubType>Form</SubType>
     </Compile>

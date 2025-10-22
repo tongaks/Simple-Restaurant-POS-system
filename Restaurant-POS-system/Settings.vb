@@ -81,6 +81,10 @@ Public Class Settings
                 HasUpdate = True
                 MsgBox("Successfully updated the configurations!", MsgBoxStyle.Information, "Success")
                 GetSettingsConfig() ' refresh SettingsConfig struct data
+
+                BackPanel = {Panel1}
+                FlowPanel = {}
+                SetTheme()
             End If
 
         Catch ex As Exception

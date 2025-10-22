@@ -22,8 +22,8 @@ Imports ZstdSharp.Unsafe
 
 
 Public Class Order
-    Dim CurrentTotal As Integer
-    Dim CurrentSubTotal As Integer
+    Dim CurrentTotal As Double
+    Dim CurrentSubTotal As Double
     Dim DiscountValue As Double = 0
     Dim CurrentFocusedItem As String
     Dim MenuItems As New List(Of Button)
@@ -77,118 +77,120 @@ Public Class Order
 
     ' Form dialog for increasing/decreasing item amount
     ' WIP
-    Private Function DisplayItemDialogForm(ByVal itemAmount As Integer)
-        'Dim itemAmount As Integer = 1
+    'Private Function DisplayItemDialogForm(ByVal itemAmount As Integer)
+    '    'Dim itemAmount As Integer = 1
 
-        Dim itemDialog As New Form
-        'itemDialog.Size = New System.Drawing.Size(500, 150)
-        itemDialog.StartPosition = FormStartPosition.CenterScreen
-        itemDialog.KeyPreview = True
-        itemDialog.AutoSize = True
-        itemDialog.Text = "Edit item quantity"
+    '    Dim itemDialog As New Form
+    '    'itemDialog.Size = New System.Drawing.Size(500, 150)
+    '    itemDialog.StartPosition = FormStartPosition.CenterScreen
+    '    itemDialog.KeyPreview = True
+    '    itemDialog.AutoSize = True
+    '    itemDialog.Text = "Edit item quantity"
 
-        Dim mainPanel As New FlowLayoutPanel
-        mainPanel.FlowDirection = FlowDirection.TopDown
-        mainPanel.AutoSize = True
+    '    Dim mainPanel As New FlowLayoutPanel
+    '    mainPanel.FlowDirection = FlowDirection.TopDown
+    '    mainPanel.AutoSize = True
 
-        Dim itemButtonPanel As New FlowLayoutPanel()
-        itemButtonPanel.FlowDirection = FlowDirection.LeftToRight
-        itemButtonPanel.AutoSize = True
-        itemButtonPanel.Margin = New Padding(30, 10, 0, 0)
+    '    Dim itemButtonPanel As New FlowLayoutPanel()
+    '    itemButtonPanel.FlowDirection = FlowDirection.LeftToRight
+    '    itemButtonPanel.AutoSize = True
+    '    itemButtonPanel.Margin = New Padding(30, 10, 0, 0)
 
-        Dim itemNameLabel As New Label()
-        itemNameLabel.Text = CurrentFocused.Text
-        itemNameLabel.Font = New Font("Arial", 30, FontStyle.Bold)
-        itemNameLabel.AutoSize = True
+    '    Dim itemNameLabel As New Label()
+    '    itemNameLabel.Text = CurrentFocused.Text
+    '    itemNameLabel.Font = New Font("Arial", 30, FontStyle.Bold)
+    '    itemNameLabel.AutoSize = True
 
-        Dim itemAmountLabel As New Label()
-        itemAmountLabel.Text = itemAmount.ToString
-        itemAmountLabel.Font = New Font("Arial", 50, FontStyle.Bold)
-        itemAmountLabel.AutoSize = True
+    '    Dim itemAmountLabel As New Label()
+    '    itemAmountLabel.Text = itemAmount.ToString
+    '    itemAmountLabel.Font = New Font("Arial", 50, FontStyle.Bold)
+    '    itemAmountLabel.AutoSize = True
 
-        Dim amountWrapper As New Panel()
-        amountWrapper.Size = New Size(itemAmountLabel.PreferredWidth + 10, itemButtonPanel.Height)
-        itemAmountLabel.Location = New Point(0, ((itemButtonPanel.Height - itemAmountLabel.Height) \ 2) - 30)
-        amountWrapper.Controls.Add(itemAmountLabel)
+    '    Dim amountWrapper As New Panel()
+    '    amountWrapper.Size = New Size(itemAmountLabel.PreferredWidth + 10, itemButtonPanel.Height)
+    '    itemAmountLabel.Location = New Point(0, ((itemButtonPanel.Height - itemAmountLabel.Height) \ 2) - 30)
+    '    amountWrapper.Controls.Add(itemAmountLabel)
 
-        Dim increaseButton As New Button()
-        increaseButton.Text = "+"
-        increaseButton.Tag = CurrentFocusedItem
-        increaseButton.BackColor = Color.Green
-        increaseButton.Size = New Size(100, 100)
-        AddHandler increaseButton.Click, Sub()
-                                             itemAmount += 1
-                                             itemAmountLabel.Text = itemAmount.ToString
-                                         End Sub
+    '    Dim increaseButton As New Button()
+    '    increaseButton.Text = "+"
+    '    increaseButton.Tag = CurrentFocusedItem
+    '    increaseButton.BackColor = Color.Green
+    '    increaseButton.Size = New Size(100, 100)
+    '    AddHandler increaseButton.Click, Sub()
+    '                                         itemAmount += 1
+    '                                         itemAmountLabel.Text = itemAmount.ToString
+    '                                     End Sub
 
-        Dim decreaseButton As New Button()
-        decreaseButton.Text = "-"
-        decreaseButton.Tag = CurrentFocusedItem
-        decreaseButton.BackColor = Color.Red
-        decreaseButton.ForeColor = Color.White
-        decreaseButton.Size = New Size(100, 100)
-        AddHandler decreaseButton.Click, Sub()
-                                             itemAmount = If((itemAmount > 1), itemAmount - 1, itemAmount)
-                                             itemAmountLabel.Text = itemAmount.ToString
-                                         End Sub
+    '    Dim decreaseButton As New Button()
+    '    decreaseButton.Text = "-"
+    '    decreaseButton.Tag = CurrentFocusedItem
+    '    decreaseButton.BackColor = Color.Red
+    '    decreaseButton.ForeColor = Color.White
+    '    decreaseButton.Size = New Size(100, 100)
+    '    AddHandler decreaseButton.Click, Sub()
+    '                                         itemAmount = If((itemAmount > 1), itemAmount - 1, itemAmount)
+    '                                         itemAmountLabel.Text = itemAmount.ToString
+    '                                     End Sub
 
-        itemButtonPanel.Controls.Add(increaseButton)
-        itemButtonPanel.Controls.Add(amountWrapper)
-        itemButtonPanel.Controls.Add(decreaseButton)
+    '    itemButtonPanel.Controls.Add(increaseButton)
+    '    itemButtonPanel.Controls.Add(amountWrapper)
+    '    itemButtonPanel.Controls.Add(decreaseButton)
 
-        Dim buttonPnl As New FlowLayoutPanel
-        buttonPnl.FlowDirection = FlowDirection.LeftToRight
-        buttonPnl.Margin = New Padding(0, 30, 0, 0)
-        buttonPnl.Padding = New Padding(50, 0, 0, 0)
-        buttonPnl.AutoSize = True
+    '    Dim buttonPnl As New FlowLayoutPanel
+    '    buttonPnl.FlowDirection = FlowDirection.LeftToRight
+    '    buttonPnl.Margin = New Padding(0, 30, 0, 0)
+    '    buttonPnl.Padding = New Padding(50, 0, 0, 0)
+    '    buttonPnl.AutoSize = True
 
-        Dim addItemBtn As New Button
-        addItemBtn.Text = "Add"
-        addItemBtn.Size = New Size(100, 60)
-        addItemBtn.FlatStyle = FlatStyle.Flat
-        addItemBtn.BackColor = Color.SpringGreen
-        'addItemBtn.Margin = New Padding(60, 30, 0, 0)
-        AddHandler addItemBtn.Click, Sub()
-                                         itemDialog.DialogResult = DialogResult.OK
-                                         itemDialog.Close()
-                                     End Sub
+    '    Dim addItemBtn As New Button
+    '    addItemBtn.Text = "Add"
+    '    addItemBtn.Size = New Size(100, 60)
+    '    addItemBtn.FlatStyle = FlatStyle.Flat
+    '    addItemBtn.BackColor = Color.SpringGreen
+    '    'addItemBtn.Margin = New Padding(60, 30, 0, 0)
+    '    AddHandler addItemBtn.Click, Sub()
+    '                                     itemDialog.DialogResult = DialogResult.OK
+    '                                     itemDialog.Close()
+    '                                 End Sub
 
-        Dim cancelItemBtn As New Button
-        cancelItemBtn.Text = "Cancel"
-        cancelItemBtn.Size = New Size(100, 60)
-        cancelItemBtn.FlatStyle = FlatStyle.Flat
-        cancelItemBtn.BackColor = Color.Gray
-        'cancelItemBtn.Margin = New Padding(60, 30, 0, 0)
-        AddHandler cancelItemBtn.Click, Sub()
-                                            itemDialog.DialogResult = DialogResult.Cancel
-                                            itemDialog.Close()
-                                        End Sub
+    '    Dim cancelItemBtn As New Button
+    '    cancelItemBtn.Text = "Cancel"
+    '    cancelItemBtn.Size = New Size(100, 60)
+    '    cancelItemBtn.FlatStyle = FlatStyle.Flat
+    '    cancelItemBtn.BackColor = Color.Gray
+    '    'cancelItemBtn.Margin = New Padding(60, 30, 0, 0)
+    '    AddHandler cancelItemBtn.Click, Sub()
+    '                                        itemDialog.DialogResult = DialogResult.Cancel
+    '                                        itemDialog.Close()
+    '                                    End Sub
 
-        buttonPnl.Controls.Add(addItemBtn)
-        buttonPnl.Controls.Add(cancelItemBtn)
+    '    buttonPnl.Controls.Add(addItemBtn)
+    '    buttonPnl.Controls.Add(cancelItemBtn)
 
-        mainPanel.Controls.Add(itemNameLabel)
-        mainPanel.Controls.Add(itemButtonPanel)
-        mainPanel.Controls.Add(buttonPnl)
-        itemDialog.Controls.Add(mainPanel)
-        'itemDialog.Size = New System.Drawing.Size(mainPanel.Width + 50, mainPanel.Height + 50)
+    '    mainPanel.Controls.Add(itemNameLabel)
+    '    mainPanel.Controls.Add(itemButtonPanel)
+    '    mainPanel.Controls.Add(buttonPnl)
+    '    itemDialog.Controls.Add(mainPanel)
+    '    'itemDialog.Size = New System.Drawing.Size(mainPanel.Width + 50, mainPanel.Height + 50)
 
-        AddHandler itemDialog.KeyDown, Sub(sender As Object, e As KeyEventArgs)
-                                           If e.Control AndAlso e.KeyCode = Keys.Enter Then
-                                               itemDialog.DialogResult = DialogResult.OK
-                                               itemDialog.Close()
-                                           ElseIf e.KeyCode = Keys.Escape Then
-                                               itemDialog.DialogResult = DialogResult.Cancel
-                                               itemDialog.Close()
-                                           End If
-                                       End Sub
+    '    AddHandler itemDialog.KeyDown, Sub(sender As Object, e As KeyEventArgs)
+    '                                       If e.Control AndAlso e.KeyCode = Keys.Enter Then
+    '                                           itemDialog.DialogResult = DialogResult.OK
+    '                                           itemDialog.Close()
+    '                                       ElseIf e.KeyCode = Keys.Escape Then
+    '                                           itemDialog.DialogResult = DialogResult.Cancel
+    '                                           itemDialog.Close()
+    '                                       End If
+    '                                   End Sub
 
-        If itemDialog.ShowDialog() = DialogResult.OK Then
-            Return itemAmount
-        Else
-            Return -1
-        End If
-    End Function
+    '    If itemDialog.ShowDialog() = DialogResult.OK Then
+    '        Return itemAmount
+    '    Else
+    '        Return -1
+    '    End If
+    'End Function
+
+
     Private Sub DisplayRecentOrders()
         Dim recentDialog As New Form
         recentDialog.Size = New System.Drawing.Size(1000, 500)
@@ -352,6 +354,16 @@ Public Class Order
     End Sub
 
 
+    Private Function DisplayItemDialogForm(ByVal itemAmount As Integer) As Integer
+        If CurrentFocused Is Nothing Then Return -1
+        Dim tagData As TagData = ExtractTag(CurrentFocused.Tag)
+        Dim dlg As New ItemDialogForm(CurrentFocused.Text, tagData.Price, itemAmount)
+        If dlg.ShowDialog() = DialogResult.OK Then
+            Return dlg.Quantity
+        Else
+            Return -1
+        End If
+    End Function
 
 
     ' Menu item/category click handlers
@@ -539,7 +551,7 @@ Public Class Order
         Dim ConnectionString = GetGlobalConnectionString()
         Dim Connection As New MySqlConnection(ConnectionString)
 
-        Dim TotalAmount = Integer.Parse(TotalLbl.Text.Substring(1))
+        Dim TotalAmount = Double.Parse(TotalLbl.Text.Substring(1))
 
         Try
             Connection.Open()
@@ -763,6 +775,7 @@ Public Class Order
 
         Dim filename As String = "Receipt" & receiptID & ".pdf"
         Dim receiptPath As String = Path.Combine(receiptsFolder, filename)
+        receipt.Save(receiptPath)
 
         MsgBox("A receipt has been created at: " & receiptPath)
         Return receiptPath

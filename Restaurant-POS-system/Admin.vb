@@ -54,6 +54,8 @@ Public Class Admin
         ' Set initial active button
         SetActiveButton(btnAuditLog)
 
+        dgvAuditLogs.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+
         BackPanel = {pnlHeader}
         FlowPanel = {}
         SetTheme()
@@ -203,7 +205,7 @@ Public Class Admin
         Try
             pnlAccountCards.Controls.Clear()
 
-            Dim accounts = DatabaseHandler.GetAllUsers(searchFilter)
+            Dim accounts = DatabaseHandler.GetAllUsers(Nothing, "")
 
             Dim yPos As Integer = 10
 
@@ -327,9 +329,9 @@ Public Class Admin
     End Sub
 
     Private Sub btnCreateAccount_Click(sender As Object, e As EventArgs) Handles btnCreateAccount.Click
-        Dim createForm As New CreateEditAccountForm()
-        If createForm.ShowDialog() = DialogResult.OK Then
-            LoadUserAccounts(txtSearchAccounts.Text.Trim())
+        Dim createForm As New CreateEditAccountForm
+        If createForm.ShowDialog = DialogResult.OK Then
+            LoadUserAccounts(txtSearchAccounts.Text.Trim)
         End If
     End Sub
 
@@ -355,5 +357,95 @@ Public Class Admin
 
     Private Sub Admin_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         MyBase.Close()
+    End Sub
+
+
+    Private Sub ViewArvhived_Users_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Try
+            pnlAccountCards.Controls.Clear()
+
+            Dim accounts = GetAllUsers(Nothing, "archived_users")
+
+            Dim yPos = 10
+
+            For Each account In accounts
+                Dim card As New AccountCard
+                card.Width = pnlAccountCards.ClientSize.Width - 40
+                card.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
+                card.SetAccount(account)
+
+                card.btnArchive.Text = "Unarchived"
+
+                ' wire events
+                AddHandler card.EditRequested, Sub(a)
+                                                   Dim editForm As New CreateEditAccountForm(a)
+                                                   If editForm.ShowDialog = DialogResult.OK Then
+                                                       LoadUserAccounts(txtSearchAccounts.Text.Trim)
+                                                   End If
+                                               End Sub
+
+                AddHandler card.DeleteRequested, Sub(a)
+                                                     Dim result = MessageBox.Show($"Are you sure you want to permanently delete user '{a.Username}'?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
+                                                     If result = DialogResult.Yes Then
+                                                         If DeleteUser(a.ID) Then
+                                                             MessageBox.Show("Account deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                                                             LoadUserAccounts(txtSearchAccounts.Text.Trim)
+                                                         Else
+                                                             MessageBox.Show("Failed to delete account.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                                         End If
+                                                     End If
+                                                 End Sub
+
+                AddHandler card.ArchiveRequested, Sub(a)
+                                                      Dim result = MessageBox.Show($"Archive user '{a.Username}'? This will move the account to archived storage.", "Confirm Archive", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                                                      If result = DialogResult.Yes Then
+                                                          If ArchiveUser(a.ID) Then
+                                                              MessageBox.Show("Account archived successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                                                              LoadUserAccounts(txtSearchAccounts.Text.Trim)
+                                                          Else
+                                                              MessageBox.Show("Failed to archive account.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                                          End If
+                                                      End If
+                                                  End Sub
+
+                ' layout
+                card.Location = New Point(10, yPos)
+                pnlAccountCards.Controls.Add(card)
+                yPos += card.Height + 10
+            Next
+
+            If accounts.Count = 0 Then
+                Dim lblNoData As New Label
+                lblNoData.Text = "No accounts found."
+                lblNoData.Font = New Font("Segoe UI", 12, FontStyle.Italic)
+                lblNoData.ForeColor = Color.Gray
+                lblNoData.Location = New Point(10, 10)
+                lblNoData.AutoSize = True
+                pnlAccountCards.Controls.Add(lblNoData)
+            End If
+
+        Catch ex As Exception
+            LogError("LoadUserAccounts", ex.Message)
+            MessageBox.Show("Error loading user accounts: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        pnlAuditLog.Visible = False
+        pnlManageAccounts.Visible = True
+        SetActiveButton(btnManageAccounts)
+        LoadUserAccounts()
+    End Sub
+
+    Private Sub Unarchived_user()
+        Dim Connection As New MySqlConnection(GetGlobalConnectionString)
+
+        Try
+            Connection.Open()
+            Dim Query As String = ""
+
+        Catch ex As Exception
+
+        End Try
     End Sub
 End Class
