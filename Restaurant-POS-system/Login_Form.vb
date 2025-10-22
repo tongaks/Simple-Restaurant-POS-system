@@ -62,6 +62,13 @@ Public Class Form1
                 Command.Parameters.AddWithValue("@role", If(IsAdmin, "admin", "cashier"))
 
                 If Command.ExecuteNonQuery() > 0 Then
+                    ' Also insert into activity_logs for audit visibility
+                    Try
+                        InsertActivityLog("Logged in")
+                    Catch
+                        ' ignore logging failure - do not block login
+                    End Try
+
                     If IsAdmin Then
                         Admin.Show()
                     Else
@@ -74,13 +81,11 @@ Public Class Form1
 
             Catch ex As Exception
                 MsgBox("Error creating login log: " + ex.ToString, MsgBoxStyle.Critical, "Error creating log")
-
             Finally
                 If Connection.State = ConnectionState.Open Then
                     Connection.Close()
                 End If
             End Try
-
         End If
     End Sub
 End Class

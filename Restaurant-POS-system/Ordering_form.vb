@@ -647,41 +647,49 @@ Public Class Order
 
             If Command.ExecuteNonQuery > 0 Then
                 MsgBox("Order created", MsgBoxStyle.Information, "Success")
-                Dim receiptName = CreateReceiptPDF()
 
-                If String.IsNullOrEmpty(receiptName) Then
-                    MessageBox.Show("Receipt was not created — skipping preview.", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                Else
-                    Try
-                        Dim designerReceipt As New Receipt()
-                        designerReceipt.LoadPdf(receiptName)
-                        designerReceipt.ShowDialog(Me)
-                    Catch ex As Exception
-                        ' Fallback: try to preview using ad-hoc viewer if designer fails
-                        Try
-                            Dim receiptForm As New Form
-                            receiptForm.Size = New System.Drawing.Size(500, 800)
-                            receiptForm.KeyPreview = True
-                            receiptForm.Text = "Receipt"
-                            receiptForm.StartPosition = FormStartPosition.CenterScreen
-                            AddHandler receiptForm.KeyPress, AddressOf ClosePreviewFormOnKeyPress
+                ' Generate PDF receipt
+                Dim receiptPath = CreateReceiptPDF()
 
-                            Dim pdfViewer1 = New PdfiumViewer.PdfViewer()
-                            pdfViewer1.Dock = DockStyle.Fill
-                            receiptForm.Controls.Add(pdfViewer1)
+                ' ===== NEW CODE: Launch modern Receipt form =====
+                Try
+                    ' Build order data from current order
+                    Dim orderData As New Receipt.OrderData With {
+                        .OrderId = GetLatestOrderId(), ' Helper function to get latest order ID
+                        .OrderDate = Date.Now,
+                        .CashierName = CurrentUser,
+                        .Items = New List(Of Receipt.OrderItem),
+                        .Subtotal = CDec(CurrentSubTotal),
+                        .DiscountPercent = DiscountValue * 100,
+                        .Total = CDec(CurrentTotal),
+                        .PaymentMethod = "Cash"
+                    }
 
-                            pdfViewer1.Document = PdfiumViewer.PdfDocument.Load(receiptName)
-                            pdfViewer1.ZoomMode = PdfViewerZoomMode.FitWidth
-                            receiptForm.Height = pdfViewer1.Height
-                            receiptForm.ShowDialog(Me)
-                        Catch ex2 As Exception
-                            MessageBox.Show("Unable to preview receipt: " & ex2.Message, "Preview Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-                        End Try
-                    End Try
-                End If
+                    ' Populate items from DataGridView
+                    For Each row As DataGridViewRow In DataGridView1.Rows
+                        Dim item As New Receipt.OrderItem With {
+                            .Name = If(row.Cells(1).Value IsNot Nothing, row.Cells(1).Value.ToString(), ""),
+                            .Amount = If(row.Cells(0).Value IsNot Nothing, CInt(row.Cells(0).Value), 0),
+                            .Price = If(row.Cells(2).Value IsNot Nothing, CDec(row.Cells(2).Value), 0D),
+                            .Total = If(row.Cells(3).Value IsNot Nothing, CDec(row.Cells(3).Value), 0D)
+                        }
+                        orderData.Items.Add(item)
+                    Next
+
+                    ' Show the modern receipt form (native UI + PDF preview)
+                    Dim receiptForm As New Receipt()
+                    receiptForm.LoadReceipt(orderData, receiptPath)
+                    receiptForm.ShowDialog(Me)
+
+                Catch ex As Exception
+                    ' Fallback to basic message if receipt form fails
+                    MessageBox.Show("Receipt created but could not display preview: " & ex.Message, "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                End Try
+                ' ===== END NEW CODE =====
 
                 InsertActivityLog("Created an order with total of " & CurrentTotal)
 
+                ' Reset form
                 CurrentTotal = 0
                 CurrentSubTotal = 0
                 DiscountValue = 0
@@ -730,35 +738,31 @@ Public Class Order
         Dim applyVoucherForm As New ApplyVoucher
 
         If applyVoucherForm.ShowDialog() = DialogResult.OK Then
-            Dim discountType As String = ""
+            ' Read selected discount from the dialog (public properties)
+            Dim selectedPercent As Double = applyVoucherForm.SelectedDiscountPercent
+            Dim discountType As String = applyVoucherForm.SelectedDiscountType
 
-            For Each cntrl As Control In applyVoucherForm.DiscountPnl.Controls
-                If TypeOf cntrl Is TextBox Then
-                    Dim txtBox As TextBox = CType(cntrl, TextBox)
-                    Dim val As Double = 0.0
+            If selectedPercent <= 0 Then
+                MessageBox.Show("No discount selected.", "Discount", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Return
+            End If
 
-                    If Double.TryParse(txtBox.Text, val) Then
-                        DiscountValue = val / 100
-                        DiscountLbl.Text = "%" & txtBox.Text
-                    End If
+            ' Apply discount (store as fraction 0.2 for 20%)
+            DiscountValue = selectedPercent / 100.0
+            DiscountLbl.Text = "%" & selectedPercent.ToString("0.##")
 
-                ElseIf TypeOf cntrl Is ComboBox Then
-                    Dim cmbBox As ComboBox = CType(cntrl, ComboBox)
-                    If Not cmbBox.Text.Contains("Select") Then
-                        discountType = cmbBox.Text
-                    End If
-                End If
-            Next
-
-            Dim activityStatement As String = "Applied discount: " & DiscountValue
+            ' Log activity
+            Dim activityStatement As String = "Applied discount: " & (selectedPercent.ToString("0.##") & "%")
             If Not String.IsNullOrEmpty(discountType) Then
                 activityStatement &= " Type: " & discountType
             End If
-
             InsertActivityLog(activityStatement)
-            Dim appliedDiscount = (DiscountValue * CurrentTotal)
-            CurrentTotal = If((Not DiscountValue = 0), Integer.Abs(appliedDiscount - CurrentSubTotal), CurrentSubTotal)
-            TotalLbl.Text = "₱" + CurrentTotal.ToString
+
+            ' Recalculate totals: discount applies to subtotal
+            Dim appliedDiscount = (DiscountValue * CurrentSubTotal)
+            CurrentTotal = CInt(Math.Round(CurrentSubTotal - appliedDiscount))
+            TotalLbl.Text = "₱" & CurrentTotal.ToString()
+
         End If
     End Sub
 
@@ -879,6 +883,13 @@ Public Class Order
     Private Sub LogoutButton_Click(sender As Object, e As EventArgs) Handles IconButton3.Click
         Dim res = MsgBox("Are you sure you want to log out?", MsgBoxStyle.YesNoCancel, "Notice")
         If res = MsgBoxResult.Yes Then
+            Try
+                ' Record logout activity (use existing CurrentUser and IsAdmin)
+                InsertActivityLog("Logged out")
+            Catch
+                ' ignore logging failure
+            End Try
+
             CurrentUser = ""
             IsAdmin = Nothing
             Form1.Show()
@@ -1024,4 +1035,26 @@ Public Class Order
             ' ignore
         End Try
     End Sub
+
+    ''' <summary>
+    ''' Get the latest order ID from database
+    ''' </summary>
+    Private Function GetLatestOrderId() As String
+        Try
+            Using conn As New MySqlConnection(GetGlobalConnectionString())
+                conn.Open()
+                Dim query As String = "SELECT IFNULL(MAX(order_id), 0) FROM orders"
+                Using cmd As New MySqlCommand(query, conn)
+                    Dim result = cmd.ExecuteScalar()
+                    If result IsNot Nothing AndAlso Not IsDBNull(result) Then
+                        Return result.ToString()
+                    End If
+                End Using
+            End Using
+        Catch ex As Exception
+            ' Fallback to timestamp if query fails
+            Return DateTime.Now.ToString("yyyyMMddHHmmss")
+        End Try
+        Return "0"
+    End Function
 End Class

@@ -68,7 +68,7 @@ Partial Class Order
         ' 
         ' pnlHeader
         ' 
-        pnlHeader.BackColor = Color.FromArgb(37, 42, 52)
+        pnlHeader.BackColor = Color.FromArgb(CByte(37), CByte(42), CByte(52))
         pnlHeader.Controls.Add(lblHeaderTitle)
         pnlHeader.Controls.Add(lblHeaderSubtitle)
         pnlHeader.Controls.Add(pnlHeaderActions)
@@ -94,7 +94,7 @@ Partial Class Order
         ' 
         lblHeaderSubtitle.AutoSize = True
         lblHeaderSubtitle.Font = New Font("Segoe UI", 10.0F)
-        lblHeaderSubtitle.ForeColor = Color.FromArgb(148, 163, 184)
+        lblHeaderSubtitle.ForeColor = Color.FromArgb(CByte(148), CByte(163), CByte(184))
         lblHeaderSubtitle.Location = New Point(35, 63)
         lblHeaderSubtitle.Name = "lblHeaderSubtitle"
         lblHeaderSubtitle.Size = New Size(105, 23)
@@ -114,7 +114,7 @@ Partial Class Order
         ' 
         ' IconButton3
         ' 
-        IconButton3.BackColor = Color.FromArgb(220, 38, 38)
+        IconButton3.BackColor = Color.FromArgb(CByte(220), CByte(38), CByte(38))
         IconButton3.Cursor = Cursors.Hand
         IconButton3.Dock = DockStyle.Right
         IconButton3.FlatAppearance.BorderSize = 0
@@ -131,7 +131,7 @@ Partial Class Order
         ' 
         ' SettingsBtn
         ' 
-        SettingsBtn.BackColor = Color.FromArgb(71, 85, 105)
+        SettingsBtn.BackColor = Color.FromArgb(CByte(71), CByte(85), CByte(105))
         SettingsBtn.Cursor = Cursors.Hand
         SettingsBtn.Dock = DockStyle.Right
         SettingsBtn.FlatAppearance.BorderSize = 0
@@ -149,7 +149,7 @@ Partial Class Order
         ' pnlSearch
         ' 
         pnlSearch.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
-        pnlSearch.BackColor = Color.FromArgb(45, 55, 72)
+        pnlSearch.BackColor = Color.FromArgb(CByte(45), CByte(55), CByte(72))
         pnlSearch.Controls.Add(SearchTxtBox)
         pnlSearch.Controls.Add(SearchBtn)
         pnlSearch.Location = New Point(550, 20)
@@ -159,7 +159,7 @@ Partial Class Order
         ' 
         ' SearchTxtBox
         ' 
-        SearchTxtBox.BackColor = Color.FromArgb(45, 55, 72)
+        SearchTxtBox.BackColor = Color.FromArgb(CByte(45), CByte(55), CByte(72))
         SearchTxtBox.BorderStyle = BorderStyle.None
         SearchTxtBox.Dock = DockStyle.Fill
         SearchTxtBox.Font = New Font("Segoe UI", 12.0F)
@@ -173,7 +173,7 @@ Partial Class Order
         ' 
         ' SearchBtn
         ' 
-        SearchBtn.BackColor = Color.FromArgb(16, 185, 129)
+        SearchBtn.BackColor = Color.FromArgb(CByte(16), CByte(185), CByte(129))
         SearchBtn.Cursor = Cursors.Hand
         SearchBtn.Dock = DockStyle.Right
         SearchBtn.FlatAppearance.BorderSize = 0
@@ -206,7 +206,7 @@ Partial Class Order
         ' 
         ' pnlOrderSidebar
         ' 
-        pnlOrderSidebar.BackColor = Color.FromArgb(247, 250, 252)
+        pnlOrderSidebar.BackColor = Color.FromArgb(CByte(247), CByte(250), CByte(252))
         pnlOrderSidebar.Controls.Add(OrderPnl)
         pnlOrderSidebar.Controls.Add(pnlTotal)
         pnlOrderSidebar.Controls.Add(pnlOrderHeader)
@@ -231,7 +231,7 @@ Partial Class Order
         ' 
         ' pnlTotal
         ' 
-        pnlTotal.BackColor = Color.FromArgb(26, 32, 44)
+        pnlTotal.BackColor = Color.FromArgb(CByte(26), CByte(32), CByte(44))
         pnlTotal.Controls.Add(pnlTotalContent)
         pnlTotal.Dock = DockStyle.Bottom
         pnlTotal.Location = New Point(0, 670)
@@ -253,7 +253,7 @@ Partial Class Order
         ' 
         ' pnlTotalRow
         ' 
-        pnlTotalRow.BackColor = Color.FromArgb(16, 185, 129)
+        pnlTotalRow.BackColor = Color.FromArgb(CByte(16), CByte(185), CByte(129))
         pnlTotalRow.Controls.Add(TotalLbl)
         pnlTotalRow.Controls.Add(Label2)
         pnlTotalRow.Dock = DockStyle.Bottom
@@ -302,7 +302,7 @@ Partial Class Order
         ' 
         DiscountLbl.Dock = DockStyle.Right
         DiscountLbl.Font = New Font("Segoe UI", 13.0F, FontStyle.Bold)
-        DiscountLbl.ForeColor = Color.FromArgb(245, 101, 101)
+        DiscountLbl.ForeColor = Color.FromArgb(CByte(245), CByte(101), CByte(101))
         DiscountLbl.Location = New Point(310, 10)
         DiscountLbl.Name = "DiscountLbl"
         DiscountLbl.Size = New Size(100, 30)
@@ -315,7 +315,7 @@ Partial Class Order
         Label3.AutoSize = True
         Label3.Dock = DockStyle.Left
         Label3.Font = New Font("Segoe UI", 12.0F)
-        Label3.ForeColor = Color.FromArgb(226, 232, 240)
+        Label3.ForeColor = Color.FromArgb(CByte(226), CByte(232), CByte(240))
         Label3.Location = New Point(20, 10)
         Label3.Name = "Label3"
         Label3.Size = New Size(89, 28)
@@ -350,7 +350,7 @@ Partial Class Order
         Label6.AutoSize = True
         Label6.Dock = DockStyle.Left
         Label6.Font = New Font("Segoe UI", 12.0F)
-        Label6.ForeColor = Color.FromArgb(226, 232, 240)
+        Label6.ForeColor = Color.FromArgb(CByte(226), CByte(232), CByte(240))
         Label6.Location = New Point(20, 10)
         Label6.Name = "Label6"
         Label6.Size = New Size(87, 28)
@@ -359,7 +359,7 @@ Partial Class Order
         ' 
         ' pnlOrderHeader
         ' 
-        pnlOrderHeader.BackColor = Color.FromArgb(37, 42, 52)
+        pnlOrderHeader.BackColor = Color.FromArgb(CByte(37), CByte(42), CByte(52))
         pnlOrderHeader.Controls.Add(lblOrderTitle)
         pnlOrderHeader.Dock = DockStyle.Top
         pnlOrderHeader.Location = New Point(0, 0)
@@ -378,11 +378,11 @@ Partial Class Order
         lblOrderTitle.Name = "lblOrderTitle"
         lblOrderTitle.Size = New Size(215, 32)
         lblOrderTitle.TabIndex = 0
-        lblOrderTitle.Text = ChrW(55357) + ChrW(57042) + " Current Order"
+        lblOrderTitle.Text = ChrW(55357) & ChrW(57042) & " Current Order"
         ' 
         ' pnlMenu
         ' 
-        pnlMenu.BackColor = Color.FromArgb(247, 250, 252)
+        pnlMenu.BackColor = Color.FromArgb(CByte(247), CByte(250), CByte(252))
         pnlMenu.Controls.Add(FoodPnl)
         pnlMenu.Controls.Add(pnlMenuActions)
         pnlMenu.Controls.Add(MenuCategoryPnl)
@@ -422,7 +422,7 @@ Partial Class Order
         ' IconButton2
         ' 
         IconButton2.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        IconButton2.BackColor = Color.FromArgb(113, 128, 150)
+        IconButton2.BackColor = Color.FromArgb(CByte(113), CByte(128), CByte(150))
         IconButton2.Cursor = Cursors.Hand
         IconButton2.FlatAppearance.BorderSize = 0
         IconButton2.FlatStyle = FlatStyle.Flat
@@ -444,7 +444,7 @@ Partial Class Order
         ' 
         ' RecentOrdersBtn
         ' 
-        RecentOrdersBtn.BackColor = Color.FromArgb(59, 130, 246)
+        RecentOrdersBtn.BackColor = Color.FromArgb(CByte(59), CByte(130), CByte(246))
         RecentOrdersBtn.Cursor = Cursors.Hand
         RecentOrdersBtn.FlatAppearance.BorderSize = 0
         RecentOrdersBtn.FlatStyle = FlatStyle.Flat
@@ -466,7 +466,7 @@ Partial Class Order
         ' 
         ' CancelBtn
         ' 
-        CancelBtn.BackColor = Color.FromArgb(220, 38, 38)
+        CancelBtn.BackColor = Color.FromArgb(CByte(220), CByte(38), CByte(38))
         CancelBtn.Cursor = Cursors.Hand
         CancelBtn.FlatAppearance.BorderSize = 0
         CancelBtn.FlatStyle = FlatStyle.Flat
@@ -488,7 +488,7 @@ Partial Class Order
         ' 
         ' DiscountBtn
         ' 
-        DiscountBtn.BackColor = Color.FromArgb(251, 191, 36)
+        DiscountBtn.BackColor = Color.FromArgb(CByte(251), CByte(191), CByte(36))
         DiscountBtn.Cursor = Cursors.Hand
         DiscountBtn.FlatAppearance.BorderSize = 0
         DiscountBtn.FlatStyle = FlatStyle.Flat
@@ -510,7 +510,7 @@ Partial Class Order
         ' 
         ' CreateOrderBtn
         ' 
-        CreateOrderBtn.BackColor = Color.FromArgb(16, 185, 129)
+        CreateOrderBtn.BackColor = Color.FromArgb(CByte(16), CByte(185), CByte(129))
         CreateOrderBtn.Cursor = Cursors.Hand
         CreateOrderBtn.FlatAppearance.BorderSize = 0
         CreateOrderBtn.FlatStyle = FlatStyle.Flat
@@ -544,7 +544,7 @@ Partial Class Order
         ' 
         AutoScaleDimensions = New SizeF(8.0F, 20.0F)
         AutoScaleMode = AutoScaleMode.Font
-        BackColor = Color.FromArgb(247, 250, 252)
+        BackColor = Color.FromArgb(CByte(247), CByte(250), CByte(252))
         ClientSize = New Size(1600, 1010)
         Controls.Add(pnlMenu)
         Controls.Add(pnlOrderSidebar)

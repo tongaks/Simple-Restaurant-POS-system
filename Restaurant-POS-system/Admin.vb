@@ -1,5 +1,4 @@
-﻿
-Imports System.Data.OleDb
+﻿Imports System.Data.OleDb
 Imports System.IO
 Imports System.Text
 Imports MySql.Data
@@ -90,27 +89,28 @@ Public Class Admin
         Try
             Using connection As New MySqlConnection(GetGlobalConnectionString())
                 connection.Open()
-                Dim query As String = "SELECT log_time, username, role, action FROM activity_logs WHERE 1=1"
 
+                ' Select log_time as formatted text to avoid provider DateTime conversion issues
+                Dim query As String = "SELECT DATE_FORMAT(log_time, '%Y-%m-%d %H:%i:%s') AS log_time, username, role, action FROM activity_logs WHERE 1=1"
                 Dim cmd As New MySqlCommand()
 
                 ' Add filters
                 If Not String.IsNullOrEmpty(usernameFilter) Then
-                    query += " AND username LIKE @username"
+                    query &= " AND username LIKE @username"
                     cmd.Parameters.AddWithValue("@username", "%" & usernameFilter & "%")
                 End If
 
                 If dateFrom.HasValue Then
-                    query += " AND log_time >= @dateFrom"
+                    query &= " AND log_time >= @dateFrom"
                     cmd.Parameters.AddWithValue("@dateFrom", dateFrom.Value.Date)
                 End If
 
                 If dateTo.HasValue Then
-                    query += " AND log_time <= @dateTo"
+                    query &= " AND log_time <= @dateTo"
                     cmd.Parameters.AddWithValue("@dateTo", dateTo.Value.Date.AddDays(1).AddSeconds(-1))
                 End If
 
-                query += " ORDER BY log_time DESC LIMIT 200"
+                query &= " ORDER BY log_time DESC LIMIT 200"
 
                 cmd.CommandText = query
                 cmd.Connection = connection
@@ -121,7 +121,6 @@ Public Class Admin
 
                 dgvAuditLogs.DataSource = dt
                 dgvAuditLogs.AutoResizeColumns()
-
             End Using
         Catch ex As Exception
             LogError("LoadAuditLogs", ex.Message)
