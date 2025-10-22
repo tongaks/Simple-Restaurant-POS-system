@@ -14,7 +14,7 @@ Imports MySql.Data.MySqlClient
 Public Class Admin
     Private currentUserRole As String = "Admin"
     Private navButtons As AdminNavButtons
-    Private currentActiveButton As Button = Nothing
+    Private currentActiveButton As IconButton = Nothing
 
     ' Simple PathManager helper class
     Public Class PathManager
@@ -65,30 +65,33 @@ Public Class Admin
     ''' <summary>
     ''' Highlight the active dashboard button
     ''' </summary>
-    Private Sub SetActiveButton(btn As Button)
+    Private Sub SetActiveButton(btn As IconButton)
         ' Reset previous active button
         If currentActiveButton IsNot Nothing Then
-            currentActiveButton.BackColor = GetOriginalButtonColor(currentActiveButton)
+            Dim colorTest As Color = GetOriginalButtonColor(currentActiveButton)
+            btn.BackColor = colorTest
+
             currentActiveButton.FlatAppearance.BorderSize = 1
             currentActiveButton.FlatAppearance.BorderColor = Color.Black
         End If
 
         ' Set new active button
         currentActiveButton = btn
-        currentActiveButton.BackColor = Color.FromArgb(100, 180, 100) ' Darker shade
+        currentActiveButton.BackColor = GetOriginalButtonColor(currentActiveButton)
         currentActiveButton.FlatAppearance.BorderSize = 3
-        currentActiveButton.FlatAppearance.BorderColor = Color.DarkGreen
+        currentActiveButton.FlatAppearance.BorderColor = Color.Black
     End Sub
 
     ''' <summary>
     ''' Get original button color based on button name
     ''' </summary>
-    Private Function GetOriginalButtonColor(btn As Button) As Color
+    Private Function GetOriginalButtonColor(btn As IconButton) As Color
         If btn Is btnAuditLog Then Return Color.LightCoral
         If btn Is btnSalesReport Then Return Color.LightGreen
         If btn Is btnManageAccounts Then Return Color.LightBlue
         If btn Is btnManageMenu Then Return Color.LightSalmon
-        Return Color.LightGray
+
+        'Return Color.LightGray
     End Function
 
     ''' <summary>
