@@ -29,14 +29,14 @@ Public Module Globals
         End If
     End Sub
     Public Sub SetBackTheme(panels() As Panel)
-        For Each pnl As Panel In panels
+        For Each pnl As Control In panels
             If pnl IsNot Nothing Then
                 pnl.BackColor = ColorTranslator.FromHtml(SettingsConfig.BarTheme)
             End If
         Next
     End Sub
     Public Sub SetFlowTheme(panels() As Panel)
-        For Each pnl As Panel In panels
+        For Each pnl As Control In panels
             If pnl IsNot Nothing Then
                 pnl.BackColor = ColorTranslator.FromHtml(SettingsConfig.BackgroundTheme)
             End If

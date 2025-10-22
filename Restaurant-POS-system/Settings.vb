@@ -48,6 +48,7 @@ Public Class Settings
         IsEdit = True
         ConfigPnl.Enabled = True
 
+        CancelBtn.Enabled = True
         EditBtn.Enabled = False
     End Sub
     Private Sub CancelBtn_Click(sender As Object, e As EventArgs) Handles CancelBtn.Click
@@ -60,6 +61,8 @@ Public Class Settings
         ConfigPnl.Enabled = False
         ItemBtnSizeTxtBox.Text = SettingsConfig.MenuItemButtonSize
         ShortcutKeyChckBox.Checked = SettingsConfig.EnableShortcutKeys
+
+        CancelBtn.Enabled = False
     End Sub
     Private Sub SaveBtn_Click(sender As Object, e As EventArgs) Handles SaveBtn.Click
         Dim Connection As New MySqlConnection(GetGlobalConnectionString)

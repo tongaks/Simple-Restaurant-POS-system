@@ -60,6 +60,8 @@ Public Class Admin
 
     End Sub
 
+
+
     ''' <summary>
     ''' Highlight the active dashboard button
     ''' </summary>
@@ -346,5 +348,9 @@ Public Class Admin
             FlowPanel = {}
             SetTheme()
         End If
+    End Sub
+
+    Private Sub Admin_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        MyBase.Close()
     End Sub
 End Class

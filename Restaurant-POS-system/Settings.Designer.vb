@@ -113,6 +113,7 @@ Partial Class Settings
         ' 
         CancelBtn.Anchor = AnchorStyles.Top Or AnchorStyles.Right
         CancelBtn.BackColor = SystemColors.AppWorkspace
+        CancelBtn.Enabled = False
         CancelBtn.FlatStyle = FlatStyle.Flat
         CancelBtn.IconChar = FontAwesome.Sharp.IconChar.LongArrowAltRight
         CancelBtn.IconColor = Color.Black

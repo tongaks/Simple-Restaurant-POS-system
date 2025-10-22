@@ -13,13 +13,18 @@ Public Class Form1
         Me.WindowState = WindowState.Maximized
         IsAdmin = False
 
-        Panel1.BackColor = ColorTranslator.FromHtml(SettingsConfig.BarTheme)
+        'Panel1.BackColor = ColorTranslator.FromHtml(SettingsConfig.BarTheme)
 
         If Not SettingsConfig.LoginImagePath = "" Then
             PictureBox1.Image = Image.FromFile(SettingsConfig.LoginImagePath)
         Else
             PictureBox1.Image = Nothing
         End If
+
+        BackPanel = {Panel1}
+        FlowPanel = {}
+        SetTheme()
+
     End Sub
     Private Sub Order_Focus(sender As Object, e As EventArgs) Handles MyBase.GotFocus
         GetSettingsConfig()
@@ -35,6 +40,10 @@ Public Class Form1
         Else
             PictureBox1.Image = Nothing
         End If
+
+        BackPanel = {Panel1}
+        FlowPanel = {}
+        SetTheme()
     End Sub
 
 

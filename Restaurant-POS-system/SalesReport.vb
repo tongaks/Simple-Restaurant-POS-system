@@ -46,6 +46,11 @@ Public Class SalesReport
         btnLogout.ForeColor = Color.Black
         btnLogout.Font = New Font("Segoe UI Symbol", 17, FontStyle.Regular)
 
+        BackPanel = {pnlHeader}
+        FlowPanel = {}
+        SetTheme()
+
+        lblTransactions.BackColor = ColorTranslator.FromHtml(SettingsConfig.BarTheme)
 
     End Sub
 
