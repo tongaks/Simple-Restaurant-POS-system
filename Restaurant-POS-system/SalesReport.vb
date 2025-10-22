@@ -507,53 +507,50 @@ Public Class SalesReport
     ''' </summary>
     Public Sub LoadTransactionDetails(connection As MySqlConnection, ByVal pnl As Panel)
         Try
-            ' === 1️⃣ Title Label (Recent Transactions) ===
-            Dim lbl As Label = pnl.Controls.OfType(Of Label)().
-            FirstOrDefault(Function(l) l.Name = "lblTransactions")
+            ' Title label
+            Dim lbl As Label = pnl.Controls.OfType(Of Label)().FirstOrDefault(Function(l) l.Name = "lblTransactions")
 
             If lbl Is Nothing Then
                 lbl = New Label With {
-                .Name = "lblTransactions",
-                .Text = "Recent Transactions",
-                .Font = New Font("Segoe UI Semibold", 12, FontStyle.Bold),
-                .ForeColor = Color.FromArgb(45, 45, 48),
-                .Dock = DockStyle.Top,
-                .Height = 35,
-                .TextAlign = ContentAlignment.MiddleLeft,
-                .Padding = New Padding(10, 0, 0, 0),
-                .BackColor = Color.White
-            }
+                    .Name = "lblTransactions",
+                    .Text = "Recent Transactions",
+                    .Font = New Font("Segoe UI Semibold", 12, FontStyle.Bold),
+                    .ForeColor = Color.FromArgb(45, 45, 48),
+                    .Dock = DockStyle.Top,
+                    .Height = 35,
+                    .TextAlign = ContentAlignment.MiddleLeft,
+                    .Padding = New Padding(10, 0, 0, 0),
+                    .BackColor = Color.White
+                }
                 pnl.Controls.Add(lbl)
             End If
 
-            ' === 2️⃣ FlowLayoutPanel (cards container) ===
-            Dim flow As FlowLayoutPanel = pnl.Controls.OfType(Of FlowLayoutPanel)().
-            FirstOrDefault(Function(f) f.Name = "flowRecentTransactions")
+            ' Flow panel
+            Dim flow As FlowLayoutPanel = pnl.Controls.OfType(Of FlowLayoutPanel)().FirstOrDefault(Function(f) f.Name = "flowRecentTransactions")
 
             If flow Is Nothing Then
                 flow = New FlowLayoutPanel With {
-                .Name = "flowRecentTransactions",
-                .Dock = DockStyle.Fill,
-                .AutoScroll = True,
-                .FlowDirection = FlowDirection.LeftToRight,
-                .WrapContents = True,
-                .Padding = New Padding(50),
-                .BackColor = Color.WhiteSmoke
-            }
+                    .Name = "flowRecentTransactions",
+                    .Dock = DockStyle.Fill,
+                    .AutoScroll = True,
+                    .FlowDirection = FlowDirection.LeftToRight,
+                    .WrapContents = True,
+                    .Padding = New Padding(50),
+                    .BackColor = Color.WhiteSmoke
+                }
                 pnl.Controls.Add(flow)
                 flow.BringToFront()
             Else
                 flow.Controls.Clear()
             End If
 
-            ' === 3️⃣ Make sure title stays on top ===
             lbl.BringToFront()
 
-            ' === 4️⃣ Load 10 recent orders as cards ===
-            Dim query As String = "SELECT order_id, order_date AS `date`, order_time AS `time`, username AS `user`, total_amount AS `amount` " &
-                              "FROM orders " &
-                              "WHERE order_date >= @dateFrom AND order_date <= @dateTo " &
-                              "ORDER BY order_date DESC, order_time DESC LIMIT 10;"
+            ' NOTE: do not select order_id — use existing columns that definitely exist (order_date, order_time, username, total_amount)
+            Dim query As String = "SELECT order_date AS `date`, order_time AS `time`, username AS `user`, total_amount AS `amount` " &
+                                  "FROM orders " &
+                                  "WHERE order_date >= @dateFrom AND order_date <= @dateTo " &
+                                  "ORDER BY order_date DESC, order_time DESC LIMIT 10;"
 
             Using cmd As New MySqlCommand(query, connection)
                 cmd.Parameters.AddWithValue("@dateFrom", dtpFrom.Value.Date)
@@ -562,39 +559,39 @@ Public Class SalesReport
                 Using reader As MySqlDataReader = cmd.ExecuteReader()
                     While reader.Read()
                         Dim card As New Panel With {
-                        .Width = 240,
-                        .Height = 100,
-                        .BackColor = Color.White,
-                        .Margin = New Padding(8),
-                        .Padding = New Padding(10),
-                        .BorderStyle = BorderStyle.FixedSingle
-                    }
+                            .Width = 240,
+                            .Height = 100,
+                            .BackColor = Color.White,
+                            .Margin = New Padding(8),
+                            .Padding = New Padding(10),
+                            .BorderStyle = BorderStyle.FixedSingle
+                        }
 
                         Dim lblDate As New Label With {
-                        .AutoSize = True,
-                        .Text = Convert.ToDateTime(reader("date")).ToString("dd/MM/yyyy") & "  " & reader("time").ToString(),
-                        .Font = New Font("Segoe UI", 9, FontStyle.Regular),
-                        .ForeColor = Color.Gray,
-                        .Location = New Point(8, 8)
-                    }
+                            .AutoSize = True,
+                            .Text = Convert.ToDateTime(reader("date")).ToString("dd/MM/yyyy") & "  " & reader("time").ToString(),
+                            .Font = New Font("Segoe UI", 9, FontStyle.Regular),
+                            .ForeColor = Color.Gray,
+                            .Location = New Point(8, 8)
+                        }
 
                         Dim lblUser As New Label With {
-                        .AutoSize = True,
-                        .Text = "User: " & reader("user").ToString(),
-                        .Font = New Font("Segoe UI", 9, FontStyle.Bold),
-                        .ForeColor = Color.FromArgb(45, 45, 48),
-                        .Location = New Point(8, 30)
-                    }
+                            .AutoSize = True,
+                            .Text = "User: " & reader("user").ToString(),
+                            .Font = New Font("Segoe UI", 9, FontStyle.Bold),
+                            .ForeColor = Color.FromArgb(45, 45, 48),
+                            .Location = New Point(8, 30)
+                        }
 
                         Dim lblAmount As New Label With {
-                        .AutoSize = False,
-                        .Size = New Size(card.Width - 16, 28),
-                        .Text = "₱" & Convert.ToDecimal(reader("amount")).ToString("N2"),
-                        .Font = New Font("Segoe UI Semibold", 11, FontStyle.Bold),
-                        .ForeColor = Color.FromArgb(52, 152, 219),
-                        .TextAlign = ContentAlignment.MiddleRight,
-                        .Location = New Point(8, 60)
-                    }
+                            .AutoSize = False,
+                            .Size = New Size(card.Width - 16, 28),
+                            .Text = "₱" & Convert.ToDecimal(reader("amount")).ToString("N2"),
+                            .Font = New Font("Segoe UI Semibold", 11, FontStyle.Bold),
+                            .ForeColor = Color.FromArgb(52, 152, 219),
+                            .TextAlign = ContentAlignment.MiddleRight,
+                            .Location = New Point(8, 60)
+                        }
 
                         card.Controls.Add(lblDate)
                         card.Controls.Add(lblUser)
