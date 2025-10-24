@@ -155,6 +155,7 @@ Partial Class SalesReport
         btnPrint.TabIndex = 7
         btnPrint.Text = "🖨️ Print"
         btnPrint.UseVisualStyleBackColor = False
+        btnPrint.Visible = False
         ' 
         ' btnExportPdf
         ' 
@@ -170,6 +171,7 @@ Partial Class SalesReport
         btnExportPdf.TabIndex = 6
         btnExportPdf.Text = "📄 PDF"
         btnExportPdf.UseVisualStyleBackColor = False
+        btnExportPdf.Visible = False
         ' 
         ' btnExportCsv
         ' 
@@ -185,6 +187,7 @@ Partial Class SalesReport
         btnExportCsv.TabIndex = 5
         btnExportCsv.Text = "📊 CSV"
         btnExportCsv.UseVisualStyleBackColor = False
+        btnExportCsv.Visible = False
         ' 
         ' btnGenerateReport
         ' 

@@ -56,12 +56,6 @@ Public Class Order
         DataGridView1.Columns(4).Name = "ImagePath"
         DataGridView1.Columns("ImagePath").ValueType = GetType(String)
 
-        BackPanel = {NavbarPnl, TotalPnl, CurrentFocusedPnl, Panel2}
-        FlowPanel = {OrderPnl, FoodPnl, MenuCategoryPnl}
-        SetTheme()
-
-        IconButton3.IconColor = ColorTranslator.FromHtml(SettingsConfig.FontColor)
-        SettingsBtn.IconColor = ColorTranslator.FromHtml(SettingsConfig.FontColor)
     End Sub
     Private Sub Order_Close(sender As Object, e As EventArgs) Handles MyBase.FormClosed
         ' close parent when child closes
@@ -254,19 +248,18 @@ Public Class Order
             Reader = Command.ExecuteReader
 
             While Reader.Read
-                Dim settingsSize = SettingsConfig.MenuItemButtonSize
+                Dim btnSize = 120
+                Dim fontSize = 12
 
                 Dim foodBtn As New Button
-                foodBtn.Size = New System.Drawing.Size(settingsSize, settingsSize)
+                foodBtn.Size = New System.Drawing.Size(btnSize, btnSize)
                 foodBtn.Margin = New Padding(0, 0, 0, 0)
                 foodBtn.Text = Reader("ItemName")
                 foodBtn.Tag = Reader("ItemPrice")
                 foodBtn.Cursor = Cursors.Hand
-                foodBtn.FlatStyle = FlatStyle.Flat
-                foodBtn.FlatAppearance.BorderSize = 3
-                foodBtn.FlatAppearance.BorderColor = Color.Gray
                 foodBtn.TabStop = True
                 foodBtn.BackColor = Color.WhiteSmoke
+                foodBtn.BackColor = Color.Transparent
 
                 If Not IsDBNull(Reader("ImagePath")) Then
                     Dim imagePath As String = Reader("ImagePath").ToString()
@@ -285,7 +278,7 @@ Public Class Order
 
                 AddHandler foodBtn.Click, AddressOf HandleItemClick
 
-                Dim foodFont As New Font("Segue UI", SettingsConfig.MenuItemFontSize, FontStyle.Regular)
+                Dim foodFont As New Font("Segue UI", fontSize, FontStyle.Regular)
 
                 Dim foodName As New Label
                 foodName.Text = Reader("ItemName")
@@ -300,9 +293,15 @@ Public Class Order
                 foodName.AutoSize = False
                 foodPrice.TextAlign = ContentAlignment.MiddleCenter
 
+                Dim paddingVal = 10
+
                 Dim FoodContainerPnl As New FlowLayoutPanel
                 FoodContainerPnl.FlowDirection = FlowDirection.TopDown
-                FoodContainerPnl.Size = New System.Drawing.Size(settingsSize, settingsSize + foodName.Height + foodPrice.Height)
+                FoodContainerPnl.Padding = New Padding(paddingVal)
+                FoodContainerPnl.Size = New System.Drawing.Size(btnSize + (paddingVal * 2), btnSize + foodName.Height + foodPrice.Height + (paddingVal * 3))
+                FoodContainerPnl.BackColor = Color.White
+                FoodContainerPnl.BorderStyle = BorderStyle.FixedSingle
+
                 FoodContainerPnl.Controls.Add(foodBtn)
                 FoodContainerPnl.Controls.Add(foodName)
                 FoodContainerPnl.Controls.Add(foodPrice)
@@ -671,20 +670,7 @@ Public Class Order
 
         ' need to log the apllying of voucher
     End Sub
-    Private Sub SettingsBtn_Click(sender As Object, e As EventArgs) Handles SettingsBtn.Click
-        If Settings.ShowDialog() = DialogResult.OK Then
-            GetSettingsConfig()
-            FoodPnl.Controls.Clear()  ' reload the menu items
-            LoadMenuItems("foods")
 
-            BackPanel = {NavbarPnl, TotalPnl, CurrentFocusedPnl, Panel2}
-            FlowPanel = {OrderPnl, FoodPnl, MenuCategoryPnl}
-            SetTheme()
-
-            IconButton3.IconColor = ColorTranslator.FromHtml(SettingsConfig.FontColor)
-            SettingsBtn.IconColor = ColorTranslator.FromHtml(SettingsConfig.FontColor)
-        End If
-    End Sub
     Private Sub CancelBtn_Click(sender As Object, e As EventArgs) Handles CancelBtn.Click
         If Not DataGridView1.Rows.Count > 0 Then
             MsgBox("Cannot cancel, No order created.", MsgBoxStyle.Critical, "Error")
@@ -935,4 +921,5 @@ Public Class Order
         CurrentTotal = If((Not DiscountValue = 0), Integer.Abs(appliedDiscount - CurrentSubTotal), CurrentSubTotal)
         TotalLbl.Text = "₱" & CurrentTotal
     End Sub
+
 End Class

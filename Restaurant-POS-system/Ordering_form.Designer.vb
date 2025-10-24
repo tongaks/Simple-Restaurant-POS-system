@@ -23,19 +23,12 @@ Partial Class Order
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         NavbarPnl = New Panel()
+        PictureBox1 = New PictureBox()
         IconButton3 = New FontAwesome.Sharp.IconButton()
         SearchBtn = New FontAwesome.Sharp.IconButton()
         DataGridView1 = New DataGridView()
-        SettingsBtn = New FontAwesome.Sharp.IconButton()
         SearchTxtBox = New TextBox()
         Label1 = New Label()
-        TotalPnl = New Panel()
-        SubtotalLbl = New Label()
-        Label6 = New Label()
-        DiscountLbl = New Label()
-        Label3 = New Label()
-        TotalLbl = New Label()
-        Label2 = New Label()
         CreateOrderBtn = New FontAwesome.Sharp.IconButton()
         DiscountBtn = New Button()
         Panel1 = New Panel()
@@ -49,46 +42,72 @@ Partial Class Order
         CancelBtn = New FontAwesome.Sharp.IconButton()
         MenuCategoryPnl = New FlowLayoutPanel()
         FoodPnl = New FlowLayoutPanel()
-        OrderPnl = New FlowLayoutPanel()
         Panel2 = New Panel()
-        Label9 = New Label()
+        TotalPnl = New Panel()
+        Panel4 = New Panel()
+        SubtotalLbl = New Label()
+        Label6 = New Label()
+        Panel3 = New Panel()
+        TotalLbl = New Label()
+        Label2 = New Label()
+        DiscountLbl = New Label()
+        Label3 = New Label()
+        OrderPnl = New FlowLayoutPanel()
         NavbarPnl.SuspendLayout()
+        CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
-        TotalPnl.SuspendLayout()
         Panel1.SuspendLayout()
         CurrentFocusedPnl.SuspendLayout()
         Panel2.SuspendLayout()
+        TotalPnl.SuspendLayout()
+        Panel4.SuspendLayout()
+        Panel3.SuspendLayout()
         SuspendLayout()
         ' 
         ' NavbarPnl
         ' 
         NavbarPnl.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
         NavbarPnl.BackColor = Color.SteelBlue
+        NavbarPnl.Controls.Add(PictureBox1)
         NavbarPnl.Controls.Add(IconButton3)
         NavbarPnl.Controls.Add(SearchBtn)
         NavbarPnl.Controls.Add(DataGridView1)
-        NavbarPnl.Controls.Add(SettingsBtn)
         NavbarPnl.Controls.Add(SearchTxtBox)
         NavbarPnl.Controls.Add(Label1)
-        NavbarPnl.Location = New Point(458, 0)
+        NavbarPnl.Location = New Point(0, 0)
         NavbarPnl.Name = "NavbarPnl"
-        NavbarPnl.Size = New Size(703, 68)
+        NavbarPnl.Size = New Size(1213, 68)
         NavbarPnl.TabIndex = 1
+        ' 
+        ' PictureBox1
+        ' 
+        PictureBox1.Image = My.Resources.Resources.BOLD_removebg_preview
+        PictureBox1.Location = New Point(0, 0)
+        PictureBox1.Name = "PictureBox1"
+        PictureBox1.Size = New Size(117, 67)
+        PictureBox1.SizeMode = PictureBoxSizeMode.Zoom
+        PictureBox1.TabIndex = 9
+        PictureBox1.TabStop = False
         ' 
         ' IconButton3
         ' 
         IconButton3.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        IconButton3.BackColor = Color.Transparent
-        IconButton3.FlatAppearance.BorderSize = 0
+        IconButton3.BackColor = Color.DarkRed
+        IconButton3.FlatAppearance.BorderColor = Color.Black
         IconButton3.FlatStyle = FlatStyle.Flat
+        IconButton3.Font = New Font("Segoe UI Semibold", 10F, FontStyle.Bold)
+        IconButton3.ForeColor = SystemColors.ControlLightLight
         IconButton3.IconChar = FontAwesome.Sharp.IconChar.SignOut
         IconButton3.IconColor = Color.WhiteSmoke
         IconButton3.IconFont = FontAwesome.Sharp.IconFont.Auto
-        IconButton3.IconSize = 40
-        IconButton3.Location = New Point(599, 16)
+        IconButton3.IconSize = 30
+        IconButton3.ImageAlign = ContentAlignment.MiddleLeft
+        IconButton3.Location = New Point(1108, 15)
         IconButton3.Name = "IconButton3"
-        IconButton3.Size = New Size(43, 42)
+        IconButton3.Size = New Size(92, 36)
         IconButton3.TabIndex = 2
+        IconButton3.Text = "Logout"
+        IconButton3.TextAlign = ContentAlignment.MiddleRight
         IconButton3.UseVisualStyleBackColor = False
         ' 
         ' SearchBtn
@@ -100,7 +119,7 @@ Partial Class Order
         SearchBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
         SearchBtn.IconSize = 30
         SearchBtn.ImageAlign = ContentAlignment.MiddleLeft
-        SearchBtn.Location = New Point(352, 19)
+        SearchBtn.Location = New Point(874, 15)
         SearchBtn.Name = "SearchBtn"
         SearchBtn.Size = New Size(79, 36)
         SearchBtn.TabIndex = 8
@@ -118,124 +137,30 @@ Partial Class Order
         DataGridView1.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left
         DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
         DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridView1.Location = New Point(444, 11)
+        DataGridView1.Location = New Point(903, 28)
         DataGridView1.Name = "DataGridView1"
-        DataGridView1.Size = New Size(29, 49)
+        DataGridView1.Size = New Size(29, 10)
         DataGridView1.TabIndex = 1
         DataGridView1.Visible = False
-        ' 
-        ' SettingsBtn
-        ' 
-        SettingsBtn.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        SettingsBtn.BackColor = Color.Transparent
-        SettingsBtn.FlatAppearance.BorderSize = 0
-        SettingsBtn.FlatStyle = FlatStyle.Flat
-        SettingsBtn.IconChar = FontAwesome.Sharp.IconChar.Cog
-        SettingsBtn.IconColor = Color.WhiteSmoke
-        SettingsBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
-        SettingsBtn.IconSize = 40
-        SettingsBtn.Location = New Point(648, 16)
-        SettingsBtn.Name = "SettingsBtn"
-        SettingsBtn.Size = New Size(43, 42)
-        SettingsBtn.TabIndex = 1
-        SettingsBtn.UseVisualStyleBackColor = False
         ' 
         ' SearchTxtBox
         ' 
         SearchTxtBox.Font = New Font("Segoe UI", 15F)
-        SearchTxtBox.Location = New Point(80, 19)
+        SearchTxtBox.Location = New Point(533, 16)
         SearchTxtBox.Name = "SearchTxtBox"
-        SearchTxtBox.Size = New Size(255, 34)
+        SearchTxtBox.Size = New Size(316, 34)
         SearchTxtBox.TabIndex = 7
         ' 
         ' Label1
         ' 
         Label1.AutoSize = True
-        Label1.Font = New Font("Segoe UI", 12F)
+        Label1.Font = New Font("Segoe UI Semibold", 15F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         Label1.ForeColor = SystemColors.ControlLightLight
-        Label1.Location = New Point(17, 22)
+        Label1.Location = New Point(457, 19)
         Label1.Name = "Label1"
-        Label1.Size = New Size(57, 21)
+        Label1.Size = New Size(72, 28)
         Label1.TabIndex = 6
         Label1.Text = "Search"
-        ' 
-        ' TotalPnl
-        ' 
-        TotalPnl.Anchor = AnchorStyles.Bottom Or AnchorStyles.Left
-        TotalPnl.BackColor = SystemColors.ControlLight
-        TotalPnl.BorderStyle = BorderStyle.FixedSingle
-        TotalPnl.Controls.Add(SubtotalLbl)
-        TotalPnl.Controls.Add(Label6)
-        TotalPnl.Controls.Add(DiscountLbl)
-        TotalPnl.Controls.Add(Label3)
-        TotalPnl.Controls.Add(TotalLbl)
-        TotalPnl.Controls.Add(Label2)
-        TotalPnl.Location = New Point(0, 475)
-        TotalPnl.Name = "TotalPnl"
-        TotalPnl.Size = New Size(452, 129)
-        TotalPnl.TabIndex = 4
-        ' 
-        ' SubtotalLbl
-        ' 
-        SubtotalLbl.AutoSize = True
-        SubtotalLbl.Font = New Font("Segoe UI", 15F)
-        SubtotalLbl.Location = New Point(354, 10)
-        SubtotalLbl.Name = "SubtotalLbl"
-        SubtotalLbl.Size = New Size(35, 28)
-        SubtotalLbl.TabIndex = 7
-        SubtotalLbl.Text = "₱0"
-        ' 
-        ' Label6
-        ' 
-        Label6.AutoSize = True
-        Label6.Font = New Font("Segoe UI", 15F)
-        Label6.Location = New Point(18, 10)
-        Label6.Name = "Label6"
-        Label6.Size = New Size(87, 28)
-        Label6.TabIndex = 6
-        Label6.Text = "Subtotal"
-        ' 
-        ' DiscountLbl
-        ' 
-        DiscountLbl.AutoSize = True
-        DiscountLbl.Font = New Font("Segoe UI", 15F)
-        DiscountLbl.ForeColor = Color.Red
-        DiscountLbl.Location = New Point(354, 42)
-        DiscountLbl.Name = "DiscountLbl"
-        DiscountLbl.Size = New Size(39, 28)
-        DiscountLbl.TabIndex = 4
-        DiscountLbl.Text = "%0"
-        ' 
-        ' Label3
-        ' 
-        Label3.AutoSize = True
-        Label3.Font = New Font("Segoe UI", 15F)
-        Label3.Location = New Point(18, 40)
-        Label3.Name = "Label3"
-        Label3.Size = New Size(89, 28)
-        Label3.TabIndex = 3
-        Label3.Text = "Discount"
-        ' 
-        ' TotalLbl
-        ' 
-        TotalLbl.AutoSize = True
-        TotalLbl.Font = New Font("Segoe UI", 20F)
-        TotalLbl.ForeColor = Color.Green
-        TotalLbl.Location = New Point(350, 72)
-        TotalLbl.Name = "TotalLbl"
-        TotalLbl.Size = New Size(48, 37)
-        TotalLbl.TabIndex = 1
-        TotalLbl.Text = "₱0"
-        ' 
-        ' Label2
-        ' 
-        Label2.AutoSize = True
-        Label2.Font = New Font("Segoe UI", 20F)
-        Label2.Location = New Point(15, 72)
-        Label2.Name = "Label2"
-        Label2.Size = New Size(74, 37)
-        Label2.TabIndex = 0
-        Label2.Text = "Total"
         ' 
         ' CreateOrderBtn
         ' 
@@ -274,13 +199,13 @@ Partial Class Order
         Panel1.Controls.Add(FoodPnl)
         Panel1.Location = New Point(458, 66)
         Panel1.Name = "Panel1"
-        Panel1.Size = New Size(704, 538)
+        Panel1.Size = New Size(743, 645)
         Panel1.TabIndex = 5
         ' 
         ' CurrentFocusedPnl
         ' 
         CurrentFocusedPnl.Anchor = AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
-        CurrentFocusedPnl.BackColor = SystemColors.ControlLight
+        CurrentFocusedPnl.BackColor = SystemColors.ControlLightLight
         CurrentFocusedPnl.Controls.Add(Label8)
         CurrentFocusedPnl.Controls.Add(RecentOrdersBtn)
         CurrentFocusedPnl.Controls.Add(Label7)
@@ -290,9 +215,9 @@ Partial Class Order
         CurrentFocusedPnl.Controls.Add(CancelBtn)
         CurrentFocusedPnl.Controls.Add(CreateOrderBtn)
         CurrentFocusedPnl.Controls.Add(DiscountBtn)
-        CurrentFocusedPnl.Location = New Point(2, 436)
+        CurrentFocusedPnl.Location = New Point(2, 543)
         CurrentFocusedPnl.Name = "CurrentFocusedPnl"
-        CurrentFocusedPnl.Size = New Size(704, 102)
+        CurrentFocusedPnl.Size = New Size(743, 102)
         CurrentFocusedPnl.TabIndex = 0
         ' 
         ' Label8
@@ -390,21 +315,131 @@ Partial Class Order
         ' 
         MenuCategoryPnl.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
         MenuCategoryPnl.BackColor = SystemColors.ControlLightLight
-        MenuCategoryPnl.Location = New Point(3, 3)
+        MenuCategoryPnl.Location = New Point(3, 8)
         MenuCategoryPnl.Name = "MenuCategoryPnl"
         MenuCategoryPnl.Padding = New Padding(0, 0, 0, 20)
-        MenuCategoryPnl.Size = New Size(703, 60)
+        MenuCategoryPnl.Size = New Size(742, 89)
         MenuCategoryPnl.TabIndex = 1
         ' 
         ' FoodPnl
         ' 
         FoodPnl.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
         FoodPnl.AutoScroll = True
-        FoodPnl.BackColor = SystemColors.ControlLightLight
-        FoodPnl.Location = New Point(2, 60)
+        FoodPnl.BackColor = Color.WhiteSmoke
+        FoodPnl.Location = New Point(2, 103)
         FoodPnl.Name = "FoodPnl"
-        FoodPnl.Size = New Size(701, 381)
+        FoodPnl.Padding = New Padding(10)
+        FoodPnl.Size = New Size(740, 434)
         FoodPnl.TabIndex = 2
+        ' 
+        ' Panel2
+        ' 
+        Panel2.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left
+        Panel2.BackColor = SystemColors.Control
+        Panel2.Controls.Add(TotalPnl)
+        Panel2.Controls.Add(OrderPnl)
+        Panel2.Location = New Point(12, 74)
+        Panel2.Name = "Panel2"
+        Panel2.Size = New Size(440, 637)
+        Panel2.TabIndex = 6
+        ' 
+        ' TotalPnl
+        ' 
+        TotalPnl.Anchor = AnchorStyles.Bottom Or AnchorStyles.Left
+        TotalPnl.BackColor = SystemColors.ControlLightLight
+        TotalPnl.BorderStyle = BorderStyle.FixedSingle
+        TotalPnl.Controls.Add(Panel4)
+        TotalPnl.Controls.Add(Panel3)
+        TotalPnl.Controls.Add(DiscountLbl)
+        TotalPnl.Controls.Add(Label3)
+        TotalPnl.Location = New Point(30, 496)
+        TotalPnl.Name = "TotalPnl"
+        TotalPnl.Size = New Size(386, 129)
+        TotalPnl.TabIndex = 4
+        ' 
+        ' Panel4
+        ' 
+        Panel4.BackColor = SystemColors.ControlLightLight
+        Panel4.BorderStyle = BorderStyle.FixedSingle
+        Panel4.Controls.Add(SubtotalLbl)
+        Panel4.Controls.Add(Label6)
+        Panel4.Location = New Point(-1, -1)
+        Panel4.Name = "Panel4"
+        Panel4.Size = New Size(386, 41)
+        Panel4.TabIndex = 9
+        ' 
+        ' SubtotalLbl
+        ' 
+        SubtotalLbl.AutoSize = True
+        SubtotalLbl.Font = New Font("Segoe UI", 15F)
+        SubtotalLbl.Location = New Point(304, 3)
+        SubtotalLbl.Name = "SubtotalLbl"
+        SubtotalLbl.Size = New Size(35, 28)
+        SubtotalLbl.TabIndex = 9
+        SubtotalLbl.Text = "₱0"
+        ' 
+        ' Label6
+        ' 
+        Label6.AutoSize = True
+        Label6.Font = New Font("Segoe UI", 15F)
+        Label6.Location = New Point(20, 3)
+        Label6.Name = "Label6"
+        Label6.Size = New Size(87, 28)
+        Label6.TabIndex = 8
+        Label6.Text = "Subtotal"
+        ' 
+        ' Panel3
+        ' 
+        Panel3.BackColor = Color.SteelBlue
+        Panel3.Controls.Add(TotalLbl)
+        Panel3.Controls.Add(Label2)
+        Panel3.Location = New Point(-1, 78)
+        Panel3.Name = "Panel3"
+        Panel3.Size = New Size(386, 50)
+        Panel3.TabIndex = 8
+        ' 
+        ' TotalLbl
+        ' 
+        TotalLbl.AutoSize = True
+        TotalLbl.Font = New Font("Segoe UI", 20F)
+        TotalLbl.ForeColor = SystemColors.ControlLightLight
+        TotalLbl.Location = New Point(298, 7)
+        TotalLbl.Name = "TotalLbl"
+        TotalLbl.Size = New Size(48, 37)
+        TotalLbl.TabIndex = 3
+        TotalLbl.Text = "₱0"
+        ' 
+        ' Label2
+        ' 
+        Label2.AutoSize = True
+        Label2.Font = New Font("Segoe UI", 20F)
+        Label2.ForeColor = SystemColors.ControlLightLight
+        Label2.Location = New Point(29, 7)
+        Label2.Name = "Label2"
+        Label2.Size = New Size(74, 37)
+        Label2.TabIndex = 2
+        Label2.Text = "Total"
+        ' 
+        ' DiscountLbl
+        ' 
+        DiscountLbl.AutoSize = True
+        DiscountLbl.Font = New Font("Segoe UI", 15F)
+        DiscountLbl.ForeColor = Color.Red
+        DiscountLbl.Location = New Point(300, 43)
+        DiscountLbl.Name = "DiscountLbl"
+        DiscountLbl.Size = New Size(39, 28)
+        DiscountLbl.TabIndex = 4
+        DiscountLbl.Text = "%0"
+        ' 
+        ' Label3
+        ' 
+        Label3.AutoSize = True
+        Label3.Font = New Font("Segoe UI", 15F)
+        Label3.Location = New Point(18, 43)
+        Label3.Name = "Label3"
+        Label3.Size = New Size(89, 28)
+        Label3.TabIndex = 3
+        Label3.Text = "Discount"
         ' 
         ' OrderPnl
         ' 
@@ -412,60 +447,40 @@ Partial Class Order
         OrderPnl.AutoScroll = True
         OrderPnl.BackColor = SystemColors.ControlLightLight
         OrderPnl.FlowDirection = FlowDirection.TopDown
-        OrderPnl.Location = New Point(0, 66)
+        OrderPnl.Location = New Point(0, 0)
         OrderPnl.Name = "OrderPnl"
-        OrderPnl.Size = New Size(452, 412)
-        OrderPnl.TabIndex = 6
+        OrderPnl.Size = New Size(443, 478)
+        OrderPnl.TabIndex = 7
         OrderPnl.WrapContents = False
-        ' 
-        ' Panel2
-        ' 
-        Panel2.BackColor = SystemColors.Control
-        Panel2.Controls.Add(Label9)
-        Panel2.Location = New Point(0, 1)
-        Panel2.Name = "Panel2"
-        Panel2.Size = New Size(452, 67)
-        Panel2.TabIndex = 0
-        ' 
-        ' Label9
-        ' 
-        Label9.AutoSize = True
-        Label9.Font = New Font("Segoe UI", 30F)
-        Label9.Location = New Point(122, 5)
-        Label9.Name = "Label9"
-        Label9.Size = New Size(188, 54)
-        Label9.TabIndex = 0
-        Label9.Text = "Order list"
         ' 
         ' Order
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = SystemColors.ControlDark
-        ClientSize = New Size(1161, 604)
+        ClientSize = New Size(1213, 723)
         Controls.Add(Panel2)
-        Controls.Add(OrderPnl)
         Controls.Add(NavbarPnl)
         Controls.Add(Panel1)
-        Controls.Add(TotalPnl)
         Name = "Order"
         Text = "Order form"
         NavbarPnl.ResumeLayout(False)
         NavbarPnl.PerformLayout()
+        CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
         CType(DataGridView1, ComponentModel.ISupportInitialize).EndInit()
-        TotalPnl.ResumeLayout(False)
-        TotalPnl.PerformLayout()
         Panel1.ResumeLayout(False)
         CurrentFocusedPnl.ResumeLayout(False)
         CurrentFocusedPnl.PerformLayout()
         Panel2.ResumeLayout(False)
-        Panel2.PerformLayout()
+        TotalPnl.ResumeLayout(False)
+        TotalPnl.PerformLayout()
+        Panel4.ResumeLayout(False)
+        Panel4.PerformLayout()
+        Panel3.ResumeLayout(False)
+        Panel3.PerformLayout()
         ResumeLayout(False)
     End Sub
     Friend WithEvents NavbarPnl As Panel
-    Friend WithEvents TotalPnl As Panel
-    Friend WithEvents Label2 As Label
-    Friend WithEvents TotalLbl As Label
     Friend WithEvents TestTable As DataGridView
     Friend WithEvents Panel1 As Panel
     Friend WithEvents MenuCategoryPnl As FlowLayoutPanel
@@ -473,16 +488,10 @@ Partial Class Order
     Friend WithEvents SearchTxtBox As TextBox
     Friend WithEvents Label1 As Label
     Friend WithEvents DataGridView1 As DataGridView
-    Friend WithEvents OrderPnl As FlowLayoutPanel
-    Friend WithEvents Label3 As Label
     Friend WithEvents DiscountBtn As Button
-    Friend WithEvents DiscountLbl As Label
     Friend WithEvents CreateOrderBtn As FontAwesome.Sharp.IconButton
     Friend WithEvents SearchBtn As FontAwesome.Sharp.IconButton
-    Friend WithEvents SettingsBtn As FontAwesome.Sharp.IconButton
     Friend WithEvents IconButton3 As FontAwesome.Sharp.IconButton
-    Friend WithEvents SubtotalLbl As Label
-    Friend WithEvents Label6 As Label
     Friend WithEvents CurrentFocusedPnl As Panel
     Friend WithEvents CancelBtn As FontAwesome.Sharp.IconButton
     Friend WithEvents IconButton2 As FontAwesome.Sharp.IconButton
@@ -492,5 +501,15 @@ Partial Class Order
     Friend WithEvents RecentOrdersBtn As FontAwesome.Sharp.IconButton
     Friend WithEvents Label8 As Label
     Friend WithEvents Panel2 As Panel
-    Friend WithEvents Label9 As Label
+    Friend WithEvents OrderPnl As FlowLayoutPanel
+    Friend WithEvents TotalPnl As Panel
+    Friend WithEvents DiscountLbl As Label
+    Friend WithEvents Label3 As Label
+    Friend WithEvents Panel3 As Panel
+    Friend WithEvents TotalLbl As Label
+    Friend WithEvents Label2 As Label
+    Friend WithEvents Panel4 As Panel
+    Friend WithEvents SubtotalLbl As Label
+    Friend WithEvents Label6 As Label
+    Friend WithEvents PictureBox1 As PictureBox
 End Class
