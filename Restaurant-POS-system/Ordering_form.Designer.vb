@@ -82,7 +82,7 @@ Partial Class Order
         ' lblHeaderTitle
         ' 
         lblHeaderTitle.AutoSize = True
-        lblHeaderTitle.Font = New Font("Segoe UI", 20.0F, FontStyle.Bold)
+        lblHeaderTitle.Font = New Font("Segoe UI", 20F, FontStyle.Bold)
         lblHeaderTitle.ForeColor = Color.White
         lblHeaderTitle.Location = New Point(30, 20)
         lblHeaderTitle.Name = "lblHeaderTitle"
@@ -93,7 +93,7 @@ Partial Class Order
         ' lblHeaderSubtitle
         ' 
         lblHeaderSubtitle.AutoSize = True
-        lblHeaderSubtitle.Font = New Font("Segoe UI", 10.0F)
+        lblHeaderSubtitle.Font = New Font("Segoe UI", 10F)
         lblHeaderSubtitle.ForeColor = Color.FromArgb(CByte(148), CByte(163), CByte(184))
         lblHeaderSubtitle.Location = New Point(35, 63)
         lblHeaderSubtitle.Name = "lblHeaderSubtitle"
@@ -162,7 +162,7 @@ Partial Class Order
         SearchTxtBox.BackColor = Color.FromArgb(CByte(45), CByte(55), CByte(72))
         SearchTxtBox.BorderStyle = BorderStyle.None
         SearchTxtBox.Dock = DockStyle.Fill
-        SearchTxtBox.Font = New Font("Segoe UI", 12.0F)
+        SearchTxtBox.Font = New Font("Segoe UI", 12F)
         SearchTxtBox.ForeColor = Color.White
         SearchTxtBox.Location = New Point(0, 0)
         SearchTxtBox.Multiline = True
@@ -178,7 +178,7 @@ Partial Class Order
         SearchBtn.Dock = DockStyle.Right
         SearchBtn.FlatAppearance.BorderSize = 0
         SearchBtn.FlatStyle = FlatStyle.Flat
-        SearchBtn.Font = New Font("Segoe UI Semibold", 10.0F, FontStyle.Bold)
+        SearchBtn.Font = New Font("Segoe UI Semibold", 10F, FontStyle.Bold)
         SearchBtn.ForeColor = Color.White
         SearchBtn.IconChar = FontAwesome.Sharp.IconChar.Search
         SearchBtn.IconColor = Color.White
@@ -266,7 +266,7 @@ Partial Class Order
         ' TotalLbl
         ' 
         TotalLbl.Dock = DockStyle.Right
-        TotalLbl.Font = New Font("Segoe UI", 24.0F, FontStyle.Bold)
+        TotalLbl.Font = New Font("Segoe UI", 24F, FontStyle.Bold)
         TotalLbl.ForeColor = Color.White
         TotalLbl.Location = New Point(230, 15)
         TotalLbl.Name = "TotalLbl"
@@ -279,7 +279,7 @@ Partial Class Order
         ' 
         Label2.AutoSize = True
         Label2.Dock = DockStyle.Left
-        Label2.Font = New Font("Segoe UI", 18.0F, FontStyle.Bold)
+        Label2.Font = New Font("Segoe UI", 18F, FontStyle.Bold)
         Label2.ForeColor = Color.White
         Label2.Location = New Point(20, 15)
         Label2.Name = "Label2"
@@ -301,7 +301,7 @@ Partial Class Order
         ' DiscountLbl
         ' 
         DiscountLbl.Dock = DockStyle.Right
-        DiscountLbl.Font = New Font("Segoe UI", 13.0F, FontStyle.Bold)
+        DiscountLbl.Font = New Font("Segoe UI", 13F, FontStyle.Bold)
         DiscountLbl.ForeColor = Color.FromArgb(CByte(245), CByte(101), CByte(101))
         DiscountLbl.Location = New Point(310, 10)
         DiscountLbl.Name = "DiscountLbl"
@@ -314,7 +314,7 @@ Partial Class Order
         ' 
         Label3.AutoSize = True
         Label3.Dock = DockStyle.Left
-        Label3.Font = New Font("Segoe UI", 12.0F)
+        Label3.Font = New Font("Segoe UI", 12F)
         Label3.ForeColor = Color.FromArgb(CByte(226), CByte(232), CByte(240))
         Label3.Location = New Point(20, 10)
         Label3.Name = "Label3"
@@ -336,7 +336,7 @@ Partial Class Order
         ' SubtotalLbl
         ' 
         SubtotalLbl.Dock = DockStyle.Right
-        SubtotalLbl.Font = New Font("Segoe UI", 14.0F, FontStyle.Bold)
+        SubtotalLbl.Font = New Font("Segoe UI", 14F, FontStyle.Bold)
         SubtotalLbl.ForeColor = Color.White
         SubtotalLbl.Location = New Point(260, 10)
         SubtotalLbl.Name = "SubtotalLbl"
@@ -349,7 +349,7 @@ Partial Class Order
         ' 
         Label6.AutoSize = True
         Label6.Dock = DockStyle.Left
-        Label6.Font = New Font("Segoe UI", 12.0F)
+        Label6.Font = New Font("Segoe UI", 12F)
         Label6.ForeColor = Color.FromArgb(CByte(226), CByte(232), CByte(240))
         Label6.Location = New Point(20, 10)
         Label6.Name = "Label6"
@@ -372,7 +372,7 @@ Partial Class Order
         ' 
         lblOrderTitle.AutoSize = True
         lblOrderTitle.Dock = DockStyle.Left
-        lblOrderTitle.Font = New Font("Segoe UI", 14.0F, FontStyle.Bold)
+        lblOrderTitle.Font = New Font("Segoe UI", 14F, FontStyle.Bold)
         lblOrderTitle.ForeColor = Color.White
         lblOrderTitle.Location = New Point(25, 20)
         lblOrderTitle.Name = "lblOrderTitle"
@@ -426,7 +426,7 @@ Partial Class Order
         IconButton2.Cursor = Cursors.Hand
         IconButton2.FlatAppearance.BorderSize = 0
         IconButton2.FlatStyle = FlatStyle.Flat
-        IconButton2.Font = New Font("Segoe UI Semibold", 10.0F, FontStyle.Bold)
+        IconButton2.Font = New Font("Segoe UI Semibold", 10F, FontStyle.Bold)
         IconButton2.ForeColor = Color.White
         IconButton2.IconChar = FontAwesome.Sharp.IconChar.Keyboard
         IconButton2.IconColor = Color.White
@@ -448,7 +448,7 @@ Partial Class Order
         RecentOrdersBtn.Cursor = Cursors.Hand
         RecentOrdersBtn.FlatAppearance.BorderSize = 0
         RecentOrdersBtn.FlatStyle = FlatStyle.Flat
-        RecentOrdersBtn.Font = New Font("Segoe UI Semibold", 10.0F, FontStyle.Bold)
+        RecentOrdersBtn.Font = New Font("Segoe UI Semibold", 10F, FontStyle.Bold)
         RecentOrdersBtn.ForeColor = Color.White
         RecentOrdersBtn.IconChar = FontAwesome.Sharp.IconChar.ClockRotateLeft
         RecentOrdersBtn.IconColor = Color.White
@@ -470,7 +470,7 @@ Partial Class Order
         CancelBtn.Cursor = Cursors.Hand
         CancelBtn.FlatAppearance.BorderSize = 0
         CancelBtn.FlatStyle = FlatStyle.Flat
-        CancelBtn.Font = New Font("Segoe UI Semibold", 10.0F, FontStyle.Bold)
+        CancelBtn.Font = New Font("Segoe UI Semibold", 10F, FontStyle.Bold)
         CancelBtn.ForeColor = Color.White
         CancelBtn.IconChar = FontAwesome.Sharp.IconChar.Close
         CancelBtn.IconColor = Color.White
@@ -492,7 +492,7 @@ Partial Class Order
         DiscountBtn.Cursor = Cursors.Hand
         DiscountBtn.FlatAppearance.BorderSize = 0
         DiscountBtn.FlatStyle = FlatStyle.Flat
-        DiscountBtn.Font = New Font("Segoe UI Semibold", 10.0F, FontStyle.Bold)
+        DiscountBtn.Font = New Font("Segoe UI Semibold", 10F, FontStyle.Bold)
         DiscountBtn.ForeColor = Color.White
         DiscountBtn.IconChar = FontAwesome.Sharp.IconChar.Tag
         DiscountBtn.IconColor = Color.White
@@ -514,7 +514,7 @@ Partial Class Order
         CreateOrderBtn.Cursor = Cursors.Hand
         CreateOrderBtn.FlatAppearance.BorderSize = 0
         CreateOrderBtn.FlatStyle = FlatStyle.Flat
-        CreateOrderBtn.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
+        CreateOrderBtn.Font = New Font("Segoe UI", 11F, FontStyle.Bold)
         CreateOrderBtn.ForeColor = Color.White
         CreateOrderBtn.IconChar = FontAwesome.Sharp.IconChar.CheckCircle
         CreateOrderBtn.IconColor = Color.White
@@ -542,7 +542,7 @@ Partial Class Order
         ' 
         ' Order
         ' 
-        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
+        AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.FromArgb(CByte(247), CByte(250), CByte(252))
         ClientSize = New Size(1600, 1010)
@@ -550,7 +550,7 @@ Partial Class Order
         Controls.Add(pnlOrderSidebar)
         Controls.Add(pnlHeader)
         Controls.Add(DataGridView1)
-        Font = New Font("Segoe UI", 9.0F)
+        Font = New Font("Segoe UI", 9F)
         Name = "Order"
         Text = "OrderUp! - Point of Sale"
         pnlHeader.ResumeLayout(False)

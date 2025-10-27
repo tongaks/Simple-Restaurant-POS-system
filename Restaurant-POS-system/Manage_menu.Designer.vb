@@ -86,7 +86,7 @@ Partial Class Manage_menu
         btnLogout.Dock = DockStyle.Right
         btnLogout.FlatAppearance.BorderSize = 0
         btnLogout.FlatStyle = FlatStyle.Flat
-        btnLogout.Font = New Font("Segoe UI Semibold", 10.0F, FontStyle.Bold)
+        btnLogout.Font = New Font("Segoe UI Semibold", 10F, FontStyle.Bold)
         btnLogout.ForeColor = Color.White
         btnLogout.Location = New Point(150, 20)
         btnLogout.Name = "btnLogout"
@@ -102,7 +102,7 @@ Partial Class Manage_menu
         btnHelp.Dock = DockStyle.Left
         btnHelp.FlatAppearance.BorderSize = 0
         btnHelp.FlatStyle = FlatStyle.Flat
-        btnHelp.Font = New Font("Segoe UI Semibold", 10.0F, FontStyle.Bold)
+        btnHelp.Font = New Font("Segoe UI Semibold", 10F, FontStyle.Bold)
         btnHelp.ForeColor = Color.White
         btnHelp.Location = New Point(90, 20)
         btnHelp.Name = "btnHelp"
@@ -118,7 +118,7 @@ Partial Class Manage_menu
         btnBack.Dock = DockStyle.Left
         btnBack.FlatAppearance.BorderSize = 0
         btnBack.FlatStyle = FlatStyle.Flat
-        btnBack.Font = New Font("Segoe UI Semibold", 10.0F, FontStyle.Bold)
+        btnBack.Font = New Font("Segoe UI Semibold", 10F, FontStyle.Bold)
         btnBack.ForeColor = Color.White
         btnBack.Location = New Point(10, 20)
         btnBack.Name = "btnBack"
@@ -145,7 +145,7 @@ Partial Class Manage_menu
         SearchBtn.Dock = DockStyle.Right
         SearchBtn.FlatAppearance.BorderSize = 0
         SearchBtn.FlatStyle = FlatStyle.Flat
-        SearchBtn.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
+        SearchBtn.Font = New Font("Segoe UI", 11F, FontStyle.Bold)
         SearchBtn.ForeColor = Color.White
         SearchBtn.IconChar = FontAwesome.Sharp.IconChar.Search
         SearchBtn.IconColor = Color.White
@@ -163,7 +163,7 @@ Partial Class Manage_menu
         ' 
         SearchTxtBox.BorderStyle = BorderStyle.None
         SearchTxtBox.Dock = DockStyle.Fill
-        SearchTxtBox.Font = New Font("Segoe UI", 12.0F)
+        SearchTxtBox.Font = New Font("Segoe UI", 12F)
         SearchTxtBox.Location = New Point(0, 0)
         SearchTxtBox.Multiline = True
         SearchTxtBox.Name = "SearchTxtBox"
@@ -174,7 +174,7 @@ Partial Class Manage_menu
         ' lblTitle
         ' 
         lblTitle.AutoSize = True
-        lblTitle.Font = New Font("Segoe UI", 24.0F, FontStyle.Bold)
+        lblTitle.Font = New Font("Segoe UI", 24F, FontStyle.Bold)
         lblTitle.ForeColor = Color.White
         lblTitle.Location = New Point(30, 25)
         lblTitle.Name = "lblTitle"
@@ -229,7 +229,7 @@ Partial Class Manage_menu
         UpdateBtn.Enabled = False
         UpdateBtn.FlatAppearance.BorderSize = 0
         UpdateBtn.FlatStyle = FlatStyle.Flat
-        UpdateBtn.Font = New Font("Segoe UI Semibold", 11.0F, FontStyle.Bold)
+        UpdateBtn.Font = New Font("Segoe UI Semibold", 11F, FontStyle.Bold)
         UpdateBtn.ForeColor = Color.White
         UpdateBtn.IconChar = FontAwesome.Sharp.IconChar.Refresh
         UpdateBtn.IconColor = Color.White
@@ -253,7 +253,7 @@ Partial Class Manage_menu
         CancelBtn.Enabled = False
         CancelBtn.FlatAppearance.BorderSize = 0
         CancelBtn.FlatStyle = FlatStyle.Flat
-        CancelBtn.Font = New Font("Segoe UI Semibold", 11.0F, FontStyle.Bold)
+        CancelBtn.Font = New Font("Segoe UI Semibold", 11F, FontStyle.Bold)
         CancelBtn.ForeColor = Color.White
         CancelBtn.IconChar = FontAwesome.Sharp.IconChar.Close
         CancelBtn.IconColor = Color.White
@@ -277,7 +277,7 @@ Partial Class Manage_menu
         DeleteBtn.Enabled = False
         DeleteBtn.FlatAppearance.BorderSize = 0
         DeleteBtn.FlatStyle = FlatStyle.Flat
-        DeleteBtn.Font = New Font("Segoe UI Semibold", 11.0F, FontStyle.Bold)
+        DeleteBtn.Font = New Font("Segoe UI Semibold", 11F, FontStyle.Bold)
         DeleteBtn.ForeColor = Color.White
         DeleteBtn.IconChar = FontAwesome.Sharp.IconChar.TrashAlt
         DeleteBtn.IconColor = Color.White
@@ -301,7 +301,7 @@ Partial Class Manage_menu
         EditBtn.Enabled = False
         EditBtn.FlatAppearance.BorderSize = 0
         EditBtn.FlatStyle = FlatStyle.Flat
-        EditBtn.Font = New Font("Segoe UI Semibold", 11.0F, FontStyle.Bold)
+        EditBtn.Font = New Font("Segoe UI Semibold", 11F, FontStyle.Bold)
         EditBtn.ForeColor = Color.White
         EditBtn.IconChar = FontAwesome.Sharp.IconChar.Edit
         EditBtn.IconColor = Color.White
@@ -325,7 +325,7 @@ Partial Class Manage_menu
         SaveBtn.Enabled = False
         SaveBtn.FlatAppearance.BorderSize = 0
         SaveBtn.FlatStyle = FlatStyle.Flat
-        SaveBtn.Font = New Font("Segoe UI Semibold", 11.0F, FontStyle.Bold)
+        SaveBtn.Font = New Font("Segoe UI Semibold", 11F, FontStyle.Bold)
         SaveBtn.ForeColor = Color.White
         SaveBtn.IconChar = FontAwesome.Sharp.IconChar.Save
         SaveBtn.IconColor = Color.White
@@ -358,7 +358,7 @@ Partial Class Manage_menu
         ' 
         PriceTxtBox.BorderStyle = BorderStyle.FixedSingle
         PriceTxtBox.Enabled = False
-        PriceTxtBox.Font = New Font("Segoe UI", 11.0F)
+        PriceTxtBox.Font = New Font("Segoe UI", 11F)
         PriceTxtBox.Location = New Point(10, 125)
         PriceTxtBox.Name = "PriceTxtBox"
         PriceTxtBox.Size = New Size(170, 32)
@@ -367,7 +367,7 @@ Partial Class Manage_menu
         ' PriceLbl
         ' 
         PriceLbl.AutoSize = True
-        PriceLbl.Font = New Font("Segoe UI Semibold", 11.0F, FontStyle.Bold)
+        PriceLbl.Font = New Font("Segoe UI Semibold", 11F, FontStyle.Bold)
         PriceLbl.ForeColor = Color.FromArgb(CByte(52), CByte(73), CByte(94))
         PriceLbl.Location = New Point(10, 95)
         PriceLbl.Name = "PriceLbl"
@@ -379,7 +379,7 @@ Partial Class Manage_menu
         ' 
         ItemNameTxtBox.BorderStyle = BorderStyle.FixedSingle
         ItemNameTxtBox.Enabled = False
-        ItemNameTxtBox.Font = New Font("Segoe UI", 11.0F)
+        ItemNameTxtBox.Font = New Font("Segoe UI", 11F)
         ItemNameTxtBox.Location = New Point(10, 40)
         ItemNameTxtBox.Name = "ItemNameTxtBox"
         ItemNameTxtBox.Size = New Size(330, 32)
@@ -388,7 +388,7 @@ Partial Class Manage_menu
         ' ItemNameLbl
         ' 
         ItemNameLbl.AutoSize = True
-        ItemNameLbl.Font = New Font("Segoe UI Semibold", 11.0F, FontStyle.Bold)
+        ItemNameLbl.Font = New Font("Segoe UI Semibold", 11F, FontStyle.Bold)
         ItemNameLbl.ForeColor = Color.FromArgb(CByte(52), CByte(73), CByte(94))
         ItemNameLbl.Location = New Point(10, 10)
         ItemNameLbl.Name = "ItemNameLbl"
@@ -399,7 +399,7 @@ Partial Class Manage_menu
         ' lblItemPreview
         ' 
         lblItemPreview.AutoSize = True
-        lblItemPreview.Font = New Font("Segoe UI", 10.0F, FontStyle.Italic)
+        lblItemPreview.Font = New Font("Segoe UI", 10F, FontStyle.Italic)
         lblItemPreview.ForeColor = Color.Gray
         lblItemPreview.Location = New Point(25, 65)
         lblItemPreview.Name = "lblItemPreview"
@@ -416,7 +416,7 @@ Partial Class Manage_menu
         ItemBtn.FlatAppearance.BorderSize = 3
         ItemBtn.FlatAppearance.MouseOverBackColor = Color.FromArgb(CByte(236), CByte(240), CByte(245))
         ItemBtn.FlatStyle = FlatStyle.Flat
-        ItemBtn.Font = New Font("Segoe UI", 11.0F)
+        ItemBtn.Font = New Font("Segoe UI", 11F)
         ItemBtn.ForeColor = Color.FromArgb(CByte(127), CByte(140), CByte(141))
         ItemBtn.Location = New Point(75, 110)
         ItemBtn.Name = "ItemBtn"
@@ -430,7 +430,7 @@ Partial Class Manage_menu
         ' 
         Label4.AutoSize = True
         Label4.Dock = DockStyle.Top
-        Label4.Font = New Font("Segoe UI Semibold", 15.0F, FontStyle.Bold)
+        Label4.Font = New Font("Segoe UI Semibold", 15F, FontStyle.Bold)
         Label4.ForeColor = Color.FromArgb(CByte(52), CByte(73), CByte(94))
         Label4.Location = New Point(25, 25)
         Label4.Name = "Label4"
@@ -472,14 +472,14 @@ Partial Class Manage_menu
         ' 
         ' Manage_menu
         ' 
-        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
+        AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.FromArgb(CByte(236), CByte(240), CByte(245))
         ClientSize = New Size(1600, 1010)
         Controls.Add(pnlMain)
         Controls.Add(pnlSidebar)
         Controls.Add(pnlHeader)
-        Font = New Font("Segoe UI", 9.0F)
+        Font = New Font("Segoe UI", 9F)
         Name = "Manage_menu"
         Text = "🍽️ Manage Menu - OrderUp!"
         pnlHeader.ResumeLayout(False)

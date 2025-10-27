@@ -3,6 +3,10 @@ Imports System.Windows.Forms.DataVisualization.Charting
 Imports MySql.Data.MySqlClient
 Imports System.Drawing
 Imports System.IO
+Imports PdfSharp.Pdf
+Imports PdfSharp.Drawing
+Imports System.Drawing.Imaging
+Imports System.Drawing.Printing
 
 ''' <summary>
 ''' Modern Sales Report Form with Advanced Charts and Analytics

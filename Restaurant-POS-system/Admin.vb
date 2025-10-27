@@ -5,14 +5,17 @@ Imports MySql.Data
 Imports MySql.Data.MySqlClient
 Imports System.Windows.Forms
 Imports System.Windows.Forms.DataVisualization.Charting
+Imports Guna.UI2.WinForms
+
 ' Admin Dashboard Form - OrderUp! System
 ' Features: Audit Log, Sales Report, Menu Management, User Management
 ' Database: MySQL/MariaDB
+' NOW USING: Guna2 Controls and AdminMenuButtonControl for navigation
 
 Public Class Admin
     Private currentUserRole As String = "Admin"
     Private navButtons As AdminNavButtons
-    Private currentActiveButton As Button = Nothing
+    Private currentActiveMenuButton As AdminMenuButtonControl = Nothing
 
     ' Simple PathManager helper class
     Public Class PathManager
@@ -49,38 +52,67 @@ Public Class Admin
         ' Initialize archived_users table if not exists
         DatabaseHandler.EnsureArchivedUsersTableExists()
 
-        ' Set initial active button
-        SetActiveButton(btnAuditLog)
+        ' Wire up the AdminMenuButtonControl Clicked events to existing handlers
+        AddHandler menuBtnAuditLog.Clicked, AddressOf MenuBtnAuditLog_Clicked
+        AddHandler menuBtnSalesReport.Clicked, AddressOf MenuBtnSalesReport_Clicked
+        AddHandler menuBtnManageMenu.Clicked, AddressOf MenuBtnManageMenu_Clicked
+        AddHandler menuBtnManageAccounts.Clicked, AddressOf MenuBtnManageAccounts_Clicked
+
+        ' Set initial active menu button
+        SetActiveMenuButton(menuBtnAuditLog)
     End Sub
 
     ''' <summary>
-    ''' Highlight the active dashboard button
+    ''' Highlight the active menu button (AdminMenuButtonControl)
     ''' </summary>
-    Private Sub SetActiveButton(btn As Button)
-        ' Reset previous active button
-        If currentActiveButton IsNot Nothing Then
-            currentActiveButton.BackColor = GetOriginalButtonColor(currentActiveButton)
-            currentActiveButton.FlatAppearance.BorderSize = 1
-            currentActiveButton.FlatAppearance.BorderColor = Color.Black
+    Private Sub SetActiveMenuButton(menuBtn As AdminMenuButtonControl)
+        ' Reset previous active button (if any)
+        If currentActiveMenuButton IsNot Nothing Then
+            ' Reset to default inactive styling (handled by control's design)
+            currentActiveMenuButton.BackColor = Color.Transparent
         End If
 
         ' Set new active button
-        currentActiveButton = btn
-        currentActiveButton.BackColor = Color.FromArgb(100, 180, 100) ' Darker shade
-        currentActiveButton.FlatAppearance.BorderSize = 3
-        currentActiveButton.FlatAppearance.BorderColor = Color.DarkGreen
+        currentActiveMenuButton = menuBtn
+        ' Highlight active state (add subtle background or border)
+        currentActiveMenuButton.BackColor = Color.FromArgb(10, Theme.PrimaryAccent)
     End Sub
 
     ''' <summary>
-    ''' Get original button color based on button name
+    ''' Menu button click handlers - wire existing logic to new controls
     ''' </summary>
-    Private Function GetOriginalButtonColor(btn As Button) As Color
-        If btn Is btnAuditLog Then Return Color.LightCoral
-        If btn Is btnSalesReport Then Return Color.LightGreen
-        If btn Is btnManageAccounts Then Return Color.LightBlue
-        If btn Is btnManageMenu Then Return Color.LightSalmon
-        Return Color.LightGray
-    End Function
+    Private Sub MenuBtnAuditLog_Clicked(sender As Object, e As EventArgs)
+        pnlManageAccounts.Visible = False
+        pnlAuditLog.Visible = True
+        SetActiveMenuButton(menuBtnAuditLog)
+        LoadAuditLogs()
+    End Sub
+
+    Private Sub MenuBtnSalesReport_Clicked(sender As Object, e As EventArgs)
+        Try
+            Dim salesReportForm As New SalesReport()
+            salesReportForm.Show()
+            SetActiveMenuButton(menuBtnSalesReport)
+        Catch ex As Exception
+            MessageBox.Show("Error opening sales report: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Sub MenuBtnManageMenu_Clicked(sender As Object, e As EventArgs)
+        Try
+            Dim menuForm As New Manage_menu()
+            menuForm.Show()
+        Catch ex As Exception
+            MessageBox.Show("Error opening menu management: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Sub MenuBtnManageAccounts_Clicked(sender As Object, e As EventArgs)
+        pnlAuditLog.Visible = False
+        pnlManageAccounts.Visible = True
+        SetActiveMenuButton(menuBtnManageAccounts)
+        LoadUserAccounts()
+    End Sub
 
     ''' <summary>
     ''' Load audit logs with optional filters
@@ -269,43 +301,7 @@ Public Class Admin
         End Try
     End Sub
 
-    ' Event Handlers
-    Private Sub btnManageMenu_Click(sender As Object, e As EventArgs) Handles btnManageMenu.Click
-        Try
-            Dim menuForm As New Manage_menu()
-            menuForm.Show()
-        Catch ex As Exception
-            MessageBox.Show("Error opening menu management: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-    End Sub
-
-    Private Sub btnAuditLog_Click(sender As Object, e As EventArgs) Handles btnAuditLog.Click
-        pnlManageAccounts.Visible = False
-        pnlAuditLog.Visible = True
-        SetActiveButton(btnAuditLog)
-        LoadAuditLogs()
-    End Sub
-
-    ''' <summary>
-    ''' Open the new standalone Sales Report form
-    ''' </summary>
-    Private Sub btnSalesReport_Click(sender As Object, e As EventArgs) Handles btnSalesReport.Click
-        Try
-            Dim salesReportForm As New SalesReport()
-            salesReportForm.Show()
-            SetActiveButton(btnSalesReport)
-        Catch ex As Exception
-            MessageBox.Show("Error opening sales report: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-    End Sub
-
-    Private Sub btnManageAccounts_Click(sender As Object, e As EventArgs) Handles btnManageAccounts.Click
-        pnlAuditLog.Visible = False
-        pnlManageAccounts.Visible = True
-        SetActiveButton(btnManageAccounts)
-        LoadUserAccounts()
-    End Sub
-
+    ' Event Handlers for Guna2 controls
     Private Sub btnFilterAuditLogs_Click(sender As Object, e As EventArgs) Handles btnFilterAuditLogs.Click
         FilterAuditLogs()
     End Sub
@@ -325,9 +321,18 @@ Public Class Admin
         LoadUserAccounts(txtSearchAccounts.Text.Trim())
     End Sub
 
-    Private Sub pnlHeader_Paint(sender As Object, e As PaintEventArgs) Handles pnlHeader.Paint
+    Private Sub pnlHeader_Paint(sender As Object, e As PaintEventArgs)
     End Sub
 
-    Private Sub pnlManageAccounts_Paint(sender As Object, e As PaintEventArgs) Handles pnlManageAccounts.Paint
+    Private Sub pnlManageAccounts_Paint(sender As Object, e As PaintEventArgs)
+    End Sub
+
+    Private Sub btnViewArchive_Click(sender As Object, e As EventArgs) Handles btnViewArchive.Click
+        Try
+            Dim archiveForm As New ArchiveStorage()
+            archiveForm.ShowDialog(Me)
+        Catch ex As Exception
+            MessageBox.Show("Error opening archive storage: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 End Class

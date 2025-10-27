@@ -170,7 +170,7 @@ Partial Class Receipt
         ' lblTotalAmount
         ' 
         lblTotalAmount.Dock = DockStyle.Right
-        lblTotalAmount.Font = New Font("Segoe UI", 20.0F, FontStyle.Bold)
+        lblTotalAmount.Font = New Font("Segoe UI", 20F, FontStyle.Bold)
         lblTotalAmount.ForeColor = Color.FromArgb(CByte(16), CByte(185), CByte(129))
         lblTotalAmount.Location = New Point(260, 8)
         lblTotalAmount.Name = "lblTotalAmount"
@@ -183,7 +183,7 @@ Partial Class Receipt
         ' 
         lblTotalLabel.AutoSize = True
         lblTotalLabel.Dock = DockStyle.Left
-        lblTotalLabel.Font = New Font("Segoe UI", 16.0F, FontStyle.Bold)
+        lblTotalLabel.Font = New Font("Segoe UI", 16F, FontStyle.Bold)
         lblTotalLabel.ForeColor = Color.FromArgb(CByte(100), CByte(116), CByte(139))
         lblTotalLabel.Location = New Point(25, 8)
         lblTotalLabel.Name = "lblTotalLabel"
@@ -205,7 +205,7 @@ Partial Class Receipt
         ' lblDiscountAmount
         ' 
         lblDiscountAmount.Dock = DockStyle.Right
-        lblDiscountAmount.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
+        lblDiscountAmount.Font = New Font("Segoe UI", 11F, FontStyle.Bold)
         lblDiscountAmount.ForeColor = Color.FromArgb(CByte(239), CByte(68), CByte(68))
         lblDiscountAmount.Location = New Point(310, 8)
         lblDiscountAmount.Name = "lblDiscountAmount"
@@ -218,7 +218,7 @@ Partial Class Receipt
         ' 
         lblDiscountLabel.AutoSize = True
         lblDiscountLabel.Dock = DockStyle.Left
-        lblDiscountLabel.Font = New Font("Segoe UI", 11.0F)
+        lblDiscountLabel.Font = New Font("Segoe UI", 11F)
         lblDiscountLabel.ForeColor = Color.FromArgb(CByte(100), CByte(116), CByte(139))
         lblDiscountLabel.Location = New Point(25, 8)
         lblDiscountLabel.Name = "lblDiscountLabel"
@@ -240,7 +240,7 @@ Partial Class Receipt
         ' lblSubtotalAmount
         ' 
         lblSubtotalAmount.Dock = DockStyle.Right
-        lblSubtotalAmount.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
+        lblSubtotalAmount.Font = New Font("Segoe UI", 11F, FontStyle.Bold)
         lblSubtotalAmount.ForeColor = Color.FromArgb(CByte(51), CByte(65), CByte(85))
         lblSubtotalAmount.Location = New Point(310, 8)
         lblSubtotalAmount.Name = "lblSubtotalAmount"
@@ -253,7 +253,7 @@ Partial Class Receipt
         ' 
         lblSubtotalLabel.AutoSize = True
         lblSubtotalLabel.Dock = DockStyle.Left
-        lblSubtotalLabel.Font = New Font("Segoe UI", 11.0F)
+        lblSubtotalLabel.Font = New Font("Segoe UI", 11F)
         lblSubtotalLabel.ForeColor = Color.FromArgb(CByte(100), CByte(116), CByte(139))
         lblSubtotalLabel.Location = New Point(25, 8)
         lblSubtotalLabel.Name = "lblSubtotalLabel"
@@ -289,7 +289,7 @@ Partial Class Receipt
         ' lblPaymentMethod
         ' 
         lblPaymentMethod.AutoSize = True
-        lblPaymentMethod.Font = New Font("Segoe UI", 11.0F)
+        lblPaymentMethod.Font = New Font("Segoe UI", 11F)
         lblPaymentMethod.ForeColor = Color.FromArgb(CByte(148), CByte(163), CByte(184))
         lblPaymentMethod.Location = New Point(25, 100)
         lblPaymentMethod.Name = "lblPaymentMethod"
@@ -300,7 +300,7 @@ Partial Class Receipt
         ' lblCashier
         ' 
         lblCashier.AutoSize = True
-        lblCashier.Font = New Font("Segoe UI", 11.0F)
+        lblCashier.Font = New Font("Segoe UI", 11F)
         lblCashier.ForeColor = Color.FromArgb(CByte(148), CByte(163), CByte(184))
         lblCashier.Location = New Point(25, 70)
         lblCashier.Name = "lblCashier"
@@ -311,7 +311,7 @@ Partial Class Receipt
         ' lblDateTime
         ' 
         lblDateTime.AutoSize = True
-        lblDateTime.Font = New Font("Segoe UI", 11.0F)
+        lblDateTime.Font = New Font("Segoe UI", 11F)
         lblDateTime.ForeColor = Color.FromArgb(CByte(148), CByte(163), CByte(184))
         lblDateTime.Location = New Point(25, 40)
         lblDateTime.Name = "lblDateTime"
@@ -322,7 +322,7 @@ Partial Class Receipt
         ' lblOrderId
         ' 
         lblOrderId.AutoSize = True
-        lblOrderId.Font = New Font("Segoe UI", 14.0F, FontStyle.Bold)
+        lblOrderId.Font = New Font("Segoe UI", 14F, FontStyle.Bold)
         lblOrderId.ForeColor = Color.White
         lblOrderId.Location = New Point(20, 10)
         lblOrderId.Name = "lblOrderId"
@@ -343,7 +343,7 @@ Partial Class Receipt
         ' lblAppTitle
         ' 
         lblAppTitle.AutoSize = True
-        lblAppTitle.Font = New Font("Segoe UI", 32.0F, FontStyle.Bold)
+        lblAppTitle.Font = New Font("Segoe UI", 32F, FontStyle.Bold)
         lblAppTitle.ForeColor = Color.White
         lblAppTitle.Location = New Point(0, 30)
         lblAppTitle.Name = "lblAppTitle"
@@ -354,7 +354,7 @@ Partial Class Receipt
         ' lblAppSubtitle
         ' 
         lblAppSubtitle.AutoSize = True
-        lblAppSubtitle.Font = New Font("Segoe UI", 12.0F)
+        lblAppSubtitle.Font = New Font("Segoe UI", 12F)
         lblAppSubtitle.ForeColor = Color.FromArgb(CByte(148), CByte(163), CByte(184))
         lblAppSubtitle.Location = New Point(5, 100)
         lblAppSubtitle.Name = "lblAppSubtitle"
@@ -403,7 +403,7 @@ Partial Class Receipt
         btnPdfZoom.Dock = DockStyle.Left
         btnPdfZoom.FlatAppearance.BorderSize = 0
         btnPdfZoom.FlatStyle = FlatStyle.Flat
-        btnPdfZoom.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        btnPdfZoom.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         btnPdfZoom.ForeColor = Color.White
         btnPdfZoom.IconChar = FontAwesome.Sharp.IconChar.MagnifyingGlassPlus
         btnPdfZoom.IconColor = Color.White
@@ -448,7 +448,7 @@ Partial Class Receipt
         btnViewPdf.Dock = DockStyle.Right
         btnViewPdf.FlatAppearance.BorderSize = 0
         btnViewPdf.FlatStyle = FlatStyle.Flat
-        btnViewPdf.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        btnViewPdf.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         btnViewPdf.ForeColor = Color.White
         btnViewPdf.IconChar = FontAwesome.Sharp.IconChar.FilePdf
         btnViewPdf.IconColor = Color.White
@@ -471,7 +471,7 @@ Partial Class Receipt
         btnViewNative.Dock = DockStyle.Left
         btnViewNative.FlatAppearance.BorderSize = 0
         btnViewNative.FlatStyle = FlatStyle.Flat
-        btnViewNative.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        btnViewNative.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         btnViewNative.ForeColor = Color.White
         btnViewNative.IconChar = FontAwesome.Sharp.IconChar.Receipt
         btnViewNative.IconColor = Color.White
@@ -490,7 +490,7 @@ Partial Class Receipt
         ' lblHeaderTitle
         ' 
         lblHeaderTitle.AutoSize = True
-        lblHeaderTitle.Font = New Font("Segoe UI", 18.0F, FontStyle.Bold)
+        lblHeaderTitle.Font = New Font("Segoe UI", 18F, FontStyle.Bold)
         lblHeaderTitle.ForeColor = Color.White
         lblHeaderTitle.Location = New Point(40, 25)
         lblHeaderTitle.Name = "lblHeaderTitle"
@@ -519,7 +519,7 @@ Partial Class Receipt
         btnEmail.Cursor = Cursors.Hand
         btnEmail.FlatAppearance.BorderSize = 0
         btnEmail.FlatStyle = FlatStyle.Flat
-        btnEmail.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
+        btnEmail.Font = New Font("Segoe UI", 11F, FontStyle.Bold)
         btnEmail.ForeColor = Color.White
         btnEmail.IconChar = FontAwesome.Sharp.IconChar.Envelope
         btnEmail.IconColor = Color.White
@@ -541,7 +541,7 @@ Partial Class Receipt
         btnPrint.Cursor = Cursors.Hand
         btnPrint.FlatAppearance.BorderSize = 0
         btnPrint.FlatStyle = FlatStyle.Flat
-        btnPrint.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
+        btnPrint.Font = New Font("Segoe UI", 11F, FontStyle.Bold)
         btnPrint.ForeColor = Color.White
         btnPrint.IconChar = FontAwesome.Sharp.IconChar.Print
         btnPrint.IconColor = Color.White
@@ -563,7 +563,7 @@ Partial Class Receipt
         btnSavePdf.Cursor = Cursors.Hand
         btnSavePdf.FlatAppearance.BorderSize = 0
         btnSavePdf.FlatStyle = FlatStyle.Flat
-        btnSavePdf.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
+        btnSavePdf.Font = New Font("Segoe UI", 11F, FontStyle.Bold)
         btnSavePdf.ForeColor = Color.White
         btnSavePdf.IconChar = FontAwesome.Sharp.IconChar.Download
         btnSavePdf.IconColor = Color.White
@@ -586,7 +586,7 @@ Partial Class Receipt
         btnClose.Cursor = Cursors.Hand
         btnClose.FlatAppearance.BorderSize = 0
         btnClose.FlatStyle = FlatStyle.Flat
-        btnClose.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
+        btnClose.Font = New Font("Segoe UI", 11F, FontStyle.Bold)
         btnClose.ForeColor = Color.White
         btnClose.IconChar = FontAwesome.Sharp.IconChar.Close
         btnClose.IconColor = Color.White
@@ -604,11 +604,11 @@ Partial Class Receipt
         ' 
         ' Receipt
         ' 
-        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
+        AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1400, 900)
         Controls.Add(pnlMain)
-        Font = New Font("Segoe UI", 9.0F)
+        Font = New Font("Segoe UI", 9F)
         KeyPreview = True
         MinimumSize = New Size(1000, 600)
         Name = "Receipt"

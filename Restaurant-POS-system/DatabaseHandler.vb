@@ -325,4 +325,105 @@ Public Module DatabaseHandler
     End Function
 
 
+    ' Add these helper methods near the bottom of the DatabaseHandler module (before End Module)
+    ' Fetch archived users, restore an archived user back to user table, and permanently delete archived user.
+
+    Public Function GetArchivedUsers(Optional searchFilter As String = "") As List(Of UserAccount)
+        Dim users As New List(Of UserAccount)()
+        Try
+            Using connection As New MySqlConnection(GetGlobalConnectionString())
+                connection.Open()
+                Dim query As String = "SELECT id, username, password, role, date_created, archived_date FROM archived_users WHERE 1=1"
+                If Not String.IsNullOrEmpty(searchFilter) Then
+                    query &= " AND (username LIKE @search OR role LIKE @search)"
+                End If
+                Using cmd As New MySqlCommand(query, connection)
+                    If Not String.IsNullOrEmpty(searchFilter) Then
+                        cmd.Parameters.AddWithValue("@search", "%" & searchFilter & "%")
+                    End If
+                    Using reader As MySqlDataReader = cmd.ExecuteReader()
+                        While reader.Read()
+                            users.Add(New UserAccount With {
+                                .ID = Convert.ToInt32(reader("id")),
+                                .Username = reader("username").ToString(),
+                                .Password = reader("password").ToString(),
+                                .Role = If(reader("role") IsNot DBNull.Value, reader("role").ToString(), String.Empty),
+                                .DateCreated = If(reader("date_created") IsNot DBNull.Value, Convert.ToDateTime(reader("date_created")), DateTime.Now)
+                            })
+                        End While
+                    End Using
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Error loading archived users: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+        Return users
+    End Function
+
+    Public Function RestoreArchivedUser(archivedId As Integer) As Boolean
+        Try
+            Using connection As New MySqlConnection(GetGlobalConnectionString())
+                connection.Open()
+                Using transaction As MySqlTransaction = connection.BeginTransaction()
+                    ' Read archived row
+                    Dim selectQuery As String = "SELECT username, password, role, date_created FROM archived_users WHERE id = @id FOR UPDATE"
+                    Dim username As String = "", password As String = "", role As String = ""
+                    Dim dateCreated As DateTime = DateTime.Now
+                    Using selectCmd As New MySqlCommand(selectQuery, connection, transaction)
+                        selectCmd.Parameters.AddWithValue("@id", archivedId)
+                        Using reader As MySqlDataReader = selectCmd.ExecuteReader()
+                            If reader.Read() Then
+                                username = reader("username").ToString()
+                                password = reader("password").ToString()
+                                role = reader("role").ToString()
+                                dateCreated = If(reader("date_created") IsNot DBNull.Value, Convert.ToDateTime(reader("date_created")), DateTime.Now)
+                            Else
+                                Return False
+                            End If
+                        End Using
+                    End Using
+
+                    ' Insert into user table
+                    Dim insertQuery As String = "INSERT INTO user (username, password, role, date_created) VALUES (@username, @password, @role, @date)"
+                    Using insertCmd As New MySqlCommand(insertQuery, connection, transaction)
+                        insertCmd.Parameters.AddWithValue("@username", username)
+                        insertCmd.Parameters.AddWithValue("@password", password)
+                        insertCmd.Parameters.AddWithValue("@role", role)
+                        insertCmd.Parameters.AddWithValue("@date", dateCreated)
+                        insertCmd.ExecuteNonQuery()
+                    End Using
+
+                    ' Delete archived row
+                    Dim deleteQuery As String = "DELETE FROM archived_users WHERE id = @id"
+                    Using deleteCmd As New MySqlCommand(deleteQuery, connection, transaction)
+                        deleteCmd.Parameters.AddWithValue("@id", archivedId)
+                        deleteCmd.ExecuteNonQuery()
+                    End Using
+
+                    transaction.Commit()
+                    Return True
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Error restoring archived user: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return False
+        End Try
+    End Function
+
+    Public Function DeleteArchivedUser(archivedId As Integer) As Boolean
+        Try
+            Using connection As New MySqlConnection(GetGlobalConnectionString())
+                connection.Open()
+                Dim deleteQuery As String = "DELETE FROM archived_users WHERE id = @id"
+                Using cmd As New MySqlCommand(deleteQuery, connection)
+                    cmd.Parameters.AddWithValue("@id", archivedId)
+                    Dim rows = cmd.ExecuteNonQuery()
+                    Return rows > 0
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Error deleting archived user: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return False
+        End Try
+    End Function
 End Module

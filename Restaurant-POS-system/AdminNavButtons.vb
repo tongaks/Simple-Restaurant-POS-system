@@ -1,5 +1,6 @@
 Imports System.Windows.Forms
 Imports MySql.Data.MySqlClient
+Imports Guna.UI2.WinForms
 
 ''' <summary>
 ''' Manages navigation buttons for Admin and related forms.
@@ -8,16 +9,17 @@ Imports MySql.Data.MySqlClient
 ''' </summary>
 Public Class AdminNavButtons
     Private ReadOnly _parentForm As Form
-    Private ReadOnly _logoutBtn As Button
-    Private ReadOnly _backBtn As Button
-    Private ReadOnly _helpBtn As Button
-    Private ReadOnly _instructionsBtn As Button
+    Private ReadOnly _logoutBtn As Control
+    Private ReadOnly _backBtn As Control
+    Private ReadOnly _helpBtn As Control
+    Private ReadOnly _instructionsBtn As Control
 
     ''' <summary>
     ''' Initialize the navigation button handler.
     ''' Pass only the buttons that exist on the target form (back/help/instructions optional).
+    ''' Accepts either standard Button or Guna2Button instances.
     ''' </summary>
-    Public Sub New(parentForm As Form, logoutBtn As Button, Optional backBtn As Button = Nothing, Optional helpBtn As Button = Nothing, Optional instructionsBtn As Button = Nothing)
+    Public Sub New(parentForm As Form, logoutBtn As Control, Optional backBtn As Control = Nothing, Optional helpBtn As Control = Nothing, Optional instructionsBtn As Control = Nothing)
         _parentForm = parentForm
         _logoutBtn = logoutBtn
         _backBtn = backBtn
@@ -26,7 +28,7 @@ Public Class AdminNavButtons
 
         ' Style buttons for consistent UI at runtime (designer still shows them in designer)
         If _logoutBtn IsNot Nothing Then
-            StyleButton(_logoutBtn, Color.LightCoral)
+            StyleButton(_logoutBtn, Color.FromArgb(220, 38, 38))
             AddHandler _logoutBtn.Click, AddressOf HandleLogout
         End If
 
@@ -36,26 +38,53 @@ Public Class AdminNavButtons
         End If
 
         If _helpBtn IsNot Nothing Then
-            StyleButton(_helpBtn, Color.LightGreen)
+            StyleButton(_helpBtn, Color.FromArgb(31, 138, 112))
             AddHandler _helpBtn.Click, AddressOf HandleHelp
         End If
 
         If _instructionsBtn IsNot Nothing Then
-            StyleButton(_instructionsBtn, Color.LightYellow)
+            StyleButton(_instructionsBtn, Color.FromArgb(255, 200, 87))
             AddHandler _instructionsBtn.Click, AddressOf HandleInstructions
         End If
     End Sub
 
-    Private Sub StyleButton(btn As Button, backColor As Color)
+    Private Sub StyleButton(btn As Control, backColor As Color)
         If btn Is Nothing Then Return
-        btn.FlatStyle = FlatStyle.Flat
-        btn.Font = New Drawing.Font("Segoe UI", 10.0F, Drawing.FontStyle.Regular)
-        btn.BackColor = backColor
-        btn.ForeColor = Color.Black
-        btn.FlatAppearance.BorderSize = 1
-        btn.Padding = New Padding(6, 4, 6, 4)
-        btn.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        btn.Visible = True
+
+        ' Guna2Button styling
+        If TypeOf btn Is Guna.UI2.WinForms.Guna2Button Then
+            Dim gbtn = DirectCast(btn, Guna.UI2.WinForms.Guna2Button)
+            gbtn.BorderRadius = Theme.DefaultBorderRadius
+            gbtn.Cursor = Cursors.Hand
+            gbtn.FillColor = backColor
+            gbtn.Font = New Drawing.Font("Segoe UI Semibold", 10.0F, Drawing.FontStyle.Bold)
+            gbtn.ForeColor = Color.White
+            gbtn.Size = If(gbtn.Size = Size.Empty, New Size(100, 40), gbtn.Size)
+            gbtn.Visible = True
+            Return
+        End If
+
+        ' Standard Button styling
+        If TypeOf btn Is Button Then
+            Dim sbtn = DirectCast(btn, Button)
+            sbtn.FlatStyle = FlatStyle.Flat
+            sbtn.Font = New Drawing.Font("Segoe UI", 10.0F, Drawing.FontStyle.Regular)
+            sbtn.BackColor = backColor
+            sbtn.ForeColor = Color.Black
+            sbtn.FlatAppearance.BorderSize = 1
+            sbtn.Padding = New Padding(6, 4, 6, 4)
+            sbtn.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+            sbtn.Visible = True
+            Return
+        End If
+
+        ' Fallback: generic Control - try to set BackColor/ForeColor where possible
+        Try
+            btn.BackColor = backColor
+            btn.ForeColor = Color.Black
+        Catch
+            ' ignore unsupported properties
+        End Try
     End Sub
 
     ''' <summary>
@@ -100,11 +129,9 @@ Public Class AdminNavButtons
     Private Sub HandleBack(sender As Object, e As EventArgs)
         Dim result = MessageBox.Show("Are you sure you want to go back? Any unsaved changes will be lost.", "Confirm Back", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
         If result = DialogResult.Yes Then
-            ' If the parent is Manage_menu, show Admin form instead of exiting
             If TypeOf _parentForm Is Manage_menu Then
                 _parentForm.Hide()
                 Try
-                    ' If Admin is already open, just show it; otherwise, create a new one
                     For Each f As Form In Application.OpenForms
                         If TypeOf f Is Admin Then
                             f.Show()
@@ -115,12 +142,10 @@ Public Class AdminNavButtons
                     Dim adminForm As New Admin()
                     adminForm.Show()
                 Catch
-                    ' fallback: create and show new Admin form
                     Dim adminForm As New Admin()
                     adminForm.Show()
                 End Try
             Else
-                ' For other forms, just close
                 _parentForm.Close()
             End If
         End If
