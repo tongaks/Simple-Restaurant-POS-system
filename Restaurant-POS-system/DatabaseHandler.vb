@@ -113,14 +113,14 @@ Public Module DatabaseHandler
                 connection.Open()
 
                 Dim createTableQuery As String = "
-                    CREATE TABLE IF NOT EXISTS archived_users (
-                        id INT AUTO_INCREMENT PRIMARY KEY,
-                        username VARCHAR(50) NOT NULL,
-                        password VARCHAR(255) NOT NULL,
-                        role VARCHAR(20) NOT NULL,
-                        date_created DATETIME NOT NULL,
-                        archived_date DATETIME DEFAULT CURRENT_TIMESTAMP
-                    )"
+                        CREATE TABLE IF NOT EXISTS archived_users (
+                            id INT AUTO_INCREMENT PRIMARY KEY,
+                            username VARCHAR(50) NOT NULL,
+                            password VARCHAR(255) NOT NULL,
+                            role VARCHAR(20) NOT NULL,
+                            date_created DATETIME NOT NULL,
+                            archived_date DATETIME DEFAULT CURRENT_TIMESTAMP
+                        )"
 
                 Using cmd As New MySqlCommand(createTableQuery, connection)
                     cmd.ExecuteNonQuery()
@@ -155,12 +155,12 @@ Public Module DatabaseHandler
                     Using reader As MySqlDataReader = cmd.ExecuteReader()
                         While reader.Read()
                             users.Add(New UserAccount With {
-                                .ID = Convert.ToInt32(reader("id")),
-                                .Username = reader("username").ToString(),
-                                .Password = reader("password").ToString(),
-                                .Role = "",
-                                .DateCreated = Date.Now
-                            })
+                                    .ID = Convert.ToInt32(reader("id")),
+                                    .Username = reader("username").ToString(),
+                                    .Password = reader("password").ToString(),
+                                    .Role = "",
+                                    .DateCreated = Date.Now
+                                })
 
                             '.Role = reader("role").ToString(),
                             '.DateCreated = Convert.ToDateTime(reader("date_created"))
@@ -344,12 +344,12 @@ Public Module DatabaseHandler
                     Using reader As MySqlDataReader = cmd.ExecuteReader()
                         While reader.Read()
                             users.Add(New UserAccount With {
-                                .ID = Convert.ToInt32(reader("id")),
-                                .Username = reader("username").ToString(),
-                                .Password = reader("password").ToString(),
-                                .Role = If(reader("role") IsNot DBNull.Value, reader("role").ToString(), String.Empty),
-                                .DateCreated = If(reader("date_created") IsNot DBNull.Value, Convert.ToDateTime(reader("date_created")), DateTime.Now)
-                            })
+                                    .ID = Convert.ToInt32(reader("id")),
+                                    .Username = reader("username").ToString(),
+                                    .Password = reader("password").ToString(),
+                                    .Role = If(reader("role") IsNot DBNull.Value, reader("role").ToString(), String.Empty),
+                                    .DateCreated = If(reader("date_created") IsNot DBNull.Value, Convert.ToDateTime(reader("date_created")), DateTime.Now)
+                                })
                         End While
                     End Using
                 End Using
