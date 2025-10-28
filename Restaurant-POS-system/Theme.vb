@@ -283,4 +283,12 @@ Public Module Theme
         }
         Return colors(index Mod colors.Length)
     End Function
+
+    ' Helper to apply shadow on Guna2ShadowPanel (Guna2ShadowPanel uses ShadowDepth/ShadowColor/ShadowShift)
+    Public Sub ApplyShadowToShadowPanel(sp As Guna.UI2.WinForms.Guna2ShadowPanel, depth As Integer, Optional color As Color = Nothing, Optional shift As Integer = 3)
+        If color = Nothing Then color = Color.FromArgb(60, 0, 0, 0)
+        sp.ShadowDepth = depth
+        sp.ShadowColor = color
+        sp.ShadowShift = shift
+    End Sub
 End Module

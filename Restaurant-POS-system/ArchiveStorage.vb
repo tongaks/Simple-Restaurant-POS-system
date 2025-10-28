@@ -3,6 +3,9 @@ Imports System.Windows.Forms
 Public Class ArchiveStorage
     Inherits Form
 
+    ' Notify callers when archived accounts change (restore / delete)
+    Public Event AccountsChanged(sender As Object, e As EventArgs)
+
     Public Sub New()
         InitializeComponent()
         Me.StartPosition = FormStartPosition.CenterParent
@@ -44,6 +47,8 @@ Public Class ArchiveStorage
                                                       If DatabaseHandler.RestoreArchivedUser(a.ID) Then
                                                           MessageBox.Show("Account restored.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
                                                           LoadArchivedAccounts(txtSearchArchive.Text.Trim())
+                                                          ' Notify subscribers (Admin) that archived accounts changed
+                                                          RaiseEvent AccountsChanged(Me, EventArgs.Empty)
                                                       Else
                                                           MessageBox.Show("Failed to restore account.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                                                       End If
@@ -55,6 +60,8 @@ Public Class ArchiveStorage
                                                               If DatabaseHandler.DeleteArchivedUser(a.ID) Then
                                                                   MessageBox.Show("Archived account deleted.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
                                                                   LoadArchivedAccounts(txtSearchArchive.Text.Trim())
+                                                                  ' Notify subscribers (Admin) that archived accounts changed
+                                                                  RaiseEvent AccountsChanged(Me, EventArgs.Empty)
                                                               Else
                                                                   MessageBox.Show("Failed to delete archived account.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                                                               End If

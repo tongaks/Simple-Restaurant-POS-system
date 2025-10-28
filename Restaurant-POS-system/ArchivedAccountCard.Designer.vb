@@ -1,14 +1,20 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class ArchivedAccountCard
     Inherits System.Windows.Forms.UserControl
 
     Private components As System.ComponentModel.IContainer
-    Friend WithEvents pnlMain As Panel
+
+    ' NOTE: Control declarations updated to match Guna style and component types
+    Friend WithEvents mainCard As Guna.UI2.WinForms.Guna2ShadowPanel
+    Friend WithEvents headerPanel As Panel ' New Structural Panel
+    Friend WithEvents avatarCircle As Guna.UI2.WinForms.Guna2CircleButton ' New Guna Component
     Friend WithEvents lblUsername As Label
-    Friend WithEvents lblRole As Label
+    Friend WithEvents lblRole As Label ' Kept for compatibility but role display is handled by roleBadge
     Friend WithEvents lblDate As Label
-    Friend WithEvents btnRestore As Button
-    Friend WithEvents btnDeletePermanent As Button
+    Friend WithEvents actionPanel As Panel ' New Structural Panel
+    Friend WithEvents roleBadge As Guna.UI2.WinForms.Guna2Chip ' New Guna Component
+    Friend WithEvents btnRestore As Guna.UI2.WinForms.Guna2Button ' Changed type to Guna2Button
+    Friend WithEvents btnDeletePermanent As Guna.UI2.WinForms.Guna2Button ' Changed type to Guna2Button
 
     <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(disposing As Boolean)
@@ -23,78 +29,184 @@ Partial Class ArchivedAccountCard
 
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        pnlMain = New Panel()
-        lblUsername = New Label()
-        lblRole = New Label()
+        Dim CustomizableEdges1 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges2 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges3 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges4 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges5 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges6 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges7 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        mainCard = New Guna.UI2.WinForms.Guna2ShadowPanel()
+        actionPanel = New Panel()
+        btnDeletePermanent = New Guna.UI2.WinForms.Guna2Button()
+        btnRestore = New Guna.UI2.WinForms.Guna2Button()
+        headerPanel = New Panel()
         lblDate = New Label()
-        btnRestore = New Button()
-        btnDeletePermanent = New Button()
-        pnlMain.SuspendLayout()
+        lblRole = New Label()
+        lblUsername = New Label()
+        roleBadge = New Guna.UI2.WinForms.Guna2Chip()
+        avatarCircle = New Guna.UI2.WinForms.Guna2CircleButton()
+        mainCard.SuspendLayout()
+        actionPanel.SuspendLayout()
+        headerPanel.SuspendLayout()
         SuspendLayout()
         ' 
-        ' pnlMain
+        ' mainCard
         ' 
-        pnlMain.BackColor = Color.White
-        pnlMain.BorderStyle = BorderStyle.FixedSingle
-        pnlMain.Controls.Add(lblUsername)
-        pnlMain.Controls.Add(lblRole)
-        pnlMain.Controls.Add(lblDate)
-        pnlMain.Controls.Add(btnRestore)
-        pnlMain.Controls.Add(btnDeletePermanent)
-        pnlMain.Dock = DockStyle.Fill
-        pnlMain.Padding = New Padding(10)
-        pnlMain.Size = New Size(600, 80)
+        mainCard.BackColor = Color.Transparent
+        mainCard.Controls.Add(actionPanel)
+        mainCard.Controls.Add(headerPanel)
+        mainCard.FillColor = Color.White
+        mainCard.Location = New Point(0, 0)
+        mainCard.Name = "mainCard"
+        mainCard.Radius = 16
+        mainCard.ShadowColor = Color.Black
+        mainCard.ShadowDepth = 12
+        mainCard.ShadowShift = 3
+        mainCard.Size = New Size(590, 93)
+        mainCard.TabIndex = 0
         ' 
-        ' lblUsername
+        ' actionPanel
         ' 
-        lblUsername.Font = New Font("Segoe UI Semibold", 11, FontStyle.Bold)
-        lblUsername.ForeColor = Color.FromArgb(45, 45, 48)
-        lblUsername.Location = New Point(10, 8)
-        lblUsername.AutoSize = True
-        lblUsername.Text = "Username: user"
-        ' 
-        ' lblRole
-        ' 
-        lblRole.Font = New Font("Segoe UI", 10)
-        lblRole.ForeColor = Color.Gray
-        lblRole.Location = New Point(10, 30)
-        lblRole.AutoSize = True
-        lblRole.Text = "Role: cashier"
-        ' 
-        ' lblDate
-        ' 
-        lblDate.Font = New Font("Segoe UI", 9)
-        lblDate.ForeColor = Color.Gray
-        lblDate.Location = New Point(10, 50)
-        lblDate.AutoSize = True
-        lblDate.Text = "Archived: 2025-10-22"
-        ' 
-        ' btnRestore
-        ' 
-        btnRestore.Text = "Restore"
-        btnRestore.BackColor = Color.FromArgb(16, 185, 129)
-        btnRestore.ForeColor = Color.White
-        btnRestore.FlatStyle = FlatStyle.Flat
-        btnRestore.FlatAppearance.BorderSize = 0
-        btnRestore.Size = New Size(90, 30)
-        btnRestore.Location = New Point(400, 25)
+        actionPanel.Controls.Add(btnDeletePermanent)
+        actionPanel.Controls.Add(btnRestore)
+        actionPanel.Dock = DockStyle.Fill
+        actionPanel.Location = New Point(310, 0)
+        actionPanel.Name = "actionPanel"
+        actionPanel.Size = New Size(280, 93)
+        actionPanel.TabIndex = 1
         ' 
         ' btnDeletePermanent
         ' 
-        btnDeletePermanent.Text = "Delete"
-        btnDeletePermanent.BackColor = Color.FromArgb(239, 68, 68)
+        btnDeletePermanent.Animated = True
+        btnDeletePermanent.BorderRadius = 12
+        btnDeletePermanent.CustomizableEdges = CustomizableEdges1
+        btnDeletePermanent.FillColor = Color.FromArgb(CByte(239), CByte(68), CByte(68))
+        btnDeletePermanent.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
         btnDeletePermanent.ForeColor = Color.White
-        btnDeletePermanent.FlatStyle = FlatStyle.Flat
-        btnDeletePermanent.FlatAppearance.BorderSize = 0
-        btnDeletePermanent.Size = New Size(90, 30)
-        btnDeletePermanent.Location = New Point(500, 25)
+        btnDeletePermanent.HoverState.FillColor = Color.FromArgb(CByte(200), CByte(48), CByte(48))
+        btnDeletePermanent.Location = New Point(137, 18)
+        btnDeletePermanent.Margin = New Padding(3, 2, 3, 2)
+        btnDeletePermanent.Name = "btnDeletePermanent"
+        btnDeletePermanent.ShadowDecoration.CustomizableEdges = CustomizableEdges2
+        btnDeletePermanent.Size = New Size(118, 45)
+        btnDeletePermanent.TabIndex = 1
+        btnDeletePermanent.Text = "🗑️ Delete"
+        ' 
+        ' btnRestore
+        ' 
+        btnRestore.Animated = True
+        btnRestore.BorderRadius = 12
+        btnRestore.CustomizableEdges = CustomizableEdges3
+        btnRestore.FillColor = Color.FromArgb(CByte(16), CByte(185), CByte(129))
+        btnRestore.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
+        btnRestore.ForeColor = Color.White
+        btnRestore.HoverState.FillColor = Color.FromArgb(CByte(10), CByte(155), CByte(100))
+        btnRestore.Location = New Point(10, 18)
+        btnRestore.Margin = New Padding(3, 2, 3, 2)
+        btnRestore.Name = "btnRestore"
+        btnRestore.ShadowDecoration.CustomizableEdges = CustomizableEdges4
+        btnRestore.Size = New Size(121, 45)
+        btnRestore.TabIndex = 0
+        btnRestore.Text = "🔄 Restore"
+        ' 
+        ' headerPanel
+        ' 
+        headerPanel.Controls.Add(lblDate)
+        headerPanel.Controls.Add(lblRole)
+        headerPanel.Controls.Add(lblUsername)
+        headerPanel.Controls.Add(roleBadge)
+        headerPanel.Controls.Add(avatarCircle)
+        headerPanel.Dock = DockStyle.Left
+        headerPanel.Location = New Point(0, 0)
+        headerPanel.Name = "headerPanel"
+        headerPanel.Padding = New Padding(15, 0, 0, 0)
+        headerPanel.Size = New Size(310, 93)
+        headerPanel.TabIndex = 0
+        ' 
+        ' lblDate
+        ' 
+        lblDate.AutoSize = True
+        lblDate.Font = New Font("Segoe UI", 9.0F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        lblDate.ForeColor = Color.DimGray
+        lblDate.Location = New Point(80, 62)
+        lblDate.Name = "lblDate"
+        lblDate.Size = New Size(166, 20)
+        lblDate.TabIndex = 4
+        lblDate.Text = "Archived: YYYY-MM-DD"
+        ' 
+        ' lblRole
+        ' 
+        lblRole.AutoSize = True
+        lblRole.Font = New Font("Segoe UI", 9.0F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        lblRole.ForeColor = Color.Gray
+        lblRole.Location = New Point(80, 38)
+        lblRole.Name = "lblRole"
+        lblRole.Size = New Size(42, 20)
+        lblRole.TabIndex = 3
+        lblRole.Text = "Role:"
+        lblRole.Visible = False
+        ' 
+        ' lblUsername
+        ' 
+        lblUsername.AutoSize = True
+        lblUsername.Font = New Font("Segoe UI", 12.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        lblUsername.ForeColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        lblUsername.Location = New Point(80, 10)
+        lblUsername.Name = "lblUsername"
+        lblUsername.Size = New Size(104, 28)
+        lblUsername.TabIndex = 2
+        lblUsername.Text = "username"
+        ' 
+        ' roleBadge
+        ' 
+        roleBadge.CustomizableEdges = CustomizableEdges5
+        roleBadge.DefaultAutoSize = True
+        roleBadge.FillColor = Color.FromArgb(CByte(59), CByte(130), CByte(246))
+        roleBadge.Font = New Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        roleBadge.ForeColor = Color.White
+        roleBadge.Location = New Point(190, 10)
+        roleBadge.Margin = New Padding(0)
+        roleBadge.Name = "roleBadge"
+        roleBadge.ShadowDecoration.CustomizableEdges = CustomizableEdges6
+        roleBadge.Size = New Size(93, 32)
+        roleBadge.TabIndex = 5
+        roleBadge.Text = "ROLE"
+        ' 
+        ' avatarCircle
+        ' 
+        avatarCircle.Animated = True
+        avatarCircle.BorderColor = SystemColors.WindowText
+        avatarCircle.DisabledState.BorderColor = Color.DarkGray
+        avatarCircle.DisabledState.CustomBorderColor = Color.DarkGray
+        avatarCircle.DisabledState.FillColor = Color.FromArgb(CByte(169), CByte(169), CByte(169))
+        avatarCircle.DisabledState.ForeColor = Color.FromArgb(CByte(141), CByte(141), CByte(141))
+        avatarCircle.FillColor = Color.FromArgb(CByte(59), CByte(130), CByte(246))
+        avatarCircle.Font = New Font("Segoe UI", 18.0F)
+        avatarCircle.ForeColor = Color.White
+        avatarCircle.Location = New Point(15, 15)
+        avatarCircle.Name = "avatarCircle"
+        avatarCircle.PressedColor = Color.Brown
+        avatarCircle.ShadowDecoration.CustomizableEdges = CustomizableEdges7
+        avatarCircle.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle
+        avatarCircle.Size = New Size(59, 50)
+        avatarCircle.TabIndex = 0
+        avatarCircle.Text = "👤"
+        avatarCircle.TextOffset = New Point(2, 0)
         ' 
         ' ArchivedAccountCard
         ' 
-        Controls.Add(pnlMain)
+        AutoScaleMode = AutoScaleMode.None
+        BackColor = Color.Transparent
+        Controls.Add(mainCard)
         Name = "ArchivedAccountCard"
-        Size = New Size(600, 80)
-        pnlMain.ResumeLayout(False)
+        Size = New Size(618, 97)
+        mainCard.ResumeLayout(False)
+        actionPanel.ResumeLayout(False)
+        headerPanel.ResumeLayout(False)
+        headerPanel.PerformLayout()
         ResumeLayout(False)
+
     End Sub
+
 End Class

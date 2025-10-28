@@ -44,16 +44,18 @@ Partial Class Admin
         Dim CustomizableEdges18 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
         Dim CustomizableEdges19 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
         Dim CustomizableEdges20 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
-        Dim CustomizableEdges33 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
-        Dim CustomizableEdges34 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
-        Dim CustomizableEdges31 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
-        Dim CustomizableEdges32 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges35 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges36 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
         Dim CustomizableEdges25 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
         Dim CustomizableEdges26 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges33 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges34 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
         Dim CustomizableEdges27 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
         Dim CustomizableEdges28 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
         Dim CustomizableEdges29 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
         Dim CustomizableEdges30 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges31 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges32 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
         pnlHeader = New Guna.UI2.WinForms.Guna2Panel()
         pnlHeaderActions = New Panel()
         btnLogout = New Guna.UI2.WinForms.Guna2Button()
@@ -82,6 +84,7 @@ Partial Class Admin
         pnlManageAccounts = New Guna.UI2.WinForms.Guna2Panel()
         pnlAccountsContent = New Panel()
         pnlAccountCards = New Panel()
+        btnRefreshAccounts = New Guna.UI2.WinForms.Guna2Button()
         pnlAccountsToolbar = New Guna.UI2.WinForms.Guna2Panel()
         txtSearchAccounts = New Guna.UI2.WinForms.Guna2TextBox()
         btnViewArchive = New Guna.UI2.WinForms.Guna2Button()
@@ -591,13 +594,13 @@ Partial Class Admin
         pnlManageAccounts.Controls.Add(pnlAccountsContent)
         pnlManageAccounts.Controls.Add(pnlAccountsToolbar)
         pnlManageAccounts.Controls.Add(pnlAccountsHeader)
-        pnlManageAccounts.CustomizableEdges = CustomizableEdges33
+        pnlManageAccounts.CustomizableEdges = CustomizableEdges35
         pnlManageAccounts.Dock = DockStyle.Fill
         pnlManageAccounts.FillColor = Color.FromArgb(CByte(247), CByte(250), CByte(252))
         pnlManageAccounts.Location = New Point(280, 100)
         pnlManageAccounts.Name = "pnlManageAccounts"
         pnlManageAccounts.Padding = New Padding(25, 0, 25, 25)
-        pnlManageAccounts.ShadowDecoration.CustomizableEdges = CustomizableEdges34
+        pnlManageAccounts.ShadowDecoration.CustomizableEdges = CustomizableEdges36
         pnlManageAccounts.Size = New Size(1320, 900)
         pnlManageAccounts.TabIndex = 3
         pnlManageAccounts.Visible = False
@@ -624,20 +627,46 @@ Partial Class Admin
         pnlAccountCards.Size = New Size(1270, 680)
         pnlAccountCards.TabIndex = 0
         ' 
+        ' btnRefreshAccounts
+        ' 
+        btnRefreshAccounts.Animated = True
+        btnRefreshAccounts.BackColor = Color.Transparent
+        btnRefreshAccounts.BorderRadius = 12
+        btnRefreshAccounts.Cursor = Cursors.Hand
+        btnRefreshAccounts.CustomizableEdges = CustomizableEdges25
+        btnRefreshAccounts.DisabledState.BorderColor = Color.DarkGray
+        btnRefreshAccounts.DisabledState.CustomBorderColor = Color.DarkGray
+        btnRefreshAccounts.DisabledState.FillColor = Color.FromArgb(CByte(169), CByte(169), CByte(169))
+        btnRefreshAccounts.DisabledState.ForeColor = Color.FromArgb(CByte(141), CByte(141), CByte(141))
+        btnRefreshAccounts.FillColor = Color.FromArgb(CByte(31), CByte(138), CByte(112))
+        btnRefreshAccounts.Font = New Font("Segoe UI Semibold", 10.5F, FontStyle.Bold)
+        btnRefreshAccounts.ForeColor = Color.White
+        btnRefreshAccounts.HoverState.FillColor = Color.FromArgb(CByte(21), CByte(118), CByte(92))
+        btnRefreshAccounts.Location = New Point(820, 25)
+        btnRefreshAccounts.Name = "btnRefreshAccounts"
+        btnRefreshAccounts.PressedColor = Color.FromArgb(CByte(16), CByte(98), CByte(72))
+        btnRefreshAccounts.ShadowDecoration.CustomizableEdges = CustomizableEdges26
+        btnRefreshAccounts.ShadowDecoration.Depth = 8
+        btnRefreshAccounts.ShadowDecoration.Enabled = True
+        btnRefreshAccounts.Size = New Size(190, 50)
+        btnRefreshAccounts.TabIndex = 4
+        btnRefreshAccounts.Text = "🔄 Refresh"
+        ' 
         ' pnlAccountsToolbar
         ' 
         pnlAccountsToolbar.BackColor = Color.White
+        pnlAccountsToolbar.Controls.Add(btnRefreshAccounts)
         pnlAccountsToolbar.Controls.Add(txtSearchAccounts)
         pnlAccountsToolbar.Controls.Add(btnViewArchive)
         pnlAccountsToolbar.Controls.Add(btnCreateAccount)
-        pnlAccountsToolbar.CustomizableEdges = CustomizableEdges31
+        pnlAccountsToolbar.CustomizableEdges = CustomizableEdges33
         pnlAccountsToolbar.Dock = DockStyle.Top
         pnlAccountsToolbar.FillColor = Color.White
         pnlAccountsToolbar.Location = New Point(25, 80)
         pnlAccountsToolbar.Name = "pnlAccountsToolbar"
         pnlAccountsToolbar.Padding = New Padding(25, 20, 25, 20)
         pnlAccountsToolbar.ShadowDecoration.Color = Color.FromArgb(CByte(40), CByte(0), CByte(0), CByte(0))
-        pnlAccountsToolbar.ShadowDecoration.CustomizableEdges = CustomizableEdges32
+        pnlAccountsToolbar.ShadowDecoration.CustomizableEdges = CustomizableEdges34
         pnlAccountsToolbar.ShadowDecoration.Depth = 8
         pnlAccountsToolbar.ShadowDecoration.Enabled = True
         pnlAccountsToolbar.Size = New Size(1270, 100)
@@ -651,7 +680,7 @@ Partial Class Admin
         txtSearchAccounts.BorderRadius = 12
         txtSearchAccounts.BorderThickness = 3
         txtSearchAccounts.Cursor = Cursors.IBeam
-        txtSearchAccounts.CustomizableEdges = CustomizableEdges25
+        txtSearchAccounts.CustomizableEdges = CustomizableEdges27
         txtSearchAccounts.DefaultText = ""
         txtSearchAccounts.DisabledState.BorderColor = Color.FromArgb(CByte(208), CByte(208), CByte(208))
         txtSearchAccounts.DisabledState.FillColor = Color.FromArgb(CByte(226), CByte(226), CByte(226))
@@ -667,7 +696,7 @@ Partial Class Admin
         txtSearchAccounts.PlaceholderForeColor = Color.FromArgb(CByte(150), CByte(150), CByte(150))
         txtSearchAccounts.PlaceholderText = "🔍 Search by username or role..."
         txtSearchAccounts.SelectedText = ""
-        txtSearchAccounts.ShadowDecoration.CustomizableEdges = CustomizableEdges26
+        txtSearchAccounts.ShadowDecoration.CustomizableEdges = CustomizableEdges28
         txtSearchAccounts.ShadowDecoration.Depth = 5
         txtSearchAccounts.ShadowDecoration.Enabled = True
         txtSearchAccounts.Size = New Size(380, 50)
@@ -679,7 +708,7 @@ Partial Class Admin
         btnViewArchive.BackColor = Color.Transparent
         btnViewArchive.BorderRadius = 12
         btnViewArchive.Cursor = Cursors.Hand
-        btnViewArchive.CustomizableEdges = CustomizableEdges27
+        btnViewArchive.CustomizableEdges = CustomizableEdges29
         btnViewArchive.DisabledState.BorderColor = Color.DarkGray
         btnViewArchive.DisabledState.CustomBorderColor = Color.DarkGray
         btnViewArchive.DisabledState.FillColor = Color.FromArgb(CByte(169), CByte(169), CByte(169))
@@ -691,10 +720,10 @@ Partial Class Admin
         btnViewArchive.Location = New Point(230, 25)
         btnViewArchive.Name = "btnViewArchive"
         btnViewArchive.PressedColor = Color.FromArgb(CByte(205), CByte(118), CByte(0))
-        btnViewArchive.ShadowDecoration.CustomizableEdges = CustomizableEdges28
+        btnViewArchive.ShadowDecoration.CustomizableEdges = CustomizableEdges30
         btnViewArchive.ShadowDecoration.Depth = 8
         btnViewArchive.ShadowDecoration.Enabled = True
-        btnViewArchive.Size = New Size(170, 50)
+        btnViewArchive.Size = New Size(193, 50)
         btnViewArchive.TabIndex = 1
         btnViewArchive.Text = "📦 View Archive"
         ' 
@@ -704,7 +733,7 @@ Partial Class Admin
         btnCreateAccount.BackColor = Color.Transparent
         btnCreateAccount.BorderRadius = 12
         btnCreateAccount.Cursor = Cursors.Hand
-        btnCreateAccount.CustomizableEdges = CustomizableEdges29
+        btnCreateAccount.CustomizableEdges = CustomizableEdges31
         btnCreateAccount.DisabledState.BorderColor = Color.DarkGray
         btnCreateAccount.DisabledState.CustomBorderColor = Color.DarkGray
         btnCreateAccount.DisabledState.FillColor = Color.FromArgb(CByte(169), CByte(169), CByte(169))
@@ -716,7 +745,7 @@ Partial Class Admin
         btnCreateAccount.Location = New Point(25, 25)
         btnCreateAccount.Name = "btnCreateAccount"
         btnCreateAccount.PressedColor = Color.FromArgb(CByte(16), CByte(98), CByte(72))
-        btnCreateAccount.ShadowDecoration.CustomizableEdges = CustomizableEdges30
+        btnCreateAccount.ShadowDecoration.CustomizableEdges = CustomizableEdges32
         btnCreateAccount.ShadowDecoration.Depth = 8
         btnCreateAccount.ShadowDecoration.Enabled = True
         btnCreateAccount.Size = New Size(190, 50)
@@ -819,4 +848,6 @@ Partial Class Admin
     Friend WithEvents txtSearchAccounts As Guna.UI2.WinForms.Guna2TextBox
     Friend WithEvents pnlAccountsContent As Panel
     Friend WithEvents pnlAccountCards As Panel
+    ' Designer-managed refresh button
+    Friend WithEvents btnRefreshAccounts As Guna.UI2.WinForms.Guna2Button
 End Class
