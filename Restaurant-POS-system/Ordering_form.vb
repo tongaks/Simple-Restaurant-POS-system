@@ -19,6 +19,7 @@ Imports PdfiumViewer
 Imports PdfSharp.Drawing
 Imports PdfSharp.Fonts
 Imports PdfSharp.Pdf
+Imports PdfSharp.Pdf.Content.Objects
 Imports PdfSharp.Quality
 Imports ZstdSharp.Unsafe
 
@@ -28,13 +29,8 @@ Public Class Order
     Dim CurrentSubTotal As Double
     Dim DiscountValue As Double = 0
     Dim CurrentFocusedItem As String
-    Dim MenuItems As New List(Of Guna2PictureBox)
     Dim currentIndex As Integer = 0
     Dim CurrentFocused As Guna2PictureBox = Nothing
-
-    Dim MenuCategories As New List(Of Guna2Button)
-    Dim CurrentCategory As Guna2Button = Nothing
-    Dim PrevCategory As Guna2Button = Nothing
 
     Private Sub Order_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         GetSettingsConfig()
@@ -45,8 +41,17 @@ Public Class Order
         CurrentTotal = 0
 
         ' data grid view essentials
-        LoadMenuCategories()
-        LoadMenuItems("Foods")
+        LoadMenuCategories(MenuContainerPnl)
+        For Each btn As Guna2Button In MenuContainerPnl.Controls
+            AddHandler btn.Click, AddressOf HandleCategorylick
+        Next
+
+        LoadMenuItems("Foods", FoodPnl)
+        For Each btn As Guna2PictureBox In MenuItems
+            AddHandler btn.Click, AddressOf HandleItemClick
+        Next
+
+
         DataGridView1.ColumnCount = 5
         DataGridView1.Columns(0).Name = "ItemAmount"
         DataGridView1.Columns("ItemAmount").ValueType = GetType(Integer)
@@ -231,175 +236,179 @@ Public Class Order
 
 
     ' CRUD functions
-    Private Sub LoadMenuCategories()
-        Dim Connection As New MySqlConnection(GetGlobalConnectionString)
-        Dim Reader As MySqlDataReader
+    'Private Sub LoadMenuCategories()
+    '    Dim Connection As New MySqlConnection(GetGlobalConnectionString)
+    '    Dim Reader As MySqlDataReader
 
-        Try
-            Connection.Open()
-            Dim Query As String = "SELECT * FROM Categories"
-            Dim Command As New MySqlCommand(Query, Connection)
-            Reader = Command.ExecuteReader
+    '    Try
+    '        Connection.Open()
+    '        Dim Query As String = "SELECT * FROM Categories"
+    '        Dim Command As New MySqlCommand(Query, Connection)
+    '        Reader = Command.ExecuteReader
 
-            While Reader.Read
-                Dim catBtn As New Guna2Button
-                catBtn.Text = Reader("CategoryName")
-                'catBtn.Size = New System.Drawing.Size(100, 50)
-                catBtn.AutoSize = True
-                catBtn.Padding = New Padding(10)
+    '        While Reader.Read
+    '            Dim catBtn As New Guna2Button
+    '            catBtn.Text = Reader("CategoryName")
+    '            'catBtn.Size = New System.Drawing.Size(100, 50)
+    '            catBtn.AutoSize = True
+    '            catBtn.Padding = New Padding(10)
 
-                catBtn.ForeColor = Color.Navy
-                catBtn.Font = New Font("Segoe UI", 12, FontStyle.Regular)
+    '            catBtn.ForeColor = Color.Navy
+    '            catBtn.Font = New Font("Segoe UI", 12, FontStyle.Regular)
 
-                catBtn.BorderRadius = 10
-                catBtn.ShadowDecoration.Enabled = True
-                catBtn.ShadowDecoration.BorderRadius = 10
-                catBtn.ShadowDecoration.Color = Color.DimGray
-                catBtn.ShadowDecoration.Depth = 20
-                catBtn.ShadowDecoration.Shadow = New Padding(-1, -1, 5, 5)
+    '            catBtn.BorderRadius = 10
+    '            catBtn.ShadowDecoration.Enabled = True
+    '            catBtn.ShadowDecoration.BorderRadius = 10
+    '            catBtn.ShadowDecoration.Color = Color.DimGray
+    '            catBtn.ShadowDecoration.Depth = 20
+    '            catBtn.ShadowDecoration.Shadow = New Padding(-1, -1, 5, 5)
 
-                catBtn.FillColor = Color.LightSteelBlue
-                catBtn.Cursor = Cursors.Hand
+    '            catBtn.FillColor = Color.LightSteelBlue
+    '            catBtn.Cursor = Cursors.Hand
 
 
-                AddHandler catBtn.Click, AddressOf HandleCatClick
-                MenuContainerPnl.Controls.Add(catBtn)
-                MenuCategories.Add(catBtn)
-            End While
+    '            AddHandler catBtn.Click, AddressOf HandleCategorylick
 
-        Catch ex As Exception
-            MsgBox("Error: " + ex.ToString, MsgBoxStyle.Critical, "ERROR")
-        Finally
-            If Connection.State = ConnectionState.Open Then
-                Connection.Close()
-            End If
-        End Try
-    End Sub
-    Private Sub LoadMenuItems(table As String)
-        Dim Connection As New MySqlConnection(GetGlobalConnectionString)
-        Dim Reader As MySqlDataReader
-        MenuItems.Clear()
-        currentIndex = 0
+    '            MenuContainerPnl.Controls.Add(catBtn)
+    '            MenuCategories.Add(catBtn)
+    '        End While
 
-        Try
-            Connection.Open()
-            Dim Query As String = "SELECT * FROM `" & table & "`"
-            Dim Command As New MySqlCommand(Query, Connection)
-            Reader = Command.ExecuteReader
+    '    Catch ex As Exception
+    '        MsgBox("Error: " + ex.ToString, MsgBoxStyle.Critical, "ERROR")
+    '    Finally
+    '        If Connection.State = ConnectionState.Open Then
+    '            Connection.Close()
+    '        End If
+    '    End Try
+    'End Sub
+    'Private Sub LoadMenuItems(table As String)
+    '    Dim Connection As New MySqlConnection(GetGlobalConnectionString)
+    '    Dim Reader As MySqlDataReader
+    '    MenuItems.Clear()
+    '    currentIndex = 0
 
-            FoodPnl.Controls.Clear()
+    '    Try
+    '        Connection.Open()
+    '        Dim Query As String = "SELECT * FROM `" & table & "`"
+    '        Dim Command As New MySqlCommand(Query, Connection)
+    '        Reader = Command.ExecuteReader
 
-            While Reader.Read
-                Dim cardWidth As Integer = 160
-                Dim cardHeight As Integer = 200
-                Dim paddingVal As Integer = 10
-                Dim fontSize As Integer = 11
+    '        FoodPnl.Controls.Clear()
 
-                Dim Card As New Guna.UI2.WinForms.Guna2Panel With {
-                .Width = cardWidth,
-                .Height = cardHeight,
-                .BorderRadius = 12,
-                .BackColor = Color.White,
-                .FillColor = Color.White,
-                .Margin = New Padding(10),
-                .Tag = Reader("ItemName")
-            }
+    '        While Reader.Read
+    '            Dim cardWidth As Integer = 160
+    '            Dim cardHeight As Integer = 200
+    '            Dim paddingVal As Integer = 10
+    '            Dim fontSize As Integer = 11
 
-                Card.ShadowDecoration.Enabled = True
-                Card.ShadowDecoration.BorderRadius = 12
-                Card.ShadowDecoration.Color = Color.Silver
-                Card.ShadowDecoration.Depth = 10
-                Card.ShadowDecoration.Shadow = New Padding(2, 2, 4, 4)
+    '            Dim Card As New Guna.UI2.WinForms.Guna2Panel With {
+    '            .Width = cardWidth,
+    '            .Height = cardHeight,
+    '            .BorderRadius = 12,
+    '            .BackColor = Color.White,
+    '            .FillColor = Color.White,
+    '            .Margin = New Padding(10),
+    '            .Tag = Reader("ItemName")
+    '        }
 
-                Dim foodImg As New Guna.UI2.WinForms.Guna2PictureBox With {
-                .Size = New Size(cardWidth - (paddingVal * 2), 100),
-                .Location = New Point(paddingVal, paddingVal),
-                .SizeMode = PictureBoxSizeMode.Zoom,
-                .BorderRadius = 10,
-                .FillColor = Color.WhiteSmoke,
-                .Cursor = Cursors.Hand,
-                .Tag = Reader("ItemPrice"),
-                .Text = Reader("ItemName")
-            }
+    '            Card.ShadowDecoration.Enabled = True
+    '            Card.ShadowDecoration.BorderRadius = 12
+    '            Card.ShadowDecoration.Color = Color.Silver
+    '            Card.ShadowDecoration.Depth = 10
+    '            Card.ShadowDecoration.Shadow = New Padding(2, 2, 4, 4)
 
-                Dim hasImage As Boolean = False
+    '            Dim foodImg As New Guna.UI2.WinForms.Guna2PictureBox With {
+    '            .Size = New Size(cardWidth - (paddingVal * 2), 100),
+    '            .Location = New Point(paddingVal, paddingVal),
+    '            .SizeMode = PictureBoxSizeMode.Zoom,
+    '            .BorderRadius = 10,
+    '            .FillColor = Color.WhiteSmoke,
+    '            .Cursor = Cursors.Hand,
+    '            .Tag = Reader("ItemPrice"),
+    '            .Text = Reader("ItemName")
+    '        }
 
-                If Not IsDBNull(Reader("ImagePath")) Then
-                    Dim imagePath As String = Reader("ImagePath").ToString()
-                    If imagePath <> "N/A" AndAlso File.Exists(imagePath) Then
-                        foodImg.Image = Image.FromFile(imagePath)
-                        foodImg.Tag &= "," & imagePath
-                        hasImage = True
-                    End If
-                End If
+    '            Dim hasImage As Boolean = False
 
-                If Not hasImage Then
-                    foodImg.Image = Nothing
-                    foodImg.FillColor = Color.LightGray
+    '            If Not IsDBNull(Reader("ImagePath")) Then
+    '                Dim imagePath As String = Reader("ImagePath").ToString()
+    '                If imagePath <> "N/A" AndAlso File.Exists(imagePath) Then
+    '                    foodImg.Image = Image.FromFile(imagePath)
+    '                    foodImg.Tag &= "," & imagePath
+    '                    hasImage = True
+    '                End If
+    '            End If
 
-                    Dim noImageLbl As New Label With {
-                    .Text = "No Image",
-                    .Font = New Font("Segoe UI", 10, FontStyle.Italic),
-                    .ForeColor = Color.DimGray,
-                    .BackColor = Color.Transparent,
-                    .AutoSize = False,
-                    .TextAlign = ContentAlignment.MiddleCenter
-                }
-                    '.Dock = DockStyle.Fill
-                    foodImg.Controls.Add(noImageLbl)
-                End If
+    '            If Not hasImage Then
+    '                foodImg.Image = Nothing
+    '                foodImg.FillColor = Color.LightGray
 
-                Dim foodName As New Label With {
-                .Text = Reader("ItemName").ToString(),
-                .Font = New Font("Segoe UI Semibold", fontSize, FontStyle.Bold),
-                .AutoSize = False,
-                .TextAlign = ContentAlignment.MiddleCenter,
-                .Width = cardWidth - (paddingVal * 2),
-                .Height = 30,
-                .Location = New Point(paddingVal, foodImg.Bottom + 5)
-            }
+    '                Dim noImageLbl As New Label With {
+    '                .Text = "No Image",
+    '                .Font = New Font("Segoe UI", 10, FontStyle.Italic),
+    '                .ForeColor = Color.DimGray,
+    '                .BackColor = Color.Transparent,
+    '                .AutoSize = False,
+    '                .TextAlign = ContentAlignment.MiddleCenter
+    '            }
+    '                '.Dock = DockStyle.Fill
+    '                foodImg.Controls.Add(noImageLbl)
+    '            End If
 
-                Dim foodPrice As New Label With {
-                .Text = "₱" & Reader("ItemPrice").ToString(),
-                .Font = New Font("Segoe UI", 14, FontStyle.Regular),
-                .ForeColor = Color.Navy,
-                .AutoSize = False,
-                .TextAlign = ContentAlignment.MiddleCenter,
-                .Width = cardWidth - (paddingVal * 2),
-                .Height = 25,
-                .Location = New Point(paddingVal, foodName.Bottom)
-            }
+    '            Dim foodName As New Label With {
+    '            .Text = Reader("ItemName").ToString(),
+    '            .Font = New Font("Segoe UI Semibold", fontSize, FontStyle.Bold),
+    '            .AutoSize = False,
+    '            .TextAlign = ContentAlignment.MiddleCenter,
+    '            .Width = cardWidth - (paddingVal * 2),
+    '            .Height = 30,
+    '            .Location = New Point(paddingVal, foodImg.Bottom + 5)
+    '        }
 
-                AddHandler Card.MouseEnter, Sub()
-                                                Card.FillColor = Color.FromArgb(245, 245, 245)
-                                                Card.ShadowDecoration.Color = Color.LightGray
-                                            End Sub
-                AddHandler Card.MouseLeave, Sub()
-                                                Card.FillColor = Color.White
-                                                Card.ShadowDecoration.Color = Color.Silver
-                                            End Sub
+    '            Dim foodPrice As New Label With {
+    '            .Text = "₱" & Reader("ItemPrice").ToString(),
+    '            .Font = New Font("Segoe UI", 14, FontStyle.Regular),
+    '            .ForeColor = Color.Navy,
+    '            .AutoSize = False,
+    '            .TextAlign = ContentAlignment.MiddleCenter,
+    '            .Width = cardWidth - (paddingVal * 2),
+    '            .Height = 25,
+    '            .Location = New Point(paddingVal, foodName.Bottom)
+    '        }
 
-                AddHandler foodImg.Click, AddressOf HandleItemClick
+    '            AddHandler Card.MouseEnter, Sub()
+    '                                            Card.FillColor = Color.FromArgb(245, 245, 245)
+    '                                            Card.ShadowDecoration.Color = Color.LightGray
+    '                                        End Sub
+    '            AddHandler Card.MouseLeave, Sub()
+    '                                            Card.FillColor = Color.White
+    '                                            Card.ShadowDecoration.Color = Color.Silver
+    '                                        End Sub
 
-                Card.Controls.Add(foodImg)
-                Card.Controls.Add(foodName)
-                Card.Controls.Add(foodPrice)
-                FoodPnl.Controls.Add(Card)
-            End While
+    '            AddHandler foodImg.Click, AddressOf HandleItemClick
 
-        Catch ex As Exception
-            MsgBox("Error: " & ex.Message, MsgBoxStyle.Critical, "ERROR")
-        Finally
-            If Connection.State = ConnectionState.Open Then
-                Connection.Close()
-            End If
-        End Try
-    End Sub
+    '            Card.Controls.Add(foodImg)
+    '            Card.Controls.Add(foodName)
+    '            Card.Controls.Add(foodPrice)
+    '            FoodPnl.Controls.Add(Card)
+    '        End While
+
+    '    Catch ex As Exception
+    '        MsgBox("Error: " & ex.Message, MsgBoxStyle.Critical, "ERROR")
+    '    Finally
+    '        If Connection.State = ConnectionState.Open Then
+    '            Connection.Close()
+    '        End If
+    '    End Try
+    'End Sub
     Private Sub SearchItem(itemName As String)
         Dim Connection As New MySqlConnection(GetGlobalConnectionString)
         Dim Reader As MySqlDataReader
+        'FoodPnl.Controls.Clear()
 
         Try
+            If MenuItems.Count > 0 Then MenuItems.Clear()
+
             Connection.Open()
             Dim Query As String = "SELECT ItemName, ItemPrice, ImagePath FROM (SELECT ItemName, ItemPrice, ImagePath FROM `restaurant`.foods UNION ALL SELECT ItemName, ItemPrice, ImagePath FROM `restaurant`.drinks UNION ALL SELECT ItemName, ItemPrice, ImagePath FROM `restaurant`.`Snacks/Sides`) AS CombinedItems WHERE ItemName LIKE CONCAT('%', @itemName, '%')"
             Dim Command As New MySqlCommand(Query, Connection)
@@ -407,8 +416,10 @@ Public Class Order
             Reader = Command.ExecuteReader
 
             If Reader.HasRows Then
-                pnlwas.Controls.Clear()
-            Else Return
+                FoodPnl.Controls.Clear()
+            Else
+                MsgBox("No item found", MsgBoxStyle.Information, "Notice")
+                Return
             End If
 
             While Reader.Read
@@ -416,12 +427,12 @@ Public Class Order
                 Dim foodPrice = Reader("ItemPrice")
                 Dim imagePath = If(IsDBNull(Reader("ImagePath")), "", Reader("ImagePath"))
 
-                Dim container As FlowLayoutPanel = CreateFoodItemButton(foodName, foodPrice, imagePath)
-                For Each btn As Button In container.Controls.OfType(Of Button)()
+                Dim container As Guna2Panel = CreateFoodItemCard(foodName, foodPrice, imagePath)
+                For Each btn As Guna2PictureBox In container.Controls.OfType(Of Guna2PictureBox)()
                     AddHandler btn.Click, AddressOf HandleItemClick
                 Next
 
-                pnlwas.Controls.Add(container)
+                FoodPnl.Controls.Add(container)
             End While
 
         Catch ex As Exception
@@ -465,7 +476,7 @@ Public Class Order
         HandleIfItemExistsInOrder(itemName, itemPrice, itemImage, itemAmount)
         Compute() ' compute total again
     End Sub
-    Private Sub HandleCatClick(sender As Object, e As EventArgs)
+    Public Sub HandleCategorylick(sender As Object, e As EventArgs)
         Dim catName = CType(sender, Guna2Button)
 
         PrevCategory = CurrentCategory
@@ -479,7 +490,11 @@ Public Class Order
 
         FoodPnl.Controls.Clear()
         FoodPnl.Focus()
-        LoadMenuItems(catName.Text)
+
+        LoadMenuItems(CurrentCategory.Text, FoodPnl)
+        For Each btn As Guna2PictureBox In MenuItems
+            AddHandler btn.Click, AddressOf HandleItemClick
+        Next
     End Sub
 
 
@@ -713,7 +728,7 @@ Public Class Order
             End If
         End Try
     End Sub
-    Private Sub SearchBtn_Click(sender As Object, e As EventArgs)
+    Private Sub SearchBtn_Click(sender As Object, e As EventArgs) Handles SearchBtn.Click
         If Not String.IsNullOrEmpty(SearchTxtBox.Text) Then
             SearchItem(SearchTxtBox.Text)
         End If
@@ -948,17 +963,17 @@ Public Class Order
             '        currentIndex += 1
             '    End If
 
-        ElseIf e.KeyCode = Keys.Enter Then
-            Dim btnSelected As Guna2PictureBox = MenuItems(currentIndex)
-            HandleItemClick(btnSelected, e)
+            'ElseIf e.KeyCode = Keys.Enter Then
+            '    Dim btnSelected As Guna2PictureBox = MenuItems(currentIndex)
+            '    HandleItemClick(btnSelected, e)
         ElseIf e.Control AndAlso e.KeyCode = Keys.C Then
             CancelBtn_Click(sender, e) ' cancel order
         ElseIf e.Control AndAlso e.KeyCode = Keys.D Then
             ApplyDiscount_Click(sender, e)
         ElseIf e.Control AndAlso e.KeyCode = Keys.O Then
             RecentOrdersBtn_Click(sender, e)
-        Else
-            Me.Focus()
+            'Else
+            '    Me.Focus()
         End If
 
         ' handle current focused item

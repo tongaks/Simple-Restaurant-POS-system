@@ -78,7 +78,7 @@ Public Class Form1
 
 
     ' Handlers
-    Private Sub HandleEnter(sender As Object, e As KeyPressEventArgs)
+    Private Sub HandleEnter(sender As Object, e As KeyPressEventArgs) Handles UsernameTxtBox.KeyPress, PasswordTxtBox.KeyPress
         If Asc(e.KeyChar) = 13 Then
             Dim table = If(IsAdmin, "Admin", "Cashier")
             HandleLogin(table)

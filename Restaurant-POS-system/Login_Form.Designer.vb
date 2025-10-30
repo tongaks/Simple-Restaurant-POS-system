@@ -103,7 +103,7 @@ Partial Class Form1
         UsernameTxtBox.BackColor = Color.Transparent
         UsernameTxtBox.BorderRadius = 10
         UsernameTxtBox.CustomizableEdges = CustomizableEdges1
-        UsernameTxtBox.DefaultText = "user"
+        UsernameTxtBox.DefaultText = "admin"
         UsernameTxtBox.Font = New Font("Segoe UI", 20F)
         UsernameTxtBox.ForeColor = Color.FromArgb(CByte(0), CByte(0), CByte(64))
         UsernameTxtBox.Location = New Point(45, 234)
@@ -124,7 +124,7 @@ Partial Class Form1
         PasswordTxtBox.BackColor = Color.Transparent
         PasswordTxtBox.BorderRadius = 10
         PasswordTxtBox.CustomizableEdges = CustomizableEdges3
-        PasswordTxtBox.DefaultText = "user"
+        PasswordTxtBox.DefaultText = "admin"
         PasswordTxtBox.Font = New Font("Segoe UI", 20F, FontStyle.Bold)
         PasswordTxtBox.ForeColor = Color.FromArgb(CByte(0), CByte(0), CByte(64))
         PasswordTxtBox.Location = New Point(45, 347)
