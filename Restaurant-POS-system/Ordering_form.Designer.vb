@@ -52,9 +52,9 @@ Partial Class Order
         PictureBox1 = New PictureBox()
         LogoutBtn = New Guna.UI2.WinForms.Guna2Button()
         SearchBtn = New Guna.UI2.WinForms.Guna2Button()
-        DataGridView1 = New DataGridView()
         SearchTxtBox = New Guna.UI2.WinForms.Guna2TextBox()
         Label1 = New Label()
+        DataGridView1 = New DataGridView()
         CreateOrderBtn = New Guna.UI2.WinForms.Guna2Button()
         DiscountBtn = New Guna.UI2.WinForms.Guna2Button()
         Panel1 = New Panel()
@@ -108,9 +108,9 @@ Partial Class Order
         NavbarPnl.Controls.Add(PictureBox1)
         NavbarPnl.Controls.Add(LogoutBtn)
         NavbarPnl.Controls.Add(SearchBtn)
-        NavbarPnl.Controls.Add(DataGridView1)
         NavbarPnl.Controls.Add(SearchTxtBox)
         NavbarPnl.Controls.Add(Label1)
+        NavbarPnl.Controls.Add(DataGridView1)
         NavbarPnl.Location = New Point(0, 0)
         NavbarPnl.Name = "NavbarPnl"
         NavbarPnl.Size = New Size(1241, 68)
@@ -134,7 +134,7 @@ Partial Class Order
         LogoutBtn.Cursor = Cursors.Hand
         LogoutBtn.CustomizableEdges = CustomizableEdges1
         LogoutBtn.FillColor = Color.DarkRed
-        LogoutBtn.Font = New Font("Segoe UI Semibold", 10.0F, FontStyle.Bold)
+        LogoutBtn.Font = New Font("Segoe UI Semibold", 10F, FontStyle.Bold)
         LogoutBtn.ForeColor = SystemColors.ControlLightLight
         LogoutBtn.Location = New Point(1136, 15)
         LogoutBtn.Name = "LogoutBtn"
@@ -155,7 +155,7 @@ Partial Class Order
         SearchBtn.FillColor = Color.SpringGreen
         SearchBtn.Font = New Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
         SearchBtn.ForeColor = Color.Black
-        SearchBtn.Location = New Point(886, 16)
+        SearchBtn.Location = New Point(935, 15)
         SearchBtn.Name = "SearchBtn"
         SearchBtn.ShadowDecoration.BorderRadius = 10
         SearchBtn.ShadowDecoration.CustomizableEdges = CustomizableEdges4
@@ -165,6 +165,31 @@ Partial Class Order
         SearchBtn.Size = New Size(97, 36)
         SearchBtn.TabIndex = 8
         SearchBtn.Text = "⌕ Search"
+        ' 
+        ' SearchTxtBox
+        ' 
+        SearchTxtBox.BorderRadius = 10
+        SearchTxtBox.CustomizableEdges = CustomizableEdges5
+        SearchTxtBox.DefaultText = ""
+        SearchTxtBox.Font = New Font("Segoe UI", 10F)
+        SearchTxtBox.Location = New Point(588, 15)
+        SearchTxtBox.Name = "SearchTxtBox"
+        SearchTxtBox.PlaceholderText = "Search item name here"
+        SearchTxtBox.SelectedText = ""
+        SearchTxtBox.ShadowDecoration.CustomizableEdges = CustomizableEdges6
+        SearchTxtBox.Size = New Size(341, 39)
+        SearchTxtBox.TabIndex = 7
+        ' 
+        ' Label1
+        ' 
+        Label1.AutoSize = True
+        Label1.Font = New Font("Segoe UI Semibold", 15F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label1.ForeColor = SystemColors.ControlLightLight
+        Label1.Location = New Point(510, 19)
+        Label1.Name = "Label1"
+        Label1.Size = New Size(72, 28)
+        Label1.TabIndex = 6
+        Label1.Text = "Search"
         ' 
         ' DataGridView1
         ' 
@@ -182,31 +207,6 @@ Partial Class Order
         DataGridView1.TabIndex = 1
         DataGridView1.Visible = False
         ' 
-        ' SearchTxtBox
-        ' 
-        SearchTxtBox.BorderRadius = 10
-        SearchTxtBox.CustomizableEdges = CustomizableEdges5
-        SearchTxtBox.DefaultText = ""
-        SearchTxtBox.Font = New Font("Segoe UI", 10.0F)
-        SearchTxtBox.Location = New Point(588, 15)
-        SearchTxtBox.Name = "SearchTxtBox"
-        SearchTxtBox.PlaceholderText = "Search item name here"
-        SearchTxtBox.SelectedText = ""
-        SearchTxtBox.ShadowDecoration.CustomizableEdges = CustomizableEdges6
-        SearchTxtBox.Size = New Size(289, 39)
-        SearchTxtBox.TabIndex = 7
-        ' 
-        ' Label1
-        ' 
-        Label1.AutoSize = True
-        Label1.Font = New Font("Segoe UI Semibold", 15.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label1.ForeColor = SystemColors.ControlLightLight
-        Label1.Location = New Point(510, 19)
-        Label1.Name = "Label1"
-        Label1.Size = New Size(72, 28)
-        Label1.TabIndex = 6
-        Label1.Text = "Search"
-        ' 
         ' CreateOrderBtn
         ' 
         CreateOrderBtn.BackColor = Color.Transparent
@@ -214,7 +214,7 @@ Partial Class Order
         CreateOrderBtn.Cursor = Cursors.Hand
         CreateOrderBtn.CustomizableEdges = CustomizableEdges7
         CreateOrderBtn.FillColor = Color.SpringGreen
-        CreateOrderBtn.Font = New Font("Segoe UI", 9.0F)
+        CreateOrderBtn.Font = New Font("Segoe UI", 9F)
         CreateOrderBtn.ForeColor = Color.Black
         CreateOrderBtn.Location = New Point(15, 42)
         CreateOrderBtn.Name = "CreateOrderBtn"
@@ -234,7 +234,7 @@ Partial Class Order
         DiscountBtn.Cursor = Cursors.Hand
         DiscountBtn.CustomizableEdges = CustomizableEdges9
         DiscountBtn.FillColor = Color.Gold
-        DiscountBtn.Font = New Font("Segoe UI", 9.0F)
+        DiscountBtn.Font = New Font("Segoe UI", 9F)
         DiscountBtn.ForeColor = Color.Black
         DiscountBtn.Location = New Point(157, 42)
         DiscountBtn.Name = "DiscountBtn"
@@ -273,13 +273,13 @@ Partial Class Order
         MenuPnl.ShadowDecoration.Depth = 10
         MenuPnl.ShadowDecoration.Enabled = True
         MenuPnl.ShadowDecoration.Shadow = New Padding(1, 1, 5, 5)
-        MenuPnl.Size = New Size(732, 103)
+        MenuPnl.Size = New Size(732, 114)
         MenuPnl.TabIndex = 3
         ' 
         ' Label9
         ' 
         Label9.AutoSize = True
-        Label9.Font = New Font("Segoe UI", 15.0F)
+        Label9.Font = New Font("Segoe UI", 15F)
         Label9.Location = New Point(21, 7)
         Label9.Name = "Label9"
         Label9.Size = New Size(105, 28)
@@ -288,6 +288,7 @@ Partial Class Order
         ' 
         ' MenuContainerPnl
         ' 
+        MenuContainerPnl.AutoSize = True
         MenuContainerPnl.Location = New Point(10, 38)
         MenuContainerPnl.Name = "MenuContainerPnl"
         MenuContainerPnl.Size = New Size(713, 55)
@@ -301,20 +302,19 @@ Partial Class Order
         pnlwas.Controls.Add(Label10)
         pnlwas.Controls.Add(FoodPnl)
         pnlwas.CustomizableEdges = CustomizableEdges13
-        pnlwas.FillColor = Color.White
-        pnlwas.Location = New Point(2, 117)
+        pnlwas.FillColor = Color.Transparent
+        pnlwas.Location = New Point(2, 128)
         pnlwas.Name = "pnlwas"
         pnlwas.ShadowDecoration.CustomizableEdges = CustomizableEdges14
         pnlwas.ShadowDecoration.Depth = 10
-        pnlwas.ShadowDecoration.Enabled = True
         pnlwas.ShadowDecoration.Shadow = New Padding(1, 1, 5, 5)
-        pnlwas.Size = New Size(732, 460)
+        pnlwas.Size = New Size(732, 449)
         pnlwas.TabIndex = 2
         ' 
         ' Label10
         ' 
         Label10.AutoSize = True
-        Label10.Font = New Font("Segoe UI", 15.0F)
+        Label10.Font = New Font("Segoe UI", 15F)
         Label10.Location = New Point(21, 15)
         Label10.Name = "Label10"
         Label10.Size = New Size(114, 28)
@@ -326,7 +326,7 @@ Partial Class Order
         FoodPnl.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
         FoodPnl.Location = New Point(10, 46)
         FoodPnl.Name = "FoodPnl"
-        FoodPnl.Size = New Size(713, 398)
+        FoodPnl.Size = New Size(713, 387)
         FoodPnl.TabIndex = 1
         ' 
         ' CurrentFocusedPnl
@@ -358,7 +358,7 @@ Partial Class Order
         ' Label8
         ' 
         Label8.AutoSize = True
-        Label8.Font = New Font("Segoe UI", 15.0F)
+        Label8.Font = New Font("Segoe UI", 15F)
         Label8.Location = New Point(456, 10)
         Label8.Name = "Label8"
         Label8.Size = New Size(82, 28)
@@ -372,7 +372,7 @@ Partial Class Order
         RecentOrdersBtn.Cursor = Cursors.Hand
         RecentOrdersBtn.CustomizableEdges = CustomizableEdges15
         RecentOrdersBtn.FillColor = Color.RoyalBlue
-        RecentOrdersBtn.Font = New Font("Segoe UI", 9.0F)
+        RecentOrdersBtn.Font = New Font("Segoe UI", 9F)
         RecentOrdersBtn.ForeColor = Color.White
         RecentOrdersBtn.Location = New Point(433, 42)
         RecentOrdersBtn.Name = "RecentOrdersBtn"
@@ -388,7 +388,7 @@ Partial Class Order
         ' Label7
         ' 
         Label7.AutoSize = True
-        Label7.Font = New Font("Segoe UI", 15.0F)
+        Label7.Font = New Font("Segoe UI", 15F)
         Label7.Location = New Point(176, 11)
         Label7.Name = "Label7"
         Label7.Size = New Size(81, 28)
@@ -398,7 +398,7 @@ Partial Class Order
         ' Label5
         ' 
         Label5.AutoSize = True
-        Label5.Font = New Font("Segoe UI", 15.0F)
+        Label5.Font = New Font("Segoe UI", 15F)
         Label5.Location = New Point(317, 11)
         Label5.Name = "Label5"
         Label5.Size = New Size(79, 28)
@@ -408,7 +408,7 @@ Partial Class Order
         ' Label4
         ' 
         Label4.AutoSize = True
-        Label4.Font = New Font("Segoe UI", 15.0F)
+        Label4.Font = New Font("Segoe UI", 15F)
         Label4.Location = New Point(21, 11)
         Label4.Name = "Label4"
         Label4.Size = New Size(112, 28)
@@ -422,7 +422,7 @@ Partial Class Order
         ShortCutKeysBtn.Cursor = Cursors.Hand
         ShortCutKeysBtn.CustomizableEdges = CustomizableEdges17
         ShortCutKeysBtn.FillColor = Color.Silver
-        ShortCutKeysBtn.Font = New Font("Segoe UI", 9.0F)
+        ShortCutKeysBtn.Font = New Font("Segoe UI", 9F)
         ShortCutKeysBtn.ForeColor = Color.Black
         ShortCutKeysBtn.Location = New Point(575, 42)
         ShortCutKeysBtn.Name = "ShortCutKeysBtn"
@@ -442,7 +442,7 @@ Partial Class Order
         CancelBtn.Cursor = Cursors.Hand
         CancelBtn.CustomizableEdges = CustomizableEdges19
         CancelBtn.FillColor = Color.Gray
-        CancelBtn.Font = New Font("Segoe UI", 9.0F)
+        CancelBtn.Font = New Font("Segoe UI", 9F)
         CancelBtn.ForeColor = Color.White
         CancelBtn.Location = New Point(301, 42)
         CancelBtn.Name = "CancelBtn"
@@ -498,7 +498,7 @@ Partial Class Order
         ' SubtotalLbl
         ' 
         SubtotalLbl.AutoSize = True
-        SubtotalLbl.Font = New Font("Segoe UI", 15.0F)
+        SubtotalLbl.Font = New Font("Segoe UI", 15F)
         SubtotalLbl.Location = New Point(304, 3)
         SubtotalLbl.Name = "SubtotalLbl"
         SubtotalLbl.Size = New Size(35, 28)
@@ -508,7 +508,7 @@ Partial Class Order
         ' Label6
         ' 
         Label6.AutoSize = True
-        Label6.Font = New Font("Segoe UI", 15.0F)
+        Label6.Font = New Font("Segoe UI", 15F)
         Label6.Location = New Point(20, 3)
         Label6.Name = "Label6"
         Label6.Size = New Size(87, 28)
@@ -540,7 +540,7 @@ Partial Class Order
         ' TotalLbl
         ' 
         TotalLbl.AutoSize = True
-        TotalLbl.Font = New Font("Segoe UI", 20.0F)
+        TotalLbl.Font = New Font("Segoe UI", 20F)
         TotalLbl.ForeColor = SystemColors.ControlLightLight
         TotalLbl.Location = New Point(298, 7)
         TotalLbl.Name = "TotalLbl"
@@ -551,7 +551,7 @@ Partial Class Order
         ' Label2
         ' 
         Label2.AutoSize = True
-        Label2.Font = New Font("Segoe UI", 20.0F)
+        Label2.Font = New Font("Segoe UI", 20F)
         Label2.ForeColor = SystemColors.ControlLightLight
         Label2.Location = New Point(29, 7)
         Label2.Name = "Label2"
@@ -562,7 +562,7 @@ Partial Class Order
         ' DiscountLbl
         ' 
         DiscountLbl.AutoSize = True
-        DiscountLbl.Font = New Font("Segoe UI", 15.0F)
+        DiscountLbl.Font = New Font("Segoe UI", 15F)
         DiscountLbl.ForeColor = Color.Red
         DiscountLbl.Location = New Point(300, 43)
         DiscountLbl.Name = "DiscountLbl"
@@ -573,7 +573,7 @@ Partial Class Order
         ' Label3
         ' 
         Label3.AutoSize = True
-        Label3.Font = New Font("Segoe UI", 15.0F)
+        Label3.Font = New Font("Segoe UI", 15F)
         Label3.Location = New Point(18, 43)
         Label3.Name = "Label3"
         Label3.Size = New Size(89, 28)
@@ -602,7 +602,7 @@ Partial Class Order
         ' Label11
         ' 
         Label11.AutoSize = True
-        Label11.Font = New Font("Segoe UI", 15.0F)
+        Label11.Font = New Font("Segoe UI", 15F)
         Label11.Location = New Point(10, 9)
         Label11.Name = "Label11"
         Label11.Size = New Size(130, 28)
@@ -623,7 +623,7 @@ Partial Class Order
         ' 
         ' Order
         ' 
-        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
+        AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.Gainsboro
         ClientSize = New Size(1241, 768)
@@ -664,7 +664,6 @@ Partial Class Order
     Friend WithEvents DataGridView1 As DataGridView
     Friend WithEvents DiscountBtn As Guna.UI2.WinForms.Guna2Button
     Friend WithEvents CreateOrderBtn As Guna.UI2.WinForms.Guna2Button
-    Friend WithEvents SearchBtn As Guna.UI2.WinForms.Guna2Button
     Friend WithEvents LogoutBtn As Guna.UI2.WinForms.Guna2Button
     Friend WithEvents CurrentFocusedPnl As Guna.UI2.WinForms.Guna2Panel
     Friend WithEvents CancelBtn As Guna.UI2.WinForms.Guna2Button
@@ -695,4 +694,5 @@ Partial Class Order
     Friend WithEvents OrderPnl As FlowLayoutPanel
     Friend WithEvents Guna2Panel2 As Guna.UI2.WinForms.Guna2Panel
     Friend WithEvents Label11 As Label
+    Friend WithEvents SearchBtn As Guna.UI2.WinForms.Guna2Button
 End Class

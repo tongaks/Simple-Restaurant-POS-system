@@ -141,7 +141,15 @@ Public Class Manage_menu
 
         Dim documentsPath As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
         Dim copyImagePath As String = Path.Combine(documentsPath, "OrderUp", "ItemPicture")
-        File.Copy(ImagePath, copyImagePath & "\" & ImageFileName)
+        Dim destinationFile As String = Path.Combine(copyImagePath, ImageFileName)
+
+        If Not Directory.Exists(copyImagePath) Then
+            Directory.CreateDirectory(copyImagePath)
+        End If
+
+        If Not Path.Exists(destinationFile) Then
+            File.Copy(ImagePath, destinationFile)
+        End If
 
 
         Dim sqlQuery As String = "INSERT INTO `" & CurrentTable & "` (ItemName, ItemPrice, ImagePath) VALUES (@Name, @Price, @Path)"
@@ -170,7 +178,13 @@ Public Class Manage_menu
     End Sub
     Private Sub UpdateMenuItem(itemName As String, itemPrice As String)
         Dim documentsPath As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
-        Dim copyImagePath As String = Path.Combine(documentsPath, "OrderUp", "ItemPicture") & "\" & ImageFileName
+        Dim copyImagePath As String = Path.Combine(documentsPath, "OrderUp", "ItemPicture")
+        Dim destinationFile As String = Path.Combine(copyImagePath, ImageFileName)
+
+        If Not Directory.Exists(copyImagePath) Then
+            Directory.CreateDirectory(copyImagePath)
+        End If
+
         If Not Path.Exists(copyImagePath) Then
             File.Copy(ImagePath, copyImagePath)
         End If

@@ -64,7 +64,7 @@ Public Class Form1
         End If
     End Sub
     Private Sub LoginBtn_Click(sender As Object, e As EventArgs) Handles LoginBtn.Click
-        Dim table As String = If((IsAdmin), "Admin", "Cashier")
+        Dim table = If(IsAdmin, "Admin", "Cashier")
 
         If String.IsNullOrWhiteSpace(UsernameTxtBox.Text) Or String.IsNullOrWhiteSpace(PasswordTxtBox.Text) Then
             MsgBox("Please complete the user credentials.", MsgBoxStyle.Critical, "Attention")
@@ -78,9 +78,9 @@ Public Class Form1
 
 
     ' Handlers
-    Private Sub HandleEnter(sender As Object, e As KeyPressEventArgs) Handles UsernameTxtBox.KeyPress, PasswordTxtBox.KeyPress
+    Private Sub HandleEnter(sender As Object, e As KeyPressEventArgs)
         If Asc(e.KeyChar) = 13 Then
-            Dim table As String = If((IsAdmin), "Admin", "Cashier")
+            Dim table = If(IsAdmin, "Admin", "Cashier")
             HandleLogin(table)
         End If
     End Sub

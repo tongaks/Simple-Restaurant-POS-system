@@ -5,6 +5,7 @@ Imports System.IO
 Imports System.Reflection.Metadata
 Imports System.Transactions
 Imports System.Windows.Forms.Design
+Imports System.Windows.Xps.Packaging
 Imports System.Xml
 Imports FontAwesome.Sharp
 Imports Guna.UI2.WinForms
@@ -31,6 +32,10 @@ Public Class Order
     Dim currentIndex As Integer = 0
     Dim CurrentFocused As Guna2PictureBox = Nothing
 
+    Dim MenuCategories As New List(Of Guna2Button)
+    Dim CurrentCategory As Guna2Button = Nothing
+    Dim PrevCategory As Guna2Button = Nothing
+
     Private Sub Order_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         GetSettingsConfig()
 
@@ -56,6 +61,13 @@ Public Class Order
 
         DataGridView1.Columns(4).Name = "ImagePath"
         DataGridView1.Columns("ImagePath").ValueType = GetType(String)
+
+        OrderPnl.HorizontalScroll.Enabled = False
+        Guna2Panel1.HorizontalScroll.Enabled = False
+
+        CurrentCategory = MenuCategories(0)
+        CurrentCategory.FillColor = Color.SteelBlue
+        CurrentCategory.ForeColor = Color.White
 
     End Sub
     Private Sub Order_Close(sender As Object, e As EventArgs) Handles MyBase.FormClosed
@@ -232,7 +244,12 @@ Public Class Order
             While Reader.Read
                 Dim catBtn As New Guna2Button
                 catBtn.Text = Reader("CategoryName")
-                catBtn.Size = New System.Drawing.Size(100, 50)
+                'catBtn.Size = New System.Drawing.Size(100, 50)
+                catBtn.AutoSize = True
+                catBtn.Padding = New Padding(10)
+
+                catBtn.ForeColor = Color.Navy
+                catBtn.Font = New Font("Segoe UI", 12, FontStyle.Regular)
 
                 catBtn.BorderRadius = 10
                 catBtn.ShadowDecoration.Enabled = True
@@ -242,12 +259,12 @@ Public Class Order
                 catBtn.ShadowDecoration.Shadow = New Padding(-1, -1, 5, 5)
 
                 catBtn.FillColor = Color.LightSteelBlue
-                catBtn.ForeColor = Color.Black
                 catBtn.Cursor = Cursors.Hand
 
 
                 AddHandler catBtn.Click, AddressOf HandleCatClick
                 MenuContainerPnl.Controls.Add(catBtn)
+                MenuCategories.Add(catBtn)
             End While
 
         Catch ex As Exception
@@ -261,8 +278,8 @@ Public Class Order
     Private Sub LoadMenuItems(table As String)
         Dim Connection As New MySqlConnection(GetGlobalConnectionString)
         Dim Reader As MySqlDataReader
-        MenuItems.Clear() ' clear for an,other menu items when change in catalog
-        currentIndex = 0 ' reset index
+        MenuItems.Clear()
+        currentIndex = 0
 
         Try
             Connection.Open()
@@ -270,85 +287,108 @@ Public Class Order
             Dim Command As New MySqlCommand(Query, Connection)
             Reader = Command.ExecuteReader
 
-            While Reader.Read
-                Dim btnSize = 120
-                Dim fontSize = 12
+            FoodPnl.Controls.Clear()
 
-                Dim foodBtn As New Guna2PictureBox
-                foodBtn.Size = New System.Drawing.Size(btnSize, btnSize)
-                foodBtn.Margin = New Padding(0, 0, 0, 0)
-                foodBtn.Text = Reader("ItemName")
-                foodBtn.Tag = Reader("ItemPrice")
-                foodBtn.Cursor = Cursors.Hand
-                foodBtn.TabStop = True
-                foodBtn.BackColor = Color.Transparent
-                foodBtn.FillColor = Color.Transparent
+            While Reader.Read
+                Dim cardWidth As Integer = 160
+                Dim cardHeight As Integer = 200
+                Dim paddingVal As Integer = 10
+                Dim fontSize As Integer = 11
+
+                Dim Card As New Guna.UI2.WinForms.Guna2Panel With {
+                .Width = cardWidth,
+                .Height = cardHeight,
+                .BorderRadius = 12,
+                .BackColor = Color.White,
+                .FillColor = Color.White,
+                .Margin = New Padding(10),
+                .Tag = Reader("ItemName")
+            }
+
+                Card.ShadowDecoration.Enabled = True
+                Card.ShadowDecoration.BorderRadius = 12
+                Card.ShadowDecoration.Color = Color.Silver
+                Card.ShadowDecoration.Depth = 10
+                Card.ShadowDecoration.Shadow = New Padding(2, 2, 4, 4)
+
+                Dim foodImg As New Guna.UI2.WinForms.Guna2PictureBox With {
+                .Size = New Size(cardWidth - (paddingVal * 2), 100),
+                .Location = New Point(paddingVal, paddingVal),
+                .SizeMode = PictureBoxSizeMode.Zoom,
+                .BorderRadius = 10,
+                .FillColor = Color.WhiteSmoke,
+                .Cursor = Cursors.Hand,
+                .Tag = Reader("ItemPrice"),
+                .Text = Reader("ItemName")
+            }
+
+                Dim hasImage As Boolean = False
 
                 If Not IsDBNull(Reader("ImagePath")) Then
                     Dim imagePath As String = Reader("ImagePath").ToString()
-                    If imagePath <> "N/A" AndAlso Not String.IsNullOrEmpty(imagePath) Then
-                        Dim image As Image = Image.FromFile(imagePath)
-                        foodBtn.Image = ResizeImageFit(image, foodBtn)
-                        foodBtn.Tag &= "," & imagePath
-                        foodBtn.ForeColor = Color.Transparent
-                    Else
-                        foodBtn.Image = Nothing
+                    If imagePath <> "N/A" AndAlso File.Exists(imagePath) Then
+                        foodImg.Image = Image.FromFile(imagePath)
+                        foodImg.Tag &= "," & imagePath
+                        hasImage = True
                     End If
-                Else
-                    foodBtn.Image = Nothing
                 End If
 
+                If Not hasImage Then
+                    foodImg.Image = Nothing
+                    foodImg.FillColor = Color.LightGray
 
-                AddHandler foodBtn.Click, AddressOf HandleItemClick
+                    Dim noImageLbl As New Label With {
+                    .Text = "No Image",
+                    .Font = New Font("Segoe UI", 10, FontStyle.Italic),
+                    .ForeColor = Color.DimGray,
+                    .BackColor = Color.Transparent,
+                    .AutoSize = False,
+                    .TextAlign = ContentAlignment.MiddleCenter
+                }
+                    '.Dock = DockStyle.Fill
+                    foodImg.Controls.Add(noImageLbl)
+                End If
 
-                Dim foodFont As New Font("Segue UI", fontSize, FontStyle.Regular)
+                Dim foodName As New Label With {
+                .Text = Reader("ItemName").ToString(),
+                .Font = New Font("Segoe UI Semibold", fontSize, FontStyle.Bold),
+                .AutoSize = False,
+                .TextAlign = ContentAlignment.MiddleCenter,
+                .Width = cardWidth - (paddingVal * 2),
+                .Height = 30,
+                .Location = New Point(paddingVal, foodImg.Bottom + 5)
+            }
 
-                Dim foodName As New Label
-                foodName.Text = Reader("ItemName")
-                foodName.Font = foodFont
-                foodName.AutoSize = False
-                foodName.MinimumSize = New Size(foodName.PreferredWidth, foodName.PreferredHeight)
-                foodName.TextAlign = ContentAlignment.MiddleCenter
+                Dim foodPrice As New Label With {
+                .Text = "₱" & Reader("ItemPrice").ToString(),
+                .Font = New Font("Segoe UI", 14, FontStyle.Regular),
+                .ForeColor = Color.Navy,
+                .AutoSize = False,
+                .TextAlign = ContentAlignment.MiddleCenter,
+                .Width = cardWidth - (paddingVal * 2),
+                .Height = 25,
+                .Location = New Point(paddingVal, foodName.Bottom)
+            }
 
-                Dim foodPrice As New Label
-                foodPrice.Text = "₱" & Reader("ItemPrice")
-                foodPrice.Font = New Font("Segue UI", fontSize, FontStyle.Bold)
-                foodName.AutoSize = False
-                foodPrice.TextAlign = ContentAlignment.MiddleCenter
+                AddHandler Card.MouseEnter, Sub()
+                                                Card.FillColor = Color.FromArgb(245, 245, 245)
+                                                Card.ShadowDecoration.Color = Color.LightGray
+                                            End Sub
+                AddHandler Card.MouseLeave, Sub()
+                                                Card.FillColor = Color.White
+                                                Card.ShadowDecoration.Color = Color.Silver
+                                            End Sub
 
-                Dim paddingVal = 10
+                AddHandler foodImg.Click, AddressOf HandleItemClick
 
-                Dim FoodContainerPnl As New FlowLayoutPanel
-                FoodContainerPnl.FlowDirection = FlowDirection.TopDown
-                FoodContainerPnl.Padding = New Padding(paddingVal)
-                FoodContainerPnl.Size = New System.Drawing.Size(btnSize + (paddingVal * 2), btnSize + foodName.Height + foodPrice.Height + (paddingVal * 3))
-                FoodContainerPnl.BackColor = Color.Transparent
-                'FoodContainerPnl.BorderStyle = BorderStyle.FixedSingle
-
-                FoodContainerPnl.Controls.Add(foodBtn)
-                FoodContainerPnl.Controls.Add(foodName)
-                FoodContainerPnl.Controls.Add(foodPrice)
-
-
-                Dim MainContainer As New Guna2Panel
-                MainContainer.Size = FoodContainerPnl.Size
-                MainContainer.BorderRadius = 10
-                MainContainer.FillColor = Color.LightSteelBlue
-
-                MainContainer.ShadowDecoration.Enabled = True
-                MainContainer.ShadowDecoration.BorderRadius = 10
-                MainContainer.ShadowDecoration.Color = Color.DimGray
-                MainContainer.ShadowDecoration.Depth = 20
-                MainContainer.ShadowDecoration.Shadow = New Padding(-1, -1, 5, 5)
-
-                MainContainer.Controls.Add(FoodContainerPnl)
-
-                'FoodContainerPnl.Controls.Add(FoodContainerPnl)
-                FoodPnl.Controls.Add(MainContainer)
+                Card.Controls.Add(foodImg)
+                Card.Controls.Add(foodName)
+                Card.Controls.Add(foodPrice)
+                FoodPnl.Controls.Add(Card)
             End While
 
         Catch ex As Exception
-            MsgBox("Error: " + ex.ToString, MsgBoxStyle.Critical, "ERROR")
+            MsgBox("Error: " & ex.Message, MsgBoxStyle.Critical, "ERROR")
         Finally
             If Connection.State = ConnectionState.Open Then
                 Connection.Close()
@@ -399,6 +439,8 @@ Public Class Order
         CurrentFocusedItem = button.Text
         CurrentFocused = button
 
+        'MsgBox("Clicked")
+
         Dim exists As Boolean = False
         Dim itemAmount As Integer = 0
         If DataGridView1.RowCount > 0 Then
@@ -425,8 +467,18 @@ Public Class Order
     End Sub
     Private Sub HandleCatClick(sender As Object, e As EventArgs)
         Dim catName = CType(sender, Guna2Button)
-        pnlwas.Controls.Clear()
-        pnlwas.Focus()
+
+        PrevCategory = CurrentCategory
+        CurrentCategory = catName
+
+        PrevCategory.FillColor = Color.LightSteelBlue
+        PrevCategory.ForeColor = Color.Navy
+
+        CurrentCategory.FillColor = Color.SteelBlue
+        CurrentCategory.ForeColor = Color.White
+
+        FoodPnl.Controls.Clear()
+        FoodPnl.Focus()
         LoadMenuItems(catName.Text)
     End Sub
 
@@ -442,14 +494,36 @@ Public Class Order
         mainPanel.WrapContents = False
         mainPanel.Width = OrderPnl.Width
         mainPanel.Height = 100
-        mainPanel.BackColor = Color.White
+        'mainPanel.BackColor = Color.LightSteelBlue
+        'mainPanel.BackColor = Color.White
+        mainPanel.BackColor = Color.WhiteSmoke
         'mainPanel.Padding = New Padding(10)
         mainPanel.AutoSize = False
 
         ' PictureBox
-        Dim pictureBox As New PictureBox()
+        Dim pictureBox As New Guna2PictureBox()
         pictureBox.Size = New Size(80, 80)
+
         pictureBox.Image = If(String.IsNullOrEmpty(itemImage), Nothing, Image.FromFile(itemImage))
+
+        If pictureBox.Image Is Nothing Then
+            pictureBox.FillColor = Color.LightGray
+
+            Dim noImageLbl As New Label With {
+         .Text = "No Image",
+         .Font = New Font("Segoe UI", 10, FontStyle.Italic),
+         .ForeColor = Color.DimGray,
+         .BackColor = Color.Transparent,
+         .AutoSize = False,
+         .Size = pictureBox.Size,
+         .Location = New Point(0, 0),
+         .TextAlign = ContentAlignment.MiddleCenter
+        }
+
+            pictureBox.Controls.Add(noImageLbl)
+        End If
+
+
         pictureBox.SizeMode = PictureBoxSizeMode.StretchImage
         'pictureBox.Margin = New Padding(5)
 
@@ -491,34 +565,35 @@ Public Class Order
         itemButtonPanel.AutoSize = True
         itemButtonPanel.Margin = New Padding(0, 20, 0, 0)
 
-        Dim increaseButton As New IconButton()
-        increaseButton.IconChar = IconChar.PlusCircle
-        increaseButton.IconSize = 25
-        increaseButton.IconColor = Color.White
+
+        Dim increaseButton As New Guna2CircleButton()
         increaseButton.Tag = itemName
-        increaseButton.BackColor = Color.Green
+        increaseButton.FillColor = Color.Green
         increaseButton.Size = New Size(40, 40)
+        increaseButton.Text = "✚"
+        increaseButton.Cursor = Cursors.Hand
         AddHandler increaseButton.Click, AddressOf IncreaseButtonHandler
 
-        Dim decreaseButton As New IconButton()
-        decreaseButton.IconChar = IconChar.MinusCircle
-        decreaseButton.IconSize = 25
-        decreaseButton.IconColor = Color.White
+
+        Dim decreaseButton As New Guna2CircleButton()
         decreaseButton.Tag = itemName
-        decreaseButton.BackColor = Color.Red
+        decreaseButton.FillColor = Color.Red
         decreaseButton.ForeColor = Color.White
         decreaseButton.Size = New Size(40, 40)
+        decreaseButton.Font = New Font("Segoe UI Semibold", 12, FontStyle.Regular)
+        decreaseButton.Text = "➖"
+        decreaseButton.Cursor = Cursors.Hand
         AddHandler decreaseButton.Click, AddressOf DecreaseButtonHandler
 
-        Dim deleteButton As New IconButton()
-        deleteButton.IconChar = IconChar.Trash
-        deleteButton.IconSize = 25
-        deleteButton.IconColor = Color.White
+
+        Dim deleteButton As New Guna2CircleButton()
         deleteButton.Tag = itemName
-        deleteButton.Tag = itemName
-        deleteButton.BackColor = Color.Red
+        deleteButton.Font = New Font("Segoe UI Semibold", 12, FontStyle.Regular)
+        deleteButton.Text = "🗑"
+        deleteButton.FillColor = Color.DarkRed
         deleteButton.ForeColor = Color.White
         deleteButton.Size = New Size(40, 40)
+        deleteButton.Cursor = Cursors.Hand
         AddHandler deleteButton.Click, AddressOf RemoveItemHandler
 
         ' Spacer to push buttons to the right
@@ -644,18 +719,18 @@ Public Class Order
         End If
     End Sub
     Private Sub IncreaseButtonHandler(sender As Object, e As EventArgs)
-        Dim itemName As String = CType(sender, Button).Tag.ToString()
+        Dim itemName As String = CType(sender, Guna2CircleButton).Tag.ToString()
 
-        Dim itemBtnName As String = CType(sender, Button).Tag
+        Dim itemBtnName As String = CType(sender, Guna2CircleButton).Tag
         Dim price As String = HandleItemAmountUpdate(True, itemBtnName)
 
         UpdateItemOrderList()
         Compute()
     End Sub
     Private Sub DecreaseButtonHandler(sender As Object, e As EventArgs)
-        Dim itemName As String = CType(sender, Button).Tag.ToString()
+        Dim itemName As String = CType(sender, Guna2CircleButton).Tag.ToString()
 
-        Dim itemBtnName As String = CType(sender, Button).Tag
+        Dim itemBtnName As String = CType(sender, Guna2CircleButton).Tag
         Dim price As String = HandleItemAmountUpdate(False, itemBtnName)
 
         UpdateItemOrderList()
@@ -844,7 +919,7 @@ Public Class Order
         Return "0"
     End Function
     Private Sub RemoveItemHandler(sender As Object, e As EventArgs)
-        Dim btn As Button = CType(sender, Button)
+        Dim btn As Guna2CircleButton = CType(sender, Guna2CircleButton)
 
         Dim index As Integer = 0
         For Each row In DataGridView1.Rows
