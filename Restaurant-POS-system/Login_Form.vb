@@ -15,15 +15,15 @@ Public Class Form1
 
         'Panel1.BackColor = ColorTranslator.FromHtml(SettingsConfig.BarTheme)
 
-        If Not SettingsConfig.LoginImagePath = "" Then
-            PictureBox1.Image = Image.FromFile(SettingsConfig.LoginImagePath)
-        Else
-            PictureBox1.Image = Nothing
-        End If
+        'If Not SettingsConfig.LoginImagePath = "" Then
+        '    PictureBox1.Image = Image.FromFile(SettingsConfig.LoginImagePath)
+        'Else
+        'PictureBox1.Image = Nothing
+        'End If
 
-        BackPanel = {Panel1}
-        FlowPanel = {}
-        SetTheme()
+        'BackPanel = {Panel1}
+        'FlowPanel = {}
+        'SetTheme()
 
     End Sub
     Private Sub Order_Focus(sender As Object, e As EventArgs) Handles MyBase.GotFocus
@@ -35,15 +35,15 @@ Public Class Form1
             LoginAsAdmin_Click(sender, e)
         End If
 
-        If Not SettingsConfig.LoginImagePath = "" Then
-            PictureBox1.Image = Image.FromFile(SettingsConfig.LoginImagePath)
-        Else
-            PictureBox1.Image = Nothing
-        End If
+        'If Not SettingsConfig.LoginImagePath = "" Then
+        '    PictureBox1.Image = Image.FromFile(SettingsConfig.LoginImagePath)
+        'Else
+        '    PictureBox1.Image = Nothing
+        'End If
 
-        BackPanel = {Panel1}
-        FlowPanel = {}
-        SetTheme()
+        'BackPanel = {Panel1}
+        'FlowPanel = {}
+        'SetTheme()
     End Sub
 
 

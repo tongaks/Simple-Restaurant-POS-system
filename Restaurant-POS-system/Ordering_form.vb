@@ -7,6 +7,7 @@ Imports System.Transactions
 Imports System.Windows.Forms.Design
 Imports System.Xml
 Imports FontAwesome.Sharp
+Imports Guna.UI2.WinForms
 Imports MySql.Data
 Imports MySql.Data.MySqlClient
 Imports Mysqlx
@@ -26,9 +27,9 @@ Public Class Order
     Dim CurrentSubTotal As Double
     Dim DiscountValue As Double = 0
     Dim CurrentFocusedItem As String
-    Dim MenuItems As New List(Of Button)
+    Dim MenuItems As New List(Of Guna2PictureBox)
     Dim currentIndex As Integer = 0
-    Dim CurrentFocused As Button = Nothing
+    Dim CurrentFocused As Guna2PictureBox = Nothing
 
     Private Sub Order_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         GetSettingsConfig()
@@ -62,9 +63,9 @@ Public Class Order
         Form1.Dispose()
     End Sub
     Private Sub OrderForm_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
-        If SettingsConfig.EnableShortcutKeys Then
-            HandleKeydownSelect(sender, e)
-        End If
+        'If SettingsConfig.EnableShortcutKeys Then
+        HandleKeydownSelect(sender, e)
+        'End If
     End Sub
 
 
@@ -183,8 +184,6 @@ Public Class Order
     '        Return -1
     '    End If
     'End Function
-
-
     Private Sub DisplayRecentOrders()
         Dim recentDialog As New Form
         recentDialog.Size = New System.Drawing.Size(1000, 500)
@@ -204,6 +203,19 @@ Public Class Order
         recentDialog.Controls.Add(pnlRecentOrders)
         recentDialog.ShowDialog()
     End Sub
+    Private Function DisplayItemDialogForm(ByVal itemAmount As Integer) As Integer
+        If CurrentFocused Is Nothing Then Return -1
+        Dim tagData As TagData = ExtractTag(CurrentFocused.Tag)
+        Dim dlg As New ItemDialogForm(CurrentFocused.Text, tagData.Price, itemAmount)
+        If dlg.ShowDialog() = DialogResult.OK Then
+            Return dlg.Quantity
+        Else
+            Return -1
+        End If
+    End Function
+
+
+
 
 
     ' CRUD functions
@@ -218,13 +230,24 @@ Public Class Order
             Reader = Command.ExecuteReader
 
             While Reader.Read
-                Dim catBtn As New Button
+                Dim catBtn As New Guna2Button
                 catBtn.Text = Reader("CategoryName")
                 catBtn.Size = New System.Drawing.Size(100, 50)
-                catBtn.FlatStyle = FlatStyle.Flat
-                catBtn.BackColor = Color.WhiteSmoke
+
+                catBtn.BorderRadius = 10
+                catBtn.ShadowDecoration.Enabled = True
+                catBtn.ShadowDecoration.BorderRadius = 10
+                catBtn.ShadowDecoration.Color = Color.DimGray
+                catBtn.ShadowDecoration.Depth = 20
+                catBtn.ShadowDecoration.Shadow = New Padding(-1, -1, 5, 5)
+
+                catBtn.FillColor = Color.LightSteelBlue
+                catBtn.ForeColor = Color.Black
+                catBtn.Cursor = Cursors.Hand
+
+
                 AddHandler catBtn.Click, AddressOf HandleCatClick
-                MenuCategoryPnl.Controls.Add(catBtn)
+                MenuContainerPnl.Controls.Add(catBtn)
             End While
 
         Catch ex As Exception
@@ -238,7 +261,7 @@ Public Class Order
     Private Sub LoadMenuItems(table As String)
         Dim Connection As New MySqlConnection(GetGlobalConnectionString)
         Dim Reader As MySqlDataReader
-        MenuItems.Clear() ' clear for another menu items when change in catalog
+        MenuItems.Clear() ' clear for an,other menu items when change in catalog
         currentIndex = 0 ' reset index
 
         Try
@@ -251,15 +274,15 @@ Public Class Order
                 Dim btnSize = 120
                 Dim fontSize = 12
 
-                Dim foodBtn As New Button
+                Dim foodBtn As New Guna2PictureBox
                 foodBtn.Size = New System.Drawing.Size(btnSize, btnSize)
                 foodBtn.Margin = New Padding(0, 0, 0, 0)
                 foodBtn.Text = Reader("ItemName")
                 foodBtn.Tag = Reader("ItemPrice")
                 foodBtn.Cursor = Cursors.Hand
                 foodBtn.TabStop = True
-                foodBtn.BackColor = Color.WhiteSmoke
                 foodBtn.BackColor = Color.Transparent
+                foodBtn.FillColor = Color.Transparent
 
                 If Not IsDBNull(Reader("ImagePath")) Then
                     Dim imagePath As String = Reader("ImagePath").ToString()
@@ -289,7 +312,7 @@ Public Class Order
 
                 Dim foodPrice As New Label
                 foodPrice.Text = "₱" & Reader("ItemPrice")
-                foodPrice.Font = foodFont
+                foodPrice.Font = New Font("Segue UI", fontSize, FontStyle.Bold)
                 foodName.AutoSize = False
                 foodPrice.TextAlign = ContentAlignment.MiddleCenter
 
@@ -299,15 +322,29 @@ Public Class Order
                 FoodContainerPnl.FlowDirection = FlowDirection.TopDown
                 FoodContainerPnl.Padding = New Padding(paddingVal)
                 FoodContainerPnl.Size = New System.Drawing.Size(btnSize + (paddingVal * 2), btnSize + foodName.Height + foodPrice.Height + (paddingVal * 3))
-                FoodContainerPnl.BackColor = Color.White
-                FoodContainerPnl.BorderStyle = BorderStyle.FixedSingle
+                FoodContainerPnl.BackColor = Color.Transparent
+                'FoodContainerPnl.BorderStyle = BorderStyle.FixedSingle
 
                 FoodContainerPnl.Controls.Add(foodBtn)
                 FoodContainerPnl.Controls.Add(foodName)
                 FoodContainerPnl.Controls.Add(foodPrice)
 
-                FoodPnl.Controls.Add(FoodContainerPnl)
-                MenuItems.Add(foodBtn)
+
+                Dim MainContainer As New Guna2Panel
+                MainContainer.Size = FoodContainerPnl.Size
+                MainContainer.BorderRadius = 10
+                MainContainer.FillColor = Color.LightSteelBlue
+
+                MainContainer.ShadowDecoration.Enabled = True
+                MainContainer.ShadowDecoration.BorderRadius = 10
+                MainContainer.ShadowDecoration.Color = Color.DimGray
+                MainContainer.ShadowDecoration.Depth = 20
+                MainContainer.ShadowDecoration.Shadow = New Padding(-1, -1, 5, 5)
+
+                MainContainer.Controls.Add(FoodContainerPnl)
+
+                'FoodContainerPnl.Controls.Add(FoodContainerPnl)
+                FoodPnl.Controls.Add(MainContainer)
             End While
 
         Catch ex As Exception
@@ -330,7 +367,7 @@ Public Class Order
             Reader = Command.ExecuteReader
 
             If Reader.HasRows Then
-                FoodPnl.Controls.Clear()
+                pnlwas.Controls.Clear()
             Else Return
             End If
 
@@ -344,7 +381,7 @@ Public Class Order
                     AddHandler btn.Click, AddressOf HandleItemClick
                 Next
 
-                FoodPnl.Controls.Add(container)
+                pnlwas.Controls.Add(container)
             End While
 
         Catch ex As Exception
@@ -353,21 +390,12 @@ Public Class Order
     End Sub
 
 
-    Private Function DisplayItemDialogForm(ByVal itemAmount As Integer) As Integer
-        If CurrentFocused Is Nothing Then Return -1
-        Dim tagData As TagData = ExtractTag(CurrentFocused.Tag)
-        Dim dlg As New ItemDialogForm(CurrentFocused.Text, tagData.Price, itemAmount)
-        If dlg.ShowDialog() = DialogResult.OK Then
-            Return dlg.Quantity
-        Else
-            Return -1
-        End If
-    End Function
+
 
 
     ' Menu item/category click handlers
     Private Sub HandleItemClick(sender As Object, e As EventArgs)
-        Dim button As Button = CType(sender, Button)
+        Dim button As Guna2PictureBox = CType(sender, Guna2PictureBox)
         CurrentFocusedItem = button.Text
         CurrentFocused = button
 
@@ -396,11 +424,13 @@ Public Class Order
         Compute() ' compute total again
     End Sub
     Private Sub HandleCatClick(sender As Object, e As EventArgs)
-        Dim catName = CType(sender, Button)
-        FoodPnl.Controls.Clear()
-        FoodPnl.Focus()
+        Dim catName = CType(sender, Guna2Button)
+        pnlwas.Controls.Clear()
+        pnlwas.Focus()
         LoadMenuItems(catName.Text)
     End Sub
+
+
 
 
 
@@ -597,7 +627,7 @@ Public Class Order
 
                 DataGridView1.Rows.Clear()
                 UpdateItemOrderList()
-                FoodPnl.Focus()
+                pnlwas.Focus()
             End If
 
         Catch ex As Exception
@@ -670,7 +700,6 @@ Public Class Order
 
         ' need to log the apllying of voucher
     End Sub
-
     Private Sub CancelBtn_Click(sender As Object, e As EventArgs) Handles CancelBtn.Click
         If Not DataGridView1.Rows.Count > 0 Then
             MsgBox("Cannot cancel, No order created.", MsgBoxStyle.Critical, "Error")
@@ -695,7 +724,7 @@ Public Class Order
         'CurrentFocused = Nothing
         'CurrentFocusedItem = ""
     End Sub
-    Private Sub ShortcutKeys_Click(sender As Object, e As EventArgs) Handles IconButton2.Click
+    Private Sub ShortcutKeys_Click(sender As Object, e As EventArgs) Handles ShortCutKeysBtn.Click
         Dim msg As String = "For selecting menu items: Use arrow key left/right and press enter to select" & vbCrLf & vbCrLf & "For adjusting the item's quantity: Use arrow key left/right and press enter to increase/decrease and Ctrl + Enter to continue" & vbCrLf & vbCrLf & "Shortcut keys can be enabled/disabled in the settings"
         MsgBox(msg, MsgBoxStyle.Information, "Shortcut keys")
     End Sub
@@ -777,7 +806,7 @@ Public Class Order
             End If
         End If
     End Sub
-    Private Sub LogoutButton_Click(sender As Object, e As EventArgs) Handles IconButton3.Click
+    Private Sub LogoutButton_Click(sender As Object, e As EventArgs) Handles LogoutBtn.Click
         Dim res = MsgBox("Are you sure you wnat to log out?", MsgBoxStyle.YesNoCancel, "Notice")
         If res = MsgBoxResult.Yes Then
             CurrentUser = ""
@@ -832,20 +861,20 @@ Public Class Order
     Private Sub HandleKeydownSelect(sender As Object, e As KeyEventArgs)
         If e.Control AndAlso e.KeyCode = Keys.Enter Then
             CreateOrderBtn_Click(sender, e)
-        ElseIf e.KeyCode = Keys.Left Then
-            If currentIndex > 0 Then
-                MenuItems(currentIndex).FlatAppearance.BorderColor = Color.Gray
-                currentIndex -= 1
-            End If
+            'ElseIf e.KeyCode = Keys.Left Then
+            '    If currentIndex > 0 Then
+            '        'MenuItems(currentIndex).FlatAppearance.BorderColor = Color.Gray
+            '        currentIndex -= 1
+            '    End If
 
-        ElseIf e.KeyCode = Keys.Right Then
-            If currentIndex < MenuItems.Count - 1 Then
-                MenuItems(currentIndex).FlatAppearance.BorderColor = Color.Gray
-                currentIndex += 1
-            End If
+            'ElseIf e.KeyCode = Keys.Right Then
+            '    If currentIndex < MenuItems.Count - 1 Then
+            '        'MenuItems(currentIndex).FlatAppearance.BorderColor = Color.Gray
+            '        currentIndex += 1
+            '    End If
 
         ElseIf e.KeyCode = Keys.Enter Then
-            Dim btnSelected As Button = MenuItems(currentIndex)
+            Dim btnSelected As Guna2PictureBox = MenuItems(currentIndex)
             HandleItemClick(btnSelected, e)
         ElseIf e.Control AndAlso e.KeyCode = Keys.C Then
             CancelBtn_Click(sender, e) ' cancel order
@@ -858,15 +887,15 @@ Public Class Order
         End If
 
         ' handle current focused item
-        MenuItems(currentIndex).FlatAppearance.BorderColor = Color.Red
+        'MenuItems(currentIndex).FlatAppearance.BorderColor = Color.Red
 
         ' get the currrent focused btn instead of using btn.focus()
-        CurrentFocusedItem = MenuItems(currentIndex).Text
-        For Each btn As Button In MenuItems
-            If btn.Text = CurrentFocusedItem Then
-                CurrentFocused = btn
-            End If
-        Next
+        'CurrentFocusedItem = MenuItems(currentIndex).Text
+        'For Each btn As Guna2PictureBox In MenuItems
+        '    If btn.Text = CurrentFocusedItem Then
+        '        CurrentFocused = btn
+        '    End If
+        'Next
     End Sub
     Private Sub HandleIfItemExistsInOrder(ByVal itemName As String, ByVal itemPrice As String, ByVal tagImgPath As String, ByVal itemAmount As Integer)
         Dim nameExists As Boolean = False
