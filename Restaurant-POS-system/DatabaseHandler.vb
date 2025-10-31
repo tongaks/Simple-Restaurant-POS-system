@@ -1,5 +1,4 @@
 ﻿Imports System.IO
-'Imports System.Windows.Controls
 Imports System.Windows.Forms
 Imports MySql.Data.MySqlClient
 
@@ -20,8 +19,11 @@ Public Module DatabaseHandler
 
     ' For mysqlconnection
     Public Function GetGlobalConnectionString() As String
-        'Return "server=localhost;userid=root;password=;database=restaurant;SslMode=none;"
-        Return "server=localhost;user=root;database=restaurant;port=3306;password=;"
+        ' Use explicit SslMode and AllowPublicKeyRetrieval to avoid connector negotiation issues.
+        ' If root has a blank password keep password=;
+        ' Prefer creating a dedicated DB user with limited privileges.
+        ' Enable AllowUserVariables so client treats @var as server user variables (fixes "Parameter '@SKIP_TRIGGER' must be defined").
+        Return "server=localhost;user=root;password=;database=restaurant;port=3306;SslMode=none;AllowPublicKeyRetrieval=True;AllowUserVariables=True;"
     End Function
 
 

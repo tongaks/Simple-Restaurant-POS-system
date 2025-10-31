@@ -2,6 +2,7 @@
 Partial Class Manage_menu
     Inherits System.Windows.Forms.Form
 
+    'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
@@ -13,516 +14,423 @@ Partial Class Manage_menu
         End Try
     End Sub
 
+    'Required by the Windows Form Designer
     Private components As System.ComponentModel.IContainer
 
+    'NOTE: The following procedure is required by the Windows Form Designer
+    'It can be modified using the Windows Form Designer.  
+    'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        pnlHeader = New Panel()
-        pnlHeaderRight = New Panel()
-        btnLogout = New Button()
-        btnHelp = New Button()
-        btnBack = New Button()
-        pnlSearch = New Panel()
-        SearchBtn = New FontAwesome.Sharp.IconButton()
-        SearchTxtBox = New TextBox()
+        Dim CustomizableEdges16 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges17 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges5 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges6 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges1 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges2 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges3 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges4 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges14 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges15 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges7 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges8 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges9 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges10 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges11 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges12 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges13 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges19 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges20 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges18 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        pnlTopBar = New Guna.UI2.WinForms.Guna2Panel()
+        pnlTopBarRow2 = New Guna.UI2.WinForms.Guna2Panel()
+        flowCategoryTabs = New FlowLayoutPanel()
+        pnlActions = New Panel()
+        cmbSortFilter = New Guna.UI2.WinForms.Guna2ComboBox()
+        btnAddNew = New Guna.UI2.WinForms.Guna2Button()
+        pnlTopBarRow1 = New Guna.UI2.WinForms.Guna2Panel()
+        btnBack = New Guna.UI2.WinForms.Guna2Button()
         lblTitle = New Label()
-        pnlSidebar = New Panel()
-        ItemInfoPnl = New Panel()
-        pnlItemActions = New Panel()
-        UpdateBtn = New FontAwesome.Sharp.IconButton()
-        CancelBtn = New FontAwesome.Sharp.IconButton()
-        DeleteBtn = New FontAwesome.Sharp.IconButton()
-        EditBtn = New FontAwesome.Sharp.IconButton()
-        SaveBtn = New FontAwesome.Sharp.IconButton()
-        pnlItemFields = New Panel()
-        PriceTxtBox = New TextBox()
-        PriceLbl = New Label()
-        ItemNameTxtBox = New TextBox()
-        ItemNameLbl = New Label()
-        lblItemPreview = New Label()
-        ItemBtn = New Button()
-        Label4 = New Label()
-        pnlMain = New Panel()
-        FoodPnl = New FlowLayoutPanel()
-        MenuCategoryPnl = New FlowLayoutPanel()
-        pnlHeader.SuspendLayout()
-        pnlHeaderRight.SuspendLayout()
-        pnlSearch.SuspendLayout()
-        pnlSidebar.SuspendLayout()
-        ItemInfoPnl.SuspendLayout()
-        pnlItemActions.SuspendLayout()
-        pnlItemFields.SuspendLayout()
+        txtSearch = New Guna.UI2.WinForms.Guna2TextBox()
+        btnHelp = New Guna.UI2.WinForms.Guna2CircleButton()
+        btnLogout = New Guna.UI2.WinForms.Guna2Button()
+        pnlMain = New Guna.UI2.WinForms.Guna2Panel()
+        flowMenuItems = New FlowLayoutPanel()
+        pnlLoadingOverlay = New Guna.UI2.WinForms.Guna2Panel()
+        lblLoading = New Label()
+        pbLoadingSpinner = New Guna.UI2.WinForms.Guna2CircleProgressBar()
+        pnlTopBar.SuspendLayout()
+        pnlTopBarRow2.SuspendLayout()
+        pnlActions.SuspendLayout()
+        pnlTopBarRow1.SuspendLayout()
         pnlMain.SuspendLayout()
+        pnlLoadingOverlay.SuspendLayout()
         SuspendLayout()
         ' 
-        ' pnlHeader
+        ' pnlTopBar
         ' 
-        pnlHeader.BackColor = Color.FromArgb(CByte(72), CByte(118), CByte(255))
-        pnlHeader.Controls.Add(pnlHeaderRight)
-        pnlHeader.Controls.Add(pnlSearch)
-        pnlHeader.Controls.Add(lblTitle)
-        pnlHeader.Dock = DockStyle.Top
-        pnlHeader.Location = New Point(0, 0)
-        pnlHeader.Name = "pnlHeader"
-        pnlHeader.Size = New Size(1600, 90)
-        pnlHeader.TabIndex = 0
+        pnlTopBar.BackColor = Color.Transparent
+        pnlTopBar.Controls.Add(pnlTopBarRow2)
+        pnlTopBar.Controls.Add(pnlTopBarRow1)
+        pnlTopBar.CustomizableEdges = CustomizableEdges16
+        pnlTopBar.Dock = DockStyle.Top
+        pnlTopBar.FillColor = Color.White
+        pnlTopBar.Location = New Point(0, 0)
+        pnlTopBar.Name = "pnlTopBar"
+        pnlTopBar.ShadowDecoration.Color = Color.FromArgb(CByte(40), CByte(0), CByte(0), CByte(0))
+        pnlTopBar.ShadowDecoration.CustomizableEdges = CustomizableEdges17
+        pnlTopBar.ShadowDecoration.Depth = 5
+        pnlTopBar.ShadowDecoration.Enabled = True
+        pnlTopBar.ShadowDecoration.Shadow = New Padding(0, 3, 0, 0)
+        pnlTopBar.Size = New Size(1600, 164)
+        pnlTopBar.TabIndex = 0
         ' 
-        ' pnlHeaderRight
+        ' pnlTopBarRow2
         ' 
-        pnlHeaderRight.Controls.Add(btnLogout)
-        pnlHeaderRight.Controls.Add(btnHelp)
-        pnlHeaderRight.Controls.Add(btnBack)
-        pnlHeaderRight.Dock = DockStyle.Right
-        pnlHeaderRight.Location = New Point(1350, 0)
-        pnlHeaderRight.Name = "pnlHeaderRight"
-        pnlHeaderRight.Padding = New Padding(10, 20, 20, 20)
-        pnlHeaderRight.Size = New Size(250, 90)
-        pnlHeaderRight.TabIndex = 3
+        pnlTopBarRow2.BackColor = Color.Transparent
+        pnlTopBarRow2.Controls.Add(flowCategoryTabs)
+        pnlTopBarRow2.Controls.Add(pnlActions)
+        pnlTopBarRow2.CustomizableEdges = CustomizableEdges5
+        pnlTopBarRow2.Dock = DockStyle.Top
+        pnlTopBarRow2.FillColor = Color.White
+        pnlTopBarRow2.Location = New Point(0, 60)
+        pnlTopBarRow2.Name = "pnlTopBarRow2"
+        pnlTopBarRow2.Padding = New Padding(20, 10, 20, 10)
+        pnlTopBarRow2.ShadowDecoration.CustomizableEdges = CustomizableEdges6
+        pnlTopBarRow2.Size = New Size(1600, 104)
+        pnlTopBarRow2.TabIndex = 1
         ' 
-        ' btnLogout
+        ' flowCategoryTabs
         ' 
-        btnLogout.BackColor = Color.FromArgb(CByte(231), CByte(76), CByte(60))
-        btnLogout.Cursor = Cursors.Hand
-        btnLogout.Dock = DockStyle.Right
-        btnLogout.FlatAppearance.BorderSize = 0
-        btnLogout.FlatStyle = FlatStyle.Flat
-        btnLogout.Font = New Font("Segoe UI Semibold", 10F, FontStyle.Bold)
-        btnLogout.ForeColor = Color.White
-        btnLogout.Location = New Point(150, 20)
-        btnLogout.Name = "btnLogout"
-        btnLogout.Size = New Size(80, 50)
-        btnLogout.TabIndex = 2
-        btnLogout.Text = "Logout"
-        btnLogout.UseVisualStyleBackColor = False
+        flowCategoryTabs.AutoSize = True
+        flowCategoryTabs.BackColor = Color.Transparent
+        flowCategoryTabs.Dock = DockStyle.Left
+        flowCategoryTabs.Location = New Point(20, 10)
+        flowCategoryTabs.Name = "flowCategoryTabs"
+        flowCategoryTabs.Padding = New Padding(0, 5, 0, 5)
+        flowCategoryTabs.Size = New Size(0, 84)
+        flowCategoryTabs.TabIndex = 0
+        flowCategoryTabs.WrapContents = False
         ' 
-        ' btnHelp
+        ' pnlActions
         ' 
-        btnHelp.BackColor = Color.FromArgb(CByte(241), CByte(196), CByte(15))
-        btnHelp.Cursor = Cursors.Hand
-        btnHelp.Dock = DockStyle.Left
-        btnHelp.FlatAppearance.BorderSize = 0
-        btnHelp.FlatStyle = FlatStyle.Flat
-        btnHelp.Font = New Font("Segoe UI Semibold", 10F, FontStyle.Bold)
-        btnHelp.ForeColor = Color.White
-        btnHelp.Location = New Point(90, 20)
-        btnHelp.Name = "btnHelp"
-        btnHelp.Size = New Size(60, 50)
-        btnHelp.TabIndex = 1
-        btnHelp.Text = "Help"
-        btnHelp.UseVisualStyleBackColor = False
+        pnlActions.BackColor = Color.Transparent
+        pnlActions.Controls.Add(cmbSortFilter)
+        pnlActions.Controls.Add(btnAddNew)
+        pnlActions.Dock = DockStyle.Right
+        pnlActions.Location = New Point(1250, 10)
+        pnlActions.Name = "pnlActions"
+        pnlActions.Size = New Size(330, 84)
+        pnlActions.TabIndex = 1
+        ' 
+        ' cmbSortFilter
+        ' 
+        cmbSortFilter.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        cmbSortFilter.BackColor = Color.Transparent
+        cmbSortFilter.BorderColor = Color.FromArgb(CByte(229), CByte(231), CByte(235))
+        cmbSortFilter.BorderRadius = 12
+        cmbSortFilter.BorderThickness = 2
+        cmbSortFilter.CustomizableEdges = CustomizableEdges1
+        cmbSortFilter.DrawMode = DrawMode.OwnerDrawFixed
+        cmbSortFilter.DropDownStyle = ComboBoxStyle.DropDownList
+        cmbSortFilter.FocusedColor = Color.FromArgb(CByte(255), CByte(200), CByte(87))
+        cmbSortFilter.FocusedState.BorderColor = Color.FromArgb(CByte(255), CByte(200), CByte(87))
+        cmbSortFilter.Font = New Font("Segoe UI", 10.0F)
+        cmbSortFilter.ForeColor = Color.FromArgb(CByte(31), CByte(41), CByte(55))
+        cmbSortFilter.HoverState.BorderColor = Color.FromArgb(CByte(209), CByte(213), CByte(219))
+        cmbSortFilter.ItemHeight = 34
+        cmbSortFilter.Items.AddRange(New Object() {"All Items", "New Items", "Price: Low to High", "Price: High to Low"})
+        cmbSortFilter.Location = New Point(0, 0)
+        cmbSortFilter.Name = "cmbSortFilter"
+        cmbSortFilter.ShadowDecoration.CustomizableEdges = CustomizableEdges2
+        cmbSortFilter.Size = New Size(170, 40)
+        cmbSortFilter.StartIndex = 0
+        cmbSortFilter.TabIndex = 0
+        ' 
+        ' btnAddNew
+        ' 
+        btnAddNew.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        btnAddNew.Animated = True
+        btnAddNew.BackColor = Color.Transparent
+        btnAddNew.BorderRadius = 12
+        btnAddNew.Cursor = Cursors.Hand
+        btnAddNew.CustomizableEdges = CustomizableEdges3
+        btnAddNew.DisabledState.BorderColor = Color.DarkGray
+        btnAddNew.DisabledState.CustomBorderColor = Color.DarkGray
+        btnAddNew.DisabledState.FillColor = Color.FromArgb(CByte(169), CByte(169), CByte(169))
+        btnAddNew.DisabledState.ForeColor = Color.FromArgb(CByte(141), CByte(141), CByte(141))
+        btnAddNew.FillColor = Color.FromArgb(CByte(46), CByte(204), CByte(113))
+        btnAddNew.Font = New Font("Segoe UI Semibold", 10.0F, FontStyle.Bold)
+        btnAddNew.ForeColor = Color.White
+        btnAddNew.HoverState.FillColor = Color.FromArgb(CByte(26), CByte(184), CByte(93))
+        btnAddNew.Location = New Point(180, 0)
+        btnAddNew.Name = "btnAddNew"
+        btnAddNew.PressedColor = Color.FromArgb(CByte(16), CByte(164), CByte(73))
+        btnAddNew.ShadowDecoration.CustomizableEdges = CustomizableEdges4
+        btnAddNew.ShadowDecoration.Depth = 8
+        btnAddNew.ShadowDecoration.Enabled = True
+        btnAddNew.Size = New Size(150, 40)
+        btnAddNew.TabIndex = 1
+        btnAddNew.Text = "➕ Add New"
+        ' 
+        ' pnlTopBarRow1
+        ' 
+        pnlTopBarRow1.BackColor = Color.Transparent
+        pnlTopBarRow1.Controls.Add(btnBack)
+        pnlTopBarRow1.Controls.Add(lblTitle)
+        pnlTopBarRow1.Controls.Add(txtSearch)
+        pnlTopBarRow1.Controls.Add(btnHelp)
+        pnlTopBarRow1.Controls.Add(btnLogout)
+        pnlTopBarRow1.CustomizableEdges = CustomizableEdges14
+        pnlTopBarRow1.Dock = DockStyle.Top
+        pnlTopBarRow1.FillColor = Color.White
+        pnlTopBarRow1.Location = New Point(0, 0)
+        pnlTopBarRow1.Name = "pnlTopBarRow1"
+        pnlTopBarRow1.Padding = New Padding(20, 10, 20, 10)
+        pnlTopBarRow1.ShadowDecoration.CustomizableEdges = CustomizableEdges15
+        pnlTopBarRow1.Size = New Size(1600, 60)
+        pnlTopBarRow1.TabIndex = 0
         ' 
         ' btnBack
         ' 
-        btnBack.BackColor = Color.FromArgb(CByte(52), CByte(152), CByte(219))
+        btnBack.Animated = True
+        btnBack.BackColor = Color.Transparent
+        btnBack.BorderRadius = 12
         btnBack.Cursor = Cursors.Hand
-        btnBack.Dock = DockStyle.Left
-        btnBack.FlatAppearance.BorderSize = 0
-        btnBack.FlatStyle = FlatStyle.Flat
-        btnBack.Font = New Font("Segoe UI Semibold", 10F, FontStyle.Bold)
+        btnBack.CustomizableEdges = CustomizableEdges7
+        btnBack.DisabledState.BorderColor = Color.DarkGray
+        btnBack.DisabledState.CustomBorderColor = Color.DarkGray
+        btnBack.DisabledState.FillColor = Color.FromArgb(CByte(169), CByte(169), CByte(169))
+        btnBack.DisabledState.ForeColor = Color.FromArgb(CByte(141), CByte(141), CByte(141))
+        btnBack.FillColor = Color.FromArgb(CByte(31), CByte(138), CByte(112))
+        btnBack.Font = New Font("Segoe UI Semibold", 10.0F, FontStyle.Bold)
         btnBack.ForeColor = Color.White
-        btnBack.Location = New Point(10, 20)
+        btnBack.HoverState.FillColor = Color.FromArgb(CByte(21), CByte(118), CByte(92))
+        btnBack.Location = New Point(20, 13)
         btnBack.Name = "btnBack"
-        btnBack.Size = New Size(80, 50)
+        btnBack.PressedColor = Color.FromArgb(CByte(16), CByte(98), CByte(72))
+        btnBack.ShadowDecoration.CustomizableEdges = CustomizableEdges8
+        btnBack.ShadowDecoration.Depth = 8
+        btnBack.ShadowDecoration.Enabled = True
+        btnBack.Size = New Size(100, 35)
         btnBack.TabIndex = 0
         btnBack.Text = "← Back"
-        btnBack.UseVisualStyleBackColor = False
-        ' 
-        ' pnlSearch
-        ' 
-        pnlSearch.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        pnlSearch.BackColor = Color.White
-        pnlSearch.Controls.Add(SearchBtn)
-        pnlSearch.Controls.Add(SearchTxtBox)
-        pnlSearch.Location = New Point(950, 20)
-        pnlSearch.Name = "pnlSearch"
-        pnlSearch.Size = New Size(380, 50)
-        pnlSearch.TabIndex = 2
-        ' 
-        ' SearchBtn
-        ' 
-        SearchBtn.BackColor = Color.FromArgb(CByte(46), CByte(204), CByte(113))
-        SearchBtn.Cursor = Cursors.Hand
-        SearchBtn.Dock = DockStyle.Right
-        SearchBtn.FlatAppearance.BorderSize = 0
-        SearchBtn.FlatStyle = FlatStyle.Flat
-        SearchBtn.Font = New Font("Segoe UI", 11F, FontStyle.Bold)
-        SearchBtn.ForeColor = Color.White
-        SearchBtn.IconChar = FontAwesome.Sharp.IconChar.Search
-        SearchBtn.IconColor = Color.White
-        SearchBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
-        SearchBtn.IconSize = 24
-        SearchBtn.Location = New Point(277, 0)
-        SearchBtn.Name = "SearchBtn"
-        SearchBtn.Size = New Size(103, 50)
-        SearchBtn.TabIndex = 1
-        SearchBtn.Text = "Search"
-        SearchBtn.TextImageRelation = TextImageRelation.ImageBeforeText
-        SearchBtn.UseVisualStyleBackColor = False
-        ' 
-        ' SearchTxtBox
-        ' 
-        SearchTxtBox.BorderStyle = BorderStyle.None
-        SearchTxtBox.Dock = DockStyle.Fill
-        SearchTxtBox.Font = New Font("Segoe UI", 12F)
-        SearchTxtBox.Location = New Point(0, 0)
-        SearchTxtBox.Multiline = True
-        SearchTxtBox.Name = "SearchTxtBox"
-        SearchTxtBox.PlaceholderText = "🔍 Search menu items..."
-        SearchTxtBox.Size = New Size(380, 50)
-        SearchTxtBox.TabIndex = 0
         ' 
         ' lblTitle
         ' 
         lblTitle.AutoSize = True
-        lblTitle.Font = New Font("Segoe UI", 24F, FontStyle.Bold)
-        lblTitle.ForeColor = Color.White
-        lblTitle.Location = New Point(30, 25)
+        lblTitle.BackColor = Color.Transparent
+        lblTitle.Font = New Font("Segoe UI", 18.0F, FontStyle.Bold)
+        lblTitle.ForeColor = Color.FromArgb(CByte(30), CByte(30), CByte(30))
+        lblTitle.Location = New Point(135, 15)
         lblTitle.Name = "lblTitle"
-        lblTitle.Size = New Size(362, 54)
+        lblTitle.Size = New Size(271, 41)
         lblTitle.TabIndex = 1
         lblTitle.Text = "🍽️ Manage Menu"
         ' 
-        ' pnlSidebar
+        ' txtSearch
         ' 
-        pnlSidebar.BackColor = Color.FromArgb(CByte(236), CByte(240), CByte(245))
-        pnlSidebar.Controls.Add(ItemInfoPnl)
-        pnlSidebar.Dock = DockStyle.Left
-        pnlSidebar.Location = New Point(0, 90)
-        pnlSidebar.Name = "pnlSidebar"
-        pnlSidebar.Padding = New Padding(25)
-        pnlSidebar.Size = New Size(450, 920)
-        pnlSidebar.TabIndex = 1
+        txtSearch.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        txtSearch.Animated = True
+        txtSearch.BackColor = Color.Transparent
+        txtSearch.BorderColor = Color.FromArgb(CByte(229), CByte(231), CByte(235))
+        txtSearch.BorderRadius = 14
+        txtSearch.BorderThickness = 2
+        txtSearch.Cursor = Cursors.IBeam
+        txtSearch.CustomizableEdges = CustomizableEdges9
+        txtSearch.DefaultText = ""
+        txtSearch.DisabledState.BorderColor = Color.FromArgb(CByte(208), CByte(208), CByte(208))
+        txtSearch.DisabledState.FillColor = Color.FromArgb(CByte(226), CByte(226), CByte(226))
+        txtSearch.DisabledState.ForeColor = Color.FromArgb(CByte(138), CByte(138), CByte(138))
+        txtSearch.DisabledState.PlaceholderForeColor = Color.FromArgb(CByte(138), CByte(138), CByte(138))
+        txtSearch.FocusedState.BorderColor = Color.FromArgb(CByte(255), CByte(200), CByte(87))
+        txtSearch.Font = New Font("Segoe UI", 10.5F)
+        txtSearch.ForeColor = Color.FromArgb(CByte(31), CByte(41), CByte(55))
+        txtSearch.HoverState.BorderColor = Color.FromArgb(CByte(209), CByte(213), CByte(219))
+        txtSearch.IconLeftOffset = New Point(12, 0)
+        txtSearch.Location = New Point(950, 10)
+        txtSearch.Margin = New Padding(4, 5, 4, 5)
+        txtSearch.Name = "txtSearch"
+        txtSearch.PlaceholderForeColor = Color.FromArgb(CByte(156), CByte(163), CByte(175))
+        txtSearch.PlaceholderText = "🔍 Search menu items..."
+        txtSearch.SelectedText = ""
+        txtSearch.ShadowDecoration.CustomizableEdges = CustomizableEdges10
+        txtSearch.ShadowDecoration.Depth = 5
+        txtSearch.ShadowDecoration.Enabled = True
+        txtSearch.Size = New Size(400, 40)
+        txtSearch.TabIndex = 2
+        txtSearch.TextOffset = New Point(5, 0)
         ' 
-        ' ItemInfoPnl
+        ' btnHelp
         ' 
-        ItemInfoPnl.BackColor = Color.White
-        ItemInfoPnl.BorderStyle = BorderStyle.FixedSingle
-        ItemInfoPnl.Controls.Add(pnlItemActions)
-        ItemInfoPnl.Controls.Add(pnlItemFields)
-        ItemInfoPnl.Controls.Add(lblItemPreview)
-        ItemInfoPnl.Controls.Add(ItemBtn)
-        ItemInfoPnl.Controls.Add(Label4)
-        ItemInfoPnl.Dock = DockStyle.Fill
-        ItemInfoPnl.Location = New Point(25, 25)
-        ItemInfoPnl.Name = "ItemInfoPnl"
-        ItemInfoPnl.Padding = New Padding(25)
-        ItemInfoPnl.Size = New Size(400, 870)
-        ItemInfoPnl.TabIndex = 0
+        btnHelp.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        btnHelp.BackColor = Color.Transparent
+        btnHelp.Cursor = Cursors.Hand
+        btnHelp.DisabledState.BorderColor = Color.DarkGray
+        btnHelp.DisabledState.CustomBorderColor = Color.DarkGray
+        btnHelp.DisabledState.FillColor = Color.FromArgb(CByte(169), CByte(169), CByte(169))
+        btnHelp.DisabledState.ForeColor = Color.FromArgb(CByte(141), CByte(141), CByte(141))
+        btnHelp.FillColor = Color.FromArgb(CByte(255), CByte(200), CByte(87))
+        btnHelp.Font = New Font("Segoe UI", 12.0F, FontStyle.Bold)
+        btnHelp.ForeColor = Color.FromArgb(CByte(30), CByte(30), CByte(30))
+        btnHelp.HoverState.FillColor = Color.FromArgb(CByte(240), CByte(180), CByte(67))
+        btnHelp.Location = New Point(1385, 10)
+        btnHelp.Name = "btnHelp"
+        btnHelp.ShadowDecoration.CustomizableEdges = CustomizableEdges11
+        btnHelp.ShadowDecoration.Enabled = True
+        btnHelp.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle
+        btnHelp.Size = New Size(50, 40)
+        btnHelp.TabIndex = 3
+        btnHelp.Text = "❓"
         ' 
-        ' pnlItemActions
+        ' btnLogout
         ' 
-        pnlItemActions.Controls.Add(UpdateBtn)
-        pnlItemActions.Controls.Add(CancelBtn)
-        pnlItemActions.Controls.Add(DeleteBtn)
-        pnlItemActions.Controls.Add(EditBtn)
-        pnlItemActions.Controls.Add(SaveBtn)
-        pnlItemActions.Location = New Point(25, 550)
-        pnlItemActions.Name = "pnlItemActions"
-        pnlItemActions.Size = New Size(350, 280)
-        pnlItemActions.TabIndex = 4
-        pnlItemActions.Visible = False
-        ' 
-        ' UpdateBtn
-        ' 
-        UpdateBtn.BackColor = Color.FromArgb(CByte(241), CByte(196), CByte(15))
-        UpdateBtn.Cursor = Cursors.Hand
-        UpdateBtn.Enabled = False
-        UpdateBtn.FlatAppearance.BorderSize = 0
-        UpdateBtn.FlatStyle = FlatStyle.Flat
-        UpdateBtn.Font = New Font("Segoe UI Semibold", 11F, FontStyle.Bold)
-        UpdateBtn.ForeColor = Color.White
-        UpdateBtn.IconChar = FontAwesome.Sharp.IconChar.Refresh
-        UpdateBtn.IconColor = Color.White
-        UpdateBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
-        UpdateBtn.IconSize = 28
-        UpdateBtn.ImageAlign = ContentAlignment.MiddleLeft
-        UpdateBtn.Location = New Point(10, 215)
-        UpdateBtn.Name = "UpdateBtn"
-        UpdateBtn.Padding = New Padding(10, 0, 10, 0)
-        UpdateBtn.Size = New Size(160, 50)
-        UpdateBtn.TabIndex = 4
-        UpdateBtn.Text = "  Update"
-        UpdateBtn.TextAlign = ContentAlignment.MiddleLeft
-        UpdateBtn.TextImageRelation = TextImageRelation.ImageBeforeText
-        UpdateBtn.UseVisualStyleBackColor = False
-        ' 
-        ' CancelBtn
-        ' 
-        CancelBtn.BackColor = Color.FromArgb(CByte(149), CByte(165), CByte(166))
-        CancelBtn.Cursor = Cursors.Hand
-        CancelBtn.Enabled = False
-        CancelBtn.FlatAppearance.BorderSize = 0
-        CancelBtn.FlatStyle = FlatStyle.Flat
-        CancelBtn.Font = New Font("Segoe UI Semibold", 11F, FontStyle.Bold)
-        CancelBtn.ForeColor = Color.White
-        CancelBtn.IconChar = FontAwesome.Sharp.IconChar.Close
-        CancelBtn.IconColor = Color.White
-        CancelBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
-        CancelBtn.IconSize = 28
-        CancelBtn.ImageAlign = ContentAlignment.MiddleLeft
-        CancelBtn.Location = New Point(180, 215)
-        CancelBtn.Name = "CancelBtn"
-        CancelBtn.Padding = New Padding(10, 0, 10, 0)
-        CancelBtn.Size = New Size(160, 50)
-        CancelBtn.TabIndex = 3
-        CancelBtn.Text = "   Cancel"
-        CancelBtn.TextAlign = ContentAlignment.MiddleLeft
-        CancelBtn.TextImageRelation = TextImageRelation.ImageBeforeText
-        CancelBtn.UseVisualStyleBackColor = False
-        ' 
-        ' DeleteBtn
-        ' 
-        DeleteBtn.BackColor = Color.FromArgb(CByte(231), CByte(76), CByte(60))
-        DeleteBtn.Cursor = Cursors.Hand
-        DeleteBtn.Enabled = False
-        DeleteBtn.FlatAppearance.BorderSize = 0
-        DeleteBtn.FlatStyle = FlatStyle.Flat
-        DeleteBtn.Font = New Font("Segoe UI Semibold", 11F, FontStyle.Bold)
-        DeleteBtn.ForeColor = Color.White
-        DeleteBtn.IconChar = FontAwesome.Sharp.IconChar.TrashAlt
-        DeleteBtn.IconColor = Color.White
-        DeleteBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
-        DeleteBtn.IconSize = 28
-        DeleteBtn.ImageAlign = ContentAlignment.MiddleLeft
-        DeleteBtn.Location = New Point(10, 145)
-        DeleteBtn.Name = "DeleteBtn"
-        DeleteBtn.Padding = New Padding(15, 0, 15, 0)
-        DeleteBtn.Size = New Size(330, 55)
-        DeleteBtn.TabIndex = 2
-        DeleteBtn.Text = "    Delete Item"
-        DeleteBtn.TextAlign = ContentAlignment.MiddleLeft
-        DeleteBtn.TextImageRelation = TextImageRelation.ImageBeforeText
-        DeleteBtn.UseVisualStyleBackColor = False
-        ' 
-        ' EditBtn
-        ' 
-        EditBtn.BackColor = Color.FromArgb(CByte(52), CByte(152), CByte(219))
-        EditBtn.Cursor = Cursors.Hand
-        EditBtn.Enabled = False
-        EditBtn.FlatAppearance.BorderSize = 0
-        EditBtn.FlatStyle = FlatStyle.Flat
-        EditBtn.Font = New Font("Segoe UI Semibold", 11F, FontStyle.Bold)
-        EditBtn.ForeColor = Color.White
-        EditBtn.IconChar = FontAwesome.Sharp.IconChar.Edit
-        EditBtn.IconColor = Color.White
-        EditBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
-        EditBtn.IconSize = 28
-        EditBtn.ImageAlign = ContentAlignment.MiddleLeft
-        EditBtn.Location = New Point(10, 75)
-        EditBtn.Name = "EditBtn"
-        EditBtn.Padding = New Padding(15, 0, 15, 0)
-        EditBtn.Size = New Size(330, 55)
-        EditBtn.TabIndex = 1
-        EditBtn.Text = "    Edit Item"
-        EditBtn.TextAlign = ContentAlignment.MiddleLeft
-        EditBtn.TextImageRelation = TextImageRelation.ImageBeforeText
-        EditBtn.UseVisualStyleBackColor = False
-        ' 
-        ' SaveBtn
-        ' 
-        SaveBtn.BackColor = Color.FromArgb(CByte(46), CByte(204), CByte(113))
-        SaveBtn.Cursor = Cursors.Hand
-        SaveBtn.Enabled = False
-        SaveBtn.FlatAppearance.BorderSize = 0
-        SaveBtn.FlatStyle = FlatStyle.Flat
-        SaveBtn.Font = New Font("Segoe UI Semibold", 11F, FontStyle.Bold)
-        SaveBtn.ForeColor = Color.White
-        SaveBtn.IconChar = FontAwesome.Sharp.IconChar.Save
-        SaveBtn.IconColor = Color.White
-        SaveBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
-        SaveBtn.IconSize = 28
-        SaveBtn.ImageAlign = ContentAlignment.MiddleLeft
-        SaveBtn.Location = New Point(10, 10)
-        SaveBtn.Name = "SaveBtn"
-        SaveBtn.Padding = New Padding(15, 0, 15, 0)
-        SaveBtn.Size = New Size(330, 55)
-        SaveBtn.TabIndex = 0
-        SaveBtn.Text = "    Save Item"
-        SaveBtn.TextAlign = ContentAlignment.MiddleLeft
-        SaveBtn.TextImageRelation = TextImageRelation.ImageBeforeText
-        SaveBtn.UseVisualStyleBackColor = False
-        ' 
-        ' pnlItemFields
-        ' 
-        pnlItemFields.Controls.Add(PriceTxtBox)
-        pnlItemFields.Controls.Add(PriceLbl)
-        pnlItemFields.Controls.Add(ItemNameTxtBox)
-        pnlItemFields.Controls.Add(ItemNameLbl)
-        pnlItemFields.Location = New Point(25, 350)
-        pnlItemFields.Name = "pnlItemFields"
-        pnlItemFields.Size = New Size(350, 180)
-        pnlItemFields.TabIndex = 3
-        pnlItemFields.Visible = False
-        ' 
-        ' PriceTxtBox
-        ' 
-        PriceTxtBox.BorderStyle = BorderStyle.FixedSingle
-        PriceTxtBox.Enabled = False
-        PriceTxtBox.Font = New Font("Segoe UI", 11F)
-        PriceTxtBox.Location = New Point(10, 125)
-        PriceTxtBox.Name = "PriceTxtBox"
-        PriceTxtBox.Size = New Size(170, 32)
-        PriceTxtBox.TabIndex = 3
-        ' 
-        ' PriceLbl
-        ' 
-        PriceLbl.AutoSize = True
-        PriceLbl.Font = New Font("Segoe UI Semibold", 11F, FontStyle.Bold)
-        PriceLbl.ForeColor = Color.FromArgb(CByte(52), CByte(73), CByte(94))
-        PriceLbl.Location = New Point(10, 95)
-        PriceLbl.Name = "PriceLbl"
-        PriceLbl.Size = New Size(77, 25)
-        PriceLbl.TabIndex = 2
-        PriceLbl.Text = "💰 Price"
-        ' 
-        ' ItemNameTxtBox
-        ' 
-        ItemNameTxtBox.BorderStyle = BorderStyle.FixedSingle
-        ItemNameTxtBox.Enabled = False
-        ItemNameTxtBox.Font = New Font("Segoe UI", 11F)
-        ItemNameTxtBox.Location = New Point(10, 40)
-        ItemNameTxtBox.Name = "ItemNameTxtBox"
-        ItemNameTxtBox.Size = New Size(330, 32)
-        ItemNameTxtBox.TabIndex = 1
-        ' 
-        ' ItemNameLbl
-        ' 
-        ItemNameLbl.AutoSize = True
-        ItemNameLbl.Font = New Font("Segoe UI Semibold", 11F, FontStyle.Bold)
-        ItemNameLbl.ForeColor = Color.FromArgb(CByte(52), CByte(73), CByte(94))
-        ItemNameLbl.Location = New Point(10, 10)
-        ItemNameLbl.Name = "ItemNameLbl"
-        ItemNameLbl.Size = New Size(136, 25)
-        ItemNameLbl.TabIndex = 0
-        ItemNameLbl.Text = "📌 Item Name"
-        ' 
-        ' lblItemPreview
-        ' 
-        lblItemPreview.AutoSize = True
-        lblItemPreview.Font = New Font("Segoe UI", 10F, FontStyle.Italic)
-        lblItemPreview.ForeColor = Color.Gray
-        lblItemPreview.Location = New Point(25, 65)
-        lblItemPreview.Name = "lblItemPreview"
-        lblItemPreview.Size = New Size(228, 23)
-        lblItemPreview.TabIndex = 1
-        lblItemPreview.Text = "Select an item from the menu"
-        ' 
-        ' ItemBtn
-        ' 
-        ItemBtn.BackColor = Color.FromArgb(CByte(245), CByte(247), CByte(250))
-        ItemBtn.Cursor = Cursors.Hand
-        ItemBtn.Enabled = False
-        ItemBtn.FlatAppearance.BorderColor = Color.FromArgb(CByte(189), CByte(195), CByte(199))
-        ItemBtn.FlatAppearance.BorderSize = 3
-        ItemBtn.FlatAppearance.MouseOverBackColor = Color.FromArgb(CByte(236), CByte(240), CByte(245))
-        ItemBtn.FlatStyle = FlatStyle.Flat
-        ItemBtn.Font = New Font("Segoe UI", 11F)
-        ItemBtn.ForeColor = Color.FromArgb(CByte(127), CByte(140), CByte(141))
-        ItemBtn.Location = New Point(75, 110)
-        ItemBtn.Name = "ItemBtn"
-        ItemBtn.Size = New Size(250, 220)
-        ItemBtn.TabIndex = 2
-        ItemBtn.Text = "📷" & vbCrLf & vbCrLf & "Click to set image"
-        ItemBtn.UseVisualStyleBackColor = False
-        ItemBtn.Visible = False
-        ' 
-        ' Label4
-        ' 
-        Label4.AutoSize = True
-        Label4.Dock = DockStyle.Top
-        Label4.Font = New Font("Segoe UI Semibold", 15F, FontStyle.Bold)
-        Label4.ForeColor = Color.FromArgb(CByte(52), CByte(73), CByte(94))
-        Label4.Location = New Point(25, 25)
-        Label4.Name = "Label4"
-        Label4.Size = New Size(183, 35)
-        Label4.TabIndex = 0
-        Label4.Text = "📝 Item Editor"
+        btnLogout.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        btnLogout.Animated = True
+        btnLogout.BackColor = Color.Transparent
+        btnLogout.BorderRadius = 12
+        btnLogout.Cursor = Cursors.Hand
+        btnLogout.CustomizableEdges = CustomizableEdges12
+        btnLogout.DisabledState.BorderColor = Color.DarkGray
+        btnLogout.DisabledState.CustomBorderColor = Color.DarkGray
+        btnLogout.DisabledState.FillColor = Color.FromArgb(CByte(169), CByte(169), CByte(169))
+        btnLogout.DisabledState.ForeColor = Color.FromArgb(CByte(141), CByte(141), CByte(141))
+        btnLogout.FillColor = Color.FromArgb(CByte(231), CByte(76), CByte(60))
+        btnLogout.Font = New Font("Segoe UI Semibold", 10.0F, FontStyle.Bold)
+        btnLogout.ForeColor = Color.White
+        btnLogout.HoverState.FillColor = Color.FromArgb(CByte(211), CByte(56), CByte(40))
+        btnLogout.Location = New Point(1451, 10)
+        btnLogout.Name = "btnLogout"
+        btnLogout.PressedColor = Color.FromArgb(CByte(191), CByte(36), CByte(20))
+        btnLogout.ShadowDecoration.CustomizableEdges = CustomizableEdges13
+        btnLogout.ShadowDecoration.Depth = 8
+        btnLogout.ShadowDecoration.Enabled = True
+        btnLogout.Size = New Size(129, 40)
+        btnLogout.TabIndex = 4
+        btnLogout.Text = "🚪 Logout"
         ' 
         ' pnlMain
         ' 
-        pnlMain.BackColor = Color.FromArgb(CByte(236), CByte(240), CByte(245))
-        pnlMain.Controls.Add(FoodPnl)
-        pnlMain.Controls.Add(MenuCategoryPnl)
+        pnlMain.AutoScroll = True
+        pnlMain.BackColor = Color.Transparent
+        pnlMain.Controls.Add(flowMenuItems)
+        pnlMain.Controls.Add(pnlLoadingOverlay)
+        pnlMain.CustomizableEdges = CustomizableEdges19
         pnlMain.Dock = DockStyle.Fill
-        pnlMain.Location = New Point(450, 90)
+        pnlMain.FillColor = Color.FromArgb(CByte(247), CByte(247), CByte(249))
+        pnlMain.Location = New Point(0, 164)
         pnlMain.Name = "pnlMain"
-        pnlMain.Size = New Size(1150, 920)
-        pnlMain.TabIndex = 2
+        pnlMain.Padding = New Padding(30)
+        pnlMain.ShadowDecoration.CustomizableEdges = CustomizableEdges20
+        pnlMain.Size = New Size(1600, 836)
+        pnlMain.TabIndex = 1
         ' 
-        ' FoodPnl
+        ' flowMenuItems
         ' 
-        FoodPnl.AutoScroll = True
-        FoodPnl.BackColor = Color.White
-        FoodPnl.Dock = DockStyle.Fill
-        FoodPnl.Location = New Point(0, 80)
-        FoodPnl.Name = "FoodPnl"
-        FoodPnl.Padding = New Padding(25)
-        FoodPnl.Size = New Size(1150, 840)
-        FoodPnl.TabIndex = 1
+        flowMenuItems.AutoScroll = True
+        flowMenuItems.BackColor = Color.Transparent
+        flowMenuItems.Dock = DockStyle.Fill
+        flowMenuItems.Location = New Point(30, 30)
+        flowMenuItems.Name = "flowMenuItems"
+        flowMenuItems.Padding = New Padding(10)
+        flowMenuItems.Size = New Size(1540, 776)
+        flowMenuItems.TabIndex = 0
         ' 
-        ' MenuCategoryPnl
+        ' pnlLoadingOverlay
         ' 
-        MenuCategoryPnl.BackColor = Color.White
-        MenuCategoryPnl.Dock = DockStyle.Top
-        MenuCategoryPnl.Location = New Point(0, 0)
-        MenuCategoryPnl.Name = "MenuCategoryPnl"
-        MenuCategoryPnl.Padding = New Padding(20, 15, 20, 15)
-        MenuCategoryPnl.Size = New Size(1150, 80)
-        MenuCategoryPnl.TabIndex = 0
+        pnlLoadingOverlay.BackColor = Color.FromArgb(CByte(200), CByte(247), CByte(247), CByte(249))
+        pnlLoadingOverlay.Controls.Add(lblLoading)
+        pnlLoadingOverlay.Controls.Add(pbLoadingSpinner)
+        pnlLoadingOverlay.CustomizableEdges = CustomizableEdges16
+        pnlLoadingOverlay.Dock = DockStyle.Fill
+        pnlLoadingOverlay.FillColor = Color.FromArgb(CByte(200), CByte(247), CByte(247), CByte(249))
+        pnlLoadingOverlay.Location = New Point(30, 30)
+        pnlLoadingOverlay.Name = "pnlLoadingOverlay"
+        pnlLoadingOverlay.ShadowDecoration.CustomizableEdges = CustomizableEdges17
+        pnlLoadingOverlay.Size = New Size(1540, 776)
+        pnlLoadingOverlay.TabIndex = 1
+        pnlLoadingOverlay.Visible = False
+        ' 
+        ' lblLoading
+        ' 
+        lblLoading.Anchor = AnchorStyles.None
+        lblLoading.AutoSize = True
+        lblLoading.BackColor = Color.Transparent
+        lblLoading.Font = New Font("Segoe UI", 14.0F, FontStyle.Bold)
+        lblLoading.ForeColor = Color.FromArgb(CByte(31), CByte(138), CByte(112))
+        lblLoading.Location = New Point(680, 438)
+        lblLoading.Name = "lblLoading"
+        lblLoading.Size = New Size(196, 32)
+        lblLoading.TabIndex = 1
+        lblLoading.Text = "Loading items..."
+        lblLoading.TextAlign = ContentAlignment.MiddleCenter
+        ' 
+        ' pbLoadingSpinner
+        ' 
+        pbLoadingSpinner.Anchor = AnchorStyles.None
+        pbLoadingSpinner.Animated = True
+        pbLoadingSpinner.BackColor = Color.Transparent
+        pbLoadingSpinner.FillColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
+        pbLoadingSpinner.FillThickness = 8
+        pbLoadingSpinner.Font = New Font("Segoe UI", 12.0F)
+        pbLoadingSpinner.ForeColor = Color.White
+        pbLoadingSpinner.Location = New Point(710, 328)
+        pbLoadingSpinner.Minimum = 0
+        pbLoadingSpinner.Name = "pbLoadingSpinner"
+        pbLoadingSpinner.ProgressColor = Color.FromArgb(CByte(255), CByte(200), CByte(87))
+        pbLoadingSpinner.ProgressColor2 = Color.FromArgb(CByte(31), CByte(138), CByte(112))
+        pbLoadingSpinner.ProgressThickness = 8
+        pbLoadingSpinner.ShadowDecoration.CustomizableEdges = CustomizableEdges18
+        pbLoadingSpinner.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle
+        pbLoadingSpinner.Size = New Size(120, 120)
+        pbLoadingSpinner.TabIndex = 0
+        pbLoadingSpinner.Text = "Guna2CircleProgressBar1"
+        pbLoadingSpinner.Value = 60
         ' 
         ' Manage_menu
         ' 
-        AutoScaleDimensions = New SizeF(8F, 20F)
+        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
         AutoScaleMode = AutoScaleMode.Font
-        BackColor = Color.FromArgb(CByte(236), CByte(240), CByte(245))
-        ClientSize = New Size(1600, 1010)
+        BackColor = Color.FromArgb(CByte(247), CByte(247), CByte(249))
+        ClientSize = New Size(1600, 1000)
         Controls.Add(pnlMain)
-        Controls.Add(pnlSidebar)
-        Controls.Add(pnlHeader)
-        Font = New Font("Segoe UI", 9F)
+        Controls.Add(pnlTopBar)
+        Font = New Font("Segoe UI", 9.0F)
+        MinimumSize = New Size(1200, 800)
         Name = "Manage_menu"
-        Text = "🍽️ Manage Menu - OrderUp!"
-        pnlHeader.ResumeLayout(False)
-        pnlHeader.PerformLayout()
-        pnlHeaderRight.ResumeLayout(False)
-        pnlSearch.ResumeLayout(False)
-        pnlSearch.PerformLayout()
-        pnlSidebar.ResumeLayout(False)
-        ItemInfoPnl.ResumeLayout(False)
-        ItemInfoPnl.PerformLayout()
-        pnlItemActions.ResumeLayout(False)
-        pnlItemFields.ResumeLayout(False)
-        pnlItemFields.PerformLayout()
+        StartPosition = FormStartPosition.CenterScreen
+        Text = "Manage Menu - OrderUp! 🍽️"
+        WindowState = FormWindowState.Maximized
+        pnlTopBar.ResumeLayout(False)
+        pnlTopBarRow2.ResumeLayout(False)
+        pnlTopBarRow2.PerformLayout()
+        pnlActions.ResumeLayout(False)
+        pnlTopBarRow1.ResumeLayout(False)
+        pnlTopBarRow1.PerformLayout()
         pnlMain.ResumeLayout(False)
+        pnlLoadingOverlay.ResumeLayout(False)
+        pnlLoadingOverlay.PerformLayout()
         ResumeLayout(False)
+
     End Sub
 
-    Friend WithEvents pnlHeader As Panel
-    Friend WithEvents lblTitle As Label
-    Friend WithEvents pnlSearch As Panel
-    Friend WithEvents SearchBtn As FontAwesome.Sharp.IconButton
-    Friend WithEvents SearchTxtBox As TextBox
-    Friend WithEvents pnlHeaderRight As Panel
-    Friend WithEvents btnLogout As Button
-    Friend WithEvents btnHelp As Button
-    Friend WithEvents btnBack As Button
-    Friend WithEvents pnlSidebar As Panel
-    Friend WithEvents ItemInfoPnl As Panel
-    Friend WithEvents Label4 As Label
-    Friend WithEvents lblItemPreview As Label
-    Friend WithEvents ItemBtn As Button
-    Friend WithEvents pnlItemFields As Panel
-    Friend WithEvents PriceTxtBox As TextBox
-    Friend WithEvents PriceLbl As Label
-    Friend WithEvents ItemNameTxtBox As TextBox
-    Friend WithEvents ItemNameLbl As Label
-    Friend WithEvents pnlItemActions As Panel
-    Friend WithEvents UpdateBtn As FontAwesome.Sharp.IconButton
-    Friend WithEvents CancelBtn As FontAwesome.Sharp.IconButton
-    Friend WithEvents DeleteBtn As FontAwesome.Sharp.IconButton
-    Friend WithEvents EditBtn As FontAwesome.Sharp.IconButton
-    Friend WithEvents SaveBtn As FontAwesome.Sharp.IconButton
-    Friend WithEvents pnlMain As Panel
-    Friend WithEvents FoodPnl As FlowLayoutPanel
-    Friend WithEvents MenuCategoryPnl As FlowLayoutPanel
+    ' ===== CONTROL DECLARATIONS =====
+    Friend WithEvents pnlTopBar As Guna.UI2.WinForms.Guna2Panel
+    Friend WithEvents pnlTopBarRow1 As Guna.UI2.WinForms.Guna2Panel
+    Friend WithEvents btnBack As Guna.UI2.WinForms.Guna2Button
+    Friend WithEvents lblTitle As System.Windows.Forms.Label
+    Friend WithEvents txtSearch As Guna.UI2.WinForms.Guna2TextBox
+    Friend WithEvents btnHelp As Guna.UI2.WinForms.Guna2CircleButton
+    Friend WithEvents btnLogout As Guna.UI2.WinForms.Guna2Button
+    Friend WithEvents pnlTopBarRow2 As Guna.UI2.WinForms.Guna2Panel
+    Friend WithEvents flowCategoryTabs As System.Windows.Forms.FlowLayoutPanel
+    Friend WithEvents pnlActions As System.Windows.Forms.Panel
+    Friend WithEvents cmbSortFilter As Guna.UI2.WinForms.Guna2ComboBox
+    Friend WithEvents btnAddNew As Guna.UI2.WinForms.Guna2Button
+    Friend WithEvents pnlMain As Guna.UI2.WinForms.Guna2Panel
+    Friend WithEvents flowMenuItems As System.Windows.Forms.FlowLayoutPanel
+    Friend WithEvents pnlLoadingOverlay As Guna.UI2.WinForms.Guna2Panel
+    Friend WithEvents lblLoading As System.Windows.Forms.Label
+    Friend WithEvents pbLoadingSpinner As Guna.UI2.WinForms.Guna2CircleProgressBar
+
 End Class
