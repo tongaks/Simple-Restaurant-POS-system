@@ -46,10 +46,10 @@ Partial Class Admin
         Dim CustomizableEdges20 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
         Dim CustomizableEdges35 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
         Dim CustomizableEdges36 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
-        Dim CustomizableEdges25 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
-        Dim CustomizableEdges26 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
         Dim CustomizableEdges33 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
         Dim CustomizableEdges34 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges25 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges26 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
         Dim CustomizableEdges27 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
         Dim CustomizableEdges28 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
         Dim CustomizableEdges29 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
@@ -84,8 +84,8 @@ Partial Class Admin
         pnlManageAccounts = New Guna.UI2.WinForms.Guna2Panel()
         pnlAccountsContent = New Panel()
         pnlAccountCards = New Panel()
-        btnRefreshAccounts = New Guna.UI2.WinForms.Guna2Button()
         pnlAccountsToolbar = New Guna.UI2.WinForms.Guna2Panel()
+        btnRefreshAccounts = New Guna.UI2.WinForms.Guna2Button()
         txtSearchAccounts = New Guna.UI2.WinForms.Guna2TextBox()
         btnViewArchive = New Guna.UI2.WinForms.Guna2Button()
         btnCreateAccount = New Guna.UI2.WinForms.Guna2Button()
@@ -244,7 +244,7 @@ Partial Class Admin
         ' 
         lblTitle.AutoSize = True
         lblTitle.Dock = DockStyle.Top
-        lblTitle.Font = New Font("Segoe UI", 22.0F, FontStyle.Bold)
+        lblTitle.Font = New Font("Segoe UI", 22F, FontStyle.Bold)
         lblTitle.ForeColor = Color.White
         lblTitle.Location = New Point(35, 18)
         lblTitle.Name = "lblTitle"
@@ -297,7 +297,7 @@ Partial Class Admin
         ' 
         lblSidebarTitle.AutoSize = True
         lblSidebarTitle.Dock = DockStyle.Top
-        lblSidebarTitle.Font = New Font("Segoe UI", 13.0F, FontStyle.Bold)
+        lblSidebarTitle.Font = New Font("Segoe UI", 13F, FontStyle.Bold)
         lblSidebarTitle.ForeColor = Color.FromArgb(CByte(255), CByte(200), CByte(87))
         lblSidebarTitle.Location = New Point(25, 18)
         lblSidebarTitle.Name = "lblSidebarTitle"
@@ -350,7 +350,7 @@ Partial Class Admin
         dgvAuditLogs.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None
         DataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle2.BackColor = Color.FromArgb(CByte(255), CByte(200), CByte(87))
-        DataGridViewCellStyle2.Font = New Font("Segoe UI Semibold", 11.0F, FontStyle.Bold)
+        DataGridViewCellStyle2.Font = New Font("Segoe UI Semibold", 11F, FontStyle.Bold)
         DataGridViewCellStyle2.ForeColor = Color.FromArgb(CByte(30), CByte(30), CByte(30))
         DataGridViewCellStyle2.Padding = New Padding(10)
         DataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(CByte(255), CByte(200), CByte(87))
@@ -360,7 +360,7 @@ Partial Class Admin
         dgvAuditLogs.ColumnHeadersHeight = 55
         DataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle3.BackColor = Color.White
-        DataGridViewCellStyle3.Font = New Font("Segoe UI", 10.0F)
+        DataGridViewCellStyle3.Font = New Font("Segoe UI", 10F)
         DataGridViewCellStyle3.ForeColor = Color.FromArgb(CByte(60), CByte(60), CByte(60))
         DataGridViewCellStyle3.Padding = New Padding(10, 8, 10, 8)
         DataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(CByte(255), CByte(245), CByte(200))
@@ -466,7 +466,7 @@ Partial Class Admin
         dtpAuditTo.CustomizableEdges = CustomizableEdges15
         dtpAuditTo.Enabled = False
         dtpAuditTo.FillColor = Color.White
-        dtpAuditTo.Font = New Font("Segoe UI", 10.0F)
+        dtpAuditTo.Font = New Font("Segoe UI", 10F)
         dtpAuditTo.ForeColor = Color.FromArgb(CByte(30), CByte(30), CByte(30))
         dtpAuditTo.Format = DateTimePickerFormat.Short
         dtpAuditTo.Location = New Point(730, 28)
@@ -491,7 +491,7 @@ Partial Class Admin
         dtpAuditFrom.CustomizableEdges = CustomizableEdges17
         dtpAuditFrom.Enabled = False
         dtpAuditFrom.FillColor = Color.White
-        dtpAuditFrom.Font = New Font("Segoe UI", 10.0F)
+        dtpAuditFrom.Font = New Font("Segoe UI", 10F)
         dtpAuditFrom.ForeColor = Color.FromArgb(CByte(30), CByte(30), CByte(30))
         dtpAuditFrom.Format = DateTimePickerFormat.Short
         dtpAuditFrom.Location = New Point(550, 28)
@@ -580,7 +580,7 @@ Partial Class Admin
         ' 
         lblAuditTitle.AutoSize = True
         lblAuditTitle.Dock = DockStyle.Left
-        lblAuditTitle.Font = New Font("Segoe UI", 20.0F, FontStyle.Bold)
+        lblAuditTitle.Font = New Font("Segoe UI", 20F, FontStyle.Bold)
         lblAuditTitle.ForeColor = Color.FromArgb(CByte(37), CByte(42), CByte(52))
         lblAuditTitle.Location = New Point(5, 25)
         lblAuditTitle.Name = "lblAuditTitle"
@@ -627,6 +627,26 @@ Partial Class Admin
         pnlAccountCards.Size = New Size(1270, 680)
         pnlAccountCards.TabIndex = 0
         ' 
+        ' pnlAccountsToolbar
+        ' 
+        pnlAccountsToolbar.BackColor = Color.White
+        pnlAccountsToolbar.Controls.Add(btnRefreshAccounts)
+        pnlAccountsToolbar.Controls.Add(txtSearchAccounts)
+        pnlAccountsToolbar.Controls.Add(btnViewArchive)
+        pnlAccountsToolbar.Controls.Add(btnCreateAccount)
+        pnlAccountsToolbar.CustomizableEdges = CustomizableEdges33
+        pnlAccountsToolbar.Dock = DockStyle.Top
+        pnlAccountsToolbar.FillColor = Color.White
+        pnlAccountsToolbar.Location = New Point(25, 80)
+        pnlAccountsToolbar.Name = "pnlAccountsToolbar"
+        pnlAccountsToolbar.Padding = New Padding(25, 20, 25, 20)
+        pnlAccountsToolbar.ShadowDecoration.Color = Color.FromArgb(CByte(40), CByte(0), CByte(0), CByte(0))
+        pnlAccountsToolbar.ShadowDecoration.CustomizableEdges = CustomizableEdges34
+        pnlAccountsToolbar.ShadowDecoration.Depth = 8
+        pnlAccountsToolbar.ShadowDecoration.Enabled = True
+        pnlAccountsToolbar.Size = New Size(1270, 100)
+        pnlAccountsToolbar.TabIndex = 1
+        ' 
         ' btnRefreshAccounts
         ' 
         btnRefreshAccounts.Animated = True
@@ -651,26 +671,6 @@ Partial Class Admin
         btnRefreshAccounts.Size = New Size(190, 50)
         btnRefreshAccounts.TabIndex = 4
         btnRefreshAccounts.Text = "🔄 Refresh"
-        ' 
-        ' pnlAccountsToolbar
-        ' 
-        pnlAccountsToolbar.BackColor = Color.White
-        pnlAccountsToolbar.Controls.Add(btnRefreshAccounts)
-        pnlAccountsToolbar.Controls.Add(txtSearchAccounts)
-        pnlAccountsToolbar.Controls.Add(btnViewArchive)
-        pnlAccountsToolbar.Controls.Add(btnCreateAccount)
-        pnlAccountsToolbar.CustomizableEdges = CustomizableEdges33
-        pnlAccountsToolbar.Dock = DockStyle.Top
-        pnlAccountsToolbar.FillColor = Color.White
-        pnlAccountsToolbar.Location = New Point(25, 80)
-        pnlAccountsToolbar.Name = "pnlAccountsToolbar"
-        pnlAccountsToolbar.Padding = New Padding(25, 20, 25, 20)
-        pnlAccountsToolbar.ShadowDecoration.Color = Color.FromArgb(CByte(40), CByte(0), CByte(0), CByte(0))
-        pnlAccountsToolbar.ShadowDecoration.CustomizableEdges = CustomizableEdges34
-        pnlAccountsToolbar.ShadowDecoration.Depth = 8
-        pnlAccountsToolbar.ShadowDecoration.Enabled = True
-        pnlAccountsToolbar.Size = New Size(1270, 100)
-        pnlAccountsToolbar.TabIndex = 1
         ' 
         ' txtSearchAccounts
         ' 
@@ -767,7 +767,7 @@ Partial Class Admin
         ' 
         lblAccountsTitle.AutoSize = True
         lblAccountsTitle.Dock = DockStyle.Left
-        lblAccountsTitle.Font = New Font("Segoe UI", 20.0F, FontStyle.Bold)
+        lblAccountsTitle.Font = New Font("Segoe UI", 20F, FontStyle.Bold)
         lblAccountsTitle.ForeColor = Color.FromArgb(CByte(37), CByte(42), CByte(52))
         lblAccountsTitle.Location = New Point(5, 25)
         lblAccountsTitle.Name = "lblAccountsTitle"
@@ -777,7 +777,7 @@ Partial Class Admin
         ' 
         ' Admin
         ' 
-        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
+        AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.FromArgb(CByte(247), CByte(250), CByte(252))
         ClientSize = New Size(1600, 1000)
@@ -785,7 +785,7 @@ Partial Class Admin
         Controls.Add(pnlAuditLog)
         Controls.Add(pnlSidebar)
         Controls.Add(pnlHeader)
-        Font = New Font("Segoe UI", 9.0F)
+        Font = New Font("Segoe UI", 9F)
         MinimumSize = New Size(1200, 800)
         Name = "Admin"
         StartPosition = FormStartPosition.CenterScreen

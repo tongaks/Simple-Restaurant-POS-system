@@ -5,169 +5,142 @@ Imports System.Drawing
 Imports System.IO
 Imports PdfSharp.Pdf
 Imports PdfSharp.Drawing
-Imports System.Drawing.Imaging
-Imports System.Drawing.Printing
+Imports Guna.UI2.WinForms
 
 ''' <summary>
-''' Modern Sales Report Form with Advanced Charts and Analytics
+''' ULTRA-MODERN Enterprise Sales Analytics Dashboard
+''' Professional, responsive, and feature-rich reporting interface
 ''' </summary>
 Public Class SalesReport
     Private chartDailySales As Chart
     Private chartTopItems As Chart
     Private chartRevenueTrend As Chart
     Private navButtons As AdminNavButtons
+    Private transactionData As New Dictionary(Of Integer, TransactionDetails)
+
+    ' Transaction detail structure for receipt viewing
+    Private Structure TransactionDetails
+        Public OrderId As Integer
+        Public OrderDate As DateTime
+        Public OrderTime As String
+        Public Username As String
+        Public TotalAmount As Decimal
+        Public Items As List(Of OrderItem)
+    End Structure
+
+    Private Structure OrderItem
+        Public ItemName As String
+        Public Quantity As Integer
+        Public Price As Decimal
+        Public Total As Decimal
+    End Structure
 
     Private Sub SalesReport_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.AutoScaleMode = AutoScaleMode.Dpi
         Me.WindowState = FormWindowState.Maximized
 
-        ' Initialize navigation buttons
         navButtons = New AdminNavButtons(Me, btnLogout, btnBack, Nothing, Nothing)
 
-        ' Set default date range (last 30 days)
         dtpFrom.Value = DateTime.Now.AddDays(-30)
         dtpTo.Value = DateTime.Now
 
-        ' Initialize charts
         InitializeCharts()
-
-        ' Load initial data
+        ShowLoadingState()
         GenerateSalesReport()
-
-        ' --- Make Logout and Power buttons look exactly like in Designer ---
-        'ican't edit it in button so i add this thing'
-
-        btnBack.FlatStyle = FlatStyle.Flat
-        btnBack.FlatAppearance.BorderSize = 0
-        btnBack.BackColor = Color.Transparent
-        btnBack.UseVisualStyleBackColor = True
-        btnBack.ForeColor = Color.Black
-        btnBack.Font = New Font("Segoe UI Symbol", 17, FontStyle.Regular)
-
-        btnLogout.FlatStyle = FlatStyle.Flat
-        btnLogout.FlatAppearance.BorderSize = 0
-        btnLogout.BackColor = Color.Transparent
-        btnLogout.UseVisualStyleBackColor = True
-        btnLogout.ForeColor = Color.Black
-        btnLogout.Font = New Font("Segoe UI Symbol", 17, FontStyle.Regular)
-
-
+        HideLoadingState()
     End Sub
 
+    Private Sub ShowLoadingState()
+        Me.Cursor = Cursors.WaitCursor
+    End Sub
 
-    ''' <summary>
-    ''' Initialize all chart controls with modern styling
-    ''' </summary>
+    Private Sub HideLoadingState()
+        Me.Cursor = Cursors.Default
+    End Sub
+
     Private Sub InitializeCharts()
         Try
-            ' Clear existing controls
-            pnlDailySalesChart.Controls.Clear()
-            pnlTopItemsChart.Controls.Clear()
-            pnlRevenueChart.Controls.Clear()
+            ' Clear existing charts
+            For Each ctrl In pnlDailySalesChart.Controls.OfType(Of Chart)().ToList()
+                ctrl.Dispose()
+            Next
+            For Each ctrl In pnlTopItemsChart.Controls.OfType(Of Chart)().ToList()
+                ctrl.Dispose()
+            Next
+            For Each ctrl In pnlRevenueChart.Controls.OfType(Of Chart)().ToList()
+                ctrl.Dispose()
+            Next
 
-            ' === 🌟 Daily Sales Chart (Professional Modern Style) ===
+            ' === DAILY SALES CHART ===
             chartDailySales = New Chart()
             chartDailySales.Dock = DockStyle.Fill
             chartDailySales.BackColor = Color.White
-            chartDailySales.BorderlineDashStyle = ChartDashStyle.Solid
-            chartDailySales.BorderlineColor = Color.LightGray
-            chartDailySales.BorderlineWidth = 1
+            chartDailySales.BorderlineColor = Color.Transparent
 
-            ' --- Chart Area ---
             Dim dailyArea As New ChartArea("DailyArea")
             With dailyArea
-                .BackColor = Color.FromArgb(250, 252, 255)
-                .BackGradientStyle = GradientStyle.TopBottom
-                .BackSecondaryColor = Color.White
-                .BorderColor = Color.Transparent
-
-                .AxisX.MajorGrid.LineColor = Color.FromArgb(235, 235, 235)
-                .AxisY.MajorGrid.LineColor = Color.FromArgb(235, 235, 235)
-                .AxisX.MajorGrid.LineDashStyle = ChartDashStyle.Dot
-                .AxisY.MajorGrid.LineDashStyle = ChartDashStyle.Dot
-
-                .AxisX.LineColor = Color.FromArgb(180, 180, 180)
-                .AxisY.LineColor = Color.FromArgb(180, 180, 180)
+                .BackColor = Color.White
+                .AxisX.MajorGrid.LineColor = Color.FromArgb(240, 240, 240)
+                .AxisY.MajorGrid.LineColor = Color.FromArgb(240, 240, 240)
+                .AxisX.MajorGrid.LineDashStyle = ChartDashStyle.Dash
+                .AxisY.MajorGrid.LineDashStyle = ChartDashStyle.Dash
+                .AxisX.LineColor = Color.FromArgb(200, 200, 200)
+                .AxisY.LineColor = Color.FromArgb(200, 200, 200)
                 .AxisX.LabelStyle.Font = New Font("Segoe UI", 10)
                 .AxisY.LabelStyle.Font = New Font("Segoe UI", 10)
-                .AxisX.Title = "Date"
-                .AxisY.Title = "Sales Amount (₱)"
-                .AxisX.TitleFont = New Font("Segoe UI Semibold", 10)
-                .AxisY.TitleFont = New Font("Segoe UI Semibold", 10)
-                .AxisX.TitleForeColor = Color.FromArgb(64, 64, 64)
-                .AxisY.TitleForeColor = Color.FromArgb(64, 64, 64)
+                .AxisX.LabelStyle.ForeColor = Color.FromArgb(120, 120, 120)
+                .AxisY.LabelStyle.ForeColor = Color.FromArgb(120, 120, 120)
             End With
             chartDailySales.ChartAreas.Add(dailyArea)
 
-            ' --- Legend ---
             Dim dailyLegend As New Legend("DailyLegend")
-            With dailyLegend
-                .Font = New Font("Segoe UI", 9)
-                .BackColor = Color.Transparent
-                .Docking = Docking.Top
-                .Alignment = StringAlignment.Center
-            End With
+            dailyLegend.Font = New Font("Segoe UI", 10)
+            dailyLegend.BackColor = Color.Transparent
+            dailyLegend.Docking = Docking.Top
             chartDailySales.Legends.Add(dailyLegend)
-
-            ' --- Title ---
-            chartDailySales.Titles.Add(New Title("Daily Sales Performance",
-                                     Docking.Top,
-                                     New Font("Segoe UI Semibold", 13, FontStyle.Bold),
-                                     Color.FromArgb(45, 45, 48)))
-
-            ' --- Default Preview Style ---
-            Dim previewSeries As New Series("Daily Sales")
-            With previewSeries
-                .ChartType = SeriesChartType.Column
-                .Color = Color.FromArgb(72, 118, 255)
-                .BackSecondaryColor = Color.FromArgb(30, 144, 255)
-                .BackGradientStyle = GradientStyle.TopBottom
-                .BorderWidth = 0
-                .ShadowColor = Color.FromArgb(80, 0, 0, 0)
-                .ShadowOffset = 3
-                .IsValueShownAsLabel = True
-                .Font = New Font("Segoe UI", 9)
-                .CustomProperties = "DrawingStyle=Cylinder, PointWidth=0.5"
-                .Points.AddXY("Sample", 0)
-            End With
-            chartDailySales.Series.Add(previewSeries)
 
             pnlDailySalesChart.Controls.Add(chartDailySales)
 
-
-            ' === Top Items Chart (Pie Chart) ===
+            ' === PIE CHART ===
             chartTopItems = New Chart()
             chartTopItems.Dock = DockStyle.Fill
-            chartTopItems.BackColor = Color.WhiteSmoke
+            chartTopItems.BackColor = Color.White
 
             Dim topArea As New ChartArea("TopArea")
             topArea.BackColor = Color.White
-            topArea.BorderColor = Color.LightGray
-            topArea.BorderWidth = 1
             topArea.Area3DStyle.Enable3D = True
-            topArea.Area3DStyle.Inclination = 20
+            topArea.Area3DStyle.Inclination = 15
+            topArea.Area3DStyle.Rotation = 10
+            topArea.Area3DStyle.LightStyle = LightStyle.Realistic
             chartTopItems.ChartAreas.Add(topArea)
 
             Dim topLegend As New Legend("TopLegend")
-            topLegend.Font = New Font("Segoe UI", 9)
+            topLegend.Font = New Font("Segoe UI", 10)
             topLegend.BackColor = Color.Transparent
-            topLegend.Docking = Docking.Right
+            topLegend.Docking = Docking.Bottom
             chartTopItems.Legends.Add(topLegend)
 
             pnlTopItemsChart.Controls.Add(chartTopItems)
 
-            ' === Revenue Trend Chart (Line Chart) ===
+            ' === LINE CHART ===
             chartRevenueTrend = New Chart()
             chartRevenueTrend.Dock = DockStyle.Fill
-            chartRevenueTrend.BackColor = Color.WhiteSmoke
+            chartRevenueTrend.BackColor = Color.White
 
             Dim revenueArea As New ChartArea("RevenueArea")
-            revenueArea.BackColor = Color.White
-            revenueArea.BorderColor = Color.LightGray
-            revenueArea.BorderWidth = 1
-            revenueArea.AxisX.MajorGrid.LineColor = Color.LightGray
-            revenueArea.AxisY.MajorGrid.LineColor = Color.LightGray
-            revenueArea.AxisX.LabelStyle.Font = New Font("Segoe UI", 9)
-            revenueArea.AxisY.LabelStyle.Font = New Font("Segoe UI", 9)
+            With revenueArea
+                .BackColor = Color.White
+                .AxisX.MajorGrid.LineColor = Color.FromArgb(240, 240, 240)
+                .AxisY.MajorGrid.LineColor = Color.FromArgb(240, 240, 240)
+                .AxisX.MajorGrid.LineDashStyle = ChartDashStyle.Dash
+                .AxisY.MajorGrid.LineDashStyle = ChartDashStyle.Dash
+                .AxisX.LineColor = Color.FromArgb(200, 200, 200)
+                .AxisY.LineColor = Color.FromArgb(200, 200, 200)
+                .AxisX.LabelStyle.Font = New Font("Segoe UI", 10)
+                .AxisY.LabelStyle.Font = New Font("Segoe UI", 10)
+                .AxisX.LabelStyle.ForeColor = Color.FromArgb(120, 120, 120)
+                .AxisY.LabelStyle.ForeColor = Color.FromArgb(120, 120, 120)
+            End With
             chartRevenueTrend.ChartAreas.Add(revenueArea)
 
             Dim revenueLegend As New Legend("RevenueLegend")
@@ -182,56 +155,31 @@ Public Class SalesReport
             MessageBox.Show("Error initializing charts: " & ex.Message, "Chart Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
-    ''' <summary>
-    ''' Prepare the FlowLayoutPanel container for recent transaction cards.
-    ''' </summary>
-    Private Sub InitializeTransactionPanel()
-        ' Use existing panel on your form where the DataGridView used to be.
-        ' I assume it's named pnlTransactions (use the actual name in your form).
-        pnlTransactions.Controls.Clear()
 
-        Dim flow As New FlowLayoutPanel() With {
-        .Name = "flowRecentTransactions",
-        .Dock = DockStyle.Fill,
-        .AutoScroll = True,
-        .WrapContents = True,
-        .FlowDirection = FlowDirection.LeftToRight,
-        .BackColor = Color.WhiteSmoke,
-        .Padding = New Padding(10)
-    }
-
-        pnlTransactions.Controls.Add(flow)
-    End Sub
-
-
-    ''' <summary>
-    ''' Generate comprehensive sales report with all charts and metrics
-    ''' </summary>
     Private Sub GenerateSalesReport()
         Try
             Using connection As New MySqlConnection(GetGlobalConnectionString())
                 connection.Open()
 
-                ' Get summary metrics
                 LoadSummaryMetrics(connection)
-
-                ' Generate all charts
                 GenerateDailySalesChart(connection)
                 GenerateTopItemsChart(connection)
                 GenerateRevenueTrendChart(connection)
+                LoadTransactionDetailsGrid(connection)
 
-                ' Load detailed transaction grid
-                LoadTransactionDetails(connection, pnlTransactions)
-
+                HideLoadingState()
             End Using
+
+            If String.IsNullOrWhiteSpace(lblTotalSales.Text) Then lblTotalSales.Text = "₱0.00"
+            If String.IsNullOrWhiteSpace(lblOrderCount.Text) Then lblOrderCount.Text = "0"
+            If String.IsNullOrWhiteSpace(lblAvgOrder.Text) Then lblAvgOrder.Text = "₱0.00"
+
         Catch ex As Exception
+            HideLoadingState()
             MessageBox.Show("Error generating sales report: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
-    ''' <summary>
-    ''' Load summary metrics (Total Sales, Order Count, Average Order)
-    ''' </summary>
     Private Sub LoadSummaryMetrics(connection As MySqlConnection)
         Try
             Dim query As String = "SELECT COUNT(*) AS OrderCount, 
@@ -261,18 +209,10 @@ Public Class SalesReport
         End Try
     End Sub
 
-    ''' <summary>
-    ''' Generate Daily Sales Column Chart
-    ''' </summary>
-    ''' <summary>
-    ''' Generate Daily Sales Column Chart (Professional Dashboard Style)
-    ''' </summary>
     Private Sub GenerateDailySalesChart(connection As MySqlConnection)
         Try
             chartDailySales.Series.Clear()
-            chartDailySales.Titles.Clear()
 
-            ' === Data Query ===
             Dim query As String = "
             SELECT DATE(order_date) AS OrderDate,
                    SUM(total_amount) AS DailySales
@@ -286,17 +226,17 @@ Public Class SalesReport
                 cmd.Parameters.AddWithValue("@dateTo", dtpTo.Value.Date.AddDays(1).AddSeconds(-1))
 
                 Dim series As New Series("Daily Sales") With {
-                .ChartType = SeriesChartType.Column,
-                .Color = Color.FromArgb(72, 118, 255),
-                .BackSecondaryColor = Color.FromArgb(30, 144, 255),
-                .BackGradientStyle = GradientStyle.TopBottom,
-                .BorderWidth = 0,
-                .ShadowColor = Color.FromArgb(60, 0, 0, 0),
-                .ShadowOffset = 3,
-                .IsValueShownAsLabel = True,
-                .Font = New Font("Segoe UI", 9),
-                .CustomProperties = "DrawingStyle=Cylinder, PointWidth=0.5"
-            }
+                    .ChartType = SeriesChartType.Column,
+                    .Color = Color.FromArgb(255, 200, 87),
+                    .BackSecondaryColor = Color.FromArgb(255, 170, 51),
+                    .BackGradientStyle = GradientStyle.VerticalCenter,
+                    .BorderWidth = 0,
+                    .ShadowOffset = 2,
+                    .IsValueShownAsLabel = True,
+                    .LabelForeColor = Color.FromArgb(30, 30, 30),
+                    .Font = New Font("Segoe UI Semibold", 9, FontStyle.Bold),
+                    .CustomProperties = "PointWidth=0.7"
+                }
 
                 Using reader As MySqlDataReader = cmd.ExecuteReader()
                     While reader.Read()
@@ -309,73 +249,44 @@ Public Class SalesReport
                 chartDailySales.Series.Add(series)
             End Using
 
-            ' === Reapply Modern Style ===
-            With chartDailySales
-                .BackColor = Color.White
-                .ChartAreas(0).BackColor = Color.FromArgb(250, 252, 255)
-                .ChartAreas(0).BackGradientStyle = GradientStyle.TopBottom
-                .ChartAreas(0).BackSecondaryColor = Color.White
-                .ChartAreas(0).AxisX.MajorGrid.LineColor = Color.FromArgb(235, 235, 235)
-                .ChartAreas(0).AxisY.MajorGrid.LineColor = Color.FromArgb(235, 235, 235)
-                .ChartAreas(0).AxisX.MajorGrid.LineDashStyle = ChartDashStyle.Dot
-                .ChartAreas(0).AxisY.MajorGrid.LineDashStyle = ChartDashStyle.Dot
-                .ChartAreas(0).AxisX.LabelStyle.Font = New Font("Segoe UI", 10)
-                .ChartAreas(0).AxisY.LabelStyle.Font = New Font("Segoe UI", 10)
-                .ChartAreas(0).AxisX.Title = "Date"
-                .ChartAreas(0).AxisY.Title = "Sales Amount (₱)"
-                .ChartAreas(0).AxisX.TitleFont = New Font("Segoe UI Semibold", 10)
-                .ChartAreas(0).AxisY.TitleFont = New Font("Segoe UI Semibold", 10)
-                .ChartAreas(0).AxisX.TitleForeColor = Color.FromArgb(64, 64, 64)
-                .ChartAreas(0).AxisY.TitleForeColor = Color.FromArgb(64, 64, 64)
-            End With
-
-            ' === Add Styled Title ===
-            chartDailySales.Titles.Add(New Title("Daily Sales Performance",
-                                  Docking.Top,
-                                  New Font("Segoe UI Semibold", 13, FontStyle.Bold),
-                                  Color.FromArgb(45, 45, 48)))
-
         Catch ex As Exception
             MessageBox.Show("Error generating daily sales chart: " & ex.Message, "Chart Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
-
-    ''' <summary>
-    ''' Generate Top 5 Items Pie Chart
-    ''' </summary>
     Private Sub GenerateTopItemsChart(connection As MySqlConnection)
         Try
             chartTopItems.Series.Clear()
-            chartTopItems.Titles.Clear()
 
             Dim query As String = "SELECT item_name, 
-                                         SUM(quantity) as TotalQty,
-                                         SUM(quantity * price) as TotalRevenue
-                                  FROM order_items oi 
-                                  JOIN orders o ON oi.order_id = o.id 
-                                  WHERE o.order_date >= @dateFrom AND o.order_date <= @dateTo 
-                                  GROUP BY item_name 
-                                  ORDER BY TotalQty DESC 
-                                  LIMIT 5"
+                                     SUM(quantity) as TotalQty,
+                                     SUM(quantity * price) as TotalRevenue
+                              FROM order_items oi 
+                              JOIN orders o ON oi.order_id = o.id 
+                              WHERE o.order_date >= @dateFrom AND o.order_date <= @dateTo 
+                              GROUP BY item_name 
+                              ORDER BY TotalQty DESC 
+                              LIMIT 5"
 
             Using cmd As New MySqlCommand(query, connection)
                 cmd.Parameters.AddWithValue("@dateFrom", dtpFrom.Value.Date)
                 cmd.Parameters.AddWithValue("@dateTo", dtpTo.Value.Date.AddDays(1).AddSeconds(-1))
 
-                Dim series As New Series("Top Items")
-                series.ChartType = SeriesChartType.Pie
-                series.IsValueShownAsLabel = True
+                Dim series As New Series("Top Items") With {
+                    .ChartType = SeriesChartType.Pie,
+                    .IsValueShownAsLabel = True,
+                    .Font = New Font("Segoe UI Semibold", 10, FontStyle.Bold)
+                }
+
                 series("PieLabelStyle") = "Outside"
-                series.Font = New Font("Segoe UI", 9, FontStyle.Bold)
-                series.LabelFormat = "{0} ({1} units)"
+                series("PieLineColor") = "Black"
 
                 Dim colorPalette() As Color = {
-                    Color.FromArgb(255, 127, 80),   ' Coral
-                    Color.FromArgb(135, 206, 250),  ' Sky Blue
-                    Color.FromArgb(152, 251, 152),  ' Pale Green
-                    Color.FromArgb(255, 218, 185),  ' Peach
-                    Color.FromArgb(221, 160, 221)   ' Plum
+                    Color.FromArgb(255, 200, 87),
+                    Color.FromArgb(31, 138, 112),
+                    Color.FromArgb(239, 68, 68),
+                    Color.FromArgb(59, 130, 246),
+                    Color.FromArgb(168, 85, 247)
                 }
 
                 Dim colorIndex As Integer = 0
@@ -387,8 +298,8 @@ Public Class SalesReport
 
                         Dim point As New DataPoint()
                         point.SetValueXY(itemName, qty)
-                        point.Label = String.Format("{0}#PERCENT{P0}#ENDPERCENT", itemName)
-                        point.LegendText = String.Format("{0} ({1} units)", itemName, qty)
+                        point.Label = "#PERCENT{P0}"
+                        point.LegendText = String.Format("{0} ({1})", itemName, qty)
                         point.Color = colorPalette(colorIndex Mod colorPalette.Length)
                         series.Points.Add(point)
 
@@ -397,23 +308,16 @@ Public Class SalesReport
                 End Using
 
                 chartTopItems.Series.Add(series)
-                chartTopItems.Titles.Add(New Title("Top 5 Best Selling Items", Docking.Top, New Font("Segoe UI", 12, FontStyle.Bold), Color.FromArgb(255, 127, 80)))
             End Using
         Catch ex As Exception
             MessageBox.Show("Error generating top items chart: " & ex.Message, "Chart Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
-
-    ''' <summary>
-    ''' Generate Revenue Trend Line Chart (Professional Dashboard Style)
-    ''' </summary>
     Private Sub GenerateRevenueTrendChart(connection As MySqlConnection)
         Try
             chartRevenueTrend.Series.Clear()
-            chartRevenueTrend.Titles.Clear()
 
-            ' === Data Query ===
             Dim query As String = "
             SELECT DATE(order_date) AS OrderDate,
                    SUM(total_amount) AS TotalRevenue
@@ -427,17 +331,17 @@ Public Class SalesReport
                 cmd.Parameters.AddWithValue("@dateTo", dtpTo.Value.Date.AddDays(1).AddSeconds(-1))
 
                 Dim series As New Series("Revenue Trend") With {
-                .ChartType = SeriesChartType.Line,
-                .BorderWidth = 3,
-                .Color = Color.FromArgb(52, 152, 219),
-                .ShadowOffset = 1,
-                .MarkerStyle = MarkerStyle.Circle,
-                .MarkerSize = 8,
-                .MarkerColor = Color.White,
-                .MarkerBorderColor = Color.FromArgb(52, 152, 219),
-                .IsValueShownAsLabel = False,
-                .BorderDashStyle = ChartDashStyle.Solid
-            }
+                    .ChartType = SeriesChartType.SplineArea,
+                    .BorderWidth = 3,
+                    .Color = Color.FromArgb(100, 31, 138, 112),
+                    .BorderColor = Color.FromArgb(31, 138, 112),
+                    .MarkerStyle = MarkerStyle.Circle,
+                    .MarkerSize = 8,
+                    .MarkerColor = Color.White,
+                    .MarkerBorderColor = Color.FromArgb(31, 138, 112),
+                    .MarkerBorderWidth = 2,
+                    .IsValueShownAsLabel = False
+                }
 
                 Using reader As MySqlDataReader = cmd.ExecuteReader()
                     While reader.Read()
@@ -450,111 +354,55 @@ Public Class SalesReport
                 chartRevenueTrend.Series.Add(series)
             End Using
 
-            ' === Apply Modern Design ===
-            With chartRevenueTrend
-                .BackColor = Color.White
-                .ChartAreas(0).BackColor = Color.FromArgb(250, 252, 255)
-                .ChartAreas(0).BackGradientStyle = GradientStyle.TopBottom
-                .ChartAreas(0).BackSecondaryColor = Color.White
-
-                ' Grid and Axis
-                .ChartAreas(0).AxisX.MajorGrid.LineColor = Color.FromArgb(235, 235, 235)
-                .ChartAreas(0).AxisY.MajorGrid.LineColor = Color.FromArgb(235, 235, 235)
-                .ChartAreas(0).AxisX.MajorGrid.LineDashStyle = ChartDashStyle.Dot
-                .ChartAreas(0).AxisY.MajorGrid.LineDashStyle = ChartDashStyle.Dot
-                .ChartAreas(0).AxisX.LineColor = Color.FromArgb(200, 200, 200)
-                .ChartAreas(0).AxisY.LineColor = Color.FromArgb(200, 200, 200)
-
-                ' Axis labels and titles
-                .ChartAreas(0).AxisX.LabelStyle.Font = New Font("Segoe UI", 10)
-                .ChartAreas(0).AxisY.LabelStyle.Font = New Font("Segoe UI", 10)
-                .ChartAreas(0).AxisX.Title = "Date"
-                .ChartAreas(0).AxisY.Title = "Revenue (₱)"
-                .ChartAreas(0).AxisX.TitleFont = New Font("Segoe UI Semibold", 10)
-                .ChartAreas(0).AxisY.TitleFont = New Font("Segoe UI Semibold", 10)
-                .ChartAreas(0).AxisX.TitleForeColor = Color.FromArgb(64, 64, 64)
-                .ChartAreas(0).AxisY.TitleForeColor = Color.FromArgb(64, 64, 64)
-            End With
-
-            ' === Add Modern Chart Title ===
-            chartRevenueTrend.Titles.Add(New Title("Revenue Trend",
-                                   Docking.Top,
-                                   New Font("Segoe UI Semibold", 13, FontStyle.Bold),
-                                   Color.FromArgb(45, 45, 48)))
-
-            ' === Add Light Gradient Fill Below the Line ===
-            Dim area As ChartArea = chartRevenueTrend.ChartAreas(0)
-            Dim gradientSeries As New Series("Revenue Fill") With {
-            .ChartType = SeriesChartType.Area,
-            .Color = Color.FromArgb(60, 52, 152, 219),
-            .BorderWidth = 0
-        }
-
-            ' Copy points from the main line for the gradient fill
-            For Each pt As DataPoint In chartRevenueTrend.Series("Revenue Trend").Points
-                gradientSeries.Points.AddXY(pt.XValue, pt.YValues(0))
-            Next
-
-            chartRevenueTrend.Series.Insert(0, gradientSeries)
-
         Catch ex As Exception
             MessageBox.Show("Error generating revenue trend chart: " & ex.Message, "Chart Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
-
-
-
     ''' <summary>
-    ''' Load recent transactions and show as cards in the FlowLayoutPanel.
-    ''' Replaces DataGridView visuals only; does NOT touch charts.
+    ''' Enhanced transaction grid with "View Receipt" button functionality
     ''' </summary>
-    Public Sub LoadTransactionDetails(connection As MySqlConnection, ByVal pnl As Panel)
+    Private Sub LoadTransactionDetailsGrid(connection As MySqlConnection)
         Try
-            ' Title label
-            Dim lbl As Label = pnl.Controls.OfType(Of Label)().FirstOrDefault(Function(l) l.Name = "lblTransactions")
+            transactionData.Clear()
+            dgvTransactions.Columns.Clear()
+            dgvTransactions.Rows.Clear()
 
-            If lbl Is Nothing Then
-                lbl = New Label With {
-                    .Name = "lblTransactions",
-                    .Text = "Recent Transactions",
-                    .Font = New Font("Segoe UI Semibold", 12, FontStyle.Bold),
-                    .ForeColor = Color.FromArgb(45, 45, 48),
-                    .Dock = DockStyle.Top,
-                    .Height = 35,
-                    .TextAlign = ContentAlignment.MiddleLeft,
-                    .Padding = New Padding(10, 0, 0, 0),
-                    .BackColor = Color.White
-                }
-                pnl.Controls.Add(lbl)
-            End If
+            ' Configure columns
+            dgvTransactions.Columns.Add("colDate", "Date")
+            dgvTransactions.Columns.Add("colTime", "Time")
+            dgvTransactions.Columns.Add("colUser", "Cashier")
+            dgvTransactions.Columns.Add("colAmount", "Amount")
 
-            ' Flow panel
-            Dim flow As FlowLayoutPanel = pnl.Controls.OfType(Of FlowLayoutPanel)().FirstOrDefault(Function(f) f.Name = "flowRecentTransactions")
+            ' Add View Receipt button column
+            Dim btnCol As New DataGridViewButtonColumn()
+            btnCol.Name = "colViewReceipt"
+            btnCol.HeaderText = "Action"
+            btnCol.Text = "📄 View Receipt"
+            btnCol.UseColumnTextForButtonValue = True
+            btnCol.Width = 150
+            btnCol.DefaultCellStyle.BackColor = Color.FromArgb(31, 138, 112)
+            btnCol.DefaultCellStyle.ForeColor = Color.White
+            btnCol.DefaultCellStyle.Font = New Font("Segoe UI Semibold", 10, FontStyle.Bold)
+            btnCol.DefaultCellStyle.SelectionBackColor = Color.FromArgb(21, 118, 92)
+            btnCol.DefaultCellStyle.SelectionForeColor = Color.White
+            dgvTransactions.Columns.Add(btnCol)
 
-            If flow Is Nothing Then
-                flow = New FlowLayoutPanel With {
-                    .Name = "flowRecentTransactions",
-                    .Dock = DockStyle.Fill,
-                    .AutoScroll = True,
-                    .FlowDirection = FlowDirection.LeftToRight,
-                    .WrapContents = True,
-                    .Padding = New Padding(50),
-                    .BackColor = Color.WhiteSmoke
-                }
-                pnl.Controls.Add(flow)
-                flow.BringToFront()
-            Else
-                flow.Controls.Clear()
-            End If
+            ' Hidden column for Order ID
+            dgvTransactions.Columns.Add("colOrderId", "OrderId")
+            dgvTransactions.Columns("colOrderId").Visible = False
 
-            lbl.BringToFront()
+            ' Set column widths for professional appearance
+            dgvTransactions.Columns("colDate").Width = 120
+            dgvTransactions.Columns("colTime").Width = 100
+            dgvTransactions.Columns("colUser").Width = 150
+            dgvTransactions.Columns("colAmount").Width = 150
+            dgvTransactions.Columns("colAmount").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
 
-            ' NOTE: do not select order_id — use existing columns that definitely exist (order_date, order_time, username, total_amount)
-            Dim query As String = "SELECT order_date AS `date`, order_time AS `time`, username AS `user`, total_amount AS `amount` " &
+            Dim query As String = "SELECT id, order_date, order_time, username, total_amount " &
                                   "FROM orders " &
                                   "WHERE order_date >= @dateFrom AND order_date <= @dateTo " &
-                                  "ORDER BY order_date DESC, order_time DESC LIMIT 10;"
+                                  "ORDER BY order_date DESC, order_time DESC LIMIT 20;"
 
             Using cmd As New MySqlCommand(query, connection)
                 cmd.Parameters.AddWithValue("@dateFrom", dtpFrom.Value.Date)
@@ -562,46 +410,23 @@ Public Class SalesReport
 
                 Using reader As MySqlDataReader = cmd.ExecuteReader()
                     While reader.Read()
-                        Dim card As New Panel With {
-                            .Width = 240,
-                            .Height = 100,
-                            .BackColor = Color.White,
-                            .Margin = New Padding(8),
-                            .Padding = New Padding(10),
-                            .BorderStyle = BorderStyle.FixedSingle
+                        Dim orderId As Integer = Convert.ToInt32(reader("id"))
+                        Dim orderDate As String = Convert.ToDateTime(reader("order_date")).ToString("dd/MM/yyyy")
+                        Dim orderTime As String = reader("order_time").ToString()
+                        Dim username As String = reader("username").ToString()
+                        Dim totalAmount As Decimal = Convert.ToDecimal(reader("total_amount"))
+
+                        ' Store basic transaction info
+                        Dim trans As New TransactionDetails With {
+                            .OrderId = orderId,
+                            .OrderDate = Convert.ToDateTime(reader("order_date")),
+                            .OrderTime = orderTime,
+                            .Username = username,
+                            .TotalAmount = totalAmount
                         }
+                        transactionData(orderId) = trans
 
-                        Dim lblDate As New Label With {
-                            .AutoSize = True,
-                            .Text = Convert.ToDateTime(reader("date")).ToString("dd/MM/yyyy") & "  " & reader("time").ToString(),
-                            .Font = New Font("Segoe UI", 9, FontStyle.Regular),
-                            .ForeColor = Color.Gray,
-                            .Location = New Point(8, 8)
-                        }
-
-                        Dim lblUser As New Label With {
-                            .AutoSize = True,
-                            .Text = "User: " & reader("user").ToString(),
-                            .Font = New Font("Segoe UI", 9, FontStyle.Bold),
-                            .ForeColor = Color.FromArgb(45, 45, 48),
-                            .Location = New Point(8, 30)
-                        }
-
-                        Dim lblAmount As New Label With {
-                            .AutoSize = False,
-                            .Size = New Size(card.Width - 16, 28),
-                            .Text = "₱" & Convert.ToDecimal(reader("amount")).ToString("N2"),
-                            .Font = New Font("Segoe UI Semibold", 11, FontStyle.Bold),
-                            .ForeColor = Color.FromArgb(52, 152, 219),
-                            .TextAlign = ContentAlignment.MiddleRight,
-                            .Location = New Point(8, 60)
-                        }
-
-                        card.Controls.Add(lblDate)
-                        card.Controls.Add(lblUser)
-                        card.Controls.Add(lblAmount)
-
-                        flow.Controls.Add(card)
+                        dgvTransactions.Rows.Add(orderDate, orderTime, username, "₱" & totalAmount.ToString("N2"), Nothing, orderId)
                     End While
                 End Using
             End Using
@@ -611,19 +436,96 @@ Public Class SalesReport
         End Try
     End Sub
 
-
-
+    ''' <summary>
+    ''' Handle View Receipt button click in DataGridView
+    ''' </summary>
+    Private Sub dgvTransactions_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvTransactions.CellContentClick
+        Try
+            ' Check if the clicked cell is in the "View Receipt" button column
+            If e.RowIndex >= 0 AndAlso e.ColumnIndex = dgvTransactions.Columns("colViewReceipt").Index Then
+                Dim orderId As Integer = Convert.ToInt32(dgvTransactions.Rows(e.RowIndex).Cells("colOrderId").Value)
+                ShowReceiptForOrder(orderId)
+            End If
+        Catch ex As Exception
+            MessageBox.Show("Error viewing receipt: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
 
     ''' <summary>
-    ''' Export report to PDF (placeholder - implement with a PDF library)
+    ''' Display receipt for a specific order using the Receipt form
     ''' </summary>
+    Private Sub ShowReceiptForOrder(orderId As Integer)
+        Try
+            ' Load complete order details including items
+            Using connection As New MySqlConnection(GetGlobalConnectionString())
+                connection.Open()
+
+                Dim trans As TransactionDetails
+                If transactionData.ContainsKey(orderId) Then
+                    trans = transactionData(orderId)
+                Else
+                    MessageBox.Show("Transaction details not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                    Return
+                End If
+
+                ' Load order items
+                trans.Items = New List(Of OrderItem)
+                Dim itemsQuery As String = "SELECT item_name, quantity, price FROM order_items WHERE order_id = @orderId"
+
+                Using cmd As New MySqlCommand(itemsQuery, connection)
+                    cmd.Parameters.AddWithValue("@orderId", orderId)
+
+                    Using reader As MySqlDataReader = cmd.ExecuteReader()
+                        While reader.Read()
+                            Dim item As New OrderItem With {
+                                .ItemName = reader("item_name").ToString(),
+                                .Quantity = Convert.ToInt32(reader("quantity")),
+                                .Price = Convert.ToDecimal(reader("price")),
+                                .Total = Convert.ToInt32(reader("quantity")) * Convert.ToDecimal(reader("price"))
+                            }
+                            trans.Items.Add(item)
+                        End While
+                    End Using
+                End Using
+
+                ' Build order data for Receipt form
+                Dim orderData As New Receipt.OrderData With {
+                    .OrderId = orderId.ToString(),
+                    .OrderDate = trans.OrderDate,
+                    .CashierName = trans.Username,
+                    .Items = New List(Of Receipt.OrderItem),
+                    .Subtotal = trans.TotalAmount,
+                    .DiscountPercent = 0,
+                    .Total = trans.TotalAmount,
+                    .PaymentMethod = "Cash"
+                }
+
+                ' Convert items
+                For Each item In trans.Items
+                    orderData.Items.Add(New Receipt.OrderItem With {
+                        .Name = item.ItemName,
+                        .Amount = item.Quantity,
+                        .Price = item.Price,
+                        .Total = item.Total
+                    })
+                Next
+
+                ' Show receipt form
+                Dim receiptForm As New Receipt()
+                receiptForm.LoadReceipt(orderData, String.Empty)
+                receiptForm.ShowDialog(Me)
+            End Using
+
+        Catch ex As Exception
+            MessageBox.Show("Error displaying receipt: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    ' Export functions
     Private Sub ExportToPdf()
         MessageBox.Show("PDF export feature coming soon!", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
 
-    ''' <summary>
-    ''' Export transactions to CSV
-    ''' </summary>
     Private Sub ExportToCsv()
         Try
             If dgvTransactions.Rows.Count = 0 Then
@@ -637,19 +539,21 @@ Public Class SalesReport
 
                 If saveDialog.ShowDialog() = DialogResult.OK Then
                     Using writer As New StreamWriter(saveDialog.FileName)
-                        ' Headers
                         Dim headers As New List(Of String)
                         For Each col As DataGridViewColumn In dgvTransactions.Columns
-                            headers.Add("""" & col.HeaderText & """")
+                            If col.Visible Then
+                                headers.Add("""" & col.HeaderText & """")
+                            End If
                         Next
                         writer.WriteLine(String.Join(",", headers))
 
-                        ' Data
                         For Each row As DataGridViewRow In dgvTransactions.Rows
                             If Not row.IsNewRow Then
                                 Dim values As New List(Of String)
                                 For Each cell As DataGridViewCell In row.Cells
-                                    values.Add("""" & If(cell.Value, "").ToString() & """")
+                                    If dgvTransactions.Columns(cell.ColumnIndex).Visible Then
+                                        values.Add("""" & If(cell.Value, "").ToString() & """")
+                                    End If
                                 Next
                                 writer.WriteLine(String.Join(",", values))
                             End If
@@ -664,9 +568,9 @@ Public Class SalesReport
         End Try
     End Sub
 
-
-    ' Button Event Handlers
+    ' Button event handlers
     Private Sub btnGenerateReport_Click(sender As Object, e As EventArgs) Handles btnGenerateReport.Click
+        ShowLoadingState()
         GenerateSalesReport()
     End Sub
 
@@ -682,68 +586,206 @@ Public Class SalesReport
         MessageBox.Show("Print feature coming soon!", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
 
-    Private Sub pnlDailySalesChart_Paint(sender As Object, e As PaintEventArgs)
-
-    End Sub
-
-    Private Sub pnlTopItemsChart_Paint(sender As Object, e As PaintEventArgs) Handles pnlTopItemsChart.Paint
-
-    End Sub
-
-    Private Sub Label5_Click(sender As Object, e As EventArgs) Handles Label5.Click
-
-    End Sub
-
-    Private Sub Label9_Click(sender As Object, e As EventArgs)
-
-    End Sub
-
-    Private Sub Label9_Click_1(sender As Object, e As EventArgs)
-
-    End Sub
-
-    Private Sub PictureBox1_Click(sender As Object, e As EventArgs)
-
-    End Sub
-
-    Private Sub pnlOrderCount_Paint(sender As Object, e As PaintEventArgs) Handles pnlOrderCount.Paint
-
-    End Sub
-
-
-    Private Sub Label9_Click_3(sender As Object, e As EventArgs) Handles Label9.Click
-
-    End Sub
-
-    Private Sub lblTotalsalesicon_Click(sender As Object, e As EventArgs) Handles lblTotalsalesicon.Click
-
-    End Sub
-
     Private Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
-
-    End Sub
-
-    Private Sub Label10_Click(sender As Object, e As EventArgs) Handles Label10.Click
-
+        ' Handled by AdminNavButtons
     End Sub
 
     Private Sub btnBack_Click(sender As Object, e As EventArgs) Handles btnBack.Click
+        Try
+            Dim adminForm As Admin = Nothing
 
+            If Me.Owner IsNot Nothing AndAlso TypeOf Me.Owner Is Admin Then
+                adminForm = DirectCast(Me.Owner, Admin)
+            Else
+                For Each f As Form In Application.OpenForms
+                    If TypeOf f Is Admin Then
+                        adminForm = DirectCast(f, Admin)
+                        Exit For
+                    End If
+                Next
+            End If
+
+            If adminForm Is Nothing Then
+                adminForm = New Admin()
+                adminForm.Show()
+            Else
+                If adminForm.WindowState = FormWindowState.Minimized Then
+                    adminForm.WindowState = FormWindowState.Normal
+                End If
+                adminForm.Show()
+                adminForm.BringToFront()
+                adminForm.Focus()
+            End If
+
+            Me.Close()
+        Catch ex As Exception
+            MessageBox.Show("Error returning to Admin: " & ex.Message, "Navigation Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
-    Private Sub pnlDailySalesChart_Paint_1(sender As Object, e As PaintEventArgs) Handles pnlDailySalesChart.Paint
-
+    ' Hover effects for modern buttons
+    Private Sub btnBack_MouseEnter(sender As Object, e As EventArgs) Handles btnBack.MouseEnter
+        btnBack.FillColor = Color.FromArgb(120, 255, 255, 255)
+        btnBack.ShadowDecoration.Depth = 15
     End Sub
 
-    Private Sub lblTransactions_Click(sender As Object, e As EventArgs) Handles lblTransactions.Click
-
+    Private Sub btnBack_MouseLeave(sender As Object, e As EventArgs) Handles btnBack.MouseLeave
+        btnBack.FillColor = Color.FromArgb(80, 255, 255, 255)
+        btnBack.ShadowDecoration.Depth = 10
     End Sub
 
-    Private Sub dgvTransactions_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvTransactions.CellContentClick
-
+    Private Sub btnLogout_MouseEnter(sender As Object, e As EventArgs) Handles btnLogout.MouseEnter
+        btnLogout.FillColor = Color.FromArgb(220, 38, 38)
+        btnLogout.ShadowDecoration.Depth = 15
     End Sub
 
-    Private Sub Label6_Click(sender As Object, e As EventArgs) Handles Label6.Click
+    Private Sub btnLogout_MouseLeave(sender As Object, e As EventArgs) Handles btnLogout.MouseLeave
+        btnLogout.FillColor = Color.FromArgb(239, 68, 68)
+        btnLogout.ShadowDecoration.Depth = 10
+    End Sub
 
+    Private Sub btnGenerateReport_MouseEnter(sender As Object, e As EventArgs) Handles btnGenerateReport.MouseEnter
+        btnGenerateReport.FillColor = Color.FromArgb(245, 185, 70)
+        btnGenerateReport.ShadowDecoration.Depth = 18
+    End Sub
+
+    Private Sub btnGenerateReport_MouseLeave(sender As Object, e As EventArgs) Handles btnGenerateReport.MouseLeave
+        btnGenerateReport.FillColor = Color.FromArgb(255, 200, 87)
+        btnGenerateReport.ShadowDecoration.Depth = 12
+    End Sub
+
+    Private Sub btnExportCsv_MouseEnter(sender As Object, e As EventArgs) Handles btnExportCsv.MouseEnter
+        btnExportCsv.FillColor = Color.FromArgb(21, 118, 92)
+        btnExportCsv.ShadowDecoration.Depth = 15
+    End Sub
+
+    Private Sub btnExportCsv_MouseLeave(sender As Object, e As EventArgs) Handles btnExportCsv.MouseLeave
+        btnExportCsv.FillColor = Color.FromArgb(31, 138, 112)
+        btnExportCsv.ShadowDecoration.Depth = 10
+    End Sub
+
+    Private Sub btnExportPdf_MouseEnter(sender As Object, e As EventArgs) Handles btnExportPdf.MouseEnter
+        btnExportPdf.FillColor = Color.FromArgb(220, 38, 38)
+        btnExportPdf.ShadowDecoration.Depth = 15
+    End Sub
+
+    Private Sub btnExportPdf_MouseLeave(sender As Object, e As EventArgs) Handles btnExportPdf.MouseLeave
+        btnExportPdf.FillColor = Color.FromArgb(239, 68, 68)
+        btnExportPdf.ShadowDecoration.Depth = 10
+    End Sub
+
+    Private Sub btnPrint_MouseEnter(sender As Object, e As EventArgs) Handles btnPrint.MouseEnter
+        btnPrint.FillColor = Color.FromArgb(107, 114, 128)
+        btnPrint.ShadowDecoration.Depth = 15
+    End Sub
+
+    Private Sub btnPrint_MouseLeave(sender As Object, e As EventArgs) Handles btnPrint.MouseLeave
+        btnPrint.FillColor = Color.FromArgb(156, 163, 175)
+        btnPrint.ShadowDecoration.Depth = 10
+    End Sub
+
+    Protected Overrides Sub OnFormClosing(e As FormClosingEventArgs)
+        MyBase.OnFormClosing(e)
+    End Sub
+
+    ' Keep legacy LoadTransactionDetails method for compatibility
+    Public Sub LoadTransactionDetails(connection As MySqlConnection, ByVal pnl As Panel)
+        Try
+            Dim flow As FlowLayoutPanel = pnl.Controls.OfType(Of FlowLayoutPanel)().FirstOrDefault(Function(f) f.Name = "flowRecentTransactions")
+
+            If flow Is Nothing Then
+                flow = New FlowLayoutPanel With {
+                    .Name = "flowRecentTransactions",
+                    .Location = New Point(25, 75),
+                    .Size = New Size(1430, 320),
+                    .AutoScroll = False,
+                    .FlowDirection = FlowDirection.LeftToRight,
+                    .WrapContents = True,
+                    .Padding = New Padding(12),
+                    .BackColor = Color.Transparent
+                }
+                pnl.Controls.Add(flow)
+                flow.BringToFront()
+            Else
+                flow.Controls.Clear()
+            End If
+
+            Dim query As String = "SELECT id, order_date AS `date`, order_time AS `time`, username AS `user`, total_amount AS `amount` " &
+                                  "FROM orders " &
+                                  "WHERE order_date >= @dateFrom AND order_date <= @dateTo " &
+                                  "ORDER BY order_date DESC, order_time DESC LIMIT 10;"
+
+            Using cmd As New MySqlCommand(query, connection)
+                cmd.Parameters.AddWithValue("@dateFrom", dtpFrom.Value.Date)
+                cmd.Parameters.AddWithValue("@dateTo", dtpTo.Value.Date.AddDays(1).AddSeconds(-1))
+
+                Using reader As MySqlDataReader = cmd.ExecuteReader()
+                    While reader.Read()
+                        Dim orderId As Integer = Convert.ToInt32(reader("id"))
+
+                        Dim card As New Guna2ShadowPanel With {
+                            .Width = 280,
+                            .Height = 140,
+                            .FillColor = Color.White,
+                            .Margin = New Padding(12),
+                            .Padding = New Padding(18),
+                            .ShadowColor = Color.Black,
+                            .ShadowDepth = 10,
+                            .ShadowShift = 3,
+                            .Radius = 15,
+                            .Tag = orderId,
+                            .Cursor = Cursors.Hand
+                        }
+
+                        ' Add click handler to card for viewing receipt
+                        AddHandler card.Click, Sub(s, ev) ShowReceiptForOrder(orderId)
+
+                        Dim lblDate As New Label With {
+                            .AutoSize = True,
+                            .Text = Convert.ToDateTime(reader("date")).ToString("dd/MM/yyyy") & "  " & reader("time").ToString(),
+                            .Font = New Font("Segoe UI", 9.5F, FontStyle.Regular),
+                            .ForeColor = Color.FromArgb(120, 120, 120),
+                            .Location = New Point(12, 12)
+                        }
+
+                        Dim lblUser As New Label With {
+                            .AutoSize = True,
+                            .Text = "👤 " & reader("user").ToString(),
+                            .Font = New Font("Segoe UI Semibold", 11, FontStyle.Bold),
+                            .ForeColor = Color.FromArgb(30, 30, 30),
+                            .Location = New Point(12, 40)
+                        }
+
+                        Dim lblAmount As New Label With {
+                            .AutoSize = False,
+                            .Size = New Size(card.Width - 24, 35),
+                            .Text = "₱" & Convert.ToDecimal(reader("amount")).ToString("N2"),
+                            .Font = New Font("Segoe UI", 15, FontStyle.Bold),
+                            .ForeColor = Color.FromArgb(31, 138, 112),
+                            .TextAlign = ContentAlignment.MiddleRight,
+                            .Location = New Point(12, 72)
+                        }
+
+                        Dim lblClickHint As New Label With {
+                            .AutoSize = True,
+                            .Text = "📄 Click to view receipt",
+                            .Font = New Font("Segoe UI", 8.0F, FontStyle.Italic),
+                            .ForeColor = Color.FromArgb(150, 150, 150),
+                            .Location = New Point(12, 112)
+                        }
+
+                        card.Controls.Add(lblDate)
+                        card.Controls.Add(lblUser)
+                        card.Controls.Add(lblAmount)
+                        card.Controls.Add(lblClickHint)
+
+                        flow.Controls.Add(card)
+                    End While
+                End Using
+            End Using
+
+        Catch ex As Exception
+            MessageBox.Show("Error loading transactions: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 End Class

@@ -17,45 +17,100 @@ Partial Class Receipt
 
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        pnlMain = New Panel()
-        pnlContent = New Panel()
-        pnlNativeReceipt = New Panel()
-        pnlReceiptScroll = New Panel()
+        components = New ComponentModel.Container()
+        Dim CustomizableEdges47 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges48 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges27 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges28 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges19 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges20 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges1 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges2 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges11 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges12 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges9 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges10 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges3 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges4 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges5 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges6 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges7 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges8 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges17 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges18 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges13 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges14 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges15 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges16 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges25 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges26 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges23 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges24 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges21 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges22 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges35 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges36 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges33 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges34 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges29 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges30 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges31 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges32 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges45 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges46 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges37 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges38 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges39 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges40 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges41 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges42 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges43 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges44 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim Animation1 As Guna.UI2.AnimatorNS.Animation = New Guna.UI2.AnimatorNS.Animation()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Receipt))
+        pnlMain = New Guna.UI2.WinForms.Guna2Panel()
+        pnlContent = New Guna.UI2.WinForms.Guna2Panel()
+        pnlNativeReceipt = New Guna.UI2.WinForms.Guna2Panel()
+        pnlReceiptScroll = New Guna.UI2.WinForms.Guna2Panel()
         flowItemsContainer = New FlowLayoutPanel()
-        pnlReceiptFooter = New Panel()
-        pnlTotalsCard = New Panel()
-        pnlTotalRow = New Panel()
+        pnlReceiptFooter = New Guna.UI2.WinForms.Guna2Panel()
+        pnlTotalsCard = New Guna.UI2.WinForms.Guna2GradientPanel()
+        pnlTotalRow = New Guna.UI2.WinForms.Guna2Panel()
         lblTotalAmount = New Label()
         lblTotalLabel = New Label()
-        pnlDiscountRow = New Panel()
+        pnlDiscountRow = New Guna.UI2.WinForms.Guna2Panel()
         lblDiscountAmount = New Label()
         lblDiscountLabel = New Label()
-        pnlSubtotalRow = New Panel()
+        pnlSubtotalRow = New Guna.UI2.WinForms.Guna2Panel()
         lblSubtotalAmount = New Label()
         lblSubtotalLabel = New Label()
-        pnlReceiptHeader = New Panel()
-        pnlHeaderInfo = New Panel()
+        pnlReceiptHeader = New Guna.UI2.WinForms.Guna2GradientPanel()
+        pnlHeaderInfo = New Guna.UI2.WinForms.Guna2Panel()
         lblPaymentMethod = New Label()
         lblCashier = New Label()
         lblDateTime = New Label()
         lblOrderId = New Label()
-        pnlLogo = New Panel()
+        pnlLogo = New Guna.UI2.WinForms.Guna2Panel()
         lblAppTitle = New Label()
         lblAppSubtitle = New Label()
-        pnlPdfViewer = New Panel()
+        pnlPdfViewer = New Guna.UI2.WinForms.Guna2Panel()
         pdfViewer = New PdfiumViewer.PdfViewer()
-        pnlPdfToolbar = New Panel()
-        btnPdfZoom = New FontAwesome.Sharp.IconButton()
-        pnlHeader = New Panel()
-        pnlViewToggle = New Panel()
-        btnViewPdf = New FontAwesome.Sharp.IconButton()
-        btnViewNative = New FontAwesome.Sharp.IconButton()
+        pnlPdfToolbar = New Guna.UI2.WinForms.Guna2GradientPanel()
+        btnPdfZoom = New Guna.UI2.WinForms.Guna2Button()
+        pnlHeader = New Guna.UI2.WinForms.Guna2GradientPanel()
+        pnlViewToggle = New Guna.UI2.WinForms.Guna2Panel()
+        btnViewPdf = New Guna.UI2.WinForms.Guna2Button()
+        btnViewNative = New Guna.UI2.WinForms.Guna2Button()
         lblHeaderTitle = New Label()
-        pnlActions = New Panel()
-        btnEmail = New FontAwesome.Sharp.IconButton()
-        btnPrint = New FontAwesome.Sharp.IconButton()
-        btnSavePdf = New FontAwesome.Sharp.IconButton()
-        btnClose = New FontAwesome.Sharp.IconButton()
+        pnlActions = New Guna.UI2.WinForms.Guna2Panel()
+        btnEmail = New Guna.UI2.WinForms.Guna2Button()
+        btnPrint = New Guna.UI2.WinForms.Guna2Button()
+        btnSavePdf = New Guna.UI2.WinForms.Guna2Button()
+        btnClose = New Guna.UI2.WinForms.Guna2Button()
+        Guna2ShadowForm1 = New Guna.UI2.WinForms.Guna2ShadowForm(components)
+        Guna2DragControl1 = New Guna.UI2.WinForms.Guna2DragControl(components)
+        Guna2Elipse1 = New Guna.UI2.WinForms.Guna2Elipse(components)
+        TransitionAnimator = New Guna.UI2.WinForms.Guna2Transition()
         pnlMain.SuspendLayout()
         pnlContent.SuspendLayout()
         pnlNativeReceipt.SuspendLayout()
@@ -81,50 +136,72 @@ Partial Class Receipt
         pnlMain.Controls.Add(pnlContent)
         pnlMain.Controls.Add(pnlHeader)
         pnlMain.Controls.Add(pnlActions)
+        pnlMain.CustomizableEdges = CustomizableEdges47
+        TransitionAnimator.SetDecoration(pnlMain, Guna.UI2.AnimatorNS.DecorationType.None)
         pnlMain.Dock = DockStyle.Fill
         pnlMain.Location = New Point(0, 0)
         pnlMain.Name = "pnlMain"
+        pnlMain.ShadowDecoration.CustomizableEdges = CustomizableEdges48
         pnlMain.Size = New Size(1400, 900)
         pnlMain.TabIndex = 0
         ' 
         ' pnlContent
         ' 
+        pnlContent.BackColor = Color.Transparent
         pnlContent.Controls.Add(pnlNativeReceipt)
         pnlContent.Controls.Add(pnlPdfViewer)
+        pnlContent.CustomizableEdges = CustomizableEdges27
+        TransitionAnimator.SetDecoration(pnlContent, Guna.UI2.AnimatorNS.DecorationType.None)
         pnlContent.Dock = DockStyle.Fill
-        pnlContent.Location = New Point(0, 90)
+        pnlContent.Location = New Point(0, 100)
         pnlContent.Name = "pnlContent"
         pnlContent.Padding = New Padding(30, 20, 30, 20)
-        pnlContent.Size = New Size(1400, 710)
+        pnlContent.ShadowDecoration.CustomizableEdges = CustomizableEdges28
+        pnlContent.Size = New Size(1400, 700)
         pnlContent.TabIndex = 1
         ' 
         ' pnlNativeReceipt
         ' 
-        pnlNativeReceipt.BackColor = Color.White
+        pnlNativeReceipt.BackColor = Color.Transparent
+        pnlNativeReceipt.BorderRadius = 20
         pnlNativeReceipt.Controls.Add(pnlReceiptScroll)
         pnlNativeReceipt.Controls.Add(pnlReceiptFooter)
         pnlNativeReceipt.Controls.Add(pnlReceiptHeader)
+        pnlNativeReceipt.CustomizableEdges = CustomizableEdges19
+        TransitionAnimator.SetDecoration(pnlNativeReceipt, Guna.UI2.AnimatorNS.DecorationType.None)
         pnlNativeReceipt.Dock = DockStyle.Fill
         pnlNativeReceipt.Location = New Point(30, 20)
         pnlNativeReceipt.Name = "pnlNativeReceipt"
-        pnlNativeReceipt.Size = New Size(1340, 670)
+        pnlNativeReceipt.ShadowDecoration.BorderRadius = 20
+        pnlNativeReceipt.ShadowDecoration.Color = Color.FromArgb(CByte(100), CByte(100), CByte(100))
+        pnlNativeReceipt.ShadowDecoration.CustomizableEdges = CustomizableEdges20
+        pnlNativeReceipt.ShadowDecoration.Depth = 15
+        pnlNativeReceipt.ShadowDecoration.Enabled = True
+        pnlNativeReceipt.ShadowDecoration.Shadow = New Padding(0, 0, 8, 8)
+        pnlNativeReceipt.Size = New Size(1340, 660)
         pnlNativeReceipt.TabIndex = 0
         ' 
         ' pnlReceiptScroll
         ' 
         pnlReceiptScroll.AutoScroll = True
+        pnlReceiptScroll.BackColor = Color.Transparent
         pnlReceiptScroll.Controls.Add(flowItemsContainer)
+        pnlReceiptScroll.CustomizableEdges = CustomizableEdges1
+        TransitionAnimator.SetDecoration(pnlReceiptScroll, Guna.UI2.AnimatorNS.DecorationType.None)
         pnlReceiptScroll.Dock = DockStyle.Fill
         pnlReceiptScroll.Location = New Point(0, 200)
         pnlReceiptScroll.Name = "pnlReceiptScroll"
         pnlReceiptScroll.Padding = New Padding(40, 20, 40, 20)
-        pnlReceiptScroll.Size = New Size(1340, 270)
+        pnlReceiptScroll.ShadowDecoration.CustomizableEdges = CustomizableEdges2
+        pnlReceiptScroll.Size = New Size(1340, 260)
         pnlReceiptScroll.TabIndex = 1
         ' 
         ' flowItemsContainer
         ' 
         flowItemsContainer.AutoSize = True
         flowItemsContainer.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        flowItemsContainer.BackColor = Color.Transparent
+        TransitionAnimator.SetDecoration(flowItemsContainer, Guna.UI2.AnimatorNS.DecorationType.None)
         flowItemsContainer.Dock = DockStyle.Top
         flowItemsContainer.FlowDirection = FlowDirection.TopDown
         flowItemsContainer.Location = New Point(40, 20)
@@ -135,42 +212,61 @@ Partial Class Receipt
         ' 
         ' pnlReceiptFooter
         ' 
-        pnlReceiptFooter.BackColor = Color.FromArgb(CByte(248), CByte(250), CByte(252))
+        pnlReceiptFooter.BackColor = Color.Transparent
         pnlReceiptFooter.Controls.Add(pnlTotalsCard)
+        pnlReceiptFooter.CustomizableEdges = CustomizableEdges11
+        TransitionAnimator.SetDecoration(pnlReceiptFooter, Guna.UI2.AnimatorNS.DecorationType.None)
         pnlReceiptFooter.Dock = DockStyle.Bottom
-        pnlReceiptFooter.Location = New Point(0, 470)
+        pnlReceiptFooter.Location = New Point(0, 460)
         pnlReceiptFooter.Name = "pnlReceiptFooter"
         pnlReceiptFooter.Padding = New Padding(40, 30, 40, 30)
+        pnlReceiptFooter.ShadowDecoration.CustomizableEdges = CustomizableEdges12
         pnlReceiptFooter.Size = New Size(1340, 200)
         pnlReceiptFooter.TabIndex = 2
         ' 
         ' pnlTotalsCard
         ' 
-        pnlTotalsCard.BackColor = Color.White
+        pnlTotalsCard.BackColor = Color.Transparent
+        pnlTotalsCard.BorderRadius = 20
         pnlTotalsCard.Controls.Add(pnlTotalRow)
         pnlTotalsCard.Controls.Add(pnlDiscountRow)
         pnlTotalsCard.Controls.Add(pnlSubtotalRow)
+        pnlTotalsCard.CustomizableEdges = CustomizableEdges9
+        TransitionAnimator.SetDecoration(pnlTotalsCard, Guna.UI2.AnimatorNS.DecorationType.None)
         pnlTotalsCard.Dock = DockStyle.Right
+        pnlTotalsCard.FillColor = Color.FromArgb(CByte(248), CByte(250), CByte(252))
+        pnlTotalsCard.FillColor2 = Color.White
+        pnlTotalsCard.GradientMode = Drawing2D.LinearGradientMode.Vertical
         pnlTotalsCard.Location = New Point(840, 30)
         pnlTotalsCard.Name = "pnlTotalsCard"
+        pnlTotalsCard.ShadowDecoration.BorderRadius = 20
+        pnlTotalsCard.ShadowDecoration.Color = Color.FromArgb(CByte(100), CByte(100), CByte(100))
+        pnlTotalsCard.ShadowDecoration.CustomizableEdges = CustomizableEdges10
+        pnlTotalsCard.ShadowDecoration.Depth = 10
+        pnlTotalsCard.ShadowDecoration.Enabled = True
         pnlTotalsCard.Size = New Size(460, 140)
         pnlTotalsCard.TabIndex = 0
         ' 
         ' pnlTotalRow
         ' 
+        pnlTotalRow.BackColor = Color.Transparent
         pnlTotalRow.Controls.Add(lblTotalAmount)
         pnlTotalRow.Controls.Add(lblTotalLabel)
+        pnlTotalRow.CustomizableEdges = CustomizableEdges3
+        TransitionAnimator.SetDecoration(pnlTotalRow, Guna.UI2.AnimatorNS.DecorationType.None)
         pnlTotalRow.Dock = DockStyle.Top
         pnlTotalRow.Location = New Point(0, 80)
         pnlTotalRow.Name = "pnlTotalRow"
         pnlTotalRow.Padding = New Padding(25, 8, 25, 8)
+        pnlTotalRow.ShadowDecoration.CustomizableEdges = CustomizableEdges4
         pnlTotalRow.Size = New Size(460, 60)
         pnlTotalRow.TabIndex = 2
         ' 
         ' lblTotalAmount
         ' 
+        TransitionAnimator.SetDecoration(lblTotalAmount, Guna.UI2.AnimatorNS.DecorationType.None)
         lblTotalAmount.Dock = DockStyle.Right
-        lblTotalAmount.Font = New Font("Segoe UI", 20F, FontStyle.Bold)
+        lblTotalAmount.Font = New Font("Segoe UI", 20.0F, FontStyle.Bold)
         lblTotalAmount.ForeColor = Color.FromArgb(CByte(16), CByte(185), CByte(129))
         lblTotalAmount.Location = New Point(260, 8)
         lblTotalAmount.Name = "lblTotalAmount"
@@ -182,9 +278,10 @@ Partial Class Receipt
         ' lblTotalLabel
         ' 
         lblTotalLabel.AutoSize = True
+        TransitionAnimator.SetDecoration(lblTotalLabel, Guna.UI2.AnimatorNS.DecorationType.None)
         lblTotalLabel.Dock = DockStyle.Left
-        lblTotalLabel.Font = New Font("Segoe UI", 16F, FontStyle.Bold)
-        lblTotalLabel.ForeColor = Color.FromArgb(CByte(100), CByte(116), CByte(139))
+        lblTotalLabel.Font = New Font("Segoe UI", 16.0F, FontStyle.Bold)
+        lblTotalLabel.ForeColor = Color.FromArgb(CByte(71), CByte(85), CByte(105))
         lblTotalLabel.Location = New Point(25, 8)
         lblTotalLabel.Name = "lblTotalLabel"
         lblTotalLabel.Size = New Size(82, 37)
@@ -193,19 +290,24 @@ Partial Class Receipt
         ' 
         ' pnlDiscountRow
         ' 
+        pnlDiscountRow.BackColor = Color.Transparent
         pnlDiscountRow.Controls.Add(lblDiscountAmount)
         pnlDiscountRow.Controls.Add(lblDiscountLabel)
+        pnlDiscountRow.CustomizableEdges = CustomizableEdges5
+        TransitionAnimator.SetDecoration(pnlDiscountRow, Guna.UI2.AnimatorNS.DecorationType.None)
         pnlDiscountRow.Dock = DockStyle.Top
         pnlDiscountRow.Location = New Point(0, 40)
         pnlDiscountRow.Name = "pnlDiscountRow"
         pnlDiscountRow.Padding = New Padding(25, 8, 25, 8)
+        pnlDiscountRow.ShadowDecoration.CustomizableEdges = CustomizableEdges6
         pnlDiscountRow.Size = New Size(460, 40)
         pnlDiscountRow.TabIndex = 1
         ' 
         ' lblDiscountAmount
         ' 
+        TransitionAnimator.SetDecoration(lblDiscountAmount, Guna.UI2.AnimatorNS.DecorationType.None)
         lblDiscountAmount.Dock = DockStyle.Right
-        lblDiscountAmount.Font = New Font("Segoe UI", 11F, FontStyle.Bold)
+        lblDiscountAmount.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
         lblDiscountAmount.ForeColor = Color.FromArgb(CByte(239), CByte(68), CByte(68))
         lblDiscountAmount.Location = New Point(310, 8)
         lblDiscountAmount.Name = "lblDiscountAmount"
@@ -217,8 +319,9 @@ Partial Class Receipt
         ' lblDiscountLabel
         ' 
         lblDiscountLabel.AutoSize = True
+        TransitionAnimator.SetDecoration(lblDiscountLabel, Guna.UI2.AnimatorNS.DecorationType.None)
         lblDiscountLabel.Dock = DockStyle.Left
-        lblDiscountLabel.Font = New Font("Segoe UI", 11F)
+        lblDiscountLabel.Font = New Font("Segoe UI", 11.0F)
         lblDiscountLabel.ForeColor = Color.FromArgb(CByte(100), CByte(116), CByte(139))
         lblDiscountLabel.Location = New Point(25, 8)
         lblDiscountLabel.Name = "lblDiscountLabel"
@@ -228,19 +331,24 @@ Partial Class Receipt
         ' 
         ' pnlSubtotalRow
         ' 
+        pnlSubtotalRow.BackColor = Color.Transparent
         pnlSubtotalRow.Controls.Add(lblSubtotalAmount)
         pnlSubtotalRow.Controls.Add(lblSubtotalLabel)
+        pnlSubtotalRow.CustomizableEdges = CustomizableEdges7
+        TransitionAnimator.SetDecoration(pnlSubtotalRow, Guna.UI2.AnimatorNS.DecorationType.None)
         pnlSubtotalRow.Dock = DockStyle.Top
         pnlSubtotalRow.Location = New Point(0, 0)
         pnlSubtotalRow.Name = "pnlSubtotalRow"
         pnlSubtotalRow.Padding = New Padding(25, 8, 25, 8)
+        pnlSubtotalRow.ShadowDecoration.CustomizableEdges = CustomizableEdges8
         pnlSubtotalRow.Size = New Size(460, 40)
         pnlSubtotalRow.TabIndex = 0
         ' 
         ' lblSubtotalAmount
         ' 
+        TransitionAnimator.SetDecoration(lblSubtotalAmount, Guna.UI2.AnimatorNS.DecorationType.None)
         lblSubtotalAmount.Dock = DockStyle.Right
-        lblSubtotalAmount.Font = New Font("Segoe UI", 11F, FontStyle.Bold)
+        lblSubtotalAmount.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
         lblSubtotalAmount.ForeColor = Color.FromArgb(CByte(51), CByte(65), CByte(85))
         lblSubtotalAmount.Location = New Point(310, 8)
         lblSubtotalAmount.Name = "lblSubtotalAmount"
@@ -252,8 +360,9 @@ Partial Class Receipt
         ' lblSubtotalLabel
         ' 
         lblSubtotalLabel.AutoSize = True
+        TransitionAnimator.SetDecoration(lblSubtotalLabel, Guna.UI2.AnimatorNS.DecorationType.None)
         lblSubtotalLabel.Dock = DockStyle.Left
-        lblSubtotalLabel.Font = New Font("Segoe UI", 11F)
+        lblSubtotalLabel.Font = New Font("Segoe UI", 11.0F)
         lblSubtotalLabel.ForeColor = Color.FromArgb(CByte(100), CByte(116), CByte(139))
         lblSubtotalLabel.Location = New Point(25, 8)
         lblSubtotalLabel.Name = "lblSubtotalLabel"
@@ -263,34 +372,44 @@ Partial Class Receipt
         ' 
         ' pnlReceiptHeader
         ' 
-        pnlReceiptHeader.BackColor = Color.FromArgb(CByte(37), CByte(42), CByte(52))
+        pnlReceiptHeader.BorderRadius = 20
         pnlReceiptHeader.Controls.Add(pnlHeaderInfo)
         pnlReceiptHeader.Controls.Add(pnlLogo)
+        pnlReceiptHeader.CustomizableEdges = CustomizableEdges17
+        TransitionAnimator.SetDecoration(pnlReceiptHeader, Guna.UI2.AnimatorNS.DecorationType.None)
         pnlReceiptHeader.Dock = DockStyle.Top
+        pnlReceiptHeader.FillColor = Color.FromArgb(CByte(37), CByte(42), CByte(52))
+        pnlReceiptHeader.FillColor2 = Color.FromArgb(CByte(71), CByte(85), CByte(105))
         pnlReceiptHeader.Location = New Point(0, 0)
         pnlReceiptHeader.Name = "pnlReceiptHeader"
         pnlReceiptHeader.Padding = New Padding(40, 30, 40, 30)
+        pnlReceiptHeader.ShadowDecoration.CustomizableEdges = CustomizableEdges18
         pnlReceiptHeader.Size = New Size(1340, 200)
         pnlReceiptHeader.TabIndex = 0
         ' 
         ' pnlHeaderInfo
         ' 
+        pnlHeaderInfo.BackColor = Color.Transparent
         pnlHeaderInfo.Controls.Add(lblPaymentMethod)
         pnlHeaderInfo.Controls.Add(lblCashier)
         pnlHeaderInfo.Controls.Add(lblDateTime)
         pnlHeaderInfo.Controls.Add(lblOrderId)
+        pnlHeaderInfo.CustomizableEdges = CustomizableEdges13
+        TransitionAnimator.SetDecoration(pnlHeaderInfo, Guna.UI2.AnimatorNS.DecorationType.None)
         pnlHeaderInfo.Dock = DockStyle.Fill
         pnlHeaderInfo.Location = New Point(440, 30)
         pnlHeaderInfo.Name = "pnlHeaderInfo"
         pnlHeaderInfo.Padding = New Padding(20, 10, 0, 10)
+        pnlHeaderInfo.ShadowDecoration.CustomizableEdges = CustomizableEdges14
         pnlHeaderInfo.Size = New Size(860, 140)
         pnlHeaderInfo.TabIndex = 1
         ' 
         ' lblPaymentMethod
         ' 
         lblPaymentMethod.AutoSize = True
-        lblPaymentMethod.Font = New Font("Segoe UI", 11F)
-        lblPaymentMethod.ForeColor = Color.FromArgb(CByte(148), CByte(163), CByte(184))
+        TransitionAnimator.SetDecoration(lblPaymentMethod, Guna.UI2.AnimatorNS.DecorationType.None)
+        lblPaymentMethod.Font = New Font("Segoe UI", 11.0F)
+        lblPaymentMethod.ForeColor = Color.FromArgb(CByte(203), CByte(213), CByte(225))
         lblPaymentMethod.Location = New Point(25, 100)
         lblPaymentMethod.Name = "lblPaymentMethod"
         lblPaymentMethod.Size = New Size(134, 25)
@@ -300,8 +419,9 @@ Partial Class Receipt
         ' lblCashier
         ' 
         lblCashier.AutoSize = True
-        lblCashier.Font = New Font("Segoe UI", 11F)
-        lblCashier.ForeColor = Color.FromArgb(CByte(148), CByte(163), CByte(184))
+        TransitionAnimator.SetDecoration(lblCashier, Guna.UI2.AnimatorNS.DecorationType.None)
+        lblCashier.Font = New Font("Segoe UI", 11.0F)
+        lblCashier.ForeColor = Color.FromArgb(CByte(203), CByte(213), CByte(225))
         lblCashier.Location = New Point(25, 70)
         lblCashier.Name = "lblCashier"
         lblCashier.Size = New Size(120, 25)
@@ -311,8 +431,9 @@ Partial Class Receipt
         ' lblDateTime
         ' 
         lblDateTime.AutoSize = True
-        lblDateTime.Font = New Font("Segoe UI", 11F)
-        lblDateTime.ForeColor = Color.FromArgb(CByte(148), CByte(163), CByte(184))
+        TransitionAnimator.SetDecoration(lblDateTime, Guna.UI2.AnimatorNS.DecorationType.None)
+        lblDateTime.Font = New Font("Segoe UI", 11.0F)
+        lblDateTime.ForeColor = Color.FromArgb(CByte(203), CByte(213), CByte(225))
         lblDateTime.Location = New Point(25, 40)
         lblDateTime.Name = "lblDateTime"
         lblDateTime.Size = New Size(229, 25)
@@ -322,7 +443,8 @@ Partial Class Receipt
         ' lblOrderId
         ' 
         lblOrderId.AutoSize = True
-        lblOrderId.Font = New Font("Segoe UI", 14F, FontStyle.Bold)
+        TransitionAnimator.SetDecoration(lblOrderId, Guna.UI2.AnimatorNS.DecorationType.None)
+        lblOrderId.Font = New Font("Segoe UI", 14.0F, FontStyle.Bold)
         lblOrderId.ForeColor = Color.White
         lblOrderId.Location = New Point(20, 10)
         lblOrderId.Name = "lblOrderId"
@@ -332,18 +454,23 @@ Partial Class Receipt
         ' 
         ' pnlLogo
         ' 
+        pnlLogo.BackColor = Color.Transparent
         pnlLogo.Controls.Add(lblAppTitle)
         pnlLogo.Controls.Add(lblAppSubtitle)
+        pnlLogo.CustomizableEdges = CustomizableEdges15
+        TransitionAnimator.SetDecoration(pnlLogo, Guna.UI2.AnimatorNS.DecorationType.None)
         pnlLogo.Dock = DockStyle.Left
         pnlLogo.Location = New Point(40, 30)
         pnlLogo.Name = "pnlLogo"
+        pnlLogo.ShadowDecoration.CustomizableEdges = CustomizableEdges16
         pnlLogo.Size = New Size(400, 140)
         pnlLogo.TabIndex = 0
         ' 
         ' lblAppTitle
         ' 
         lblAppTitle.AutoSize = True
-        lblAppTitle.Font = New Font("Segoe UI", 32F, FontStyle.Bold)
+        TransitionAnimator.SetDecoration(lblAppTitle, Guna.UI2.AnimatorNS.DecorationType.None)
+        lblAppTitle.Font = New Font("Segoe UI", 32.0F, FontStyle.Bold)
         lblAppTitle.ForeColor = Color.White
         lblAppTitle.Location = New Point(0, 30)
         lblAppTitle.Name = "lblAppTitle"
@@ -354,8 +481,9 @@ Partial Class Receipt
         ' lblAppSubtitle
         ' 
         lblAppSubtitle.AutoSize = True
-        lblAppSubtitle.Font = New Font("Segoe UI", 12F)
-        lblAppSubtitle.ForeColor = Color.FromArgb(CByte(148), CByte(163), CByte(184))
+        TransitionAnimator.SetDecoration(lblAppSubtitle, Guna.UI2.AnimatorNS.DecorationType.None)
+        lblAppSubtitle.Font = New Font("Segoe UI", 12.0F)
+        lblAppSubtitle.ForeColor = Color.FromArgb(CByte(203), CByte(213), CByte(225))
         lblAppSubtitle.Location = New Point(5, 100)
         lblAppSubtitle.Name = "lblAppSubtitle"
         lblAppSubtitle.Size = New Size(218, 28)
@@ -364,135 +492,177 @@ Partial Class Receipt
         ' 
         ' pnlPdfViewer
         ' 
-        pnlPdfViewer.BackColor = Color.White
+        pnlPdfViewer.BackColor = Color.Transparent
+        pnlPdfViewer.BorderRadius = 20
         pnlPdfViewer.Controls.Add(pdfViewer)
         pnlPdfViewer.Controls.Add(pnlPdfToolbar)
+        pnlPdfViewer.CustomizableEdges = CustomizableEdges25
+        TransitionAnimator.SetDecoration(pnlPdfViewer, Guna.UI2.AnimatorNS.DecorationType.None)
         pnlPdfViewer.Dock = DockStyle.Fill
         pnlPdfViewer.Location = New Point(30, 20)
         pnlPdfViewer.Name = "pnlPdfViewer"
-        pnlPdfViewer.Size = New Size(1340, 670)
+        pnlPdfViewer.ShadowDecoration.BorderRadius = 20
+        pnlPdfViewer.ShadowDecoration.Color = Color.FromArgb(CByte(100), CByte(100), CByte(100))
+        pnlPdfViewer.ShadowDecoration.CustomizableEdges = CustomizableEdges26
+        pnlPdfViewer.ShadowDecoration.Depth = 15
+        pnlPdfViewer.ShadowDecoration.Enabled = True
+        pnlPdfViewer.ShadowDecoration.Shadow = New Padding(0, 0, 8, 8)
+        pnlPdfViewer.Size = New Size(1340, 660)
         pnlPdfViewer.TabIndex = 1
         pnlPdfViewer.Visible = False
         ' 
         ' pdfViewer
         ' 
         pdfViewer.BackColor = Color.FromArgb(CByte(240), CByte(242), CByte(245))
+        TransitionAnimator.SetDecoration(pdfViewer, Guna.UI2.AnimatorNS.DecorationType.None)
         pdfViewer.Dock = DockStyle.Fill
-        pdfViewer.Location = New Point(0, 50)
+        pdfViewer.Location = New Point(0, 60)
         pdfViewer.Margin = New Padding(4, 5, 4, 5)
         pdfViewer.Name = "pdfViewer"
-        pdfViewer.Size = New Size(1340, 620)
+        pdfViewer.Size = New Size(1340, 600)
         pdfViewer.TabIndex = 1
         pdfViewer.ZoomMode = PdfiumViewer.PdfViewerZoomMode.FitWidth
         ' 
         ' pnlPdfToolbar
         ' 
-        pnlPdfToolbar.BackColor = Color.FromArgb(CByte(37), CByte(42), CByte(52))
+        pnlPdfToolbar.BorderRadius = 20
         pnlPdfToolbar.Controls.Add(btnPdfZoom)
+        pnlPdfToolbar.CustomBorderThickness = New Padding(0, 0, 0, 1)
+        pnlPdfToolbar.CustomizableEdges = CustomizableEdges23
+        TransitionAnimator.SetDecoration(pnlPdfToolbar, Guna.UI2.AnimatorNS.DecorationType.None)
         pnlPdfToolbar.Dock = DockStyle.Top
+        pnlPdfToolbar.FillColor = Color.FromArgb(CByte(37), CByte(42), CByte(52))
+        pnlPdfToolbar.FillColor2 = Color.FromArgb(CByte(71), CByte(85), CByte(105))
         pnlPdfToolbar.Location = New Point(0, 0)
         pnlPdfToolbar.Name = "pnlPdfToolbar"
         pnlPdfToolbar.Padding = New Padding(15, 8, 15, 8)
-        pnlPdfToolbar.Size = New Size(1340, 50)
+        pnlPdfToolbar.ShadowDecoration.CustomizableEdges = CustomizableEdges24
+        pnlPdfToolbar.Size = New Size(1340, 60)
         pnlPdfToolbar.TabIndex = 0
         ' 
         ' btnPdfZoom
         ' 
-        btnPdfZoom.BackColor = Color.FromArgb(CByte(71), CByte(85), CByte(105))
+        btnPdfZoom.Animated = True
+        btnPdfZoom.BackColor = Color.Transparent
+        btnPdfZoom.BorderRadius = 12
         btnPdfZoom.Cursor = Cursors.Hand
+        btnPdfZoom.CustomizableEdges = CustomizableEdges21
+        TransitionAnimator.SetDecoration(btnPdfZoom, Guna.UI2.AnimatorNS.DecorationType.None)
+        btnPdfZoom.DisabledState.BorderColor = Color.DarkGray
+        btnPdfZoom.DisabledState.CustomBorderColor = Color.DarkGray
+        btnPdfZoom.DisabledState.FillColor = Color.FromArgb(CByte(169), CByte(169), CByte(169))
+        btnPdfZoom.DisabledState.ForeColor = Color.FromArgb(CByte(141), CByte(141), CByte(141))
         btnPdfZoom.Dock = DockStyle.Left
-        btnPdfZoom.FlatAppearance.BorderSize = 0
-        btnPdfZoom.FlatStyle = FlatStyle.Flat
-        btnPdfZoom.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        btnPdfZoom.ForeColor = Color.White
-        btnPdfZoom.IconChar = FontAwesome.Sharp.IconChar.MagnifyingGlassPlus
-        btnPdfZoom.IconColor = Color.White
-        btnPdfZoom.IconFont = FontAwesome.Sharp.IconFont.Auto
-        btnPdfZoom.IconSize = 18
-        btnPdfZoom.ImageAlign = ContentAlignment.MiddleLeft
+        btnPdfZoom.FillColor = Color.FromArgb(CByte(94), CByte(234), CByte(212))
+        btnPdfZoom.Font = New Font("Segoe UI", 9.75F, FontStyle.Bold)
+        btnPdfZoom.ForeColor = Color.FromArgb(CByte(15), CByte(23), CByte(42))
+        btnPdfZoom.HoverState.FillColor = Color.FromArgb(CByte(45), CByte(212), CByte(191))
+        btnPdfZoom.ImageAlign = HorizontalAlignment.Left
+        btnPdfZoom.ImageSize = New Size(18, 18)
         btnPdfZoom.Location = New Point(15, 8)
         btnPdfZoom.Name = "btnPdfZoom"
-        btnPdfZoom.Padding = New Padding(5, 0, 5, 0)
-        btnPdfZoom.Size = New Size(120, 34)
+        btnPdfZoom.Padding = New Padding(8, 0, 8, 0)
+        btnPdfZoom.ShadowDecoration.CustomizableEdges = CustomizableEdges22
+        btnPdfZoom.Size = New Size(150, 44)
         btnPdfZoom.TabIndex = 0
-        btnPdfZoom.Text = "Fit Width"
-        btnPdfZoom.TextImageRelation = TextImageRelation.ImageBeforeText
-        btnPdfZoom.UseVisualStyleBackColor = False
+        btnPdfZoom.Text = "🔍 Fit Width"
+        btnPdfZoom.TextAlign = HorizontalAlignment.Right
         ' 
         ' pnlHeader
         ' 
-        pnlHeader.BackColor = Color.FromArgb(CByte(37), CByte(42), CByte(52))
         pnlHeader.Controls.Add(pnlViewToggle)
         pnlHeader.Controls.Add(lblHeaderTitle)
+        pnlHeader.CustomizableEdges = CustomizableEdges35
+        TransitionAnimator.SetDecoration(pnlHeader, Guna.UI2.AnimatorNS.DecorationType.None)
         pnlHeader.Dock = DockStyle.Top
+        pnlHeader.FillColor = Color.FromArgb(CByte(37), CByte(42), CByte(52))
+        pnlHeader.FillColor2 = Color.FromArgb(CByte(71), CByte(85), CByte(105))
         pnlHeader.Location = New Point(0, 0)
         pnlHeader.Name = "pnlHeader"
         pnlHeader.Padding = New Padding(40, 20, 40, 20)
-        pnlHeader.Size = New Size(1400, 90)
+        pnlHeader.ShadowDecoration.CustomizableEdges = CustomizableEdges36
+        pnlHeader.ShadowDecoration.Depth = 8
+        pnlHeader.ShadowDecoration.Enabled = True
+        pnlHeader.Size = New Size(1400, 100)
         pnlHeader.TabIndex = 0
         ' 
         ' pnlViewToggle
         ' 
+        pnlViewToggle.BackColor = Color.Transparent
         pnlViewToggle.Controls.Add(btnViewPdf)
         pnlViewToggle.Controls.Add(btnViewNative)
+        pnlViewToggle.CustomizableEdges = CustomizableEdges33
+        TransitionAnimator.SetDecoration(pnlViewToggle, Guna.UI2.AnimatorNS.DecorationType.None)
         pnlViewToggle.Dock = DockStyle.Right
-        pnlViewToggle.Location = New Point(1080, 20)
+        pnlViewToggle.Location = New Point(1040, 20)
         pnlViewToggle.Name = "pnlViewToggle"
-        pnlViewToggle.Size = New Size(280, 50)
+        pnlViewToggle.Padding = New Padding(5)
+        pnlViewToggle.ShadowDecoration.CustomizableEdges = CustomizableEdges34
+        pnlViewToggle.Size = New Size(320, 60)
         pnlViewToggle.TabIndex = 1
         ' 
         ' btnViewPdf
         ' 
-        btnViewPdf.BackColor = Color.FromArgb(CByte(71), CByte(85), CByte(105))
+        btnViewPdf.Animated = True
+        btnViewPdf.BackColor = Color.Transparent
+        btnViewPdf.BorderRadius = 15
         btnViewPdf.Cursor = Cursors.Hand
+        btnViewPdf.CustomizableEdges = CustomizableEdges29
+        TransitionAnimator.SetDecoration(btnViewPdf, Guna.UI2.AnimatorNS.DecorationType.None)
+        btnViewPdf.DisabledState.BorderColor = Color.DarkGray
+        btnViewPdf.DisabledState.CustomBorderColor = Color.DarkGray
+        btnViewPdf.DisabledState.FillColor = Color.FromArgb(CByte(169), CByte(169), CByte(169))
+        btnViewPdf.DisabledState.ForeColor = Color.FromArgb(CByte(141), CByte(141), CByte(141))
         btnViewPdf.Dock = DockStyle.Right
-        btnViewPdf.FlatAppearance.BorderSize = 0
-        btnViewPdf.FlatStyle = FlatStyle.Flat
-        btnViewPdf.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        btnViewPdf.FillColor = Color.FromArgb(CByte(71), CByte(85), CByte(105))
+        btnViewPdf.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
         btnViewPdf.ForeColor = Color.White
-        btnViewPdf.IconChar = FontAwesome.Sharp.IconChar.FilePdf
-        btnViewPdf.IconColor = Color.White
-        btnViewPdf.IconFont = FontAwesome.Sharp.IconFont.Auto
-        btnViewPdf.IconSize = 20
-        btnViewPdf.ImageAlign = ContentAlignment.MiddleLeft
-        btnViewPdf.Location = New Point(140, 0)
+        btnViewPdf.HoverState.FillColor = Color.FromArgb(CByte(100), CByte(116), CByte(139))
+        btnViewPdf.ImageAlign = HorizontalAlignment.Left
+        btnViewPdf.Location = New Point(161, 5)
         btnViewPdf.Name = "btnViewPdf"
-        btnViewPdf.Padding = New Padding(8, 0, 8, 0)
-        btnViewPdf.Size = New Size(140, 50)
+        btnViewPdf.Padding = New Padding(10, 0, 10, 0)
+        btnViewPdf.ShadowDecoration.CustomizableEdges = CustomizableEdges30
+        btnViewPdf.Size = New Size(154, 50)
         btnViewPdf.TabIndex = 1
-        btnViewPdf.Text = "PDF View"
-        btnViewPdf.TextImageRelation = TextImageRelation.ImageBeforeText
-        btnViewPdf.UseVisualStyleBackColor = False
+        btnViewPdf.Text = "📄 PDF View"
+        btnViewPdf.TextAlign = HorizontalAlignment.Right
         ' 
         ' btnViewNative
         ' 
-        btnViewNative.BackColor = Color.FromArgb(CByte(16), CByte(185), CByte(129))
+        btnViewNative.Animated = True
+        btnViewNative.BackColor = Color.Transparent
+        btnViewNative.BorderRadius = 15
         btnViewNative.Cursor = Cursors.Hand
+        btnViewNative.CustomizableEdges = CustomizableEdges31
+        TransitionAnimator.SetDecoration(btnViewNative, Guna.UI2.AnimatorNS.DecorationType.None)
+        btnViewNative.DisabledState.BorderColor = Color.DarkGray
+        btnViewNative.DisabledState.CustomBorderColor = Color.DarkGray
+        btnViewNative.DisabledState.FillColor = Color.FromArgb(CByte(169), CByte(169), CByte(169))
+        btnViewNative.DisabledState.ForeColor = Color.FromArgb(CByte(141), CByte(141), CByte(141))
         btnViewNative.Dock = DockStyle.Left
-        btnViewNative.FlatAppearance.BorderSize = 0
-        btnViewNative.FlatStyle = FlatStyle.Flat
-        btnViewNative.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        btnViewNative.FillColor = Color.FromArgb(CByte(16), CByte(185), CByte(129))
+        btnViewNative.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
         btnViewNative.ForeColor = Color.White
-        btnViewNative.IconChar = FontAwesome.Sharp.IconChar.Receipt
-        btnViewNative.IconColor = Color.White
-        btnViewNative.IconFont = FontAwesome.Sharp.IconFont.Auto
-        btnViewNative.IconSize = 20
-        btnViewNative.ImageAlign = ContentAlignment.MiddleLeft
-        btnViewNative.Location = New Point(0, 0)
+        btnViewNative.HoverState.FillColor = Color.FromArgb(CByte(5), CByte(150), CByte(105))
+        btnViewNative.ImageAlign = HorizontalAlignment.Left
+        btnViewNative.Location = New Point(5, 5)
         btnViewNative.Name = "btnViewNative"
-        btnViewNative.Padding = New Padding(8, 0, 8, 0)
-        btnViewNative.Size = New Size(140, 50)
+        btnViewNative.Padding = New Padding(10, 0, 10, 0)
+        btnViewNative.ShadowDecoration.CustomizableEdges = CustomizableEdges32
+        btnViewNative.Size = New Size(150, 50)
         btnViewNative.TabIndex = 0
-        btnViewNative.Text = "Receipt"
-        btnViewNative.TextImageRelation = TextImageRelation.ImageBeforeText
-        btnViewNative.UseVisualStyleBackColor = False
+        btnViewNative.Text = ChrW(55358) & ChrW(56830) & " Receipt"
+        btnViewNative.TextAlign = HorizontalAlignment.Right
         ' 
         ' lblHeaderTitle
         ' 
         lblHeaderTitle.AutoSize = True
-        lblHeaderTitle.Font = New Font("Segoe UI", 18F, FontStyle.Bold)
+        lblHeaderTitle.BackColor = Color.Transparent
+        TransitionAnimator.SetDecoration(lblHeaderTitle, Guna.UI2.AnimatorNS.DecorationType.None)
+        lblHeaderTitle.Font = New Font("Segoe UI", 18.0F, FontStyle.Bold)
         lblHeaderTitle.ForeColor = Color.White
-        lblHeaderTitle.Location = New Point(40, 25)
+        lblHeaderTitle.Location = New Point(40, 30)
         lblHeaderTitle.Name = "lblHeaderTitle"
         lblHeaderTitle.Size = New Size(259, 41)
         lblHeaderTitle.TabIndex = 0
@@ -501,114 +671,197 @@ Partial Class Receipt
         ' pnlActions
         ' 
         pnlActions.BackColor = Color.White
-        pnlActions.BorderStyle = BorderStyle.FixedSingle
         pnlActions.Controls.Add(btnEmail)
         pnlActions.Controls.Add(btnPrint)
         pnlActions.Controls.Add(btnSavePdf)
         pnlActions.Controls.Add(btnClose)
+        pnlActions.CustomBorderColor = Color.FromArgb(CByte(226), CByte(232), CByte(240))
+        pnlActions.CustomBorderThickness = New Padding(0, 1, 0, 0)
+        pnlActions.CustomizableEdges = CustomizableEdges45
+        TransitionAnimator.SetDecoration(pnlActions, Guna.UI2.AnimatorNS.DecorationType.None)
         pnlActions.Dock = DockStyle.Bottom
         pnlActions.Location = New Point(0, 800)
         pnlActions.Name = "pnlActions"
         pnlActions.Padding = New Padding(40, 15, 40, 15)
+        pnlActions.ShadowDecoration.CustomizableEdges = CustomizableEdges46
+        pnlActions.ShadowDecoration.Depth = 10
+        pnlActions.ShadowDecoration.Enabled = True
         pnlActions.Size = New Size(1400, 100)
         pnlActions.TabIndex = 2
         ' 
         ' btnEmail
         ' 
-        btnEmail.BackColor = Color.FromArgb(CByte(99), CByte(102), CByte(241))
+        btnEmail.Animated = True
+        btnEmail.BackColor = Color.Transparent
+        btnEmail.BorderRadius = 15
         btnEmail.Cursor = Cursors.Hand
-        btnEmail.FlatAppearance.BorderSize = 0
-        btnEmail.FlatStyle = FlatStyle.Flat
-        btnEmail.Font = New Font("Segoe UI", 11F, FontStyle.Bold)
+        btnEmail.CustomizableEdges = CustomizableEdges37
+        TransitionAnimator.SetDecoration(btnEmail, Guna.UI2.AnimatorNS.DecorationType.None)
+        btnEmail.DisabledState.BorderColor = Color.DarkGray
+        btnEmail.DisabledState.CustomBorderColor = Color.DarkGray
+        btnEmail.DisabledState.FillColor = Color.FromArgb(CByte(169), CByte(169), CByte(169))
+        btnEmail.DisabledState.ForeColor = Color.FromArgb(CByte(141), CByte(141), CByte(141))
+        btnEmail.FillColor = Color.FromArgb(CByte(99), CByte(102), CByte(241))
+        btnEmail.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
         btnEmail.ForeColor = Color.White
-        btnEmail.IconChar = FontAwesome.Sharp.IconChar.Envelope
-        btnEmail.IconColor = Color.White
-        btnEmail.IconFont = FontAwesome.Sharp.IconFont.Auto
-        btnEmail.IconSize = 24
-        btnEmail.ImageAlign = ContentAlignment.MiddleLeft
-        btnEmail.Location = New Point(720, 20)
+        btnEmail.HoverState.FillColor = Color.FromArgb(CByte(79), CByte(70), CByte(229))
+        btnEmail.ImageAlign = HorizontalAlignment.Left
+        btnEmail.ImageSize = New Size(24, 24)
+        btnEmail.Location = New Point(720, 21)
         btnEmail.Name = "btnEmail"
         btnEmail.Padding = New Padding(12, 0, 12, 0)
+        btnEmail.ShadowDecoration.BorderRadius = 15
+        btnEmail.ShadowDecoration.Color = Color.FromArgb(CByte(99), CByte(102), CByte(241))
+        btnEmail.ShadowDecoration.CustomizableEdges = CustomizableEdges38
+        btnEmail.ShadowDecoration.Depth = 8
+        btnEmail.ShadowDecoration.Enabled = True
         btnEmail.Size = New Size(200, 58)
         btnEmail.TabIndex = 3
-        btnEmail.Text = "Email"
-        btnEmail.TextImageRelation = TextImageRelation.ImageBeforeText
-        btnEmail.UseVisualStyleBackColor = False
+        btnEmail.Text = "✉️ Email"
+        btnEmail.TextAlign = HorizontalAlignment.Right
         ' 
         ' btnPrint
         ' 
-        btnPrint.BackColor = Color.FromArgb(CByte(59), CByte(130), CByte(246))
+        btnPrint.Animated = True
+        btnPrint.BackColor = Color.Transparent
+        btnPrint.BorderRadius = 15
         btnPrint.Cursor = Cursors.Hand
-        btnPrint.FlatAppearance.BorderSize = 0
-        btnPrint.FlatStyle = FlatStyle.Flat
-        btnPrint.Font = New Font("Segoe UI", 11F, FontStyle.Bold)
+        btnPrint.CustomizableEdges = CustomizableEdges39
+        TransitionAnimator.SetDecoration(btnPrint, Guna.UI2.AnimatorNS.DecorationType.None)
+        btnPrint.DisabledState.BorderColor = Color.DarkGray
+        btnPrint.DisabledState.CustomBorderColor = Color.DarkGray
+        btnPrint.DisabledState.FillColor = Color.FromArgb(CByte(169), CByte(169), CByte(169))
+        btnPrint.DisabledState.ForeColor = Color.FromArgb(CByte(141), CByte(141), CByte(141))
+        btnPrint.FillColor = Color.FromArgb(CByte(59), CByte(130), CByte(246))
+        btnPrint.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
         btnPrint.ForeColor = Color.White
-        btnPrint.IconChar = FontAwesome.Sharp.IconChar.Print
-        btnPrint.IconColor = Color.White
-        btnPrint.IconFont = FontAwesome.Sharp.IconFont.Auto
-        btnPrint.IconSize = 24
-        btnPrint.ImageAlign = ContentAlignment.MiddleLeft
-        btnPrint.Location = New Point(490, 20)
+        btnPrint.HoverState.FillColor = Color.FromArgb(CByte(37), CByte(99), CByte(235))
+        btnPrint.ImageAlign = HorizontalAlignment.Left
+        btnPrint.ImageSize = New Size(24, 24)
+        btnPrint.Location = New Point(490, 21)
         btnPrint.Name = "btnPrint"
         btnPrint.Padding = New Padding(12, 0, 12, 0)
+        btnPrint.ShadowDecoration.BorderRadius = 15
+        btnPrint.ShadowDecoration.Color = Color.FromArgb(CByte(59), CByte(130), CByte(246))
+        btnPrint.ShadowDecoration.CustomizableEdges = CustomizableEdges40
+        btnPrint.ShadowDecoration.Depth = 8
+        btnPrint.ShadowDecoration.Enabled = True
         btnPrint.Size = New Size(200, 58)
         btnPrint.TabIndex = 2
-        btnPrint.Text = "Print"
-        btnPrint.TextImageRelation = TextImageRelation.ImageBeforeText
-        btnPrint.UseVisualStyleBackColor = False
+        btnPrint.Text = "🖨️ Print"
+        btnPrint.TextAlign = HorizontalAlignment.Right
         ' 
         ' btnSavePdf
         ' 
-        btnSavePdf.BackColor = Color.FromArgb(CByte(16), CByte(185), CByte(129))
+        btnSavePdf.Animated = True
+        btnSavePdf.BackColor = Color.Transparent
+        btnSavePdf.BorderRadius = 15
         btnSavePdf.Cursor = Cursors.Hand
-        btnSavePdf.FlatAppearance.BorderSize = 0
-        btnSavePdf.FlatStyle = FlatStyle.Flat
-        btnSavePdf.Font = New Font("Segoe UI", 11F, FontStyle.Bold)
+        btnSavePdf.CustomizableEdges = CustomizableEdges41
+        TransitionAnimator.SetDecoration(btnSavePdf, Guna.UI2.AnimatorNS.DecorationType.None)
+        btnSavePdf.DisabledState.BorderColor = Color.DarkGray
+        btnSavePdf.DisabledState.CustomBorderColor = Color.DarkGray
+        btnSavePdf.DisabledState.FillColor = Color.FromArgb(CByte(169), CByte(169), CByte(169))
+        btnSavePdf.DisabledState.ForeColor = Color.FromArgb(CByte(141), CByte(141), CByte(141))
+        btnSavePdf.FillColor = Color.FromArgb(CByte(16), CByte(185), CByte(129))
+        btnSavePdf.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
         btnSavePdf.ForeColor = Color.White
-        btnSavePdf.IconChar = FontAwesome.Sharp.IconChar.Download
-        btnSavePdf.IconColor = Color.White
-        btnSavePdf.IconFont = FontAwesome.Sharp.IconFont.Auto
-        btnSavePdf.IconSize = 24
-        btnSavePdf.ImageAlign = ContentAlignment.MiddleLeft
-        btnSavePdf.Location = New Point(260, 20)
+        btnSavePdf.HoverState.FillColor = Color.FromArgb(CByte(5), CByte(150), CByte(105))
+        btnSavePdf.ImageAlign = HorizontalAlignment.Left
+        btnSavePdf.ImageSize = New Size(24, 24)
+        btnSavePdf.Location = New Point(260, 21)
         btnSavePdf.Name = "btnSavePdf"
         btnSavePdf.Padding = New Padding(12, 0, 12, 0)
+        btnSavePdf.ShadowDecoration.BorderRadius = 15
+        btnSavePdf.ShadowDecoration.Color = Color.FromArgb(CByte(16), CByte(185), CByte(129))
+        btnSavePdf.ShadowDecoration.CustomizableEdges = CustomizableEdges42
+        btnSavePdf.ShadowDecoration.Depth = 8
+        btnSavePdf.ShadowDecoration.Enabled = True
         btnSavePdf.Size = New Size(200, 58)
         btnSavePdf.TabIndex = 1
-        btnSavePdf.Text = "Save PDF"
-        btnSavePdf.TextImageRelation = TextImageRelation.ImageBeforeText
-        btnSavePdf.UseVisualStyleBackColor = False
+        btnSavePdf.Text = "⬇️ Save PDF"
+        btnSavePdf.TextAlign = HorizontalAlignment.Right
         ' 
         ' btnClose
         ' 
         btnClose.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        btnClose.BackColor = Color.FromArgb(CByte(71), CByte(85), CByte(105))
+        btnClose.Animated = True
+        btnClose.BackColor = Color.Transparent
+        btnClose.BorderRadius = 15
         btnClose.Cursor = Cursors.Hand
-        btnClose.FlatAppearance.BorderSize = 0
-        btnClose.FlatStyle = FlatStyle.Flat
-        btnClose.Font = New Font("Segoe UI", 11F, FontStyle.Bold)
+        btnClose.CustomizableEdges = CustomizableEdges43
+        TransitionAnimator.SetDecoration(btnClose, Guna.UI2.AnimatorNS.DecorationType.None)
+        btnClose.DisabledState.BorderColor = Color.DarkGray
+        btnClose.DisabledState.CustomBorderColor = Color.DarkGray
+        btnClose.DisabledState.FillColor = Color.FromArgb(CByte(169), CByte(169), CByte(169))
+        btnClose.DisabledState.ForeColor = Color.FromArgb(CByte(141), CByte(141), CByte(141))
+        btnClose.FillColor = Color.FromArgb(CByte(71), CByte(85), CByte(105))
+        btnClose.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
         btnClose.ForeColor = Color.White
-        btnClose.IconChar = FontAwesome.Sharp.IconChar.Close
-        btnClose.IconColor = Color.White
-        btnClose.IconFont = FontAwesome.Sharp.IconFont.Auto
-        btnClose.IconSize = 24
-        btnClose.ImageAlign = ContentAlignment.MiddleLeft
-        btnClose.Location = New Point(1160, 20)
+        btnClose.HoverState.FillColor = Color.FromArgb(CByte(51), CByte(65), CByte(85))
+        btnClose.ImageAlign = HorizontalAlignment.Left
+        btnClose.ImageSize = New Size(24, 24)
+        btnClose.Location = New Point(1160, 21)
         btnClose.Name = "btnClose"
         btnClose.Padding = New Padding(12, 0, 12, 0)
+        btnClose.ShadowDecoration.BorderRadius = 15
+        btnClose.ShadowDecoration.CustomizableEdges = CustomizableEdges44
+        btnClose.ShadowDecoration.Depth = 5
+        btnClose.ShadowDecoration.Enabled = True
         btnClose.Size = New Size(180, 58)
         btnClose.TabIndex = 0
-        btnClose.Text = "Close"
-        btnClose.TextImageRelation = TextImageRelation.ImageBeforeText
-        btnClose.UseVisualStyleBackColor = False
+        btnClose.Text = "❌ Close"
+        btnClose.TextAlign = HorizontalAlignment.Right
+        ' 
+        ' Guna2ShadowForm1
+        ' 
+        Guna2ShadowForm1.BorderRadius = 20
+        Guna2ShadowForm1.ShadowColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        Guna2ShadowForm1.TargetForm = Me
+        ' 
+        ' Guna2DragControl1
+        ' 
+        Guna2DragControl1.DockIndicatorTransparencyValue = 0.6R
+        Guna2DragControl1.TargetControl = pnlHeader
+        Guna2DragControl1.UseTransparentDrag = True
+        ' 
+        ' Guna2Elipse1
+        ' 
+        Guna2Elipse1.BorderRadius = 20
+        Guna2Elipse1.TargetControl = Me
+        ' 
+        ' TransitionAnimator
+        ' 
+        TransitionAnimator.AnimationType = Guna.UI2.AnimatorNS.AnimationType.HorizSlide
+        TransitionAnimator.Cursor = Nothing
+        Animation1.AnimateOnlyDifferences = True
+        Animation1.BlindCoeff = CType(resources.GetObject("Animation1.BlindCoeff"), PointF)
+        Animation1.LeafCoeff = 0F
+        Animation1.MaxTime = 1.0F
+        Animation1.MinTime = 0F
+        Animation1.MosaicCoeff = CType(resources.GetObject("Animation1.MosaicCoeff"), PointF)
+        Animation1.MosaicShift = CType(resources.GetObject("Animation1.MosaicShift"), PointF)
+        Animation1.MosaicSize = 0
+        Animation1.Padding = New Padding(0)
+        Animation1.RotateCoeff = 0F
+        Animation1.RotateLimit = 0F
+        Animation1.ScaleCoeff = CType(resources.GetObject("Animation1.ScaleCoeff"), PointF)
+        Animation1.SlideCoeff = CType(resources.GetObject("Animation1.SlideCoeff"), PointF)
+        Animation1.TimeCoeff = 0F
+        Animation1.TransparencyCoeff = 0F
+        TransitionAnimator.DefaultAnimation = Animation1
+        TransitionAnimator.MaxAnimationTime = 800
+        TransitionAnimator.TimeStep = 0.01F
         ' 
         ' Receipt
         ' 
-        AutoScaleDimensions = New SizeF(8F, 20F)
+        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1400, 900)
         Controls.Add(pnlMain)
-        Font = New Font("Segoe UI", 9F)
+        TransitionAnimator.SetDecoration(Me, Guna.UI2.AnimatorNS.DecorationType.None)
+        Font = New Font("Segoe UI", 9.0F)
+        FormBorderStyle = FormBorderStyle.None
         KeyPreview = True
         MinimumSize = New Size(1000, 600)
         Name = "Receipt"
@@ -641,43 +894,47 @@ Partial Class Receipt
         ResumeLayout(False)
     End Sub
 
-    Friend WithEvents pnlMain As Panel
-    Friend WithEvents pnlHeader As Panel
+    Friend WithEvents pnlMain As Guna.UI2.WinForms.Guna2Panel
+    Friend WithEvents pnlHeader As Guna.UI2.WinForms.Guna2GradientPanel
     Friend WithEvents lblHeaderTitle As Label
-    Friend WithEvents pnlContent As Panel
-    Friend WithEvents pnlNativeReceipt As Panel
-    Friend WithEvents pnlReceiptHeader As Panel
-    Friend WithEvents pnlLogo As Panel
+    Friend WithEvents pnlContent As Guna.UI2.WinForms.Guna2Panel
+    Friend WithEvents pnlNativeReceipt As Guna.UI2.WinForms.Guna2Panel
+    Friend WithEvents pnlReceiptHeader As Guna.UI2.WinForms.Guna2GradientPanel
+    Friend WithEvents pnlLogo As Guna.UI2.WinForms.Guna2Panel
     Friend WithEvents lblAppTitle As Label
     Friend WithEvents lblAppSubtitle As Label
-    Friend WithEvents pnlHeaderInfo As Panel
+    Friend WithEvents pnlHeaderInfo As Guna.UI2.WinForms.Guna2Panel
     Friend WithEvents lblOrderId As Label
     Friend WithEvents lblDateTime As Label
     Friend WithEvents lblCashier As Label
     Friend WithEvents lblPaymentMethod As Label
-    Friend WithEvents pnlReceiptScroll As Panel
+    Friend WithEvents pnlReceiptScroll As Guna.UI2.WinForms.Guna2Panel
     Friend WithEvents flowItemsContainer As FlowLayoutPanel
-    Friend WithEvents pnlReceiptFooter As Panel
-    Friend WithEvents pnlTotalsCard As Panel
-    Friend WithEvents pnlSubtotalRow As Panel
+    Friend WithEvents pnlReceiptFooter As Guna.UI2.WinForms.Guna2Panel
+    Friend WithEvents pnlTotalsCard As Guna.UI2.WinForms.Guna2GradientPanel
+    Friend WithEvents pnlSubtotalRow As Guna.UI2.WinForms.Guna2Panel
     Friend WithEvents lblSubtotalLabel As Label
     Friend WithEvents lblSubtotalAmount As Label
-    Friend WithEvents pnlDiscountRow As Panel
+    Friend WithEvents pnlDiscountRow As Guna.UI2.WinForms.Guna2Panel
     Friend WithEvents lblDiscountLabel As Label
     Friend WithEvents lblDiscountAmount As Label
-    Friend WithEvents pnlTotalRow As Panel
+    Friend WithEvents pnlTotalRow As Guna.UI2.WinForms.Guna2Panel
     Friend WithEvents lblTotalLabel As Label
     Friend WithEvents lblTotalAmount As Label
-    Friend WithEvents pnlPdfViewer As Panel
+    Friend WithEvents pnlPdfViewer As Guna.UI2.WinForms.Guna2Panel
     Friend WithEvents pdfViewer As PdfiumViewer.PdfViewer
-    Friend WithEvents pnlPdfToolbar As Panel
-    Friend WithEvents btnPdfZoom As FontAwesome.Sharp.IconButton
-    Friend WithEvents pnlViewToggle As Panel
-    Friend WithEvents btnViewNative As FontAwesome.Sharp.IconButton
-    Friend WithEvents btnViewPdf As FontAwesome.Sharp.IconButton
-    Friend WithEvents pnlActions As Panel
-    Friend WithEvents btnSavePdf As FontAwesome.Sharp.IconButton
-    Friend WithEvents btnPrint As FontAwesome.Sharp.IconButton
-    Friend WithEvents btnEmail As FontAwesome.Sharp.IconButton
-    Friend WithEvents btnClose As FontAwesome.Sharp.IconButton
+    Friend WithEvents pnlPdfToolbar As Guna.UI2.WinForms.Guna2GradientPanel
+    Friend WithEvents btnPdfZoom As Guna.UI2.WinForms.Guna2Button
+    Friend WithEvents pnlViewToggle As Guna.UI2.WinForms.Guna2Panel
+    Friend WithEvents btnViewNative As Guna.UI2.WinForms.Guna2Button
+    Friend WithEvents btnViewPdf As Guna.UI2.WinForms.Guna2Button
+    Friend WithEvents pnlActions As Guna.UI2.WinForms.Guna2Panel
+    Friend WithEvents btnSavePdf As Guna.UI2.WinForms.Guna2Button
+    Friend WithEvents btnPrint As Guna.UI2.WinForms.Guna2Button
+    Friend WithEvents btnEmail As Guna.UI2.WinForms.Guna2Button
+    Friend WithEvents btnClose As Guna.UI2.WinForms.Guna2Button
+    Friend WithEvents Guna2ShadowForm1 As Guna.UI2.WinForms.Guna2ShadowForm
+    Friend WithEvents Guna2DragControl1 As Guna.UI2.WinForms.Guna2DragControl
+    Friend WithEvents Guna2Elipse1 As Guna.UI2.WinForms.Guna2Elipse
+    Friend WithEvents TransitionAnimator As Guna.UI2.WinForms.Guna2Transition
 End Class
