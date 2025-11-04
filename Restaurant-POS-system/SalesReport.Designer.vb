@@ -1,6 +1,6 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class SalesReport
-    Inherits System.Windows.Forms.Form
+    Inherits System.Windows.Forms.UserControl
 
     <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(disposing As Boolean)
@@ -110,7 +110,7 @@ Partial Class SalesReport
         ' Guna2BorderlessForm1
         ' 
         Guna2BorderlessForm1.BorderRadius = 25
-        Guna2BorderlessForm1.ContainerControl = Me
+        ' Note: BorderlessForm.ContainerControl is not set for UserControl hosting.
         Guna2BorderlessForm1.DockIndicatorTransparencyValue = 0.6R
         Guna2BorderlessForm1.ShadowColor = Color.FromArgb(CByte(31), CByte(138), CByte(112))
         Guna2BorderlessForm1.TransparentWhileDrag = True
@@ -118,7 +118,7 @@ Partial Class SalesReport
         ' Guna2ShadowForm1
         ' 
         Guna2ShadowForm1.ShadowColor = Color.FromArgb(CByte(31), CByte(138), CByte(112))
-        Guna2ShadowForm1.TargetForm = Me
+        ' Note: ShadowForm.TargetForm is not assigned for UserControl hosting.
         ' 
         ' Guna2Elipse1
         ' 
@@ -779,17 +779,16 @@ Partial Class SalesReport
         btnLogout.Text = "⮾ Logout"
         btnLogout.UseTransparentBackground = True
         ' 
-        ' SalesReport
+        ' SalesReport (UserControl)
         ' 
         AutoScaleDimensions = New SizeF(8.0F, 20.0F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.FromArgb(CByte(247), CByte(250), CByte(252))
-        ClientSize = New Size(1600, 1000)
+        ' Set control size (UserControl does not have ClientSize/Form properties)
+        Me.Size = New Size(1600, 1000)
         Controls.Add(pnlScrollContainer)
-        FormBorderStyle = FormBorderStyle.None
         Name = "SalesReport"
-        StartPosition = FormStartPosition.CenterScreen
-        Text = "Sales Analytics - OrderUp!"
+        ' Designer: no FormBorderStyle, StartPosition or Text for UserControl
         pnlScrollContainer.ResumeLayout(False)
         pnlMainContent.ResumeLayout(False)
         pnlTransactions.ResumeLayout(False)

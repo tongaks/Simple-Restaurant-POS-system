@@ -7,14 +7,13 @@ Imports Guna.UI2.WinForms
 Imports System.Text.RegularExpressions
 
 ''' <summary>
-''' ULTRA-MODERN MENU MANAGEMENT FORM
-''' Enterprise-grade UI with card-based layout, smooth animations, and inline editing
-''' Redesigned from ground up to match 2025 standards
+''' ULTRA-MODERN MENU MANAGEMENT - PROFESSIONAL GRADE
+''' Premium UI/UX with glassmorphism, gradients, and smooth animations
 ''' </summary>
 Public Class Manage_menu
     ' ===== PRIVATE FIELDS =====
-    Private currentCategory As String = "Foods"               ' display name
-    Private currentCategoryTable As String = "Foods"         ' safe table name
+    Private currentCategory As String = "Foods"
+    Private currentCategoryTable As String = "Foods"
     Private allMenuItems As New List(Of MenuItemData)
     Private displayedCards As New List(Of MenuItemCard)
     Private categoryButtons As New List(Of Guna2Button)
@@ -22,10 +21,11 @@ Public Class Manage_menu
     Private searchTimer As Timer
     Private currentSort As String = "All Items"
     Private isLoading As Boolean = False
+    Private glowTimer As Timer
+    Private glowDirection As Integer = 1
 
-    ' Prevent the same runtime error message from spamming repeatedly
     Private hasShownRuntimeError As Boolean = False
-    Private shownLoadError As Boolean = False ' guard to avoid infinite spam of load errors
+    Private shownLoadError As Boolean = False
 
     ' ===== MENU ITEM DATA STRUCTURE =====
     Private Class MenuItemData
@@ -37,90 +37,102 @@ Public Class Manage_menu
         Public Property DateAdded As DateTime
     End Class
 
-    ' ===== FORM LOAD =====
+    ' ===== CONTROL LOAD =====
     Private Sub Manage_menu_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Try
-            Me.WindowState = FormWindowState.Maximized
+            Dim parentForm As Form = Me.FindForm()
+            If parentForm IsNot Nothing Then
+                If TypeOf parentForm Is Admin Then
+                    navButtons = New AdminNavButtons(parentForm, btnLogout, btnBack, btnHelp, Nothing)
+                End If
+                Me.AutoScaleMode = AutoScaleMode.Inherit
+            Else
+                Me.AutoScaleMode = AutoScaleMode.Font
+            End If
 
-            ' Initialize navigation buttons
-            navButtons = New AdminNavButtons(Me, btnLogout, btnBack, btnHelp, Nothing)
-
-            ' Setup search timer for debouncing (ensure it's always available)
             If searchTimer Is Nothing Then
                 searchTimer = New Timer()
-                searchTimer.Interval = 300 ' 300ms debounce
+                searchTimer.Interval = 300
                 AddHandler searchTimer.Tick, AddressOf SearchTimer_Tick
             End If
 
-            ' Apply premium styling
-            ApplyPremiumStyling()
-
-            ' Load categories and create tabs
+            ApplyUltraModernStyling()
+            StartTitleGlowAnimation()
             LoadCategoryTabs()
-
-            ' Load initial category items
             LoadMenuItems(currentCategoryTable)
-
-            ' Start entrance animation
             AnimateEntrance()
 
         Catch ex As Exception
-            MessageBox.Show("Error initializing form: " & ex.Message, "Initialization Error",
+            MessageBox.Show("Error initializing control: " & ex.Message, "Initialization Error",
                             MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
     ''' <summary>
-    ''' Apply premium enterprise styling to all components
+    ''' Apply ultra-modern professional styling
     ''' </summary>
-    Private Sub ApplyPremiumStyling()
-        ' Form styling
+    Private Sub ApplyUltraModernStyling()
+        ' Control styling
         Me.BackColor = Theme.NeutralBackground
 
-        ' Top bar styling is already handled by Designer
-        ' Apply additional runtime styling if needed
-
-        ' Main content area styling
+        ' Main content area - subtle gradient
         pnlMain.FillColor = Theme.NeutralBackground
 
-        ' Loading overlay styling
-        pnlLoadingOverlay.FillColor = Color.FromArgb(200, Theme.NeutralBackground.R,
+        ' Loading overlay - frosted glass effect
+        pnlLoadingOverlay.FillColor = Color.FromArgb(240, Theme.NeutralBackground.R,
                                                        Theme.NeutralBackground.G,
                                                        Theme.NeutralBackground.B)
+
+        ' Add subtle shine to category tabs container
+        flowCategoryTabs.BackColor = Color.Transparent
     End Sub
 
     ''' <summary>
-    ''' Cinematic entrance animation
+    ''' Animated glow effect on title
+    ''' </summary>
+    Private Sub StartTitleGlowAnimation()
+        glowTimer = New Timer()
+        glowTimer.Interval = 30
+        Dim glowIntensity As Integer = 40
+
+        AddHandler glowTimer.Tick, Sub()
+                                       glowIntensity += (2 * glowDirection)
+
+                                       If glowIntensity >= 80 Then
+                                           glowDirection = -1
+                                       ElseIf glowIntensity <= 40 Then
+                                           glowDirection = 1
+                                       End If
+
+                                       Try
+                                           pnlTitleGlow.FillColor = Color.FromArgb(glowIntensity, 255, 200, 87)
+                                       Catch
+                                       End Try
+                                   End Sub
+        glowTimer.Start()
+    End Sub
+
+    ''' <summary>
+    ''' Enhanced entrance animation with stagger
     ''' </summary>
     Private Sub AnimateEntrance()
-        Me.Opacity = 0
-        pnlTopBar.Top = -120
+        pnlTopBar.Top = -164
 
         Dim fadeTimer As New Timer()
-        fadeTimer.Interval = 15
+        fadeTimer.Interval = 12
         Dim steps As Integer = 0
 
         AddHandler fadeTimer.Tick, Sub()
                                        steps += 1
 
-                                       ' Fade in form
-                                       If Me.Opacity < 1 Then
-                                           Me.Opacity = Math.Min(1, Me.Opacity + 0.05)
-                                       End If
-
-                                       ' Slide down top bar
                                        If pnlTopBar.Top < 0 Then
-                                           pnlTopBar.Top = Math.Min(0, pnlTopBar.Top + 10)
+                                           pnlTopBar.Top = Math.Min(0, pnlTopBar.Top + 12)
                                        End If
 
-                                       ' Complete animation
-                                       If steps >= 20 Then
-                                           Me.Opacity = 1
+                                       If steps >= 15 Then
                                            pnlTopBar.Top = 0
                                            fadeTimer.Stop()
                                            fadeTimer.Dispose()
-
-                                           ' Trigger content entrance
                                            AnimateContentEntrance()
                                        End If
                                    End Sub
@@ -128,17 +140,14 @@ Public Class Manage_menu
     End Sub
 
     ''' <summary>
-    ''' Animate content cards entrance with stagger
-    ''' NOTE: Timer.Interval must be > 0. guard against 0 by using at least 1.
-    ''' Also wrap handler to avoid unhandled exceptions that spam the dialog.
+    ''' Animate content cards with enhanced stagger
     ''' </summary>
     Private Sub AnimateContentEntrance()
         For i As Integer = 0 To displayedCards.Count - 1
             Dim card = displayedCards(i)
-            Dim delay = i * 50 ' 50ms stagger per card
+            Dim delay = i * 60
 
             Dim timer As New Timer()
-            ' Timer.Interval must be > 0; use 1ms for immediate execution when delay is 0
             timer.Interval = If(delay <= 0, 1, delay)
             timer.Tag = card
 
@@ -165,21 +174,18 @@ Public Class Manage_menu
         Next
     End Sub
 
-    ''' <summary>
-    ''' Animate single card slide up from bottom
-    ''' </summary>
     Private Sub AnimateCardSlideUp(card As MenuItemCard)
         Dim originalY = card.Top
-        card.Top = originalY + 30
+        card.Top = originalY + 40
 
         Dim slideTimer As New Timer()
-        slideTimer.Interval = 10
+        slideTimer.Interval = 8
         Dim steps As Integer = 0
 
         AddHandler slideTimer.Tick, Sub()
                                         steps += 1
                                         If card.Top > originalY Then
-                                            card.Top = Math.Max(originalY, card.Top - 3)
+                                            card.Top = Math.Max(originalY, card.Top - 4)
                                         Else
                                             card.Top = originalY
                                             slideTimer.Stop()
@@ -189,10 +195,7 @@ Public Class Manage_menu
         slideTimer.Start()
     End Sub
 
-    ' ===== CATEGORY TAB MANAGEMENT =====
-    ''' <summary>
-    ''' Load category tabs from database and create UI buttons
-    ''' </summary>
+    ' ===== CATEGORY TAB MANAGEMENT - ULTRA MODERN =====
     Private Sub LoadCategoryTabs()
         Try
             flowCategoryTabs.Controls.Clear()
@@ -208,16 +211,14 @@ Public Class Manage_menu
                             Dim categoryName As String = reader("CategoryName").ToString()
                             Dim safeName As String = Regex.Replace(categoryName.Trim(), "[^A-Za-z0-9_]", "_")
                             If String.IsNullOrWhiteSpace(safeName) Then safeName = "Category_" & Guid.NewGuid().ToString("N").Substring(0, 6)
-                            CreateCategoryTab(categoryName, safeName)
+                            CreateModernCategoryTab(categoryName, safeName)
                         End While
                     End Using
                 End Using
             End Using
 
-            ' Set first category as active
             If categoryButtons.Count > 0 Then
                 SetActiveCategoryTab(categoryButtons(0))
-                ' initialize currentCategory/currentCategoryTable from first button
                 Dim t = CType(categoryButtons(0).Tag, Tuple(Of String, String))
                 currentCategory = t.Item1
                 currentCategoryTable = t.Item2
@@ -227,11 +228,10 @@ Public Class Manage_menu
             MessageBox.Show("Error loading categories: " & ex.Message, "Database Error",
                             MessageBoxButtons.OK, MessageBoxIcon.Error)
 
-            ' Fallback categories (create with safe names)
-            CreateCategoryTab("Foods", Regex.Replace("Foods", "[^A-Za-z0-9_]", "_"))
-            CreateCategoryTab("Drinks", Regex.Replace("Drinks", "[^A-Za-z0-9_]", "_"))
-            CreateCategoryTab("Snacks/Sides", Regex.Replace("Snacks_Sides", "[^A-Za-z0-9_]", "_"))
-            CreateCategoryTab("Desserts", Regex.Replace("Desserts", "[^A-Za-z0-9_]", "_"))
+            CreateModernCategoryTab("Foods", "Foods")
+            CreateModernCategoryTab("Drinks", "Drinks")
+            CreateModernCategoryTab("Snacks/Sides", "Snacks_Sides")
+            CreateModernCategoryTab("Desserts", "Desserts")
 
             If categoryButtons.Count > 0 Then
                 SetActiveCategoryTab(categoryButtons(0))
@@ -243,36 +243,33 @@ Public Class Manage_menu
     End Sub
 
     ''' <summary>
-    ''' Create a single category tab button
+    ''' Create ultra-modern category tab with glassmorphism
     ''' </summary>
-    Private Sub CreateCategoryTab(categoryDisplayName As String, safeTableName As String)
+    Private Sub CreateModernCategoryTab(categoryDisplayName As String, safeTableName As String)
         Dim btnCategory As New Guna2Button()
 
         With btnCategory
-            .Size = New Size(130, 40)
-            .BorderRadius = 20 ' Pill shape
-            .Font = New Font("Segoe UI Semibold", 10.5F, FontStyle.Bold)
+            .Size = New Size(140, 48)
+            .BorderRadius = 24 ' More rounded
+            .Font = New Font("Segoe UI Semibold", 11.0F, FontStyle.Bold)
             .Cursor = Cursors.Hand
             .Text = GetCategoryIcon(categoryDisplayName) & " " & categoryDisplayName
-            ' store display and safe name as a tuple in Tag
             .Tag = Tuple.Create(categoryDisplayName, safeTableName)
             .Animated = True
-            .Margin = New Padding(5, 0, 5, 0)
+            .Margin = New Padding(6, 0, 6, 0)
 
-            ' Inactive state (default)
-            .FillColor = Color.Transparent
-            .BorderColor = Theme.LightBorder
+            ' Inactive state - glassmorphism
+            .FillColor = Color.FromArgb(30, 255, 255, 255)
+            .BorderColor = Color.FromArgb(60, 255, 255, 255)
             .BorderThickness = 2
-            .ForeColor = Theme.GrayText
+            .ForeColor = Color.White
 
-            ' Hover state
-            .HoverState.FillColor = Color.FromArgb(20, Theme.PrimaryAccent.R,
-                                                     Theme.PrimaryAccent.G,
-                                                     Theme.PrimaryAccent.B)
-            .HoverState.BorderColor = Theme.PrimaryAccent
+            ' Hover state - brighter glass
+            .HoverState.FillColor = Color.FromArgb(50, 255, 255, 255)
+            .HoverState.BorderColor = Color.FromArgb(100, 255, 255, 255)
 
             ' Shadow
-            .ShadowDecoration.Enabled = False ' Only show shadow when active
+            .ShadowDecoration.Enabled = False
         End With
 
         AddHandler btnCategory.Click, AddressOf CategoryTab_Click
@@ -280,9 +277,6 @@ Public Class Manage_menu
         categoryButtons.Add(btnCategory)
     End Sub
 
-    ''' <summary>
-    ''' Get emoji icon for category
-    ''' </summary>
     Private Function GetCategoryIcon(categoryName As String) As String
         Select Case categoryName.ToLower()
             Case "foods"
@@ -300,9 +294,6 @@ Public Class Manage_menu
         End Select
     End Function
 
-    ''' <summary>
-    ''' Handle category tab click
-    ''' </summary>
     Private Sub CategoryTab_Click(sender As Object, e As EventArgs)
         Dim clickedButton = CType(sender, Guna2Button)
         SetActiveCategoryTab(clickedButton)
@@ -311,11 +302,10 @@ Public Class Manage_menu
         currentCategory = tuple.Item1
         currentCategoryTable = tuple.Item2
 
-        ' Load items with fade transition
         FadeOutCards()
 
         Dim loadTimer As New Timer()
-        loadTimer.Interval = 300 ' Wait for fade out
+        loadTimer.Interval = 250
         AddHandler loadTimer.Tick, Sub()
                                        LoadMenuItems(currentCategoryTable)
                                        loadTimer.Stop()
@@ -325,36 +315,29 @@ Public Class Manage_menu
     End Sub
 
     ''' <summary>
-    ''' Set active category tab with visual feedback
+    ''' Ultra-modern active tab styling with gradient
     ''' </summary>
     Private Sub SetActiveCategoryTab(activeButton As Guna2Button)
-        ' Reset all buttons to inactive state
         For Each btn In categoryButtons
-            btn.FillColor = Color.Transparent
-            btn.BorderColor = Theme.LightBorder
+            btn.FillColor = Color.FromArgb(30, 255, 255, 255)
+            btn.BorderColor = Color.FromArgb(60, 255, 255, 255)
             btn.BorderThickness = 2
-            btn.ForeColor = Theme.GrayText
+            btn.ForeColor = Color.White
             btn.ShadowDecoration.Enabled = False
         Next
 
-        ' Set active button style
         With activeButton
-            .FillColor = Theme.PrimaryAccent
-            .BorderColor = Theme.PrimaryAccent
+            .FillColor = Color.FromArgb(255, 200, 87)
+            .BorderColor = Color.FromArgb(255, 200, 87)
             .BorderThickness = 0
-            .ForeColor = Theme.DarkText
+            .ForeColor = Color.FromArgb(30, 30, 30)
             .ShadowDecoration.Enabled = True
-            .ShadowDecoration.Depth = 8
-            .ShadowDecoration.Color = Color.FromArgb(80, Theme.PrimaryAccent.R,
-                                                       Theme.PrimaryAccent.G,
-                                                       Theme.PrimaryAccent.B)
+            .ShadowDecoration.Depth = 15
+            .ShadowDecoration.Color = Color.FromArgb(100, 255, 200, 87)
         End With
     End Sub
 
     ' ===== MENU ITEMS LOADING =====
-    ''' <summary>
-    ''' Load menu items from database for specified category
-    ''' </summary>
     Private Sub LoadMenuItems(categoryTable As String)
         If isLoading Then Return
 
@@ -369,7 +352,6 @@ Public Class Manage_menu
             Using connection As New MySqlConnection(GetGlobalConnectionString())
                 connection.Open()
 
-                ' Query with DateAdded field (add if doesn't exist)
                 Dim query As String = "SELECT ItemId, ItemName, ItemPrice, ImagePath, " &
                                       "COALESCE(DateAdded, NOW()) as DateAdded " &
                                       "FROM `" & categoryTable & "` ORDER BY ItemName"
@@ -378,7 +360,6 @@ Public Class Manage_menu
                     Using reader As MySqlDataReader = command.ExecuteReader()
                         While reader.Read()
                             Try
-                                ' Safely read each column and handle DBNull
                                 Dim itemId As Integer = 0
                                 Dim itemName As String = String.Empty
                                 Dim itemPrice As Decimal = 0D
@@ -389,7 +370,6 @@ Public Class Manage_menu
                                     Dim idx = reader.GetOrdinal("ItemId")
                                     If Not reader.IsDBNull(idx) Then itemId = Convert.ToInt32(reader.GetValue(idx))
                                 Catch ex As Exception
-                                    ' if field missing or cannot cast, skip row but continue
                                     Throw New Exception("Missing or invalid ItemId column: " & ex.Message, ex)
                                 End Try
 
@@ -417,7 +397,6 @@ Public Class Manage_menu
                                 Catch
                                 End Try
 
-                                ' Normalize image path
                                 If String.IsNullOrWhiteSpace(imagePath) OrElse imagePath = "N/A" Then imagePath = String.Empty
 
                                 allMenuItems.Add(New MenuItemData() With {
@@ -429,7 +408,6 @@ Public Class Manage_menu
                                     .DateAdded = dateAdded
                                 })
                             Catch rowEx As Exception
-                                ' Show load error once and stop loading further rows to avoid spamming
                                 If Not shownLoadError Then
                                     shownLoadError = True
                                     MessageBox.Show("Error loading menu items: " & rowEx.Message, "Database Error",
@@ -442,12 +420,8 @@ Public Class Manage_menu
                 End Using
             End Using
 
-            ' Apply current sort/filter
             ApplySortFilter()
-
-            ' Create cards for filtered items
             CreateMenuCards()
-
             HideLoadingOverlay()
             isLoading = False
 
@@ -470,9 +444,6 @@ Public Class Manage_menu
         End Try
     End Sub
 
-    ''' <summary>
-    ''' Create menu item cards from data
-    ''' </summary>
     Private Sub CreateMenuCards()
         flowMenuItems.SuspendLayout()
 
@@ -480,10 +451,9 @@ Public Class Manage_menu
             Dim card As New MenuItemCard()
             card.SetCardData(itemData.ItemId, itemData.ItemName, itemData.ItemPrice,
                              itemData.ImagePath, itemData.CategoryTable, itemData.DateAdded)
-            card.Margin = New Padding(10)
-            card.Visible = False ' Hidden for entrance animation
+            card.Margin = New Padding(12)
+            card.Visible = False
 
-            ' Wire up events
             AddHandler card.SaveRequested, AddressOf Card_SaveRequested
             AddHandler card.DeleteRequested, AddressOf Card_DeleteRequested
             AddHandler card.ImageChangeRequested, AddressOf Card_ImageChangeRequested
@@ -492,43 +462,33 @@ Public Class Manage_menu
             displayedCards.Add(card)
         Next
 
-        ' Show empty state if no items
         If allMenuItems.Count = 0 Then
             ShowEmptyState()
         End If
 
         flowMenuItems.ResumeLayout()
-
-        ' Trigger entrance animation
         AnimateContentEntrance()
     End Sub
 
-    ''' <summary>
-    ''' Show empty state when no items exist
-    ''' </summary>
     Private Sub ShowEmptyState()
         Dim lblEmpty As New Label()
-        lblEmpty.Text = "No items in this category yet" & vbCrLf & vbCrLf &
-                        "Click '➕ Add New' to create your first item"
-        lblEmpty.Font = New Font("Segoe UI", 14.0F, FontStyle.Italic)
-        lblEmpty.ForeColor = Theme.GrayText
+        lblEmpty.Text = "✨ No items in this category yet" & vbCrLf & vbCrLf &
+                        "Click 'Add New' to create your first item"
+        lblEmpty.Font = New Font("Segoe UI Semibold", 15.0F, FontStyle.Regular)
+        lblEmpty.ForeColor = Color.FromArgb(120, 120, 120)
         lblEmpty.TextAlign = ContentAlignment.MiddleCenter
         lblEmpty.AutoSize = False
-        lblEmpty.Size = New Size(400, 120)
-        lblEmpty.Location = New Point((flowMenuItems.Width - 400) \ 2, 150)
+        lblEmpty.Size = New Size(450, 140)
+        lblEmpty.Location = New Point((flowMenuItems.Width - 450) \ 2, 180)
         flowMenuItems.Controls.Add(lblEmpty)
     End Sub
 
-    ''' <summary>
-    ''' Show loading overlay
-    ''' </summary>
     Private Sub ShowLoadingOverlay()
         pnlLoadingOverlay.Visible = True
         pnlLoadingOverlay.BringToFront()
 
-        ' Animate progress bar
         Dim progressTimer As New Timer()
-        progressTimer.Interval = 30
+        progressTimer.Interval = 25
         Dim progressValue As Integer = 0
 
         AddHandler progressTimer.Tick, Sub()
@@ -536,14 +496,10 @@ Public Class Manage_menu
                                            pbLoadingSpinner.Value = progressValue
                                        End Sub
         progressTimer.Start()
-        pnlLoadingOverlay.Tag = progressTimer ' Store for cleanup
+        pnlLoadingOverlay.Tag = progressTimer
     End Sub
 
-    ''' <summary>
-    ''' Hide loading overlay
-    ''' </summary>
     Private Sub HideLoadingOverlay()
-        ' Stop progress animation
         If pnlLoadingOverlay.Tag IsNot Nothing Then
             Dim timer = CType(pnlLoadingOverlay.Tag, Timer)
             Try
@@ -558,9 +514,6 @@ Public Class Manage_menu
     End Sub
 
     ' ===== CARD EVENT HANDLERS =====
-    ''' <summary>
-    ''' Handle card save request (update item)
-    ''' </summary>
     Private Sub Card_SaveRequested(itemId As Integer, newName As String, newPrice As Decimal, newImagePath As String)
         Try
             Using connection As New MySqlConnection(GetGlobalConnectionString())
@@ -579,9 +532,8 @@ Public Class Manage_menu
                     Dim rowsAffected = command.ExecuteNonQuery()
 
                     If rowsAffected > 0 Then
-                        ShowSuccessToast("Item updated successfully!")
+                        ShowSuccessToast("✨ Item updated successfully!")
 
-                        ' Update in-memory data
                         Dim itemData = allMenuItems.FirstOrDefault(Function(x) x.ItemId = itemId)
                         If itemData IsNot Nothing Then
                             itemData.ItemName = newName
@@ -601,9 +553,6 @@ Public Class Manage_menu
         End Try
     End Sub
 
-    ''' <summary>
-    ''' Handle card delete request
-    ''' </summary>
     Private Sub Card_DeleteRequested(itemId As Integer, itemName As String)
         Dim result = MessageBox.Show(
             $"Are you sure you want to delete '{itemName}'?" & vbCrLf & vbCrLf &
@@ -625,15 +574,13 @@ Public Class Manage_menu
                         Dim rowsAffected = command.ExecuteNonQuery()
 
                         If rowsAffected > 0 Then
-                            ShowSuccessToast("Item deleted successfully!")
+                            ShowSuccessToast("🗑️ Item deleted successfully!")
 
-                            ' Remove from UI with animation
                             Dim card = displayedCards.FirstOrDefault(Function(c) c.ItemId = itemId)
                             If card IsNot Nothing Then
                                 AnimateCardFadeOut(card)
                             End If
 
-                            ' Remove from data
                             allMenuItems.RemoveAll(Function(x) x.ItemId = itemId)
                         Else
                             MessageBox.Show("Failed to delete item.", "Delete Failed",
@@ -649,9 +596,6 @@ Public Class Manage_menu
         End If
     End Sub
 
-    ''' <summary>
-    ''' Handle image change request from card
-    ''' </summary>
     Private Sub Card_ImageChangeRequested(itemId As Integer, ByRef newImagePath As String)
         Using fileDialog As New OpenFileDialog()
             fileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.gif|All Files|*.*"
@@ -663,25 +607,20 @@ Public Class Manage_menu
         End Using
     End Sub
 
-    ''' <summary>
-    ''' Animate card fade out and removal
-    ''' </summary>
     Private Sub AnimateCardFadeOut(card As MenuItemCard)
         Dim fadeTimer As New Timer()
-        fadeTimer.Interval = 20
+        fadeTimer.Interval = 15
         Dim steps As Integer = 0
         Dim originalSize = card.Size
 
         AddHandler fadeTimer.Tick, Sub()
                                        steps += 1
 
-                                       ' Scale down
-                                       Dim scale = 1.0 - (steps * 0.05)
-                                       If scale > 0.5 Then
+                                       Dim scale = 1.0 - (steps * 0.06)
+                                       If scale > 0.4 Then
                                            card.Size = New Size(CInt(originalSize.Width * scale),
                                                                 CInt(originalSize.Height * scale))
                                        Else
-                                           ' Remove from UI
                                            flowMenuItems.Controls.Remove(card)
                                            displayedCards.Remove(card)
                                            card.Dispose()
@@ -695,25 +634,21 @@ Public Class Manage_menu
     ' ===== SEARCH FUNCTIONALITY =====
     Private Sub txtSearch_TextChanged(sender As Object, e As EventArgs) Handles txtSearch.TextChanged
         Try
-            ' Ensure searchTimer is initialized (TextChanged can fire before Load)
             If searchTimer Is Nothing Then
                 searchTimer = New Timer()
                 searchTimer.Interval = 300
                 AddHandler searchTimer.Tick, AddressOf SearchTimer_Tick
             End If
 
-            ' Debounce search
             searchTimer.Stop()
             searchTimer.Start()
         Catch ex As Exception
-            ' Prevent spammed error dialogs by showing only once and falling back
             If Not hasShownRuntimeError Then
                 hasShownRuntimeError = True
                 MessageBox.Show("Search handler error: " & ex.Message, "Runtime Error",
                                 MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
 
-            ' Safe fallback: apply filter immediately (best-effort)
             Try
                 ApplySearchFilter()
             Catch
@@ -734,9 +669,6 @@ Public Class Manage_menu
         End Try
     End Sub
 
-    ''' <summary>
-    ''' Apply search filter to displayed items
-    ''' </summary>
     Private Sub ApplySearchFilter()
         Dim searchText = ""
         Try
@@ -746,12 +678,10 @@ Public Class Manage_menu
         End Try
 
         If String.IsNullOrEmpty(searchText) Then
-            ' Show all cards
             For Each card In displayedCards
                 card.Visible = True
             Next
         Else
-            ' Filter cards
             For Each card In displayedCards
                 Dim matches = False
                 Try
@@ -768,22 +698,17 @@ Public Class Manage_menu
         currentSort = cmbSortFilter.SelectedItem.ToString()
         ApplySortFilter()
 
-        ' Reload display
         flowMenuItems.Controls.Clear()
         displayedCards.Clear()
         CreateMenuCards()
     End Sub
 
-    ''' <summary>
-    ''' Apply sort/filter to menu items
-    ''' </summary>
     Private Sub ApplySortFilter()
         Select Case currentSort
             Case "All Items"
-                ' No filtering, items already loaded
+                ' No filtering
 
             Case "New Items"
-                ' Filter items added within last 30 days
                 Dim thirtyDaysAgo = DateTime.Now.AddDays(-30)
                 allMenuItems = allMenuItems.Where(Function(x) x.DateAdded >= thirtyDaysAgo).ToList()
 
@@ -797,7 +722,6 @@ Public Class Manage_menu
 
     ' ===== ADD NEW ITEM =====
     Private Sub btnAddNew_Click(sender As Object, e As EventArgs) Handles btnAddNew.Click
-        ' AddMenuItemDialog is implemented as a UserControl. Host it in a modal Form so ShowDialog works.
         Using addCtrl As New AddMenuItemDialog(currentCategory)
             Dim hostForm As New Form()
             hostForm.FormBorderStyle = FormBorderStyle.FixedDialog
@@ -807,7 +731,6 @@ Public Class Manage_menu
             hostForm.ShowInTaskbar = False
             hostForm.AutoScaleMode = AutoScaleMode.None
 
-            ' Size the host to the control. If control has not been measured, set a reasonable default.
             If addCtrl.Width > 0 AndAlso addCtrl.Height > 0 Then
                 hostForm.ClientSize = addCtrl.Size
             Else
@@ -818,22 +741,14 @@ Public Class Manage_menu
             hostForm.Controls.Add(addCtrl)
             hostForm.BackColor = Me.BackColor
 
-            If hostForm.ShowDialog(Me) = DialogResult.OK Then
-                ShowSuccessToast("New item added successfully!")
-
-                ' Reload current category (safe table name)
+            If hostForm.ShowDialog(Me.FindForm()) = DialogResult.OK Then
+                ShowSuccessToast("✨ New item added successfully!")
                 LoadMenuItems(currentCategoryTable)
-
-                ' Notify ordering form(s) to reload their menu if they expose a public refresh method
                 NotifyOrderingForms()
             End If
         End Using
     End Sub
 
-    ''' <summary>
-    ''' Notify any open Ordering_Form instances to reload menu data.
-    ''' Uses reflection to avoid hard dependency.
-    ''' </summary>
     Private Sub NotifyOrderingForms()
         Try
             For Each f As Form In Application.OpenForms
@@ -860,18 +775,14 @@ Public Class Manage_menu
                 End If
             Next
         Catch
-            ' Non-critical; do not surface to user
         End Try
     End Sub
 
     ' ===== ANIMATION HELPERS =====
-    ''' <summary>
-    ''' Fade out all cards
-    ''' </summary>
     Private Sub FadeOutCards()
         For Each card In displayedCards
             Dim fadeTimer As New Timer()
-            fadeTimer.Interval = 10
+            fadeTimer.Interval = 8
             fadeTimer.Tag = card
 
             AddHandler fadeTimer.Tick, Sub(s, ev)
@@ -887,23 +798,26 @@ Public Class Manage_menu
     End Sub
 
     ''' <summary>
-    ''' Show success toast notification
+    ''' Ultra-modern success toast with gradient
     ''' </summary>
     Private Sub ShowSuccessToast(message As String)
-        Dim toast As New Guna2Panel()
-        toast.Size = New Size(350, 60)
-        toast.Location = New Point(Me.Width - 370, Me.Height - 80)
-        toast.FillColor = Color.FromArgb(46, 204, 113)
-        toast.BorderRadius = 12
+        Dim toast As New Guna2GradientPanel()
+        toast.Size = New Size(380, 70)
+        toast.Location = New Point(Me.Width - 400, Me.Height - 90)
+        toast.FillColor = Color.FromArgb(31, 138, 112)
+        toast.FillColor2 = Color.FromArgb(46, 204, 113)
+        toast.GradientMode = LinearGradientMode.Horizontal
+        toast.BorderRadius = 16
         toast.ShadowDecoration.Enabled = True
-        toast.ShadowDecoration.Depth = 15
+        toast.ShadowDecoration.Depth = 20
+        toast.ShadowDecoration.Color = Color.FromArgb(100, 31, 138, 112)
 
         Dim lblMessage As New Label()
-        lblMessage.Text = "✓ " & message
-        lblMessage.Font = New Font("Segoe UI Semibold", 11.0F, FontStyle.Bold)
+        lblMessage.Text = message
+        lblMessage.Font = New Font("Segoe UI Semibold", 12.0F, FontStyle.Bold)
         lblMessage.ForeColor = Color.White
         lblMessage.AutoSize = False
-        lblMessage.Size = New Size(330, 40)
+        lblMessage.Size = New Size(360, 50)
         lblMessage.Location = New Point(10, 10)
         lblMessage.TextAlign = ContentAlignment.MiddleLeft
 
@@ -911,33 +825,55 @@ Public Class Manage_menu
         Me.Controls.Add(toast)
         toast.BringToFront()
 
+        ' Slide in animation
+        Dim slideInTimer As New Timer()
+        slideInTimer.Interval = 10
+        Dim startX = Me.Width
+        toast.Left = startX
+        Dim targetX = Me.Width - 400
+
+        AddHandler slideInTimer.Tick, Sub()
+                                          If toast.Left > targetX Then
+                                              toast.Left -= 15
+                                          Else
+                                              toast.Left = targetX
+                                              slideInTimer.Stop()
+                                              slideInTimer.Dispose()
+                                          End If
+                                      End Sub
+        slideInTimer.Start()
+
         ' Auto-hide after 3 seconds
         Dim hideTimer As New Timer()
         hideTimer.Interval = 3000
         hideTimer.Tag = toast
 
         AddHandler hideTimer.Tick, Sub(s, ev)
-                                       Dim t = CType(CType(s, Timer).Tag, Guna2Panel)
-                                       Me.Controls.Remove(t)
-                                       t.Dispose()
+                                       Dim t = CType(CType(s, Timer).Tag, Guna2GradientPanel)
+
+                                       ' Slide out animation
+                                       Dim slideOutTimer As New Timer()
+                                       slideOutTimer.Interval = 10
+                                       slideOutTimer.Tag = t
+
+                                       AddHandler slideOutTimer.Tick, Sub(s2, ev2)
+                                                                          Dim panel = CType(CType(s2, Timer).Tag, Guna2GradientPanel)
+                                                                          If panel.Left < Me.Width Then
+                                                                              panel.Left += 15
+                                                                          Else
+                                                                              Me.Controls.Remove(panel)
+                                                                              panel.Dispose()
+                                                                              CType(s2, Timer).Stop()
+                                                                              CType(s2, Timer).Dispose()
+                                                                          End If
+                                                                      End Sub
+                                       slideOutTimer.Start()
+
                                        CType(s, Timer).Stop()
                                        CType(s, Timer).Dispose()
                                    End Sub
         hideTimer.Start()
     End Sub
 
-    ' ===== CLEANUP =====
-    Private Sub Manage_menu_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-        ' Cleanup timers
-        Try
-            searchTimer?.Stop()
-            searchTimer?.Dispose()
-        Catch
-        End Try
-
-        ' Cleanup cards
-        For Each card In displayedCards
-            card.Dispose()
-        Next
-    End Sub
+    ' ===== CLEANUP ====
 End Class

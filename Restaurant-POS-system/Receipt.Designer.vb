@@ -266,7 +266,7 @@ Partial Class Receipt
         ' 
         TransitionAnimator.SetDecoration(lblTotalAmount, Guna.UI2.AnimatorNS.DecorationType.None)
         lblTotalAmount.Dock = DockStyle.Right
-        lblTotalAmount.Font = New Font("Segoe UI", 20.0F, FontStyle.Bold)
+        lblTotalAmount.Font = New Font("Segoe UI", 20F, FontStyle.Bold)
         lblTotalAmount.ForeColor = Color.FromArgb(CByte(16), CByte(185), CByte(129))
         lblTotalAmount.Location = New Point(260, 8)
         lblTotalAmount.Name = "lblTotalAmount"
@@ -280,7 +280,7 @@ Partial Class Receipt
         lblTotalLabel.AutoSize = True
         TransitionAnimator.SetDecoration(lblTotalLabel, Guna.UI2.AnimatorNS.DecorationType.None)
         lblTotalLabel.Dock = DockStyle.Left
-        lblTotalLabel.Font = New Font("Segoe UI", 16.0F, FontStyle.Bold)
+        lblTotalLabel.Font = New Font("Segoe UI", 16F, FontStyle.Bold)
         lblTotalLabel.ForeColor = Color.FromArgb(CByte(71), CByte(85), CByte(105))
         lblTotalLabel.Location = New Point(25, 8)
         lblTotalLabel.Name = "lblTotalLabel"
@@ -307,7 +307,7 @@ Partial Class Receipt
         ' 
         TransitionAnimator.SetDecoration(lblDiscountAmount, Guna.UI2.AnimatorNS.DecorationType.None)
         lblDiscountAmount.Dock = DockStyle.Right
-        lblDiscountAmount.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
+        lblDiscountAmount.Font = New Font("Segoe UI", 11F, FontStyle.Bold)
         lblDiscountAmount.ForeColor = Color.FromArgb(CByte(239), CByte(68), CByte(68))
         lblDiscountAmount.Location = New Point(310, 8)
         lblDiscountAmount.Name = "lblDiscountAmount"
@@ -321,7 +321,7 @@ Partial Class Receipt
         lblDiscountLabel.AutoSize = True
         TransitionAnimator.SetDecoration(lblDiscountLabel, Guna.UI2.AnimatorNS.DecorationType.None)
         lblDiscountLabel.Dock = DockStyle.Left
-        lblDiscountLabel.Font = New Font("Segoe UI", 11.0F)
+        lblDiscountLabel.Font = New Font("Segoe UI", 11F)
         lblDiscountLabel.ForeColor = Color.FromArgb(CByte(100), CByte(116), CByte(139))
         lblDiscountLabel.Location = New Point(25, 8)
         lblDiscountLabel.Name = "lblDiscountLabel"
@@ -348,7 +348,7 @@ Partial Class Receipt
         ' 
         TransitionAnimator.SetDecoration(lblSubtotalAmount, Guna.UI2.AnimatorNS.DecorationType.None)
         lblSubtotalAmount.Dock = DockStyle.Right
-        lblSubtotalAmount.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
+        lblSubtotalAmount.Font = New Font("Segoe UI", 11F, FontStyle.Bold)
         lblSubtotalAmount.ForeColor = Color.FromArgb(CByte(51), CByte(65), CByte(85))
         lblSubtotalAmount.Location = New Point(310, 8)
         lblSubtotalAmount.Name = "lblSubtotalAmount"
@@ -362,7 +362,7 @@ Partial Class Receipt
         lblSubtotalLabel.AutoSize = True
         TransitionAnimator.SetDecoration(lblSubtotalLabel, Guna.UI2.AnimatorNS.DecorationType.None)
         lblSubtotalLabel.Dock = DockStyle.Left
-        lblSubtotalLabel.Font = New Font("Segoe UI", 11.0F)
+        lblSubtotalLabel.Font = New Font("Segoe UI", 11F)
         lblSubtotalLabel.ForeColor = Color.FromArgb(CByte(100), CByte(116), CByte(139))
         lblSubtotalLabel.Location = New Point(25, 8)
         lblSubtotalLabel.Name = "lblSubtotalLabel"
@@ -408,7 +408,7 @@ Partial Class Receipt
         ' 
         lblPaymentMethod.AutoSize = True
         TransitionAnimator.SetDecoration(lblPaymentMethod, Guna.UI2.AnimatorNS.DecorationType.None)
-        lblPaymentMethod.Font = New Font("Segoe UI", 11.0F)
+        lblPaymentMethod.Font = New Font("Segoe UI", 11F)
         lblPaymentMethod.ForeColor = Color.FromArgb(CByte(203), CByte(213), CByte(225))
         lblPaymentMethod.Location = New Point(25, 100)
         lblPaymentMethod.Name = "lblPaymentMethod"
@@ -420,7 +420,7 @@ Partial Class Receipt
         ' 
         lblCashier.AutoSize = True
         TransitionAnimator.SetDecoration(lblCashier, Guna.UI2.AnimatorNS.DecorationType.None)
-        lblCashier.Font = New Font("Segoe UI", 11.0F)
+        lblCashier.Font = New Font("Segoe UI", 11F)
         lblCashier.ForeColor = Color.FromArgb(CByte(203), CByte(213), CByte(225))
         lblCashier.Location = New Point(25, 70)
         lblCashier.Name = "lblCashier"
@@ -432,7 +432,7 @@ Partial Class Receipt
         ' 
         lblDateTime.AutoSize = True
         TransitionAnimator.SetDecoration(lblDateTime, Guna.UI2.AnimatorNS.DecorationType.None)
-        lblDateTime.Font = New Font("Segoe UI", 11.0F)
+        lblDateTime.Font = New Font("Segoe UI", 11F)
         lblDateTime.ForeColor = Color.FromArgb(CByte(203), CByte(213), CByte(225))
         lblDateTime.Location = New Point(25, 40)
         lblDateTime.Name = "lblDateTime"
@@ -444,7 +444,7 @@ Partial Class Receipt
         ' 
         lblOrderId.AutoSize = True
         TransitionAnimator.SetDecoration(lblOrderId, Guna.UI2.AnimatorNS.DecorationType.None)
-        lblOrderId.Font = New Font("Segoe UI", 14.0F, FontStyle.Bold)
+        lblOrderId.Font = New Font("Segoe UI", 14F, FontStyle.Bold)
         lblOrderId.ForeColor = Color.White
         lblOrderId.Location = New Point(20, 10)
         lblOrderId.Name = "lblOrderId"
@@ -470,7 +470,7 @@ Partial Class Receipt
         ' 
         lblAppTitle.AutoSize = True
         TransitionAnimator.SetDecoration(lblAppTitle, Guna.UI2.AnimatorNS.DecorationType.None)
-        lblAppTitle.Font = New Font("Segoe UI", 32.0F, FontStyle.Bold)
+        lblAppTitle.Font = New Font("Segoe UI", 32F, FontStyle.Bold)
         lblAppTitle.ForeColor = Color.White
         lblAppTitle.Location = New Point(0, 30)
         lblAppTitle.Name = "lblAppTitle"
@@ -482,7 +482,7 @@ Partial Class Receipt
         ' 
         lblAppSubtitle.AutoSize = True
         TransitionAnimator.SetDecoration(lblAppSubtitle, Guna.UI2.AnimatorNS.DecorationType.None)
-        lblAppSubtitle.Font = New Font("Segoe UI", 12.0F)
+        lblAppSubtitle.Font = New Font("Segoe UI", 12F)
         lblAppSubtitle.ForeColor = Color.FromArgb(CByte(203), CByte(213), CByte(225))
         lblAppSubtitle.Location = New Point(5, 100)
         lblAppSubtitle.Name = "lblAppSubtitle"
@@ -615,7 +615,7 @@ Partial Class Receipt
         btnViewPdf.DisabledState.ForeColor = Color.FromArgb(CByte(141), CByte(141), CByte(141))
         btnViewPdf.Dock = DockStyle.Right
         btnViewPdf.FillColor = Color.FromArgb(CByte(71), CByte(85), CByte(105))
-        btnViewPdf.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
+        btnViewPdf.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
         btnViewPdf.ForeColor = Color.White
         btnViewPdf.HoverState.FillColor = Color.FromArgb(CByte(100), CByte(116), CByte(139))
         btnViewPdf.ImageAlign = HorizontalAlignment.Left
@@ -642,7 +642,7 @@ Partial Class Receipt
         btnViewNative.DisabledState.ForeColor = Color.FromArgb(CByte(141), CByte(141), CByte(141))
         btnViewNative.Dock = DockStyle.Left
         btnViewNative.FillColor = Color.FromArgb(CByte(16), CByte(185), CByte(129))
-        btnViewNative.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
+        btnViewNative.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
         btnViewNative.ForeColor = Color.White
         btnViewNative.HoverState.FillColor = Color.FromArgb(CByte(5), CByte(150), CByte(105))
         btnViewNative.ImageAlign = HorizontalAlignment.Left
@@ -660,7 +660,7 @@ Partial Class Receipt
         lblHeaderTitle.AutoSize = True
         lblHeaderTitle.BackColor = Color.Transparent
         TransitionAnimator.SetDecoration(lblHeaderTitle, Guna.UI2.AnimatorNS.DecorationType.None)
-        lblHeaderTitle.Font = New Font("Segoe UI", 18.0F, FontStyle.Bold)
+        lblHeaderTitle.Font = New Font("Segoe UI", 18F, FontStyle.Bold)
         lblHeaderTitle.ForeColor = Color.White
         lblHeaderTitle.Location = New Point(40, 30)
         lblHeaderTitle.Name = "lblHeaderTitle"
@@ -702,7 +702,7 @@ Partial Class Receipt
         btnEmail.DisabledState.FillColor = Color.FromArgb(CByte(169), CByte(169), CByte(169))
         btnEmail.DisabledState.ForeColor = Color.FromArgb(CByte(141), CByte(141), CByte(141))
         btnEmail.FillColor = Color.FromArgb(CByte(99), CByte(102), CByte(241))
-        btnEmail.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
+        btnEmail.Font = New Font("Segoe UI", 11F, FontStyle.Bold)
         btnEmail.ForeColor = Color.White
         btnEmail.HoverState.FillColor = Color.FromArgb(CByte(79), CByte(70), CByte(229))
         btnEmail.ImageAlign = HorizontalAlignment.Left
@@ -733,7 +733,7 @@ Partial Class Receipt
         btnPrint.DisabledState.FillColor = Color.FromArgb(CByte(169), CByte(169), CByte(169))
         btnPrint.DisabledState.ForeColor = Color.FromArgb(CByte(141), CByte(141), CByte(141))
         btnPrint.FillColor = Color.FromArgb(CByte(59), CByte(130), CByte(246))
-        btnPrint.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
+        btnPrint.Font = New Font("Segoe UI", 11F, FontStyle.Bold)
         btnPrint.ForeColor = Color.White
         btnPrint.HoverState.FillColor = Color.FromArgb(CByte(37), CByte(99), CByte(235))
         btnPrint.ImageAlign = HorizontalAlignment.Left
@@ -764,7 +764,7 @@ Partial Class Receipt
         btnSavePdf.DisabledState.FillColor = Color.FromArgb(CByte(169), CByte(169), CByte(169))
         btnSavePdf.DisabledState.ForeColor = Color.FromArgb(CByte(141), CByte(141), CByte(141))
         btnSavePdf.FillColor = Color.FromArgb(CByte(16), CByte(185), CByte(129))
-        btnSavePdf.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
+        btnSavePdf.Font = New Font("Segoe UI", 11F, FontStyle.Bold)
         btnSavePdf.ForeColor = Color.White
         btnSavePdf.HoverState.FillColor = Color.FromArgb(CByte(5), CByte(150), CByte(105))
         btnSavePdf.ImageAlign = HorizontalAlignment.Left
@@ -796,7 +796,7 @@ Partial Class Receipt
         btnClose.DisabledState.FillColor = Color.FromArgb(CByte(169), CByte(169), CByte(169))
         btnClose.DisabledState.ForeColor = Color.FromArgb(CByte(141), CByte(141), CByte(141))
         btnClose.FillColor = Color.FromArgb(CByte(71), CByte(85), CByte(105))
-        btnClose.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
+        btnClose.Font = New Font("Segoe UI", 11F, FontStyle.Bold)
         btnClose.ForeColor = Color.White
         btnClose.HoverState.FillColor = Color.FromArgb(CByte(51), CByte(65), CByte(85))
         btnClose.ImageAlign = HorizontalAlignment.Left
@@ -837,7 +837,7 @@ Partial Class Receipt
         Animation1.AnimateOnlyDifferences = True
         Animation1.BlindCoeff = CType(resources.GetObject("Animation1.BlindCoeff"), PointF)
         Animation1.LeafCoeff = 0F
-        Animation1.MaxTime = 1.0F
+        Animation1.MaxTime = 1F
         Animation1.MinTime = 0F
         Animation1.MosaicCoeff = CType(resources.GetObject("Animation1.MosaicCoeff"), PointF)
         Animation1.MosaicShift = CType(resources.GetObject("Animation1.MosaicShift"), PointF)
@@ -855,12 +855,12 @@ Partial Class Receipt
         ' 
         ' Receipt
         ' 
-        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
+        AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1400, 900)
         Controls.Add(pnlMain)
         TransitionAnimator.SetDecoration(Me, Guna.UI2.AnimatorNS.DecorationType.None)
-        Font = New Font("Segoe UI", 9.0F)
+        Font = New Font("Segoe UI", 9F)
         FormBorderStyle = FormBorderStyle.None
         KeyPreview = True
         MinimumSize = New Size(1000, 600)

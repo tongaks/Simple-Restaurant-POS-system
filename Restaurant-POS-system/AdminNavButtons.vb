@@ -5,28 +5,22 @@ Imports Guna.UI2.WinForms
 ''' <summary>
 ''' Manages navigation buttons for Admin and related forms.
 ''' Handles Logout, Back, Help, and Instructions functionality.
-''' Constructor accepts existing designer buttons (one or more) so logic lives here and forms stay clean.
+''' Accepts parent control (Form or UserControl) so it works when a UserControl hosts navigation buttons.
 ''' </summary>
 Public Class AdminNavButtons
-    Private ReadOnly _parentForm As Form
+    Private ReadOnly _parentControl As Control
     Private ReadOnly _logoutBtn As Control
     Private ReadOnly _backBtn As Control
     Private ReadOnly _helpBtn As Control
     Private ReadOnly _instructionsBtn As Control
 
-    ''' <summary>
-    ''' Initialize the navigation button handler.
-    ''' Pass only the buttons that exist on the target form (back/help/instructions optional).
-    ''' Accepts either standard Button or Guna2Button instances.
-    ''' </summary>
-    Public Sub New(parentForm As Form, logoutBtn As Control, Optional backBtn As Control = Nothing, Optional helpBtn As Control = Nothing, Optional instructionsBtn As Control = Nothing)
-        _parentForm = parentForm
+    Public Sub New(parentControl As Control, logoutBtn As Control, Optional backBtn As Control = Nothing, Optional helpBtn As Control = Nothing, Optional instructionsBtn As Control = Nothing)
+        _parentControl = parentControl
         _logoutBtn = logoutBtn
         _backBtn = backBtn
         _helpBtn = helpBtn
         _instructionsBtn = instructionsBtn
 
-        ' Style buttons for consistent UI at runtime (designer still shows them in designer)
         If _logoutBtn IsNot Nothing Then
             StyleButton(_logoutBtn, Color.FromArgb(220, 38, 38))
             AddHandler _logoutBtn.Click, AddressOf HandleLogout
@@ -51,7 +45,6 @@ Public Class AdminNavButtons
     Private Sub StyleButton(btn As Control, backColor As Color)
         If btn Is Nothing Then Return
 
-        ' Guna2Button styling
         If TypeOf btn Is Guna.UI2.WinForms.Guna2Button Then
             Dim gbtn = DirectCast(btn, Guna.UI2.WinForms.Guna2Button)
             gbtn.BorderRadius = Theme.DefaultBorderRadius
@@ -64,7 +57,6 @@ Public Class AdminNavButtons
             Return
         End If
 
-        ' Standard Button styling
         If TypeOf btn Is Button Then
             Dim sbtn = DirectCast(btn, Button)
             sbtn.FlatStyle = FlatStyle.Flat
@@ -78,24 +70,17 @@ Public Class AdminNavButtons
             Return
         End If
 
-        ' Fallback: generic Control - try to set BackColor/ForeColor where possible
         Try
             btn.BackColor = backColor
             btn.ForeColor = Color.Black
         Catch
-            ' ignore unsupported properties
         End Try
     End Sub
 
-    ''' <summary>
-    ''' Handles logout - returns to login form
-    ''' </summary>
     Private Sub HandleLogout(sender As Object, e As EventArgs)
         Dim result = MessageBox.Show("Are you sure you want to logout?", "Confirm Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-
         If result = DialogResult.Yes Then
             Try
-                ' Log the logout action (best-effort)
                 Try
                     Using connection As New MySqlConnection(GetGlobalConnectionString())
                         connection.Open()
@@ -109,13 +94,14 @@ Public Class AdminNavButtons
                         End Using
                     End Using
                 Catch
-                    ' swallow - do not block logout for logging failure
                 End Try
 
-                ' Clear current user and return to login
                 CurrentUser = String.Empty
 
-                _parentForm.Hide()
+                Dim parentForm = _parentControl?.FindForm()
+                If parentForm IsNot Nothing Then
+                    parentForm.Hide()
+                End If
                 Form1.Show()
             Catch ex As Exception
                 MessageBox.Show("Error during logout: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -123,50 +109,43 @@ Public Class AdminNavButtons
         End If
     End Sub
 
-    ''' <summary>
-    ''' Handles back navigation - closes current form. On Manage_menu this will return to Admin.
-    ''' </summary>
     Private Sub HandleBack(sender As Object, e As EventArgs)
         Dim result = MessageBox.Show("Are you sure you want to go back? Any unsaved changes will be lost.", "Confirm Back", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
         If result = DialogResult.Yes Then
-            If TypeOf _parentForm Is Manage_menu Then
-                _parentForm.Hide()
-                Try
-                    For Each f As Form In Application.OpenForms
-                        If TypeOf f Is Admin Then
-                            f.Show()
-                            f.BringToFront()
-                            Return
-                        End If
-                    Next
-                    Dim adminForm As New Admin()
-                    adminForm.Show()
-                Catch
-                    Dim adminForm As New Admin()
-                    adminForm.Show()
-                End Try
-            Else
-                _parentForm.Close()
+            Dim parentForm = _parentControl?.FindForm()
+            If parentForm IsNot Nothing Then
+                ' If parent is actually a Manage_menu UserControl host (unlikely here), just show Admin
+                If TypeOf _parentControl Is Manage_menu Then
+                    Try
+                        For Each f As Form In Application.OpenForms
+                            If TypeOf f Is Admin Then
+                                f.Show()
+                                f.BringToFront()
+                                Return
+                            End If
+                        Next
+                        Dim adminForm As New Admin()
+                        adminForm.Show()
+                    Catch
+                        Dim adminForm As New Admin()
+                        adminForm.Show()
+                    End Try
+                Else
+                    parentForm.Close()
+                End If
             End If
         End If
     End Sub
 
-    ''' <summary>
-    ''' Shows help information
-    ''' </summary>
     Private Sub HandleHelp(sender As Object, e As EventArgs)
         Dim helpMessage As String = "Admin Dashboard Help" & vbCrLf & vbCrLf &
-            "Features:" & vbCrLf &
-            "• Audit Log - View system activity logs with filtering options" & vbCrLf &
+            "Features:" & vbCrLf & "• Audit Log - View system activity logs with filtering options" & vbCrLf &
             "• Sales Report - Generate and export sales reports by date range" & vbCrLf &
             "• Manage Menu - Add, edit, or delete menu items" & vbCrLf &
             "• Manage Accounts - View all user accounts" & vbCrLf & vbCrLf
         MessageBox.Show(helpMessage, "Help", MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
 
-    ''' <summary>
-    ''' Shows detailed instructions
-    ''' </summary>
     Private Sub HandleInstructions(sender As Object, e As EventArgs)
         Dim instructions As String = "Admin Dashboard Instructions" & vbCrLf & vbCrLf &
             "Audit Log:" & vbCrLf &
@@ -178,7 +157,7 @@ Public Class AdminNavButtons
             "2. Click 'Generate Report' to view data" & vbCrLf &
             "3. Click 'Export to CSV' to save report" & vbCrLf & vbCrLf &
             "Manage Menu:" & vbCrLf &
-            "1. Click 'Manage Menu Items' button" & vbCrLf &
+            "1. Click 'Manage Menu' on the sidebar" & vbCrLf &
             "2. Select category and item to edit" & vbCrLf &
             "3. Use Edit, Delete, or Add buttons" & vbCrLf & vbCrLf &
             "Manage Accounts:" & vbCrLf &

@@ -10,8 +10,11 @@ Imports Guna.UI2.WinForms
 ''' <summary>
 ''' ULTRA-MODERN Enterprise Sales Analytics Dashboard
 ''' Professional, responsive, and feature-rich reporting interface
+''' Converted to a UserControl for embedding inside Admin
 ''' </summary>
 Public Class SalesReport
+    Inherits UserControl
+
     Private chartDailySales As Chart
     Private chartTopItems As Chart
     Private chartRevenueTrend As Chart
@@ -36,18 +39,39 @@ Public Class SalesReport
     End Structure
 
     Private Sub SalesReport_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Me.AutoScaleMode = AutoScaleMode.Dpi
-        Me.WindowState = FormWindowState.Maximized
+        Try
+            ' If hosted inside a Form, create AdminNavButtons with the parent form (only if parent is Admin)
+            Dim parentForm As Form = Me.FindForm()
+            If parentForm IsNot Nothing Then
+                If TypeOf parentForm Is Admin Then
+                    navButtons = New AdminNavButtons(parentForm, btnLogout, btnBack, Nothing, Nothing)
+                End If
+                ' Inherit scaling/layout from parent for better responsiveness when embedded
+                Me.AutoScaleMode = AutoScaleMode.Inherit
 
-        navButtons = New AdminNavButtons(Me, btnLogout, btnBack, Nothing, Nothing)
+                ' Make the user control fill its container when used inside Admin
+                Me.Dock = DockStyle.Fill
+            Else
+                ' Designer or standalone load
+                Me.AutoScaleMode = AutoScaleMode.Font
+            End If
 
-        dtpFrom.Value = DateTime.Now.AddDays(-30)
-        dtpTo.Value = DateTime.Now
+            ' Ensure chart panels fill container when hosted
+            chartDailySales = Nothing
+            chartTopItems = Nothing
+            chartRevenueTrend = Nothing
 
-        InitializeCharts()
-        ShowLoadingState()
-        GenerateSalesReport()
-        HideLoadingState()
+            dtpFrom.Value = DateTime.Now.AddDays(-30)
+            dtpTo.Value = DateTime.Now
+
+            InitializeCharts()
+            ShowLoadingState()
+            GenerateSalesReport()
+            HideLoadingState()
+        Catch ex As Exception
+            MessageBox.Show("Error initializing SalesReport control: " & ex.Message, "Initialization Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
     Private Sub ShowLoadingState()
@@ -510,10 +534,10 @@ Public Class SalesReport
                     })
                 Next
 
-                ' Show receipt form
+                ' Show receipt form (pass parent form if available)
                 Dim receiptForm As New Receipt()
                 receiptForm.LoadReceipt(orderData, String.Empty)
-                receiptForm.ShowDialog(Me)
+                receiptForm.ShowDialog(If(Me.FindForm(), Nothing))
             End Using
 
         Catch ex As Exception
@@ -592,32 +616,38 @@ Public Class SalesReport
 
     Private Sub btnBack_Click(sender As Object, e As EventArgs) Handles btnBack.Click
         Try
-            Dim adminForm As Admin = Nothing
-
-            If Me.Owner IsNot Nothing AndAlso TypeOf Me.Owner Is Admin Then
-                adminForm = DirectCast(Me.Owner, Admin)
-            Else
-                For Each f As Form In Application.OpenForms
-                    If TypeOf f Is Admin Then
-                        adminForm = DirectCast(f, Admin)
-                        Exit For
-                    End If
-                Next
+            ' If hosted inside Admin, ask Admin to show audit view instead of creating new Admin instance
+            Dim parentForm = Me.FindForm()
+            If parentForm IsNot Nothing AndAlso TypeOf parentForm Is Admin Then
+                DirectCast(parentForm, Admin).ShowAuditView()
+                Return
             End If
 
-            If adminForm Is Nothing Then
-                adminForm = New Admin()
-                adminForm.Show()
-            Else
-                If adminForm.WindowState = FormWindowState.Minimized Then
-                    adminForm.WindowState = FormWindowState.Normal
+            Dim admin As Admin = Nothing
+            For Each f As Form In Application.OpenForms
+                If TypeOf f Is Admin Then
+                    admin = DirectCast(f, Admin)
+                    Exit For
                 End If
-                adminForm.Show()
-                adminForm.BringToFront()
-                adminForm.Focus()
+            Next
+
+            If admin Is Nothing Then
+                admin = New Admin()
+                admin.Show()
+            Else
+                If admin.WindowState = FormWindowState.Minimized Then
+                    admin.WindowState = FormWindowState.Normal
+                End If
+                admin.Show()
+                admin.BringToFront()
+                admin.Focus()
             End If
 
-            Me.Close()
+            ' If embedded, remove the control from its parent (do not call Close on a UserControl)
+            If Me.Parent IsNot Nothing Then
+                Me.Parent.Controls.Remove(Me)
+            End If
+
         Catch ex As Exception
             MessageBox.Show("Error returning to Admin: " & ex.Message, "Navigation Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
@@ -682,10 +712,6 @@ Public Class SalesReport
     Private Sub btnPrint_MouseLeave(sender As Object, e As EventArgs) Handles btnPrint.MouseLeave
         btnPrint.FillColor = Color.FromArgb(156, 163, 175)
         btnPrint.ShadowDecoration.Depth = 10
-    End Sub
-
-    Protected Overrides Sub OnFormClosing(e As FormClosingEventArgs)
-        MyBase.OnFormClosing(e)
     End Sub
 
     ' Keep legacy LoadTransactionDetails method for compatibility

@@ -8,11 +8,10 @@ Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports Guna.UI2.WinForms
 
-''' <summary>
-''' ENTERPRISE-GRADE Admin Dashboard - OrderUp! System
-''' Premium Design with Full Guna2 Capabilities
-''' </summary>
 Public Class Admin
+    Inherits Form
+
+    ' ===== FIELDS =====
     Private currentUserRole As String = "Admin"
     Private navButtons As AdminNavButtons
     Private currentActiveButton As ModernNavButton = Nothing
@@ -21,7 +20,13 @@ Public Class Admin
     Private fadeTimer As Timer
     Private fadeStep As Integer
 
-    ' PathManager helper class
+    ' Runtime host panels and cached embedded modules
+    Private pnlSalesHost As Guna2Panel = Nothing
+    Private pnlManageMenuHost As Guna2Panel = Nothing
+    Private salesReportInstance As SalesReport = Nothing       ' SalesReport is a UserControl now
+    Private manageMenuInstance As Manage_menu = Nothing        ' Manage_menu is a UserControl
+
+    ' ===== PATH MANAGER =====
     Public Class PathManager
         Public Shared Function GetExportsPath() As String
             Dim appPath As String = Application.StartupPath
@@ -42,44 +47,161 @@ Public Class Admin
         End Function
     End Class
 
-    ''' <summary>
-    ''' Form load - initialize premium dashboard
-    ''' </summary>
+    ' ===== FORM LIFECYCLE =====
     Private Sub Admin_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ' Initialize navigation
+        ' Initialize navigation helper (uses existing controls from Designer)
         navButtons = New AdminNavButtons(Me, btnLogout, Nothing, btnHelp, btnInstructions)
 
         Me.WindowState = FormWindowState.Maximized
 
-        ' Apply premium enterprise styling
+        ' Apply style and prepare sidebar
         ApplyPremiumEnterpriseDesign()
-
-        ' Initialize premium sidebar
         InitializePremiumSidebar()
 
-        ' Load initial view
+        ' Create runtime hosts for embedded modules
+        CreateModuleHosts()
+
+        ' Default view
         LoadAuditLogs()
         pnlManageAccounts.Visible = False
         pnlAuditLog.Visible = True
         currentPanel = pnlAuditLog
 
-        ' Initialize database
+        ' Ensure DB artifacts exist
         DatabaseHandler.EnsureArchivedUsersTableExists()
 
-        ' Set initial active
-        If menuButtons.Count > 0 Then
-            SetActiveNavButton(menuButtons(0))
-        End If
+        ' Set initial active nav
+        If menuButtons.Count > 0 Then SetActiveNavButton(menuButtons(0))
 
-        ' Cinematic entrance animation
+        ' Entrance animation
         AnimateEntranceEffect()
     End Sub
 
-    ''' <summary>
-    ''' Cinematic entrance animation
-    ''' </summary>
+    ' ===== HOST PANELS CREATION =====
+    Private Sub CreateModuleHosts()
+        Try
+            ' SalesReport host (Form hosting)
+            pnlSalesHost = New Guna2Panel() With {
+                .Name = "pnlSalesHost",
+                .Dock = DockStyle.Fill,
+                .FillColor = If(pnlAuditLog IsNot Nothing, pnlAuditLog.FillColor, Color.White),
+                .Visible = False,
+                .Padding = New Padding(25, 0, 25, 25),
+                .AutoScroll = True
+            }
+            Me.Controls.Add(pnlSalesHost)
+            Try
+                Dim idx = Me.Controls.GetChildIndex(pnlAuditLog)
+                If idx >= 0 Then Me.Controls.SetChildIndex(pnlSalesHost, idx)
+            Catch
+            End Try
+            AddHandler pnlSalesHost.Resize, Sub(s, ev)
+                                                Try
+                                                    If pnlSalesHost.Controls.Count > 0 Then pnlSalesHost.Controls(0).Size = pnlSalesHost.ClientSize
+                                                Catch
+                                                End Try
+                                            End Sub
+
+            ' Manage_menu host (UserControl hosting)
+            pnlManageMenuHost = New Guna2Panel() With {
+                .Name = "pnlManageMenuHost",
+                .Dock = DockStyle.Fill,
+                .FillColor = If(pnlManageAccounts IsNot Nothing, pnlManageAccounts.FillColor, Color.White),
+                .Visible = False,
+                .Padding = New Padding(25, 0, 25, 25),
+                .AutoScroll = True
+            }
+            Me.Controls.Add(pnlManageMenuHost)
+            Try
+                Dim idx = Me.Controls.GetChildIndex(pnlAuditLog)
+                If idx >= 0 Then Me.Controls.SetChildIndex(pnlManageMenuHost, idx)
+            Catch
+            End Try
+            AddHandler pnlManageMenuHost.Resize, Sub(s, ev)
+                                                     Try
+                                                         If pnlManageMenuHost.Controls.Count > 0 Then pnlManageMenuHost.Controls(0).Size = pnlManageMenuHost.ClientSize
+                                                     Catch
+                                                     End Try
+                                                 End Sub
+        Catch ex As Exception
+            LogError("CreateModuleHosts", ex.Message)
+        End Try
+    End Sub
+
+    ' ===== HOSTING HELPERS =====
+    Private Sub HostFormInPanel(frm As Form, hostPanel As Panel)
+        If frm Is Nothing OrElse hostPanel Is Nothing Then Return
+        Try
+            If frm.TopLevel Then frm.TopLevel = False
+
+            If hostPanel.Controls.Contains(frm) Then
+                frm.BringToFront()
+                frm.Size = hostPanel.ClientSize
+                Return
+            End If
+
+            frm.FormBorderStyle = FormBorderStyle.None
+            frm.AutoScaleMode = AutoScaleMode.Inherit
+            frm.Dock = DockStyle.Fill
+            frm.Margin = New Padding(0)
+            frm.Padding = New Padding(0)
+
+            hostPanel.Controls.Add(frm)
+            frm.Show()
+            frm.Refresh()
+            frm.Size = hostPanel.ClientSize
+        Catch ex As Exception
+            LogError("HostFormInPanel", ex.Message)
+            MessageBox.Show("Error hosting module: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Sub HostControlInPanel(ctrl As Control, hostPanel As Panel)
+        If ctrl Is Nothing OrElse hostPanel Is Nothing Then Return
+        Try
+            If hostPanel.Controls.Contains(ctrl) Then
+                ctrl.BringToFront()
+                ctrl.Size = hostPanel.ClientSize
+                Return
+            End If
+
+            ctrl.Dock = DockStyle.Fill
+            ctrl.Margin = New Padding(0)
+            ctrl.Padding = New Padding(0)
+
+            hostPanel.Controls.Add(ctrl)
+            ctrl.BringToFront()
+            ctrl.Refresh()
+            ctrl.Size = hostPanel.ClientSize
+        Catch ex As Exception
+            LogError("HostControlInPanel", ex.Message)
+            MessageBox.Show("Error hosting control: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    ' ===== NAVIGATION HELPERS FOR EMBEDDED MODULES =====
+    Public Sub ShowAuditView()
+        Try
+            If menuButtons.Count > 0 Then SetActiveNavButton(menuButtons(0))
+            SwitchPanel(pnlAuditLog)
+            LoadAuditLogs()
+        Catch ex As Exception
+            LogError("ShowAuditView", ex.Message)
+        End Try
+    End Sub
+
+    Public Sub ShowManageMenuView()
+        Try
+            If menuButtons.Count > 2 Then SetActiveNavButton(menuButtons(2))
+            If pnlManageMenuHost IsNot Nothing Then SwitchPanel(pnlManageMenuHost)
+        Catch ex As Exception
+            LogError("ShowManageMenuView", ex.Message)
+        End Try
+    End Sub
+
+    ' ===== ANIMATIONS =====
     Private Sub AnimateEntranceEffect()
-        Me.Opacity = 0
+        ' Keep simple: slide sidebar and header
         pnlSidebar.Left = -280
         pnlHeader.Top = -100
 
@@ -92,39 +214,20 @@ Public Class Admin
     Private Sub OnFadeTimerTick(sender As Object, e As EventArgs)
         fadeStep += 1
 
-        ' Fade in form
-        If Me.Opacity < 1 Then
-            Me.Opacity = Math.Min(1, Me.Opacity + 0.05)
-        End If
+        If pnlSidebar.Left < 0 Then pnlSidebar.Left = Math.Min(0, pnlSidebar.Left + 20)
+        If pnlHeader.Top < 0 Then pnlHeader.Top = Math.Min(0, pnlHeader.Top + 10)
 
-        ' Slide in sidebar
-        If pnlSidebar.Left < 0 Then
-            pnlSidebar.Left = Math.Min(0, pnlSidebar.Left + 20)
-        End If
-
-        ' Slide down header
-        If pnlHeader.Top < 0 Then
-            pnlHeader.Top = Math.Min(0, pnlHeader.Top + 10)
-        End If
-
-        ' Complete animation
         If fadeStep > 20 Then
-            Me.Opacity = 1
             pnlSidebar.Left = 0
             pnlHeader.Top = 0
             fadeTimer.Stop()
             RemoveHandler fadeTimer.Tick, AddressOf OnFadeTimerTick
             fadeTimer.Dispose()
             fadeTimer = Nothing
-
-            ' Animate content panels (simple show; panels don't support Opacity)
             AnimateContentEntry()
         End If
     End Sub
 
-    ''' <summary>
-    ''' Animate content panels entrance (panels do not support Opacity — keep simple)
-    ''' </summary>
     Private Sub AnimateContentEntry()
         If currentPanel IsNot Nothing Then
             currentPanel.Visible = True
@@ -132,15 +235,12 @@ Public Class Admin
         End If
     End Sub
 
-    ''' <summary>
-    ''' Initialize premium sidebar with custom nav buttons
-    ''' </summary>
+    ' ===== SIDEBAR INITIALIZATION =====
     Private Sub InitializePremiumSidebar()
         Try
             flowMenuCards.Controls.Clear()
             menuButtons.Clear()
 
-            ' Create custom modern nav buttons
             Dim btnAudit As New ModernNavButton()
             btnAudit.SetContent("Audit Log", "View system activity", "📋", Color.FromArgb(139, 92, 246))
             AddHandler btnAudit.ButtonClicked, AddressOf MenuButton_Audit_Clicked
@@ -164,22 +264,16 @@ Public Class Admin
             AddHandler btnAccounts.ButtonClicked, AddressOf MenuButton_Accounts_Clicked
             flowMenuCards.Controls.Add(btnAccounts)
             menuButtons.Add(btnAccounts)
-
         Catch ex As Exception
             MessageBox.Show("Error initializing sidebar: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
-    ''' <summary>
-    ''' Set active navigation button with premium animation
-    ''' </summary>
     Private Sub SetActiveNavButton(btn As ModernNavButton)
-        ' Reset all buttons
         For Each menuBtn In menuButtons
             menuBtn.SetInactive()
         Next
 
-        ' Activate selected
         If btn IsNot Nothing Then
             btn.SetActive()
             Dim originalSize = btn.Size
@@ -187,7 +281,6 @@ Public Class Admin
 
             Dim scaleTimer As New Timer With {.Interval = 10}
             Dim steps As Integer = 0
-
             AddHandler scaleTimer.Tick, Sub(s, args)
                                             steps += 1
                                             If steps >= 5 Then
@@ -202,9 +295,8 @@ Public Class Admin
         currentActiveButton = btn
     End Sub
 
-    ''' <summary>
-    ''' Apply premium enterprise design system
-    ''' </summary>
+    ' ===== STYLING HELPERS (KEEP YOUR ORIGINALS) =====
+    ' Please keep your existing style methods (I include them here to ensure they are declared).
     Private Sub ApplyPremiumEnterpriseDesign()
         Try
             Me.BackColor = Color.FromArgb(245, 247, 250)
@@ -218,9 +310,6 @@ Public Class Admin
         End Try
     End Sub
 
-    ''' <summary>
-    ''' Apply gradient to header
-    ''' </summary>
     Private Sub ApplyGradientHeader()
         pnlHeader.FillColor = Color.FromArgb(30, 30, 35)
         pnlHeader.ShadowDecoration.Enabled = True
@@ -228,22 +317,17 @@ Public Class Admin
         pnlHeader.ShadowDecoration.Color = Color.FromArgb(100, 0, 0, 0)
         pnlHeader.ShadowDecoration.Shadow = New Padding(0, 5, 0, 0)
 
-        ' Title styling
         lblTitle.ForeColor = Color.White
         lblTitle.Font = New Font("Segoe UI", 24.0F, FontStyle.Bold)
 
         lblSubtitle.ForeColor = Color.FromArgb(160, 165, 175)
         lblSubtitle.Font = New Font("Segoe UI", 11.0F, FontStyle.Regular)
 
-        ' Premium buttons
-        StylePremiumButton(btnLogout, Color.FromArgb(239, 68, 68), "🚪 Logout")
+        StylePremiumButton(btnLogout, Color.FromArgb(239, 68, 68), "🚪 Logout", Nothing)
         StylePremiumButton(btnInstructions, Color.FromArgb(251, 191, 36), "📖 Guide", Color.FromArgb(20, 20, 20))
-        StylePremiumButton(btnHelp, Color.FromArgb(16, 185, 129), "❓ Help")
+        StylePremiumButton(btnHelp, Color.FromArgb(16, 185, 129), "❓ Help", Nothing)
     End Sub
 
-    ''' <summary>
-    ''' Apply sidebar design with gradient
-    ''' </summary>
     Private Sub ApplySidebarDesign()
         pnlSidebar.FillColor = Color.FromArgb(25, 28, 35)
         pnlSidebar.ShadowDecoration.Enabled = True
@@ -254,34 +338,24 @@ Public Class Admin
         lblSidebarTitle.Font = New Font("Segoe UI", 14.0F, FontStyle.Bold)
     End Sub
 
-    ''' <summary>
-    ''' Style content panels
-    ''' </summary>
     Private Sub StyleContentPanels()
-        ' Audit log panel
         pnlAuditLog.FillColor = Color.FromArgb(245, 247, 250)
         lblAuditTitle.Font = New Font("Segoe UI", 22.0F, FontStyle.Bold)
         lblAuditTitle.ForeColor = Color.FromArgb(20, 25, 35)
 
-        ' Accounts panel
         pnlManageAccounts.FillColor = Color.FromArgb(245, 247, 250)
         lblAccountsTitle.Font = New Font("Segoe UI", 22.0F, FontStyle.Bold)
         lblAccountsTitle.ForeColor = Color.FromArgb(20, 25, 35)
 
-        ' Filter panels with card style
         StyleFilterPanel(pnlAuditFilters)
         StyleFilterPanel(pnlAccountsToolbar)
 
-        ' Content containers
         pnlAuditContent.FillColor = Color.White
         pnlAuditContent.Radius = 16
         pnlAuditContent.ShadowDepth = 15
         pnlAuditContent.ShadowColor = Color.FromArgb(50, 0, 0, 0)
     End Sub
 
-    ''' <summary>
-    ''' Style filter panel as premium card
-    ''' </summary>
     Private Sub StyleFilterPanel(panel As Guna2Panel)
         panel.FillColor = Color.White
         panel.BorderRadius = 16
@@ -291,44 +365,28 @@ Public Class Admin
         panel.ShadowDecoration.BorderRadius = 16
     End Sub
 
-    ''' <summary>
-    ''' Style premium button
-    ''' </summary>
-    Private Sub StylePremiumButton(btn As Guna2Button, fillColor As Color, text As String, Optional foreColor As Color = Nothing)
-        If foreColor = Nothing Then foreColor = Color.White
-
+    Private Sub StylePremiumButton(btn As Guna2Button, fillColor As Color, text As String, Optional foreColor As Color? = Nothing)
+        Dim actualFore As Color = If(foreColor.HasValue, foreColor.Value, Color.White)
         With btn
             .FillColor = fillColor
-            .ForeColor = foreColor
+            .ForeColor = actualFore
             .BorderRadius = 14
             .Font = New Font("Segoe UI", 10.5F, FontStyle.Bold)
             .Cursor = Cursors.Hand
             .Text = text
             .Animated = True
             .AnimatedGIF = True
-
-            ' Gradient effect
             .UseTransparentBackground = True
-
-            ' Shadow
             .ShadowDecoration.Enabled = True
             .ShadowDecoration.Depth = 12
             .ShadowDecoration.Color = Color.FromArgb(80, fillColor)
             .ShadowDecoration.BorderRadius = 14
-
-            ' Hover
             .HoverState.FillColor = AdjustBrightness(fillColor, -15)
-            ' Do not attempt to set HoverState.ShadowDecoration.* (not supported on Guna2 button state)
-
-            ' Press
             .PressedColor = AdjustBrightness(fillColor, -30)
             .PressedDepth = 5
         End With
     End Sub
 
-    ''' <summary>
-    ''' Style premium DataGrid
-    ''' </summary>
     Private Sub StylePremiumDataGrid()
         With dgvAuditLogs
             .BackgroundColor = Color.White
@@ -337,8 +395,6 @@ Public Class Admin
             .GridColor = Color.FromArgb(240, 242, 245)
             .RowTemplate.Height = 60
             .ColumnHeadersHeight = 60
-
-            ' Premium header
             .ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None
             .EnableHeadersVisualStyles = False
 
@@ -351,7 +407,6 @@ Public Class Admin
             headerStyle.SelectionBackColor = Color.FromArgb(251, 191, 36)
             .ColumnHeadersDefaultCellStyle = headerStyle
 
-            ' Premium cells
             Dim cellStyle As New DataGridViewCellStyle()
             cellStyle.BackColor = Color.White
             cellStyle.ForeColor = Color.FromArgb(55, 65, 81)
@@ -361,7 +416,6 @@ Public Class Admin
             cellStyle.SelectionForeColor = Color.FromArgb(20, 20, 20)
             .DefaultCellStyle = cellStyle
 
-            ' Alternating rows
             Dim altStyle As New DataGridViewCellStyle()
             altStyle.BackColor = Color.FromArgb(249, 250, 251)
             .AlternatingRowsDefaultCellStyle = altStyle
@@ -376,25 +430,15 @@ Public Class Admin
         End With
     End Sub
 
-    ''' <summary>
-    ''' Style premium form controls
-    ''' </summary>
     Private Sub StylePremiumControls()
-        ' Textboxes
         StylePremiumTextBox(txtUsernameFilter)
         StylePremiumTextBox(txtSearchAccounts)
-
-        ' Buttons
         StylePremiumActionButton(btnFilterAuditLogs, Color.FromArgb(251, 191, 36), "🔍 Filter", Color.FromArgb(20, 20, 20))
         StylePremiumActionButton(btnExportAuditLogs, Color.FromArgb(16, 185, 129), "📊 Export")
         StylePremiumActionButton(btnCreateAccount, Color.FromArgb(16, 185, 129), "➕ Create")
         StylePremiumActionButton(btnViewArchive, Color.FromArgb(245, 158, 11), "📦 Archive")
-
-        ' Date pickers
         StylePremiumDatePicker(dtpAuditFrom)
         StylePremiumDatePicker(dtpAuditTo)
-
-        ' Checkbox
         With chkDateFilter
             .CheckedState.FillColor = Color.FromArgb(251, 191, 36)
             .CheckedState.BorderColor = Color.FromArgb(251, 191, 36)
@@ -404,9 +448,6 @@ Public Class Admin
         End With
     End Sub
 
-    ''' <summary>
-    ''' Style premium textbox
-    ''' </summary>
     Private Sub StylePremiumTextBox(txt As Guna2TextBox)
         With txt
             .BorderRadius = 14
@@ -417,16 +458,8 @@ Public Class Admin
             .PlaceholderForeColor = Color.FromArgb(156, 163, 175)
             .Height = 50
             .TextOffset = New Point(5, 0)
-
-            ' Focus state
             .FocusedState.BorderColor = Color.FromArgb(251, 191, 36)
-            ' FocusedState.BorderThickness is not supported on Guna2TextBox state; keep control-level BorderThickness.
-            '.FocusedState.BorderThickness = 3
-
-            ' Hover
             .HoverState.BorderColor = Color.FromArgb(209, 213, 219)
-
-            ' Shadow
             .ShadowDecoration.Enabled = True
             .ShadowDecoration.Depth = 5
             .ShadowDecoration.Color = Color.FromArgb(20, 0, 0, 0)
@@ -434,40 +467,26 @@ Public Class Admin
         End With
     End Sub
 
-    ''' <summary>
-    ''' Style premium action button
-    ''' </summary>
-    Private Sub StylePremiumActionButton(btn As Guna2Button, fillColor As Color, text As String, Optional foreColor As Color = Nothing)
-        If foreColor = Nothing Then foreColor = Color.White
-
+    Private Sub StylePremiumActionButton(btn As Guna2Button, fillColor As Color, text As String, Optional foreColor As Color? = Nothing)
+        Dim actualFore As Color = If(foreColor.HasValue, foreColor.Value, Color.White)
         With btn
             .FillColor = fillColor
-            .ForeColor = foreColor
+            .ForeColor = actualFore
             .BorderRadius = 14
             .Font = New Font("Segoe UI", 10.5F, FontStyle.Bold)
             .Cursor = Cursors.Hand
             .Text = text
             .Height = 50
             .Animated = True
-
-            ' Shadow
             .ShadowDecoration.Enabled = True
             .ShadowDecoration.Depth = 10
             .ShadowDecoration.Color = Color.FromArgb(60, fillColor)
             .ShadowDecoration.BorderRadius = 14
-
-            ' Hover
             .HoverState.FillColor = AdjustBrightness(fillColor, -15)
-            ' Do not attempt to set HoverState.ShadowDecoration.* (not supported on Guna2 button state)
-
-            ' Press
             .PressedColor = AdjustBrightness(fillColor, -30)
         End With
     End Sub
 
-    ''' <summary>
-    ''' Style premium date picker
-    ''' </summary>
     Private Sub StylePremiumDatePicker(dtp As Guna2DateTimePicker)
         With dtp
             .BorderRadius = 14
@@ -478,15 +497,11 @@ Public Class Admin
             .ForeColor = Color.FromArgb(31, 41, 55)
             .Height = 50
             .Checked = True
-
             .FocusedColor = Color.FromArgb(251, 191, 36)
             .HoverState.BorderColor = Color.FromArgb(209, 213, 219)
         End With
     End Sub
 
-    ''' <summary>
-    ''' Adjust color brightness
-    ''' </summary>
     Private Function AdjustBrightness(color As Color, amount As Integer) As Color
         Dim r As Integer = Math.Max(0, Math.Min(255, color.R + amount))
         Dim g As Integer = Math.Max(0, Math.Min(255, color.G + amount))
@@ -494,15 +509,12 @@ Public Class Admin
         Return Color.FromArgb(color.A, r, g, b)
     End Function
 
-    ''' <summary>
-    ''' Switch panels with smooth transition
-    ''' </summary>
+    ' ===== PANEL SWITCH =====
     Private Sub SwitchPanel(targetPanel As Panel)
+        If targetPanel Is Nothing Then Return
         If currentPanel Is targetPanel Then Return
 
-        If currentPanel IsNot Nothing Then
-            currentPanel.Visible = False
-        End If
+        If currentPanel IsNot Nothing Then currentPanel.Visible = False
 
         targetPanel.Visible = True
         targetPanel.BringToFront()
@@ -519,20 +531,23 @@ Public Class Admin
     Private Sub MenuButton_Sales_Clicked(sender As Object, e As EventArgs)
         SetActiveNavButton(TryCast(sender, ModernNavButton))
         Try
-            Dim salesReportForm As New SalesReport()
-            salesReportForm.Show()
+            If salesReportInstance Is Nothing OrElse salesReportInstance.IsDisposed Then salesReportInstance = New SalesReport()
+            ' SalesReport is a UserControl now; host as a control
+            HostControlInPanel(salesReportInstance, pnlSalesHost)
+            SwitchPanel(pnlSalesHost)
         Catch ex As Exception
-            MessageBox.Show("Error opening sales report: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Error loading sales report: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
     Private Sub MenuButton_Menu_Clicked(sender As Object, e As EventArgs)
         SetActiveNavButton(TryCast(sender, ModernNavButton))
         Try
-            Dim menuForm As New Manage_menu()
-            menuForm.Show()
+            If manageMenuInstance Is Nothing OrElse manageMenuInstance.IsDisposed Then manageMenuInstance = New Manage_menu()
+            HostControlInPanel(manageMenuInstance, pnlManageMenuHost)
+            SwitchPanel(pnlManageMenuHost)
         Catch ex As Exception
-            MessageBox.Show("Error opening menu management: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Error loading menu management: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
@@ -542,7 +557,7 @@ Public Class Admin
         LoadUserAccounts()
     End Sub
 
-    ' ===== ORIGINAL BUSINESS LOGIC (PRESERVED) =====
+    ' ===== DATA & EXPORT =====
     Private Sub LoadAuditLogs(Optional usernameFilter As String = "", Optional dateFrom As DateTime? = Nothing, Optional dateTo As DateTime? = Nothing)
         Try
             Using connection As New MySqlConnection(GetGlobalConnectionString())
@@ -576,32 +591,6 @@ Public Class Admin
         End Try
     End Sub
 
-    Private Sub FilterAuditLogs()
-        Dim dateFrom As DateTime? = Nothing
-        Dim dateTo As DateTime? = Nothing
-        If chkDateFilter.Checked Then
-            dateFrom = dtpAuditFrom.Value.Date
-            dateTo = dtpAuditTo.Value.Date
-        End If
-        LoadAuditLogs(txtUsernameFilter.Text.Trim(), dateFrom, dateTo)
-    End Sub
-
-    Private Sub ExportAuditLogsToCsv()
-        Try
-            If dgvAuditLogs.Rows.Count = 0 Then
-                MessageBox.Show("No data to export.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                Return
-            End If
-            Dim fileName As String = $"AuditLogs_{DateTime.Now:yyyyMMdd_HHmmss}.csv"
-            Dim filePath As String = Path.Combine(PathManager.GetExportsPath(), fileName)
-            ExportDataGridToCsv(dgvAuditLogs, filePath)
-            MessageBox.Show($"Audit logs exported to: {filePath}", "Export Complete", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        Catch ex As Exception
-            LogError("ExportAuditLogsToCsv", ex.Message)
-            MessageBox.Show("Error exporting audit logs: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-    End Sub
-
     Private Sub ExportDataGridToCsv(dgv As DataGridView, filePath As String)
         Using writer As New StreamWriter(filePath, False, Encoding.UTF8)
             Dim headers As String = String.Join(",", dgv.Columns.Cast(Of DataGridViewColumn)().Select(Function(col) $"""{col.HeaderText}"""))
@@ -615,6 +604,7 @@ Public Class Admin
         End Using
     End Sub
 
+    ' ===== ACCOUNTS PANEL LOADING =====
     Private Sub LoadUserAccounts(Optional searchFilter As String = "")
         Try
             pnlAccountCards.Controls.Clear()
@@ -622,14 +612,12 @@ Public Class Admin
             Dim yPos As Integer = 10
             For Each account In accounts
                 Dim card As New PremiumAccountCard()
-                card.Width = pnlAccountCards.ClientSize.Width - 40
+                card.Width = Math.Max(100, pnlAccountCards.ClientSize.Width - 40)
                 card.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
                 card.SetAccount(account)
                 AddHandler card.EditRequested, Sub(a)
                                                    Dim editForm As New CreateEditAccountForm(a)
-                                                   If editForm.ShowDialog() = DialogResult.OK Then
-                                                       LoadUserAccounts(txtSearchAccounts.Text.Trim())
-                                                   End If
+                                                   If editForm.ShowDialog() = DialogResult.OK Then LoadUserAccounts(txtSearchAccounts.Text.Trim())
                                                End Sub
                 AddHandler card.DeleteRequested, Sub(a)
                                                      Dim result = MessageBox.Show($"Permanently delete user '{a.Username}'?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
@@ -647,7 +635,6 @@ Public Class Admin
                                                       If result = DialogResult.Yes Then
                                                           If DatabaseHandler.ArchiveUser(a.ID) Then
                                                               MessageBox.Show("Account archived successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                                                              ' Refresh list immediately after successful archive
                                                               LoadUserAccounts(txtSearchAccounts.Text.Trim())
                                                           Else
                                                               MessageBox.Show("Failed to archive account.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -659,12 +646,13 @@ Public Class Admin
                 yPos += card.Height + 15
             Next
             If accounts.Count = 0 Then
-                Dim lblNoData As New Label()
-                lblNoData.Text = "No accounts found."
-                lblNoData.Font = New Font("Segoe UI", 12, FontStyle.Italic)
-                lblNoData.ForeColor = Color.Gray
-                lblNoData.Location = New Point(10, 10)
-                lblNoData.AutoSize = True
+                Dim lblNoData As New Label() With {
+                    .Text = "No accounts found.",
+                    .Font = New Font("Segoe UI", 12, FontStyle.Italic),
+                    .ForeColor = Color.Gray,
+                    .Location = New Point(10, 10),
+                    .AutoSize = True
+                }
                 pnlAccountCards.Controls.Add(lblNoData)
             End If
         Catch ex As Exception
@@ -673,6 +661,7 @@ Public Class Admin
         End Try
     End Sub
 
+    ' ===== LOGGING =====
     Private Sub LogError(method As String, message As String)
         Try
             Dim logFile As String = Path.Combine(PathManager.GetLogsPath(), "error.txt")
@@ -683,20 +672,27 @@ Public Class Admin
         End Try
     End Sub
 
-    ' ===== EVENT HANDLERS =====
+    ' ===== EVENT HANDLERS (designer) =====
     Private Sub btnFilterAuditLogs_Click(sender As Object, e As EventArgs) Handles btnFilterAuditLogs.Click
-        FilterAuditLogs()
+        Dim dateFrom As DateTime? = Nothing
+        Dim dateTo As DateTime? = Nothing
+        If chkDateFilter.Checked Then
+            dateFrom = dtpAuditFrom.Value.Date
+            dateTo = dtpAuditTo.Value.Date
+        End If
+        LoadAuditLogs(txtUsernameFilter.Text.Trim(), dateFrom, dateTo)
     End Sub
 
     Private Sub btnExportAuditLogs_Click(sender As Object, e As EventArgs) Handles btnExportAuditLogs.Click
-        ExportAuditLogsToCsv()
+        Dim fileName As String = $"AuditLogs_{DateTime.Now:yyyyMMdd_HHmmss}.csv"
+        Dim filePath As String = Path.Combine(PathManager.GetExportsPath(), fileName)
+        ExportDataGridToCsv(dgvAuditLogs, filePath)
+        MessageBox.Show($"Audit logs exported to: {filePath}", "Export Complete", MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
 
     Private Sub btnCreateAccount_Click(sender As Object, e As EventArgs) Handles btnCreateAccount.Click
         Dim createForm As New CreateEditAccountForm
-        If createForm.ShowDialog = DialogResult.OK Then
-            LoadUserAccounts(txtSearchAccounts.Text.Trim)
-        End If
+        If createForm.ShowDialog() = DialogResult.OK Then LoadUserAccounts(txtSearchAccounts.Text.Trim())
     End Sub
 
     Private Sub txtSearchAccounts_TextChanged(sender As Object, e As EventArgs) Handles txtSearchAccounts.TextChanged
@@ -706,29 +702,20 @@ Public Class Admin
     Private Sub btnViewArchive_Click(sender As Object, e As EventArgs) Handles btnViewArchive.Click
         Try
             Dim archiveForm As New ArchiveStorage()
-            ' Subscribe to archive changes so Manage Accounts refreshes automatically when an item is restored/deleted
             AddHandler archiveForm.AccountsChanged, AddressOf OnArchiveAccountsChanged
             archiveForm.ShowDialog(Me)
-            ' Unsubscribe (defensive)
             RemoveHandler archiveForm.AccountsChanged, AddressOf OnArchiveAccountsChanged
         Catch ex As Exception
             MessageBox.Show("Error opening archive storage: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
-    ' Designer-placed Refresh button handler
     Private Sub btnRefreshAccounts_Click(sender As Object, e As EventArgs) Handles btnRefreshAccounts.Click
         LoadUserAccounts(txtSearchAccounts.Text.Trim())
     End Sub
 
-
-
-    ' Handler called when ArchiveStorage raises AccountsChanged
     Private Sub OnArchiveAccountsChanged(sender As Object, e As EventArgs)
-        ' Only reload if Manage Accounts panel is visible
-        If pnlManageAccounts.Visible Then
-            LoadUserAccounts(txtSearchAccounts.Text.Trim())
-        End If
+        If pnlManageAccounts.Visible Then LoadUserAccounts(txtSearchAccounts.Text.Trim())
     End Sub
 
     Private Sub chkDateFilter_CheckedChanged(sender As Object, e As EventArgs) Handles chkDateFilter.CheckedChanged
@@ -736,11 +723,23 @@ Public Class Admin
         dtpAuditTo.Enabled = chkDateFilter.Checked
     End Sub
 
-    Private Sub pnlHeader_Paint(sender As Object, e As PaintEventArgs) Handles pnlHeader.Paint
+    ' ===== CLEANUP =====
+    Protected Overrides Sub OnFormClosing(e As FormClosingEventArgs)
+        MyBase.OnFormClosing(e)
+        Try
+            If salesReportInstance IsNot Nothing AndAlso Not salesReportInstance.IsDisposed Then
+                ' SalesReport is a UserControl now — dispose it instead of calling Close()
+                salesReportInstance.Dispose()
+                salesReportInstance = Nothing
+            End If
+        Catch
+        End Try
+        Try
+            If manageMenuInstance IsNot Nothing AndAlso Not manageMenuInstance.IsDisposed Then
+                manageMenuInstance.Dispose()
+                manageMenuInstance = Nothing
+            End If
+        Catch
+        End Try
     End Sub
-
-    Private Sub pnlManageAccounts_Paint(sender As Object, e As PaintEventArgs) Handles pnlManageAccounts.Paint
-    End Sub
-
-
 End Class
