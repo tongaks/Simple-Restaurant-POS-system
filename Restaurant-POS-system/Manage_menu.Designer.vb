@@ -52,8 +52,6 @@ Partial Class Manage_menu
         Dim CustomizableEdges19 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
         Dim CustomizableEdges9 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
         Dim CustomizableEdges10 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
-        Dim CustomizableEdges11 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
-        Dim CustomizableEdges12 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
         Dim CustomizableEdges13 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
         Dim CustomizableEdges14 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
         Dim CustomizableEdges15 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
@@ -64,6 +62,8 @@ Partial Class Manage_menu
         Dim CustomizableEdges23 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
         Dim CustomizableEdges24 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
         Dim CustomizableEdges22 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges11 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges12 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
         pnlTopBar = New Guna.UI2.WinForms.Guna2GradientPanel()
         pnlTopBarRow2 = New Guna.UI2.WinForms.Guna2Panel()
         flowCategoryTabs = New FlowLayoutPanel()
@@ -73,7 +73,6 @@ Partial Class Manage_menu
         pnlTopBarRow1 = New Guna.UI2.WinForms.Guna2Panel()
         btnBack = New Guna.UI2.WinForms.Guna2Button()
         lblTitle = New Label()
-        pnlTitleGlow = New Guna.UI2.WinForms.Guna2Panel()
         txtSearch = New Guna.UI2.WinForms.Guna2TextBox()
         btnHelp = New Guna.UI2.WinForms.Guna2CircleButton()
         btnLogout = New Guna.UI2.WinForms.Guna2Button()
@@ -82,12 +81,14 @@ Partial Class Manage_menu
         pnlLoadingOverlay = New Guna.UI2.WinForms.Guna2Panel()
         lblLoading = New Label()
         pbLoadingSpinner = New Guna.UI2.WinForms.Guna2CircleProgressBar()
+        pnlTitleGlow = New Guna.UI2.WinForms.Guna2Panel()
         pnlTopBar.SuspendLayout()
         pnlTopBarRow2.SuspendLayout()
         pnlActions.SuspendLayout()
         pnlTopBarRow1.SuspendLayout()
         pnlMain.SuspendLayout()
         pnlLoadingOverlay.SuspendLayout()
+        pnlTitleGlow.SuspendLayout()
         SuspendLayout()
         ' 
         ' pnlTopBar
@@ -213,7 +214,6 @@ Partial Class Manage_menu
         ' 
         pnlTopBarRow1.BackColor = Color.Transparent
         pnlTopBarRow1.Controls.Add(btnBack)
-        pnlTopBarRow1.Controls.Add(lblTitle)
         pnlTopBarRow1.Controls.Add(pnlTitleGlow)
         pnlTopBarRow1.Controls.Add(txtSearch)
         pnlTopBarRow1.Controls.Add(btnHelp)
@@ -260,27 +260,11 @@ Partial Class Manage_menu
         lblTitle.BackColor = Color.Transparent
         lblTitle.Font = New Font("Segoe UI", 20F, FontStyle.Bold)
         lblTitle.ForeColor = Color.White
-        lblTitle.Location = New Point(155, 22)
+        lblTitle.Location = New Point(-4, 4)
         lblTitle.Name = "lblTitle"
         lblTitle.Size = New Size(308, 46)
         lblTitle.TabIndex = 1
         lblTitle.Text = "🍽️ Manage Menu"
-        ' 
-        ' pnlTitleGlow
-        ' 
-        pnlTitleGlow.BackColor = Color.Transparent
-        pnlTitleGlow.BorderRadius = 20
-        pnlTitleGlow.CustomizableEdges = CustomizableEdges11
-        pnlTitleGlow.FillColor = Color.FromArgb(CByte(40), CByte(255), CByte(200), CByte(87))
-        pnlTitleGlow.Location = New Point(145, 13)
-        pnlTitleGlow.Name = "pnlTitleGlow"
-        pnlTitleGlow.ShadowDecoration.BorderRadius = 20
-        pnlTitleGlow.ShadowDecoration.Color = Color.FromArgb(CByte(120), CByte(255), CByte(200), CByte(87))
-        pnlTitleGlow.ShadowDecoration.CustomizableEdges = CustomizableEdges12
-        pnlTitleGlow.ShadowDecoration.Depth = 25
-        pnlTitleGlow.ShadowDecoration.Enabled = True
-        pnlTitleGlow.Size = New Size(300, 50)
-        pnlTitleGlow.TabIndex = 2
         ' 
         ' txtSearch
         ' 
@@ -449,6 +433,23 @@ Partial Class Manage_menu
         pbLoadingSpinner.Text = "Guna2CircleProgressBar1"
         pbLoadingSpinner.Value = 60
         ' 
+        ' pnlTitleGlow
+        ' 
+        pnlTitleGlow.BackColor = Color.Transparent
+        pnlTitleGlow.BorderRadius = 20
+        pnlTitleGlow.Controls.Add(lblTitle)
+        pnlTitleGlow.CustomizableEdges = CustomizableEdges11
+        pnlTitleGlow.FillColor = Color.FromArgb(CByte(40), CByte(255), CByte(200), CByte(87))
+        pnlTitleGlow.Location = New Point(145, 13)
+        pnlTitleGlow.Name = "pnlTitleGlow"
+        pnlTitleGlow.ShadowDecoration.BorderRadius = 20
+        pnlTitleGlow.ShadowDecoration.Color = Color.FromArgb(CByte(120), CByte(255), CByte(200), CByte(87))
+        pnlTitleGlow.ShadowDecoration.CustomizableEdges = CustomizableEdges12
+        pnlTitleGlow.ShadowDecoration.Depth = 25
+        pnlTitleGlow.ShadowDecoration.Enabled = True
+        pnlTitleGlow.Size = New Size(300, 50)
+        pnlTitleGlow.TabIndex = 2
+        ' 
         ' Manage_menu
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
@@ -465,10 +466,11 @@ Partial Class Manage_menu
         pnlTopBarRow2.PerformLayout()
         pnlActions.ResumeLayout(False)
         pnlTopBarRow1.ResumeLayout(False)
-        pnlTopBarRow1.PerformLayout()
         pnlMain.ResumeLayout(False)
         pnlLoadingOverlay.ResumeLayout(False)
         pnlLoadingOverlay.PerformLayout()
+        pnlTitleGlow.ResumeLayout(False)
+        pnlTitleGlow.PerformLayout()
         ResumeLayout(False)
     End Sub
 
@@ -477,7 +479,6 @@ Partial Class Manage_menu
     Friend WithEvents pnlTopBarRow1 As Guna.UI2.WinForms.Guna2Panel
     Friend WithEvents btnBack As Guna.UI2.WinForms.Guna2Button
     Friend WithEvents lblTitle As System.Windows.Forms.Label
-    Friend WithEvents pnlTitleGlow As Guna.UI2.WinForms.Guna2Panel
     Friend WithEvents txtSearch As Guna.UI2.WinForms.Guna2TextBox
     Friend WithEvents btnHelp As Guna.UI2.WinForms.Guna2CircleButton
     Friend WithEvents btnLogout As Guna.UI2.WinForms.Guna2Button
@@ -491,5 +492,6 @@ Partial Class Manage_menu
     Friend WithEvents pnlLoadingOverlay As Guna.UI2.WinForms.Guna2Panel
     Friend WithEvents lblLoading As System.Windows.Forms.Label
     Friend WithEvents pbLoadingSpinner As Guna.UI2.WinForms.Guna2CircleProgressBar
+    Friend WithEvents pnlTitleGlow As Guna.UI2.WinForms.Guna2Panel
 
 End Class

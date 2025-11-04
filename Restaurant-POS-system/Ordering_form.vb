@@ -400,29 +400,75 @@ Public Class Order
         End If
 
         Dim ConnectionString = GetGlobalConnectionString()
-        Dim Connection As New MySqlConnection(ConnectionString)
-        Dim TotalAmount = Integer.Parse(TotalLbl.Text.Substring(1))
-
-        Try
+        Using Connection As New MySqlConnection(ConnectionString)
             Connection.Open()
-            Dim Query = "INSERT INTO orders (order_date, order_time, username, total_amount) VALUES (@date, @time, @user, @total)"
-            Dim Command As New MySqlCommand(Query, Connection)
-            Command.Parameters.AddWithValue("@date", Date.Now.ToString("yyyy-MM-dd"))
-            Command.Parameters.AddWithValue("@time", Date.Now.ToString("HH:mm:ss"))
-            Command.Parameters.AddWithValue("@user", CurrentUser)
-            Command.Parameters.AddWithValue("@total", TotalAmount)
+            Dim TotalAmount = Integer.Parse(TotalLbl.Text.Substring(1))
 
-            If Command.ExecuteNonQuery > 0 Then
-                MsgBox("Order created", MsgBoxStyle.Information, "Success")
+            Try
+                ' Insert order and get inserted id
+                Dim insertOrderSql = "INSERT INTO orders (order_date, order_time, username, total_amount) VALUES (@date, @time, @user, @total)"
+                Using cmd As New MySqlCommand(insertOrderSql, Connection)
+                    cmd.Parameters.AddWithValue("@date", Date.Now.ToString("yyyy-MM-dd"))
+                    cmd.Parameters.AddWithValue("@time", Date.Now.ToString("HH:mm:ss"))
+                    cmd.Parameters.AddWithValue("@user", CurrentUser)
+                    cmd.Parameters.AddWithValue("@total", TotalAmount)
 
-                ' Generate PDF receipt
-                Dim receiptPath = CreateReceiptPDF()
+                    If cmd.ExecuteNonQuery() > 0 Then
+                        ' Try to obtain last inserted id
+                        Dim orderId As Long = 0
+                        Try
+                            orderId = cmd.LastInsertedId
+                        Catch
+                        End Try
+                        If orderId = 0 Then
+                            Using idCmd As New MySqlCommand("SELECT LAST_INSERT_ID()", Connection)
+                                orderId = Convert.ToInt64(idCmd.ExecuteScalar())
+                            End Using
+                        End If
 
-                ' ===== NEW CODE: Launch modern Receipt form =====
-                Try
-                    ' Build order data from current order
-                    Dim orderData As New Receipt.OrderData With {
-                        .OrderId = GetLatestOrderId(), ' Helper function to get latest order ID
+                        ' Insert each order item to order_items table
+                        Dim insertItemSql = "INSERT INTO order_items (order_id, item_name, quantity, price) VALUES (@orderId, @name, @qty, @price)"
+                        For Each row As DataGridViewRow In DataGridView1.Rows
+                            If row.IsNewRow Then Continue For
+                            Dim qty = If(row.Cells(0).Value, 0)
+                            Dim name = If(row.Cells(1).Value, String.Empty).ToString()
+                            Dim price = If(row.Cells(2).Value, 0)
+                            Using itemCmd As New MySqlCommand(insertItemSql, Connection)
+                                itemCmd.Parameters.AddWithValue("@orderId", orderId)
+                                itemCmd.Parameters.AddWithValue("@name", name)
+                                itemCmd.Parameters.AddWithValue("@qty", qty)
+                                itemCmd.Parameters.AddWithValue("@price", price)
+                                itemCmd.ExecuteNonQuery()
+                            End Using
+                        Next
+
+                        MsgBox("Order created", MsgBoxStyle.Information, "Success")
+
+                        ' Generate PDF receipt (existing function) then ensure it's saved with orderId name
+                        Dim generatedPdf As String = CreateReceiptPDF()
+                        Dim receiptsDir As String = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Receipts")
+                        Try
+                            If Not Directory.Exists(receiptsDir) Then Directory.CreateDirectory(receiptsDir)
+                        Catch
+                            ' ignore folder creation failure here; CreateReceiptPDF already reported errors if any
+                        End Try
+
+                        Dim receiptPath As String = String.Empty
+                        If Not String.IsNullOrEmpty(generatedPdf) AndAlso File.Exists(generatedPdf) Then
+                            Try
+                                receiptPath = Path.Combine(receiptsDir, "Receipt_" & orderId.ToString() & ".pdf")
+                                File.Copy(generatedPdf, receiptPath, True)
+                            Catch
+                                receiptPath = generatedPdf ' fallback
+                            End Try
+                        Else
+                            ' Fallback filename if CreateReceiptPDF returned empty: create a minimal filename
+                            receiptPath = Path.Combine(receiptsDir, "Receipt_" & orderId.ToString() & ".pdf")
+                        End If
+
+                        ' Build orderData from current DataGridView (same as before)
+                        Dim orderData As New Receipt.OrderData With {
+                        .OrderId = orderId.ToString(),
                         .OrderDate = Date.Now,
                         .CashierName = CurrentUser,
                         .Items = New List(Of Receipt.OrderItem),
@@ -432,51 +478,52 @@ Public Class Order
                         .PaymentMethod = "Cash"
                     }
 
-                    ' Populate items from DataGridView
-                    For Each row As DataGridViewRow In DataGridView1.Rows
-                        Dim item As New Receipt.OrderItem With {
+                        For Each row As DataGridViewRow In DataGridView1.Rows
+                            If row.IsNewRow Then Continue For
+                            Dim item As New Receipt.OrderItem With {
                             .Name = If(row.Cells(1).Value IsNot Nothing, row.Cells(1).Value.ToString(), ""),
                             .Amount = If(row.Cells(0).Value IsNot Nothing, CInt(row.Cells(0).Value), 0),
                             .Price = If(row.Cells(2).Value IsNot Nothing, CDec(row.Cells(2).Value), 0D),
                             .Total = If(row.Cells(3).Value IsNot Nothing, CDec(row.Cells(3).Value), 0D)
                         }
-                        orderData.Items.Add(item)
-                    Next
+                            orderData.Items.Add(item)
+                        Next
 
-                    ' Show the modern receipt form (native UI + PDF preview)
-                    Dim receiptForm As New Receipt()
-                    receiptForm.LoadReceipt(orderData, receiptPath)
-                    receiptForm.ShowDialog(Me)
+                        ' Show the modern receipt form (pass the generated receipt path)
+                        Try
+                            Dim receiptForm As New Receipt()
+                            receiptForm.LoadReceipt(orderData, receiptPath)
+                            receiptForm.ShowDialog(Me)
+                        Catch ex As Exception
+                            MessageBox.Show("Receipt created but could not display preview: " & ex.Message, "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        End Try
 
-                Catch ex As Exception
-                    ' Fallback to basic message if receipt form fails
-                    MessageBox.Show("Receipt created but could not display preview: " & ex.Message, "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                End Try
-                ' ===== END NEW CODE =====
+                        InsertActivityLog("Created an order with total of " & CurrentTotal)
 
-                InsertActivityLog("Created an order with total of " & CurrentTotal)
+                        ' Reset form
+                        CurrentTotal = 0
+                        CurrentSubTotal = 0
+                        DiscountValue = 0
 
-                ' Reset form
-                CurrentTotal = 0
-                CurrentSubTotal = 0
-                DiscountValue = 0
+                        SubtotalLbl.Text = "₱" & CurrentSubTotal
+                        DiscountLbl.Text = "%" & DiscountValue
+                        TotalLbl.Text = "₱" & CurrentTotal
 
-                SubtotalLbl.Text = "₱" & CurrentSubTotal
-                DiscountLbl.Text = "%" & DiscountValue
-                TotalLbl.Text = "₱" & CurrentTotal
-
-                DataGridView1.Rows.Clear()
-                UpdateItemOrderList()
-                FoodPnl.Focus()
-            End If
-
-        Catch ex As Exception
-            MsgBox("Failed to create order: " + ex.ToString, MsgBoxStyle.Critical, "Error")
-        Finally
-            If Connection.State = ConnectionState.Open Then
-                Connection.Close()
-            End If
-        End Try
+                        DataGridView1.Rows.Clear()
+                        UpdateItemOrderList()
+                        FoodPnl.Focus()
+                    Else
+                        MsgBox("Failed to create order", MsgBoxStyle.Critical, "Error")
+                    End If
+                End Using
+            Catch ex As Exception
+                MsgBox("Failed to create order: " + ex.ToString, MsgBoxStyle.Critical, "Error")
+            Finally
+                If Connection.State = ConnectionState.Open Then
+                    Connection.Close()
+                End If
+            End Try
+        End Using
     End Sub
 
     Private Sub SearchBtn_Click(sender As Object, e As EventArgs) Handles SearchBtn.Click

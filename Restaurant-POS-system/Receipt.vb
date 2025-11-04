@@ -32,132 +32,160 @@ Public Class Receipt
 
     Public Sub New()
         InitializeComponent()
-        AddHandler Me.Load, AddressOf Receipt_Load
-        AddHandler Me.KeyDown, AddressOf Receipt_KeyDown
-        AddHandler Me.Shown, AddressOf Receipt_Shown
+        ' Use Handles on the methods instead of AddHandler to avoid binding issues.
+        ' Initial button hover effects are set in Receipt_Load which runs via Handles.
     End Sub
 
-    Private Sub Receipt_Load(sender As Object, e As EventArgs)
-        ' Show native view by default
+    Private Sub Receipt_Load(sender As Object, e As EventArgs) Handles Me.Load
+        ' Show native view by default (no animation)
         ShowNativeView()
 
         ' Initial button hover effects setup
         SetupButtonHoverEffects()
     End Sub
 
-    Private Sub Receipt_Shown(sender As Object, e As EventArgs)
-        ' Animate form entrance
-        Me.Opacity = 0
-        Dim fadeTimer As New Timer With {.Interval = 10}
-        AddHandler fadeTimer.Tick, Sub()
-                                       Me.Opacity += 0.05
-                                       If Me.Opacity >= 1 Then
-                                           fadeTimer.Stop()
-                                           fadeTimer.Dispose()
-                                       End If
-                                   End Sub
-        fadeTimer.Start()
+    Private Sub Receipt_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+        ' Keep fully opaque (no entrance animation)
+        Me.Opacity = 1.0R
     End Sub
 
-    Private Sub SetupButtonHoverEffects()
-        ' Add smooth hover effects to all buttons
-        For Each btn As Guna.UI2.WinForms.Guna2Button In {btnSavePdf, btnPrint, btnEmail, btnClose, btnViewNative, btnViewPdf, btnPdfZoom}
-            AddHandler btn.MouseEnter, AddressOf Button_MouseEnter
-            AddHandler btn.MouseLeave, AddressOf Button_MouseLeave
-        Next
-    End Sub
-
-    Private Sub Button_MouseEnter(sender As Object, e As EventArgs)
-        Dim btn = TryCast(sender, Guna.UI2.WinForms.Guna2Button)
-        If btn IsNot Nothing Then
-            btn.ShadowDecoration.Depth = 15
+    Private Sub Receipt_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
+        If e.KeyCode = Keys.Escape Then
+            btnClose_Click(sender, EventArgs.Empty)
+        ElseIf e.Control AndAlso e.KeyCode = Keys.P Then
+            btnPrint_Click(sender, EventArgs.Empty)
+            e.Handled = True
+        ElseIf e.KeyCode = Keys.Enter Then
+            btnSavePdf_Click(sender, EventArgs.Empty)
+            e.Handled = True
+        ElseIf e.Control AndAlso e.KeyCode = Keys.S Then
+            btnSavePdf_Click(sender, EventArgs.Empty)
+            e.Handled = True
         End If
     End Sub
 
-    Private Sub Button_MouseLeave(sender As Object, e As EventArgs)
-        Dim btn = TryCast(sender, Guna.UI2.WinForms.Guna2Button)
-        If btn IsNot Nothing Then
-            btn.ShadowDecoration.Depth = 8
-        End If
-    End Sub
-
-    ''' <summary>
-    ''' Main entry point - Load receipt with order data and optional PDF path
-    ''' </summary>
-    Public Sub LoadReceipt(orderData As OrderData, Optional pdfPath As String = "")
-        Try
-            If orderData Is Nothing Then
-                MessageBox.Show("No order data provided.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-                Return
-            End If
-
-            _orderData = orderData
-            _pdfPath = pdfPath
-
-            ' Populate native receipt view
-            PopulateNativeReceipt()
-
-            ' Try to load PDF if path is valid
-            If Not String.IsNullOrEmpty(pdfPath) AndAlso File.Exists(pdfPath) Then
-                Try
-                    pdfViewer.Document = PdfiumViewer.PdfDocument.Load(pdfPath)
-                    pdfViewer.ZoomMode = PdfViewerZoomMode.FitWidth
-                    _fitWidth = True
-                Catch ex As Exception
-                    ' PDF load failed, but native view still works
-                    MessageBox.Show("Could not load PDF preview, showing digital receipt only." & vbCrLf & vbCrLf & "Error: " & ex.Message, "PDF Load Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-                    ' Disable PDF view button
-                    btnViewPdf.Enabled = False
-                    btnViewPdf.FillColor = Color.FromArgb(71, 85, 105)
-                End Try
-            Else
-                ' No PDF available
-                btnViewPdf.Enabled = False
-                btnViewPdf.FillColor = Color.FromArgb(71, 85, 105)
-            End If
-
-        Catch ex As Exception
-            MessageBox.Show("Error loading receipt: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-    End Sub
-
-    ''' <summary>
-    ''' Populate the native receipt UI with order data
-    ''' </summary>
+    ' Populate the native receipt immediately (no animation)
     Private Sub PopulateNativeReceipt()
         Try
+            If _orderData Is Nothing Then Return
+
             ' Header information
             lblOrderId.Text = "Order #" & _orderData.OrderId
             lblDateTime.Text = "Date: " & _orderData.OrderDate.ToString("yyyy-MM-dd HH:mm:ss")
             lblCashier.Text = "Cashier: " & _orderData.CashierName
             lblPaymentMethod.Text = "Payment: " & _orderData.PaymentMethod
 
-            ' Clear items
-            flowItemsContainer.Controls.Clear()
+            ' Ensure native receipt panel is visible
+            pnlPdfViewer.Visible = False
+            pnlNativeReceipt.Visible = True
+            _currentView = "native"
 
-            ' Add items with staggered animation
-            If _orderData.Items IsNot Nothing Then
-                Dim delay As Integer = 0
+            ' Clear the scroll area and create a stable content panel we control explicitly
+            pnlReceiptScroll.Controls.Clear()
+
+            Dim content As New Panel()
+            content.Name = "receiptContentPanel"
+            content.BackColor = Color.Transparent
+            content.AutoSize = False
+            content.Location = New Point(40, 20)
+            content.Width = Math.Max(600, pnlReceiptScroll.ClientSize.Width - 80)
+            content.AutoScroll = False
+
+            Dim y As Integer = 0
+            Dim rowHeight As Integer = 80
+            Dim leftPadding As Integer = 0
+
+            If _orderData.Items IsNot Nothing AndAlso _orderData.Items.Count > 0 Then
                 For Each item In _orderData.Items
-                    Dim itemCard = CreateItemCard(item)
-                    itemCard.Tag = delay
-                    flowItemsContainer.Controls.Add(itemCard)
+                    ' simple row panel - avoids layout race conditions
+                    Dim row As New Panel With {
+                    .BackColor = Color.FromArgb(248, 250, 252),
+                    .Location = New Point(leftPadding, y),
+                    .Size = New Size(content.Width, rowHeight)
+                }
 
-                    ' Animate item entrance
-                    AnimateItemEntrance(itemCard, delay)
-                    delay += 50
+                    ' Quantity (left)
+                    Dim lblQty As New Label With {
+                    .Text = item.Amount.ToString(),
+                    .Font = New Font("Segoe UI", 16, FontStyle.Bold),
+                    .ForeColor = Color.FromArgb(16, 185, 129),
+                    .Location = New Point(12, 20),
+                    .AutoSize = True,
+                    .BackColor = Color.Transparent
+                }
+
+                    ' Name (middle)
+                    Dim lblName As New Label With {
+                    .Text = item.Name,
+                    .Font = New Font("Segoe UI", 12, FontStyle.Bold),
+                    .ForeColor = Color.FromArgb(30, 41, 59),
+                    .Location = New Point(86, 18),
+                    .AutoSize = False,
+                    .Size = New Size(CInt(row.Width * 0.65), 24),
+                    .BackColor = Color.Transparent
+                }
+
+                    ' Unit price (below name)
+                    Dim lblUnit As New Label With {
+                    .Text = "₱" & item.Price.ToString("N2") & " each",
+                    .Font = New Font("Segoe UI", 9.5F, FontStyle.Regular),
+                    .ForeColor = Color.FromArgb(100, 116, 139),
+                    .Location = New Point(86, 42),
+                    .AutoSize = True,
+                    .BackColor = Color.Transparent
+                }
+
+                    ' Total (right)
+                    Dim lblTotal As New Label With {
+                    .Text = "₱" & item.Total.ToString("N2"),
+                    .Font = New Font("Segoe UI Semibold", 14, FontStyle.Bold),
+                    .ForeColor = Color.FromArgb(15, 23, 42),
+                    .AutoSize = True,
+                    .BackColor = Color.Transparent
+                }
+                    lblTotal.Location = New Point(row.Width - lblTotal.PreferredWidth - 24, 22)
+
+                    row.Controls.Add(lblQty)
+                    row.Controls.Add(lblName)
+                    row.Controls.Add(lblUnit)
+                    row.Controls.Add(lblTotal)
+
+                    ' Reposition total if row resized later
+                    AddHandler row.SizeChanged, Sub()
+                                                    Try
+                                                        lblTotal.Location = New Point(row.Width - lblTotal.PreferredWidth - 24, 22)
+                                                    Catch
+                                                    End Try
+                                                End Sub
+
+                    content.Controls.Add(row)
+                    y += rowHeight + 12
                 Next
+            Else
+                Dim placeholder As New Label With {
+                .AutoSize = False,
+                .Text = "No items found for this receipt.",
+                .Font = New Font("Segoe UI", 12.0F, FontStyle.Italic),
+                .ForeColor = Color.FromArgb(150, 150, 150),
+                .TextAlign = ContentAlignment.MiddleCenter,
+                .Height = 80,
+                .Width = content.Width,
+                .Location = New Point(leftPadding, y),
+                .BackColor = Color.Transparent
+            }
+                content.Controls.Add(placeholder)
+                y += placeholder.Height + 12
             End If
 
-            ' Totals with animation
-            AnimateTotalsUpdate()
+            ' Set content size so scroll works
+            content.Height = Math.Max(1, y)
+            pnlReceiptScroll.Controls.Add(content)
 
+            ' Totals update (always)
             lblSubtotalAmount.Text = "₱" & _orderData.Subtotal.ToString("N2")
-
-            Dim discountAmount As Decimal = (_orderData.DiscountPercent / 100) * _orderData.Subtotal
+            Dim discountAmount As Decimal = CDec((_orderData.DiscountPercent / 100D) * _orderData.Subtotal)
             lblDiscountLabel.Text = "Discount (" & _orderData.DiscountPercent.ToString("0.0") & "%)"
             lblDiscountAmount.Text = "-₱" & discountAmount.ToString("N2")
-
             lblTotalAmount.Text = "₱" & _orderData.Total.ToString("N2")
 
         Catch ex As Exception
@@ -165,144 +193,12 @@ Public Class Receipt
         End Try
     End Sub
 
-    Private Sub AnimateItemEntrance(itemCard As Panel, delay As Integer)
-        itemCard.Location = New Point(itemCard.Location.X - 50, itemCard.Location.Y)
-        itemCard.Visible = False
-
-        Dim entryTimer As New Timer With {.Interval = delay, .Tag = itemCard}
-        AddHandler entryTimer.Tick, Sub(s, e)
-                                        Dim timer = DirectCast(s, Timer)
-                                        Dim card = DirectCast(timer.Tag, Panel)
-                                        timer.Stop()
-                                        timer.Dispose()
-
-                                        card.Visible = True
-                                        TransitionAnimator.Show(card)
-                                    End Sub
-        entryTimer.Start()
-    End Sub
-
-    Private Sub AnimateTotalsUpdate()
-        ' Pulse animation for total amount
-        Dim pulseTimer As New Timer With {.Interval = 50}
-        Dim pulseCount As Integer = 0
-        Dim originalSize = lblTotalAmount.Font.Size
-
-        AddHandler pulseTimer.Tick, Sub()
-                                        pulseCount += 1
-                                        If pulseCount <= 5 Then
-                                            lblTotalAmount.Font = New Font(lblTotalAmount.Font.FontFamily, originalSize + 2, FontStyle.Bold)
-                                        ElseIf pulseCount <= 10 Then
-                                            lblTotalAmount.Font = New Font(lblTotalAmount.Font.FontFamily, originalSize, FontStyle.Bold)
-                                        Else
-                                            pulseTimer.Stop()
-                                            pulseTimer.Dispose()
-                                        End If
-                                    End Sub
-        pulseTimer.Start()
-    End Sub
-
-    ''' <summary>
-    ''' Create a modern card UI for each order item
-    ''' </summary>
-    Private Function CreateItemCard(item As OrderItem) As Guna.UI2.WinForms.Guna2Panel
-        Dim card As New Guna.UI2.WinForms.Guna2Panel With {
-            .Width = flowItemsContainer.ClientSize.Width - 20,
-            .Height = 80,
-            .BorderRadius = 15,
-            .FillColor = Color.FromArgb(248, 250, 252),
-            .Margin = New Padding(0, 0, 0, 12)
-        }
-
-        card.ShadowDecoration.BorderRadius = 15
-        card.ShadowDecoration.Depth = 5
-        card.ShadowDecoration.Enabled = True
-        card.ShadowDecoration.Color = Color.FromArgb(200, 200, 200)
-
-        ' Quantity badge with gradient
-        Dim qtyBadge As New Guna.UI2.WinForms.Guna2GradientPanel With {
-            .Size = New Size(60, 60),
-            .Location = New Point(15, 10),
-            .BorderRadius = 12,
-            .FillColor = Color.FromArgb(16, 185, 129),
-            .FillColor2 = Color.FromArgb(5, 150, 105),
-            .GradientMode = Drawing2D.LinearGradientMode.ForwardDiagonal
-        }
-
-        Dim qtyLabel As New Label With {
-            .Text = item.Amount.ToString(),
-            .Font = New Font("Segoe UI", 18, FontStyle.Bold),
-            .ForeColor = Color.White,
-            .TextAlign = ContentAlignment.MiddleCenter,
-            .Dock = DockStyle.Fill,
-            .BackColor = Color.Transparent
-        }
-        qtyBadge.Controls.Add(qtyLabel)
-
-        ' Item name
-        Dim nameLabel As New Label With {
-            .Text = item.Name,
-            .Font = New Font("Segoe UI", 13, FontStyle.Bold),
-            .ForeColor = Color.FromArgb(30, 41, 59),
-            .Location = New Point(90, 15),
-            .AutoSize = True,
-            .MaximumSize = New Size(600, 0),
-            .BackColor = Color.Transparent
-        }
-
-        ' Unit price
-        Dim priceLabel As New Label With {
-            .Text = "₱" & item.Price.ToString("N2") & " each",
-            .Font = New Font("Segoe UI", 10, FontStyle.Regular),
-            .ForeColor = Color.FromArgb(100, 116, 139),
-            .Location = New Point(90, 45),
-            .AutoSize = True,
-            .BackColor = Color.Transparent
-        }
-
-        ' Line total
-        Dim totalLabel As New Label With {
-            .Text = "₱" & item.Total.ToString("N2"),
-            .Font = New Font("Segoe UI Semibold", 16, FontStyle.Bold),
-            .ForeColor = Color.FromArgb(15, 23, 42),
-            .Location = New Point(card.Width - 180, 25),
-            .AutoSize = True,
-            .BackColor = Color.Transparent
-        }
-
-        card.Controls.AddRange({qtyBadge, nameLabel, priceLabel, totalLabel})
-
-        ' Hover effect
-        AddHandler card.MouseEnter, Sub()
-                                        card.ShadowDecoration.Depth = 10
-                                        card.FillColor = Color.White
-                                    End Sub
-        AddHandler card.MouseLeave, Sub()
-                                        card.ShadowDecoration.Depth = 5
-                                        card.FillColor = Color.FromArgb(248, 250, 252)
-                                    End Sub
-
-        Return card
-    End Function
-
-    ' View toggle handlers with animation
-    Private Sub btnViewNative_Click(sender As Object, e As EventArgs) Handles btnViewNative.Click
-        ShowNativeView()
-    End Sub
-
-    Private Sub btnViewPdf_Click(sender As Object, e As EventArgs) Handles btnViewPdf.Click
-        ShowPdfView()
-    End Sub
-
+    ' Replace ShowNativeView/ShowPdfView to set visible directly (no TransitionAnimator)
     Private Sub ShowNativeView()
         If _currentView = "native" Then Return
-
         _currentView = "native"
-        TransitionAnimator.Hide(pnlPdfViewer)
         pnlPdfViewer.Visible = False
         pnlNativeReceipt.Visible = True
-        TransitionAnimator.Show(pnlNativeReceipt)
-
         btnViewNative.FillColor = Color.FromArgb(16, 185, 129)
         btnViewPdf.FillColor = Color.FromArgb(71, 85, 105)
     End Sub
@@ -312,15 +208,10 @@ Public Class Receipt
             MessageBox.Show("PDF preview is not available.", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Return
         End If
-
         If _currentView = "pdf" Then Return
-
         _currentView = "pdf"
-        TransitionAnimator.Hide(pnlNativeReceipt)
         pnlNativeReceipt.Visible = False
         pnlPdfViewer.Visible = True
-        TransitionAnimator.Show(pnlPdfViewer)
-
         btnViewNative.FillColor = Color.FromArgb(71, 85, 105)
         btnViewPdf.FillColor = Color.FromArgb(16, 185, 129)
     End Sub
@@ -409,34 +300,79 @@ Public Class Receipt
         End Try
     End Sub
 
+    ' Ensure the Close button ends the dialog immediately (single click).
     Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
-        ' Animate form exit
-        Dim fadeTimer As New Timer With {.Interval = 10}
-        AddHandler fadeTimer.Tick, Sub()
-                                       Me.Opacity -= 0.1
-                                       If Me.Opacity <= 0 Then
-                                           fadeTimer.Stop()
-                                           fadeTimer.Dispose()
-                                           Me.Close()
-                                       End If
-                                   End Sub
-        fadeTimer.Start()
+        Try
+            Me.DialogResult = DialogResult.OK
+            Me.Close()
+        Catch ex As Exception
+            Try
+                Me.Close()
+            Catch
+            End Try
+        End Try
     End Sub
 
-    ' Keyboard shortcuts
-    Private Sub Receipt_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = Keys.Escape Then
-            btnClose_Click(sender, EventArgs.Empty)
-        ElseIf e.Control AndAlso e.KeyCode = Keys.P Then
-            btnPrint_Click(sender, EventArgs.Empty)
-            e.Handled = True
-        ElseIf e.KeyCode = Keys.Enter Then
-            btnSavePdf_Click(sender, EventArgs.Empty)
-            e.Handled = True
-        ElseIf e.Control AndAlso e.KeyCode = Keys.S Then
-            btnSavePdf_Click(sender, EventArgs.Empty)
-            e.Handled = True
+    Private Sub SetupButtonHoverEffects()
+        ' Add smooth hover effects to all buttons
+        For Each btn As Guna.UI2.WinForms.Guna2Button In {btnSavePdf, btnPrint, btnEmail, btnClose, btnViewNative, btnViewPdf, btnPdfZoom}
+            AddHandler btn.MouseEnter, AddressOf Button_MouseEnter
+            AddHandler btn.MouseLeave, AddressOf Button_MouseLeave
+        Next
+    End Sub
+
+    Private Sub Button_MouseEnter(sender As Object, e As EventArgs)
+        Dim btn = TryCast(sender, Guna.UI2.WinForms.Guna2Button)
+        If btn IsNot Nothing Then
+            btn.ShadowDecoration.Depth = 15
         End If
+    End Sub
+
+    Private Sub Button_MouseLeave(sender As Object, e As EventArgs)
+        Dim btn = TryCast(sender, Guna.UI2.WinForms.Guna2Button)
+        If btn IsNot Nothing Then
+            btn.ShadowDecoration.Depth = 8
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' Main entry point - Load receipt with order data and optional PDF path
+    ''' </summary>
+    Public Sub LoadReceipt(orderData As OrderData, Optional pdfPath As String = "")
+        Try
+            If orderData Is Nothing Then
+                MessageBox.Show("No order data provided.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Return
+            End If
+
+            _orderData = orderData
+            _pdfPath = pdfPath
+
+            ' Populate native receipt view
+            PopulateNativeReceipt()
+
+            ' Try to load PDF if path is valid
+            If Not String.IsNullOrEmpty(pdfPath) AndAlso File.Exists(pdfPath) Then
+                Try
+                    pdfViewer.Document = PdfiumViewer.PdfDocument.Load(pdfPath)
+                    pdfViewer.ZoomMode = PdfViewerZoomMode.FitWidth
+                    _fitWidth = True
+                Catch ex As Exception
+                    ' PDF load failed, but native view still works
+                    MessageBox.Show("Could not load PDF preview, showing digital receipt only." & vbCrLf & vbCrLf & "Error: " & ex.Message, "PDF Load Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                    ' Disable PDF view button
+                    btnViewPdf.Enabled = False
+                    btnViewPdf.FillColor = Color.FromArgb(71, 85, 105)
+                End Try
+            Else
+                ' No PDF available
+                btnViewPdf.Enabled = False
+                btnViewPdf.FillColor = Color.FromArgb(71, 85, 105)
+            End If
+
+        Catch ex As Exception
+            MessageBox.Show("Error loading receipt: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
     ''' <summary>
@@ -444,52 +380,64 @@ Public Class Receipt
     ''' </summary>
     Private Function GeneratePdfFromOrderData() As String
         Try
+            If _orderData Is Nothing Then
+                MessageBox.Show("No order data to generate PDF.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Return String.Empty
+            End If
+
             Dim pdfDoc As New PdfSharp.Pdf.PdfDocument()
             Dim page As PdfPage = pdfDoc.AddPage()
             Dim gfx As XGraphics = XGraphics.FromPdfPage(page)
 
-            Dim titleFont As New XFont("Arial", 18, XFontStyleEx.Bold)
-            Dim headerFont As New XFont("Arial", 12, XFontStyleEx.Bold)
-            Dim regFont As New XFont("Arial", 11, XFontStyleEx.Regular)
+            ' Use PdfSharp's XFontStyle values via CType to avoid missing-symbol issues on some PdfSharp builds
+            Dim titleFont As New XFont("Arial", 18)
+            Dim headerFont As New XFont("Arial", 12)
+            Dim regFont As New XFont("Arial", 11)
             Dim textBrush As XBrush = XBrushes.Black
 
             Dim yPos As Integer = 50
 
             ' Header
-            gfx.DrawString("OrderUp - Receipt", titleFont, textBrush, New XRect(50, yPos, 500, 30), XStringFormats.TopLeft)
+            gfx.DrawString("OrderUp - Receipt", titleFont, textBrush, New XRect(50, yPos, page.Width.Point - 100, 30), XStringFormats.TopLeft)
             yPos += 40
 
-            gfx.DrawString("Order ID: " & _orderData.OrderId, regFont, textBrush, New XRect(50, yPos, 400, 20), XStringFormats.TopLeft)
+            gfx.DrawString("Order ID: " & _orderData.OrderId, regFont, textBrush, New XRect(50, yPos, page.Width.Point - 100, 20), XStringFormats.TopLeft)
             yPos += 25
-            gfx.DrawString("Date: " & _orderData.OrderDate.ToString("yyyy-MM-dd HH:mm:ss"), regFont, textBrush, New XRect(50, yPos, 400, 20), XStringFormats.TopLeft)
+            gfx.DrawString("Date: " & _orderData.OrderDate.ToString("yyyy-MM-dd HH:mm:ss"), regFont, textBrush, New XRect(50, yPos, page.Width.Point - 100, 20), XStringFormats.TopLeft)
             yPos += 25
-            gfx.DrawString("Cashier: " & _orderData.CashierName, regFont, textBrush, New XRect(50, yPos, 400, 20), XStringFormats.TopLeft)
+            gfx.DrawString("Cashier: " & _orderData.CashierName, regFont, textBrush, New XRect(50, yPos, page.Width.Point - 100, 20), XStringFormats.TopLeft)
             yPos += 25
-            gfx.DrawString("Payment: " & _orderData.PaymentMethod, regFont, textBrush, New XRect(50, yPos, 400, 20), XStringFormats.TopLeft)
+            gfx.DrawString("Payment: " & _orderData.PaymentMethod, regFont, textBrush, New XRect(50, yPos, page.Width.Point - 100, 20), XStringFormats.TopLeft)
             yPos += 40
 
             ' Items header
-            gfx.DrawString("Items:", headerFont, textBrush, New XRect(50, yPos, 200, 20), XStringFormats.TopLeft)
+            gfx.DrawString("Items:", headerFont, textBrush, New XRect(50, yPos, page.Width.Point - 100, 20), XStringFormats.TopLeft)
             yPos += 30
 
             ' Items
             For Each item In _orderData.Items
                 Dim itemLine = item.Amount.ToString() & "x  " & item.Name & "  @₱" & item.Price.ToString("N2") & "  =  ₱" & item.Total.ToString("N2")
-                gfx.DrawString(itemLine, regFont, textBrush, New XRect(70, yPos, 450, 20), XStringFormats.TopLeft)
+                gfx.DrawString(itemLine, regFont, textBrush, New XRect(70, yPos, page.Width.Point - 120, 20), XStringFormats.TopLeft)
                 yPos += 25
+                ' Add a new page if we overflow
+                If yPos > page.Height.Point - 100 Then
+                    page = pdfDoc.AddPage()
+                    gfx = XGraphics.FromPdfPage(page)
+                    yPos = 50
+                End If
             Next
 
             yPos += 20
 
             ' Totals
-            gfx.DrawString("Subtotal: ₱" & _orderData.Subtotal.ToString("N2"), headerFont, textBrush, New XRect(50, yPos, 400, 20), XStringFormats.TopLeft)
+            gfx.DrawString("Subtotal: ₱" & _orderData.Subtotal.ToString("N2"), headerFont, textBrush, New XRect(50, yPos, page.Width.Point - 100, 20), XStringFormats.TopLeft)
             yPos += 25
 
             Dim discountAmt = (_orderData.DiscountPercent / 100) * _orderData.Subtotal
-            gfx.DrawString("Discount (" & _orderData.DiscountPercent.ToString("0.0") & "%): -₱" & discountAmt.ToString("N2"), regFont, textBrush, New XRect(50, yPos, 400, 20), XStringFormats.TopLeft)
+            gfx.DrawString("Discount (" & _orderData.DiscountPercent.ToString("0.0") & "%): -₱" & discountAmt.ToString("N2"), regFont, textBrush, New XRect(50, yPos, page.Width.Point - 100, 20), XStringFormats.TopLeft)
             yPos += 30
 
-            gfx.DrawString("TOTAL: ₱" & _orderData.Total.ToString("N2"), titleFont, textBrush, New XRect(50, yPos, 400, 30), XStringFormats.TopLeft)
+            gfx.DrawString("TOTAL: ₱" & _orderData.Total.ToString("N2"), titleFont, textBrush, New XRect(50, yPos, page.Width.Point - 100, 30), XStringFormats.TopLeft)
 
             ' Save to temp file
             Dim tempPath = Path.Combine(Path.GetTempPath(), "Receipt_" & _orderData.OrderId & "_" & DateTime.Now.ToString("yyyyMMddHHmmss") & ".pdf")
@@ -502,4 +450,87 @@ Public Class Receipt
             Return String.Empty
         End Try
     End Function
+
+    Private Function CreateItemCard(item As OrderItem) As Guna.UI2.WinForms.Guna2Panel
+        ' Create a compact item row panel for the receipt
+        Dim card As New Guna.UI2.WinForms.Guna2Panel With {
+            .Width = If(flowItemsContainer IsNot Nothing AndAlso flowItemsContainer.ClientSize.Width > 0,
+                        Math.Max(600, flowItemsContainer.ClientSize.Width - 20),
+                        800),
+            .Height = 80,
+            .BorderRadius = 12,
+            .FillColor = Color.FromArgb(248, 250, 252),
+            .Margin = New Padding(0, 0, 0, 12)
+        }
+
+        card.ShadowDecoration.BorderRadius = 12
+        card.ShadowDecoration.Depth = 3
+        card.ShadowDecoration.Enabled = True
+        card.ShadowDecoration.Color = Color.FromArgb(200, 200, 200)
+
+        ' Quantity badge
+        Dim qtyBadge As New Guna.UI2.WinForms.Guna2GradientPanel With {
+            .Size = New Size(56, 56),
+            .Location = New Point(12, 12),
+            .BorderRadius = 10,
+            .FillColor = Color.FromArgb(16, 185, 129),
+            .FillColor2 = Color.FromArgb(5, 150, 105),
+            .GradientMode = Drawing2D.LinearGradientMode.ForwardDiagonal
+        }
+        Dim qtyLabel As New Label With {
+            .Text = item.Amount.ToString(),
+            .Font = New Font("Segoe UI", 16, FontStyle.Bold),
+            .ForeColor = Color.White,
+            .TextAlign = ContentAlignment.MiddleCenter,
+            .Dock = DockStyle.Fill,
+            .BackColor = Color.Transparent
+        }
+        qtyBadge.Controls.Add(qtyLabel)
+
+        ' Item name
+        Dim nameLabel As New Label With {
+            .Text = item.Name,
+            .Font = New Font("Segoe UI", 12, FontStyle.Bold),
+            .ForeColor = Color.FromArgb(30, 41, 59),
+            .Location = New Point(86, 14),
+            .AutoSize = True,
+            .MaximumSize = New Size(card.Width - 260, 0),
+            .BackColor = Color.Transparent
+        }
+
+        ' Unit price
+        Dim priceLabel As New Label With {
+            .Text = "₱" & item.Price.ToString("N2") & " each",
+            .Font = New Font("Segoe UI", 9.5F, FontStyle.Regular),
+            .ForeColor = Color.FromArgb(100, 116, 139),
+            .Location = New Point(86, 36),
+            .AutoSize = True,
+            .BackColor = Color.Transparent
+        }
+
+        ' Line total (right aligned)
+        Dim totalLabel As New Label With {
+            .Text = "₱" & item.Total.ToString("N2"),
+            .Font = New Font("Segoe UI Semibold", 14, FontStyle.Bold),
+            .ForeColor = Color.FromArgb(15, 23, 42),
+            .AutoSize = True,
+            .BackColor = Color.Transparent
+        }
+        ' place total at right side
+        totalLabel.Location = New Point(card.Width - totalLabel.PreferredWidth - 24, 22)
+
+        ' Add controls
+        card.Controls.AddRange({qtyBadge, nameLabel, priceLabel, totalLabel})
+
+        ' Ensure the total label repositions if container resizes
+        AddHandler card.SizeChanged, Sub()
+                                         Try
+                                             totalLabel.Location = New Point(card.Width - totalLabel.PreferredWidth - 24, 22)
+                                         Catch
+                                         End Try
+                                     End Sub
+
+        Return card
+    End Function
+
 End Class

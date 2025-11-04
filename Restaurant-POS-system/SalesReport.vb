@@ -463,11 +463,22 @@ Public Class SalesReport
     ''' <summary>
     ''' Handle View Receipt button click in DataGridView
     ''' </summary>
-    Private Sub dgvTransactions_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvTransactions.CellContentClick
+    Private Sub dgvTransactions_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvTransactions.CellContentClick, dgvTransactions.CellClick
         Try
-            ' Check if the clicked cell is in the "View Receipt" button column
-            If e.RowIndex >= 0 AndAlso e.ColumnIndex = dgvTransactions.Columns("colViewReceipt").Index Then
-                Dim orderId As Integer = Convert.ToInt32(dgvTransactions.Rows(e.RowIndex).Cells("colOrderId").Value)
+            ' Ignore header/invalid clicks
+            If e.RowIndex < 0 OrElse e.ColumnIndex < 0 Then Return
+
+            Dim viewCol = dgvTransactions.Columns("colViewReceipt")
+            If viewCol Is Nothing Then Return
+
+            If e.ColumnIndex = viewCol.Index Then
+                Dim cellVal = dgvTransactions.Rows(e.RowIndex).Cells("colOrderId").Value
+                If cellVal Is Nothing OrElse String.IsNullOrWhiteSpace(cellVal.ToString()) Then
+                    MessageBox.Show("Order id not found for this row.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                    Return
+                End If
+
+                Dim orderId As Integer = Convert.ToInt32(cellVal)
                 ShowReceiptForOrder(orderId)
             End If
         Catch ex As Exception
@@ -480,66 +491,93 @@ Public Class SalesReport
     ''' </summary>
     Private Sub ShowReceiptForOrder(orderId As Integer)
         Try
-            ' Load complete order details including items
             Using connection As New MySqlConnection(GetGlobalConnectionString())
                 connection.Open()
 
-                Dim trans As TransactionDetails
-                If transactionData.ContainsKey(orderId) Then
-                    trans = transactionData(orderId)
-                Else
-                    MessageBox.Show("Transaction details not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-                    Return
-                End If
+                ' Load header info from orders table (do not rely only on transactionData)
+                Dim headerQuery As String = "SELECT id, order_date, order_time, username, total_amount FROM orders WHERE id = @orderId LIMIT 1"
+                Dim orderDate As DateTime = DateTime.Now
+                Dim username As String = ""
+                Dim totalAmount As Decimal = 0D
 
-                ' Load order items
-                trans.Items = New List(Of OrderItem)
+                Using hdrCmd As New MySqlCommand(headerQuery, connection)
+                    hdrCmd.Parameters.AddWithValue("@orderId", orderId)
+                    Using rdr As MySqlDataReader = hdrCmd.ExecuteReader()
+                        If rdr.Read() Then
+                            orderDate = If(IsDBNull(rdr("order_date")), DateTime.Now, Convert.ToDateTime(rdr("order_date")))
+                            username = If(IsDBNull(rdr("username")), "", rdr("username").ToString())
+                            totalAmount = If(IsDBNull(rdr("total_amount")), 0D, Convert.ToDecimal(rdr("total_amount")))
+                        Else
+                            MessageBox.Show("Order not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                            Return
+                        End If
+                    End Using
+                End Using
+
+                ' Load order_items
+                Dim items As New List(Of OrderItem)
                 Dim itemsQuery As String = "SELECT item_name, quantity, price FROM order_items WHERE order_id = @orderId"
 
-                Using cmd As New MySqlCommand(itemsQuery, connection)
-                    cmd.Parameters.AddWithValue("@orderId", orderId)
-
-                    Using reader As MySqlDataReader = cmd.ExecuteReader()
-                        While reader.Read()
-                            Dim item As New OrderItem With {
-                                .ItemName = reader("item_name").ToString(),
-                                .Quantity = Convert.ToInt32(reader("quantity")),
-                                .Price = Convert.ToDecimal(reader("price")),
-                                .Total = Convert.ToInt32(reader("quantity")) * Convert.ToDecimal(reader("price"))
-                            }
-                            trans.Items.Add(item)
+                Using itemsCmd As New MySqlCommand(itemsQuery, connection)
+                    itemsCmd.Parameters.AddWithValue("@orderId", orderId)
+                    Using rdr As MySqlDataReader = itemsCmd.ExecuteReader()
+                        While rdr.Read()
+                            Dim it As New OrderItem With {
+                            .ItemName = If(IsDBNull(rdr("item_name")), "", rdr("item_name").ToString()),
+                            .Quantity = If(IsDBNull(rdr("quantity")), 0, Convert.ToInt32(rdr("quantity"))),
+                            .Price = If(IsDBNull(rdr("price")), 0D, Convert.ToDecimal(rdr("price"))),
+                            .Total = If(IsDBNull(rdr("quantity")), 0, Convert.ToInt32(rdr("quantity"))) * If(IsDBNull(rdr("price")), 0D, Convert.ToDecimal(rdr("price")))
+                        }
+                            items.Add(it)
                         End While
                     End Using
                 End Using
 
-                ' Build order data for Receipt form
+                ' Build orderData
                 Dim orderData As New Receipt.OrderData With {
-                    .OrderId = orderId.ToString(),
-                    .OrderDate = trans.OrderDate,
-                    .CashierName = trans.Username,
-                    .Items = New List(Of Receipt.OrderItem),
-                    .Subtotal = trans.TotalAmount,
-                    .DiscountPercent = 0,
-                    .Total = trans.TotalAmount,
-                    .PaymentMethod = "Cash"
-                }
+                .OrderId = orderId.ToString(),
+                .OrderDate = orderDate,
+                .CashierName = username,
+                .Items = New List(Of Receipt.OrderItem),
+                .Subtotal = totalAmount,
+                .DiscountPercent = 0,
+                .Total = totalAmount,
+                .PaymentMethod = "Cash"
+            }
 
-                ' Convert items
-                For Each item In trans.Items
+                For Each it In items
                     orderData.Items.Add(New Receipt.OrderItem With {
-                        .Name = item.ItemName,
-                        .Amount = item.Quantity,
-                        .Price = item.Price,
-                        .Total = item.Total
-                    })
+                    .Name = it.ItemName,
+                    .Amount = it.Quantity,
+                    .Price = it.Price,
+                    .Total = it.Total
+                })
                 Next
 
-                ' Show receipt form (pass parent form if available)
-                Dim receiptForm As New Receipt()
-                receiptForm.LoadReceipt(orderData, String.Empty)
-                receiptForm.ShowDialog(If(Me.FindForm(), Nothing))
-            End Using
+                ' If no DB items, try to locate saved PDF named Receipt_{orderId}.pdf in Documents\Receipts (created by ordering form)
+                Dim pdfPath As String = String.Empty
+                If orderData.Items.Count = 0 Then
+                    Dim receiptsDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Receipts")
+                    Dim candidate = Path.Combine(receiptsDir, "Receipt_" & orderId.ToString() & ".pdf")
+                    If File.Exists(candidate) Then
+                        pdfPath = candidate
+                    Else
+                        ' try other common patterns (backup)
+                        If Directory.Exists(receiptsDir) Then
+                            Dim files = Directory.GetFiles(receiptsDir, "Receipt_*" & orderId.ToString() & "*.pdf")
+                            If files.Length > 0 Then pdfPath = files(0)
+                        End If
+                    End If
+                End If
 
+                ' Show receipt: prefer native (items present) but pass pdfPath so pdf view is available
+                Dim receiptForm As New Receipt()
+                receiptForm.LoadReceipt(orderData, If(String.IsNullOrEmpty(pdfPath), String.Empty, pdfPath))
+
+                ' Show as modal (without owner to avoid activation issues)
+                receiptForm.ShowDialog()
+
+            End Using
         Catch ex As Exception
             MessageBox.Show("Error displaying receipt: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
@@ -812,6 +850,18 @@ Public Class SalesReport
 
         Catch ex As Exception
             MessageBox.Show("Error loading transactions: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    ' Add this public method to allow external controls to request a refresh
+    Public Sub RefreshReport()
+        Try
+            ShowLoadingState()
+            GenerateSalesReport()
+            HideLoadingState()
+        Catch ex As Exception
+            ' non-fatal: show the error so developer knows why refresh failed
+            MessageBox.Show("Error refreshing sales report: " & ex.Message, "Refresh Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 End Class

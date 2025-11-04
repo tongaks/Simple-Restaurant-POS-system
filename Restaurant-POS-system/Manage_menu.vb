@@ -514,14 +514,15 @@ Public Class Manage_menu
     End Sub
 
     ' ===== CARD EVENT HANDLERS =====
+    ' Call NotifyOrderingForms after successful update in Card_SaveRequested
     Private Sub Card_SaveRequested(itemId As Integer, newName As String, newPrice As Decimal, newImagePath As String)
         Try
             Using connection As New MySqlConnection(GetGlobalConnectionString())
                 connection.Open()
 
                 Dim query As String = "UPDATE `" & currentCategoryTable & "` " &
-                                      "SET ItemName = @name, ItemPrice = @price, ImagePath = @imagePath " &
-                                      "WHERE ItemId = @id"
+                                  "SET ItemName = @name, ItemPrice = @price, ImagePath = @imagePath " &
+                                  "WHERE ItemId = @id"
 
                 Using command As New MySqlCommand(query, connection)
                     command.Parameters.AddWithValue("@name", newName)
@@ -540,26 +541,38 @@ Public Class Manage_menu
                             itemData.ItemPrice = newPrice
                             itemData.ImagePath = newImagePath
                         End If
+
+                        ' Update the visible card immediately (if present)
+                        Dim card = displayedCards.FirstOrDefault(Function(c) c.ItemId = itemId)
+                        If card IsNot Nothing Then
+                            Try
+                                card.UpdateDisplay(newName, newPrice)
+                            Catch
+                            End Try
+                        End If
+
+                        ' Notify other open forms/controls (OrderingForm, SalesReport etc.)
+                        NotifyOrderingForms()
                     Else
                         MessageBox.Show("Failed to update item.", "Update Failed",
-                                        MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                                    MessageBoxButtons.OK, MessageBoxIcon.Warning)
                     End If
                 End Using
             End Using
 
         Catch ex As Exception
             MessageBox.Show("Error updating item: " & ex.Message, "Database Error",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
     Private Sub Card_DeleteRequested(itemId As Integer, itemName As String)
         Dim result = MessageBox.Show(
-            $"Are you sure you want to delete '{itemName}'?" & vbCrLf & vbCrLf &
-            "This action cannot be undone.",
-            "Confirm Deletion",
-            MessageBoxButtons.YesNo,
-            MessageBoxIcon.Question)
+        $"Are you sure you want to delete '{itemName}'?" & vbCrLf & vbCrLf &
+        "This action cannot be undone.",
+        "Confirm Deletion",
+        MessageBoxButtons.YesNo,
+        MessageBoxIcon.Question)
 
         If result = DialogResult.Yes Then
             Try
@@ -582,16 +595,19 @@ Public Class Manage_menu
                             End If
 
                             allMenuItems.RemoveAll(Function(x) x.ItemId = itemId)
+
+                            ' Notify other open forms/controls to refresh
+                            NotifyOrderingForms()
                         Else
                             MessageBox.Show("Failed to delete item.", "Delete Failed",
-                                            MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                                        MessageBoxButtons.OK, MessageBoxIcon.Warning)
                         End If
                     End Using
                 End Using
 
             Catch ex As Exception
                 MessageBox.Show("Error deleting item: " & ex.Message, "Database Error",
-                                MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try
         End If
     End Sub
@@ -749,32 +765,66 @@ Public Class Manage_menu
         End Using
     End Sub
 
+    ' Replace the existing NotifyOrderingForms method with this improved version
     Private Sub NotifyOrderingForms()
         Try
             For Each f As Form In Application.OpenForms
                 If f Is Nothing Then Continue For
+
                 Dim tName = f.GetType().Name
+                ' Existing behavior: try to call known ordering form methods
                 If String.Equals(tName, "Ordering_Form", StringComparison.OrdinalIgnoreCase) OrElse String.Equals(tName, "OrderingForm", StringComparison.OrdinalIgnoreCase) Then
                     Dim mi = f.GetType().GetMethod("ReloadMenuItems", Reflection.BindingFlags.Public Or Reflection.BindingFlags.Instance)
                     If mi IsNot Nothing Then
-                        mi.Invoke(f, Nothing)
-                        Continue For
-                    End If
-
-                    mi = f.GetType().GetMethod("RefreshMenu", Reflection.BindingFlags.Public Or Reflection.BindingFlags.Instance)
-                    If mi IsNot Nothing Then
-                        mi.Invoke(f, Nothing)
-                        Continue For
-                    End If
-
-                    mi = f.GetType().GetMethod("RefreshMenuItems", Reflection.BindingFlags.Public Or Reflection.BindingFlags.Instance)
-                    If mi IsNot Nothing Then
-                        mi.Invoke(f, Nothing)
-                        Continue For
+                        Try
+                            mi.Invoke(f, Nothing)
+                        Catch
+                        End Try
+                    Else
+                        mi = f.GetType().GetMethod("RefreshMenu", Reflection.BindingFlags.Public Or Reflection.BindingFlags.Instance)
+                        If mi IsNot Nothing Then
+                            Try
+                                mi.Invoke(f, Nothing)
+                            Catch
+                            End Try
+                        Else
+                            mi = f.GetType().GetMethod("RefreshMenuItems", Reflection.BindingFlags.Public Or Reflection.BindingFlags.Instance)
+                            If mi IsNot Nothing Then
+                                Try
+                                    mi.Invoke(f, Nothing)
+                                Catch
+                                End Try
+                            End If
+                        End If
                     End If
                 End If
+
+                ' New: recursively search all controls in the form for SalesReport and call RefreshReport()
+                Dim SubRecurse As Action(Of Control)
+                SubRecurse = Sub(ctrl As Control)
+                                 If ctrl Is Nothing Then Return
+                                 Try
+                                     If TypeOf ctrl Is SalesReport Then
+                                         Try
+                                             DirectCast(ctrl, SalesReport).RefreshReport()
+                                         Catch
+                                         End Try
+                                     End If
+                                 Catch
+                                 End Try
+
+                                 For Each child As Control In ctrl.Controls
+                                     SubRecurse(child)
+                                 Next
+                             End Sub
+
+                ' Start recursion from the form's top-level controls
+                For Each topCtrl As Control In f.Controls
+                    SubRecurse(topCtrl)
+                Next
             Next
         Catch
+            ' silent - best-effort notify
         End Try
     End Sub
 
