@@ -1,11 +1,23 @@
 ﻿Imports System.Drawing
 Imports System.IO
+'Imports System.Windows.Controls
 Imports System.Windows.Forms
+Imports Guna.UI2.WinForms
+Imports MySql.Data.MySqlClient
 
 Public Module Globals
     ' Application-wide current user and admin flag
     Public CurrentUser As String = String.Empty
     Public IsAdmin As Boolean = False
+
+
+
+    ' for food ordering/manage
+    Public MenuItems As New List(Of Guna2PictureBox)
+    Public MenuCategories As New List(Of Guna2Button)
+    Public CurrentCategory As Guna2Button = Nothing
+    Public PrevCategory As Guna2Button = Nothing
+
 
     Public Structure UserAccount
         Public Property ID As Integer
@@ -14,6 +26,8 @@ Public Module Globals
         Public Property Role As String
         Public Property DateCreated As DateTime
     End Structure
+
+
 
     ' Resize an Image to fit inside a control preserving aspect ratio
     Public Function ResizeImageFit(img As Image, ctrl As Control) As Image
@@ -34,7 +48,6 @@ Public Module Globals
         End Using
         Return bmp
     End Function
-
     Public Sub FormCloseParent(sender As Object, e As FormClosedEventArgs)
         Dim frm = TryCast(sender, Form)
         If frm Is Nothing Then Return
@@ -46,8 +59,6 @@ Public Module Globals
             ' silent
         End Try
     End Sub
-
-
     ' Textbox things
     Public Sub HandleNumberOnly(sender As Object, e As KeyPressEventArgs)
         If Not Char.IsDigit(e.KeyChar) And Not Asc(e.KeyChar) = 8 Then
@@ -56,95 +67,229 @@ Public Module Globals
     End Sub
 
 
+
+
+
+
     ' for ordering form for menu panel
-    Public Function CreateFoodItemButton(itemName As String, itemPrice As String, imgPath As String) As FlowLayoutPanel
-        ' Defensive defaults from settings (centralized)
-        Dim btnSize As Integer = 100
-        Dim fontSize As Single = 12.0F
-        Try
-            If DatabaseHandler.SettingsConfig.MenuItemButtonSize > 0 Then
-                btnSize = DatabaseHandler.SettingsConfig.MenuItemButtonSize
-            End If
-            If DatabaseHandler.SettingsConfig.MenuItemFontSize > 0 Then
-                fontSize = CSng(DatabaseHandler.SettingsConfig.MenuItemFontSize)
-            End If
-        Catch
-            ' if SettingsConfig not initialized, use defaults
-            btnSize = 100
-            fontSize = 12.0F
-        End Try
+    Public Function CreateFoodItemCard(itemName As String, itemPrice As String, imgPath As String) As Guna.UI2.WinForms.Guna2Panel
+        Dim cardWidth As Integer = 160
+        Dim cardHeight As Integer = 200
+        Dim paddingVal As Integer = 10
+        Dim fontSize As Integer = 11
 
-        ' Create the main button
-        Dim foodBtn As New Button With {
-            .Name = "btnFood",
-            .Text = itemName,
-            .Size = New Size(btnSize, btnSize),
-            .Margin = New Padding(0),
-            .Cursor = Cursors.Hand,
-            .FlatStyle = FlatStyle.Flat,
-            .BackColor = Color.White,
-            .ForeColor = Color.FromArgb(45, 45, 48)
-        }
-        foodBtn.FlatAppearance.BorderSize = 3
-        foodBtn.FlatAppearance.BorderColor = Color.Gray
+        ' Create the card panel
+        Dim foodCard As New Guna.UI2.WinForms.Guna2Panel With {
+        .Width = cardWidth,
+        .Height = cardHeight,
+        .BorderRadius = 12,
+        .BackColor = Color.White,
+        .FillColor = Color.White,
+        .Margin = New Padding(10),
+        .Tag = itemName
+    }
 
-        ' Store data in Tag (use a consistent format)
-        foodBtn.Tag = itemPrice
-        If Not String.IsNullOrEmpty(imgPath) AndAlso File.Exists(imgPath) Then
-            Try
-                Using image As Image = Image.FromFile(imgPath)
-                    Dim scaled = ResizeImageFit(image, foodBtn)
-                    foodBtn.BackgroundImage = scaled
-                    foodBtn.BackgroundImageLayout = ImageLayout.Stretch
-                End Using
-                foodBtn.Tag &= "," & imgPath
-            Catch ex As Exception
-                MsgBox("Error loading image: " & ex.Message, MsgBoxStyle.Critical, "Image Load Error")
-            End Try
+        foodCard.ShadowDecoration.Enabled = True
+        foodCard.ShadowDecoration.Depth = 30
+        foodCard.ShadowDecoration.BorderRadius = 12
+        foodCard.ShadowDecoration.Shadow = New Padding(1, 1, 5, 5)
+
+        ' Add shadow to the card
+        foodCard.ShadowDecoration.Enabled = True
+        foodCard.ShadowDecoration.BorderRadius = 12
+        foodCard.ShadowDecoration.Color = Color.Silver
+        foodCard.ShadowDecoration.Depth = 10
+        foodCard.ShadowDecoration.Shadow = New Padding(2, 2, 4, 4)
+
+        ' Create the picture box for the food image
+        Dim foodImg As New Guna.UI2.WinForms.Guna2PictureBox With {
+        .Size = New Size(cardWidth - (paddingVal * 2), 100),
+        .Location = New Point(paddingVal, paddingVal),
+        .SizeMode = PictureBoxSizeMode.Zoom,
+        .BorderRadius = 10,
+        .FillColor = Color.WhiteSmoke,
+        .Cursor = Cursors.Hand,
+        .Tag = itemPrice,
+        .Text = itemName
+    }
+
+        ' Check if an image path is provided
+        Dim hasImage As Boolean = False
+        If Not String.IsNullOrEmpty(imgPath) AndAlso imgPath <> "N/A" AndAlso File.Exists(imgPath) Then
+            foodImg.Image = Image.FromFile(imgPath)
+            foodImg.Tag &= "," & imgPath
+            hasImage = True
         End If
 
-        ' Price label
-        Dim resolvedFont As Font
-        Try
-            resolvedFont = New Font("Segoe UI", fontSize, FontStyle.Regular)
-        Catch
-            resolvedFont = New Font("Segoe UI", 12.0F, FontStyle.Regular)
-        End Try
+        ' If no image, show "No Image" label
+        If Not hasImage Then
+            foodImg.Image = Nothing
+            foodImg.FillColor = Color.LightGray
 
+            Dim noImageLbl As New Label With {
+            .Text = "No Image",
+            .Font = New Font("Segoe UI", 10, FontStyle.Italic),
+            .ForeColor = Color.DimGray,
+            .BackColor = Color.Transparent,
+            .AutoSize = False,
+            .TextAlign = ContentAlignment.MiddleCenter
+        }
+            foodImg.Controls.Add(noImageLbl)
+        End If
+
+        ' Create the label for the food name
+        Dim foodName As New Label With {
+        .Text = itemName,
+        .Font = New Font("Segoe UI Semibold", fontSize, FontStyle.Bold),
+        .AutoSize = False,
+        .TextAlign = ContentAlignment.MiddleCenter,
+        .Width = cardWidth - (paddingVal * 2),
+        .Height = 30,
+        .Location = New Point(paddingVal, foodImg.Bottom + 5)
+    }
+
+        ' Create the label for the food price
         Dim foodPrice As New Label With {
-            .Text = "₱" & itemPrice,
-            .Font = resolvedFont,
-            .TextAlign = ContentAlignment.MiddleCenter,
-            .AutoSize = False,
-            .Width = btnSize,
-            .Height = CInt(resolvedFont.GetHeight() * 1.8)
-        }
+        .Text = "₱" & itemPrice,
+        .Font = New Font("Segoe UI", 14, FontStyle.Regular),
+        .ForeColor = Color.Navy,
+        .AutoSize = False,
+        .TextAlign = ContentAlignment.MiddleCenter,
+        .Width = cardWidth - (paddingVal * 2),
+        .Height = 25,
+        .Location = New Point(paddingVal, foodName.Bottom)
+    }
 
-        Dim foodNameLabel As New Label With {
-            .Text = itemName,
-            .Font = resolvedFont,
-            .TextAlign = ContentAlignment.MiddleCenter,
-            .AutoSize = False,
-            .Width = btnSize,
-            .Height = CInt(resolvedFont.GetHeight() * 1.8)
-        }
+        ' Add the controls to the card
+        foodCard.Controls.Add(foodImg)
+        foodCard.Controls.Add(foodName)
+        foodCard.Controls.Add(foodPrice)
 
-        ' Container panel for button + labels
-        Dim container As New FlowLayoutPanel With {
-            .Size = New Size(btnSize, btnSize + foodNameLabel.Height + foodPrice.Height + 8),
-            .FlowDirection = FlowDirection.TopDown,
-            .WrapContents = False,
-            .AutoSize = False,
-            .Margin = New Padding(8),
-            .BackColor = Color.Transparent
-        }
+        ' Add mouse enter and leave events for hover effects
+        AddHandler foodCard.MouseEnter, Sub()
+                                            foodCard.FillColor = Color.FromArgb(245, 245, 245)
+                                            foodCard.ShadowDecoration.Color = Color.LightGray
+                                        End Sub
+        AddHandler foodCard.MouseLeave, Sub()
+                                            foodCard.FillColor = Color.White
+                                            foodCard.ShadowDecoration.Color = Color.Silver
+                                        End Sub
 
-        container.Controls.Add(foodBtn)
-        container.Controls.Add(foodNameLabel)
-        container.Controls.Add(foodPrice)
-
-        Return container
+        MenuItems.Add(foodImg)
+        Return foodCard
     End Function
+    Public Function CreateMenuCategoryButton(ByVal catName As String) As Guna2Button
+        Dim catBtn As New Guna2Button
+        catBtn.Text = catName
+        catBtn.AutoSize = True
+        catBtn.Padding = New Padding(10)
+
+        catBtn.ForeColor = Color.Navy
+        catBtn.Font = New Font("Segoe UI", 12, FontStyle.Regular)
+
+        catBtn.BorderRadius = 10
+        catBtn.ShadowDecoration.Enabled = True
+        catBtn.ShadowDecoration.BorderRadius = 10
+        catBtn.ShadowDecoration.Color = Color.DimGray
+        catBtn.ShadowDecoration.Depth = 20
+        catBtn.ShadowDecoration.Shadow = New Padding(-1, -1, 5, 5)
+
+        catBtn.FillColor = Color.LightSteelBlue
+        catBtn.Cursor = Cursors.Hand
+
+        Return catBtn
+    End Function
+    Public Sub LoadMenuCategories(panel As FlowLayoutPanel)
+        Dim Connection As New MySqlConnection(GetGlobalConnectionString)
+        Dim Reader As MySqlDataReader
+        MenuCategories.Clear()
+
+        Try
+            Connection.Open()
+            Dim Query As String = "SELECT * FROM restaurant.categories"
+            Dim Command As New MySqlCommand(Query, Connection)
+            Reader = Command.ExecuteReader
+
+            Dim allCategoryButton As Guna2Button = CreateMenuCategoryButton("All")
+            panel.Controls.Add(allCategoryButton)
+            MenuCategories.Add(allCategoryButton)
+
+            While Reader.Read
+                Dim catBtn As New Guna2Button
+                catBtn.Text = Reader("CategoryName")
+                catBtn.AutoSize = True
+                catBtn.Padding = New Padding(10)
+
+                catBtn.ForeColor = Color.Navy
+                catBtn.Font = New Font("Segoe UI", 12, FontStyle.Regular)
+
+                catBtn.BorderRadius = 10
+                catBtn.ShadowDecoration.Enabled = True
+                catBtn.ShadowDecoration.BorderRadius = 10
+                catBtn.ShadowDecoration.Color = Color.DimGray
+                catBtn.ShadowDecoration.Depth = 20
+                catBtn.ShadowDecoration.Shadow = New Padding(-1, -1, 5, 5)
+
+                catBtn.FillColor = Color.LightSteelBlue
+                catBtn.Cursor = Cursors.Hand
+
+                panel.Controls.Add(catBtn)
+                MenuCategories.Add(catBtn)
+
+            End While
+
+        Catch ex As Exception
+            MsgBox("Error: " + ex.ToString, MsgBoxStyle.Critical, "ERROR")
+        Finally
+            If Connection.State = ConnectionState.Open Then
+                Connection.Close()
+            End If
+        End Try
+    End Sub
+    Public Sub LoadMenuItems(table As String, panel As FlowLayoutPanel)
+        Dim Connection As New MySqlConnection(GetGlobalConnectionString)
+        Dim Reader As MySqlDataReader
+
+        If MenuItems.Count > 0 Then MenuItems.Clear()
+
+        Try
+            Connection.Open()
+            'Dim Query As String = "SELECT * FROM `" & table & "`"
+            Dim Query As String = ""
+
+            If table = "All" Then
+                'Query = "SELECT * FROM (SELECT * FROM `restaurant`.foods UNION ALL SELECT * FROM `restaurant`.drinks UNION ALL SELECT * FROM `restaurant`.`Snacks/Sides`) AS CombinedItems"
+                Query = "SELECT * FROM (SELECT * FROM `restaurant`.foods UNION ALL SELECT * FROM `restaurant`.drinks UNION ALL SELECT * FROM `restaurant`.snacks_sides) AS CombinedItems"
+            Else
+                Query = "SELECT * FROM `" & table & "`"
+            End If
+
+
+            Dim Command As New MySqlCommand(Query, Connection)
+            Reader = Command.ExecuteReader
+
+            panel.Controls.Clear()
+
+            While Reader.Read
+                Dim imgPath As String = If(IsDBNull(Reader("ImagePath")), "N/A", Reader("ImagePath"))
+                Dim item As Guna2Panel = CreateFoodItemCard(Reader("ItemName"), Reader("ItemPrice"), imgPath)
+                panel.Controls.Add(item)
+            End While
+
+        Catch ex As Exception
+            MsgBox("Error: " & ex.Message, MsgBoxStyle.Critical, "ERROR")
+        Finally
+            If Connection.State = ConnectionState.Open Then
+                Connection.Close()
+            End If
+        End Try
+    End Sub
+
+
+
+
+
+
 
     ' for extracting tag from buttons
     Public Function ExtractTag(tag As Object) As DatabaseHandler.TagData

@@ -8,6 +8,11 @@ Public Module DatabaseHandler
         Public TagImagePath As String
     End Structure
 
+    Public Structure Discounts
+        Public DiscountType As String
+        Public DiscountValue As Double
+    End Structure
+
     Public Structure SettingsConfigStruct
         Public MenuItemButtonSize As Integer
         Public MenuItemFontSize As Integer
@@ -23,8 +28,13 @@ Public Module DatabaseHandler
         ' If root has a blank password keep password=;
         ' Prefer creating a dedicated DB user with limited privileges.
         ' Enable AllowUserVariables so client treats @var as server user variables (fixes "Parameter '@SKIP_TRIGGER' must be defined").
-        Return "server=localhost;user=root;password=;database=restaurant;port=3306;SslMode=none;AllowPublicKeyRetrieval=True;AllowUserVariables=True;"
+        'Return "server=localhost;user=root;password=;database=restaurant;port=3306;SslMode=none;AllowPublicKeyRetrieval=True;AllowUserVariables=True;"
+        Return "server=localhost;user=root;password=washer22456;database=restaurant;port=3306;"
     End Function
+
+
+
+
 
 
     ' CRUD  related
@@ -34,7 +44,7 @@ Public Module DatabaseHandler
 
         Try
             Connection.Open()
-            Dim Query As String = "SELECT * from " & table & " WHERE Username = @Username AND Password = @Password"
+            Dim Query As String = "SELECT * from restaurant.user WHERE Username = @Username AND Password = @Password"
             Dim Command As New MySqlCommand(Query, Connection)
 
             Command.Parameters.AddWithValue("@Username", uname)
@@ -45,6 +55,10 @@ Public Module DatabaseHandler
             If Reader.HasRows = False Then
                 MsgBox("Invalid username or password.", MsgBoxStyle.Critical, "Attention")
                 Return False
+            End If
+
+            If Reader.Read And Reader("role") = "Admin" Then
+                IsAdmin = True
             End If
 
         Catch ex As Exception
@@ -108,7 +122,120 @@ Public Module DatabaseHandler
             End If
         End Try
     End Sub
-    ' CRUD  Archive functions
+
+
+
+
+
+
+
+    ' apply discount table crud
+    Public Function RetrieveDiscounts() As List(Of Discounts)
+        Dim Connection As New MySqlConnection(GetGlobalConnectionString)
+        Dim Reader As MySqlDataReader
+
+        Dim listDiscount As New List(Of Discounts)
+
+        Try
+            Connection.Open()
+            Dim Query As String = "SELECT * from restaurant.discounts"
+            Dim Command As New MySqlCommand(Query, Connection)
+
+            Reader = Command.ExecuteReader()
+
+            If Reader.HasRows = False Then
+                MsgBox("Failed to retrieve discounts.", MsgBoxStyle.Critical, "Attention")
+                Return Nothing
+            Else
+                While Reader.Read
+                    Dim discount As New Discounts
+
+                    If Not IsDBNull(Reader("discount_type")) Then
+                        discount.DiscountType = Reader("discount_type")
+                        discount.DiscountValue = Reader("discount_value")
+                        listDiscount.Add(discount)
+                    End If
+
+
+                End While
+            End If
+
+        Catch ex As Exception
+            MsgBox("Error on trying to retrieve discounts: " + ex.Message, MsgBoxStyle.Critical, "Error")
+            Return Nothing
+        Finally
+            If Connection.State = ConnectionState.Open Then
+                Connection.Close()
+            End If
+        End Try
+
+        Return listDiscount
+    End Function
+    Public Sub UpdateDiscounts(ByVal id As String, ByVal discountType As String, ByVal discountValue As String)
+        Dim Connection As New MySqlConnection(GetGlobalConnectionString)
+
+        Try
+            Connection.Open()
+            Dim Query As String = "UPDATE restaurant.discounts SET discount_type = @type, discount_value = @value WHERE id = @id"
+            Dim Command As New MySqlCommand(Query, Connection)
+            Command.Parameters.AddWithValue("@type", discountType)
+            Command.Parameters.AddWithValue("@value", discountValue)
+            Command.Parameters.AddWithValue("@id", id)
+
+
+        Catch ex As Exception
+            MsgBox("Error trying to update discounts: " + ex.Message, MsgBoxStyle.Critical, "Error")
+            Return
+        Finally
+            If Connection.State = ConnectionState.Open Then
+                Connection.Close()
+            End If
+        End Try
+    End Sub
+    Public Sub InsertDiscounts(ByVal discountType As String, ByVal discountValue As String)
+        Dim Connection As New MySqlConnection(GetGlobalConnectionString)
+
+        Try
+            Connection.Open()
+            Dim Query As String = "INSERT INTO restaurant.discounts (discount_type, discount_value) VALUES (@type, @value)"
+            Dim Command As New MySqlCommand(Query, Connection)
+            Command.Parameters.AddWithValue("@type", discountType)
+            Command.Parameters.AddWithValue("@value", discountValue)
+
+        Catch ex As Exception
+            MsgBox("Error trying to insert discounts: " + ex.Message, MsgBoxStyle.Critical, "Error")
+            Return
+        Finally
+            If Connection.State = ConnectionState.Open Then
+                Connection.Close()
+            End If
+        End Try
+    End Sub
+    Public Sub DeleteDiscounts(ByVal id As String)
+        Dim Connection As New MySqlConnection(GetGlobalConnectionString)
+
+        Try
+            Connection.Open()
+            Dim Query As String = "DELETE FROM restaurant.discounts WHERE id = @id"
+            Dim Command As New MySqlCommand(Query, Connection)
+            Command.Parameters.AddWithValue("@id", id)
+
+
+        Catch ex As Exception
+            MsgBox("Error trying to delete discounts: " + ex.Message, MsgBoxStyle.Critical, "Error")
+            Return
+        Finally
+            If Connection.State = ConnectionState.Open Then
+                Connection.Close()
+            End If
+        End Try
+    End Sub
+
+
+
+
+
+    ' CRUD  User account
     Public Sub EnsureArchivedUsersTableExists()
         Try
             Using connection As New MySqlConnection(GetGlobalConnectionString())
@@ -329,7 +456,6 @@ Public Module DatabaseHandler
 
     ' Add these helper methods near the bottom of the DatabaseHandler module (before End Module)
     ' Fetch archived users, restore an archived user back to user table, and permanently delete archived user.
-
     Public Function GetArchivedUsers(Optional searchFilter As String = "") As List(Of UserAccount)
         Dim users As New List(Of UserAccount)()
         Try
@@ -361,7 +487,6 @@ Public Module DatabaseHandler
         End Try
         Return users
     End Function
-
     Public Function RestoreArchivedUser(archivedId As Integer) As Boolean
         Try
             Using connection As New MySqlConnection(GetGlobalConnectionString())
@@ -411,7 +536,6 @@ Public Module DatabaseHandler
             Return False
         End Try
     End Function
-
     Public Function DeleteArchivedUser(archivedId As Integer) As Boolean
         Try
             Using connection As New MySqlConnection(GetGlobalConnectionString())

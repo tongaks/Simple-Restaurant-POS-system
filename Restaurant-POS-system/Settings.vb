@@ -6,7 +6,7 @@ Public Class Settings
 
     Private Sub Settings_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ' load configs
-        GetSettingsConfig()
+        'GetSettingsConfig()
         ItemBtnSizeTxtBox.Text = SettingsConfig.MenuItemButtonSize
         FontSizeTxtBtn.Text = SettingsConfig.MenuItemFontSize
         ShortcutKeyChckBox.Checked = SettingsConfig.EnableShortcutKeys
@@ -57,7 +57,7 @@ Public Class Settings
             If Command.ExecuteNonQuery > 0 Then
                 HasUpdate = True
                 MsgBox("Successfully updated the configurations!", MsgBoxStyle.Information, "Success")
-                GetSettingsConfig() ' refresh SettingsConfig struct data
+                'GetSettingsConfig() ' refresh SettingsConfig struct data
             End If
 
         Catch ex As Exception

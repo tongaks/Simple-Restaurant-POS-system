@@ -8,10 +8,45 @@ Public Class Form1
     Public ConnectionString As String
 
     Private Sub Order_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        'GetSettingsConfig()
         ConnectionString = GetGlobalConnectionString()
         Me.WindowState = WindowState.Maximized
         IsAdmin = False
+
+        'Panel1.BackColor = ColorTranslator.FromHtml(SettingsConfig.BarTheme)
+
+        'If Not SettingsConfig.LoginImagePath = "" Then
+        '    PictureBox1.Image = Image.FromFile(SettingsConfig.LoginImagePath)
+        'Else
+        'PictureBox1.Image = Nothing
+        'End If
+
+        'BackPanel = {Panel1}
+        'FlowPanel = {}
+        'SetTheme()
+
     End Sub
+    Private Sub Order_Focus(sender As Object, e As EventArgs) Handles MyBase.GotFocus
+        'GetSettingsConfig()
+
+        If IsAdmin Then
+            UsernameTxtBox.Clear()
+            PasswordTxtBox.Clear()
+            LoginAsAdmin_Click(sender, e)
+        End If
+
+        'If Not SettingsConfig.LoginImagePath = "" Then
+        '    PictureBox1.Image = Image.FromFile(SettingsConfig.LoginImagePath)
+        'Else
+        '    PictureBox1.Image = Nothing
+        'End If
+
+        'BackPanel = {Panel1}
+        'FlowPanel = {}
+        'SetTheme()
+    End Sub
+
+
 
 
     ' Button
@@ -29,26 +64,34 @@ Public Class Form1
         End If
     End Sub
     Private Sub LoginBtn_Click(sender As Object, e As EventArgs) Handles LoginBtn.Click
-        Dim table As String = If((IsAdmin), "admin", "user")
+        'Dim role = If(IsAdmin, "Admin", "Cashier")
 
         If String.IsNullOrWhiteSpace(UsernameTxtBox.Text) Or String.IsNullOrWhiteSpace(PasswordTxtBox.Text) Then
             MsgBox("Please complete the user credentials.", MsgBoxStyle.Critical, "Attention")
             Return
         End If
 
-        HandleLogin(table)
+        'HandleLogin(role)
+        HandleLogin()
     End Sub
+
+
 
 
     ' Handlers
     Private Sub HandleEnter(sender As Object, e As KeyPressEventArgs) Handles UsernameTxtBox.KeyPress, PasswordTxtBox.KeyPress
         If Asc(e.KeyChar) = 13 Then
-            Dim table As String = If((IsAdmin), "Admin", "User")
-            HandleLogin(table)
+            'Dim table = If(IsAdmin, "Admin", "Cashier")
+            If String.IsNullOrWhiteSpace(UsernameTxtBox.Text) Or String.IsNullOrWhiteSpace(PasswordTxtBox.Text) Then
+                MsgBox("Please complete the user credentials.", MsgBoxStyle.Critical, "Attention")
+                Return
+            End If
+
+            HandleLogin()
         End If
     End Sub
-    Private Sub HandleLogin(table As String)
-        If Login(UsernameTxtBox.Text, PasswordTxtBox.Text, table) Then
+    Private Sub HandleLogin()
+        If Login(UsernameTxtBox.Text, PasswordTxtBox.Text, "user") Then
             CurrentUser = UsernameTxtBox.Text
             Dim Connection As New MySqlConnection(ConnectionString)
 
@@ -59,16 +102,9 @@ Public Class Form1
                 Command.Parameters.AddWithValue("@uname", CurrentUser)
                 Command.Parameters.AddWithValue("@date", DateTime.Now.Date)
                 Command.Parameters.AddWithValue("@time", DateTime.Now.TimeOfDay)
-                Command.Parameters.AddWithValue("@role", If(IsAdmin, "admin", "cashier"))
+                Command.Parameters.AddWithValue("@role", If(IsAdmin, "Admin", "Cashier"))
 
                 If Command.ExecuteNonQuery() > 0 Then
-                    ' Also insert into activity_logs for audit visibility
-                    Try
-                        InsertActivityLog("Logged in")
-                    Catch
-                        ' ignore logging failure - do not block login
-                    End Try
-
                     If IsAdmin Then
                         Admin.Show()
                     Else
@@ -81,11 +117,13 @@ Public Class Form1
 
             Catch ex As Exception
                 MsgBox("Error creating login log: " + ex.ToString, MsgBoxStyle.Critical, "Error creating log")
+
             Finally
                 If Connection.State = ConnectionState.Open Then
                     Connection.Close()
                 End If
             End Try
+
         End If
     End Sub
 End Class

@@ -4,29 +4,50 @@
     <Compile Update="AccountCard.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="AddMenuItemDialog.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="Admin.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="ApplyVoucher.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="ArchivedAccountCard.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="ArchiveStorage.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="CreateEditAccountForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ItemDialogForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Login_Form.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Manage_menu.vb">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="MenuItemCard.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="ModernNavButton.vb">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Ordering_form.vb">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PremiumAccountCard.vb">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Receipt.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="SalesReport.vb">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Settings.vb">
       <SubType>Form</SubType>

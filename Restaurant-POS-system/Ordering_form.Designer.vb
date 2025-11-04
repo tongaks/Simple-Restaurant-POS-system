@@ -1,8 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Order
     Inherits System.Windows.Forms.Form
 
-    <System.Diagnostics.DebuggerNonUserCode()>
+    'Form overrides dispose to clean up the component list.
+    <System.Diagnostics.DebuggerNonUserCode()> _
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -13,600 +14,683 @@ Partial Class Order
         End Try
     End Sub
 
+    'Required by the Windows Form Designer
     Private components As System.ComponentModel.IContainer
 
-    <System.Diagnostics.DebuggerStepThrough()>
+    'NOTE: The following procedure is required by the Windows Form Designer
+    'It can be modified using the Windows Form Designer.  
+    'Do not modify it using the code editor.
+    <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        pnlHeader = New Panel()
-        lblHeaderTitle = New Label()
-        lblHeaderSubtitle = New Label()
-        pnlHeaderActions = New Panel()
-        IconButton3 = New FontAwesome.Sharp.IconButton()
-        SettingsBtn = New FontAwesome.Sharp.IconButton()
-        pnlSearch = New Panel()
-        SearchTxtBox = New TextBox()
-        SearchBtn = New FontAwesome.Sharp.IconButton()
+        Dim CustomizableEdges7 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges8 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges1 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges2 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges3 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges4 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges5 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges6 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges9 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges10 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges11 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges12 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges13 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges14 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges15 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges16 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges23 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges24 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges17 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges18 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges19 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges20 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges21 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges22 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges25 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges26 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges27 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges28 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        NavbarPnl = New Guna.UI2.WinForms.Guna2Panel()
+        LogoutBtn = New Guna.UI2.WinForms.Guna2Button()
+        SearchBtn = New Guna.UI2.WinForms.Guna2Button()
+        SearchTxtBox = New Guna.UI2.WinForms.Guna2TextBox()
+        Label1 = New Label()
         DataGridView1 = New DataGridView()
-        pnlOrderSidebar = New Panel()
-        OrderPnl = New FlowLayoutPanel()
-        pnlTotal = New Panel()
-        pnlTotalContent = New Panel()
-        pnlTotalRow = New Panel()
-        TotalLbl = New Label()
-        Label2 = New Label()
-        pnlDiscountRow = New Panel()
-        DiscountLbl = New Label()
-        Label3 = New Label()
-        pnlSubtotalRow = New Panel()
+        CreateOrderBtn = New Guna.UI2.WinForms.Guna2Button()
+        DiscountBtn = New Guna.UI2.WinForms.Guna2Button()
+        Panel1 = New Panel()
+        MenuPnl = New Guna.UI2.WinForms.Guna2Panel()
+        Label9 = New Label()
+        MenuContainerPnl = New FlowLayoutPanel()
+        pnlwas = New Guna.UI2.WinForms.Guna2Panel()
+        Label10 = New Label()
+        FoodPnl = New FlowLayoutPanel()
+        CurrentFocusedPnl = New Guna.UI2.WinForms.Guna2Panel()
+        Label8 = New Label()
+        RecentOrdersBtn = New Guna.UI2.WinForms.Guna2Button()
+        Label7 = New Label()
+        Label5 = New Label()
+        Label4 = New Label()
+        ShortCutKeysBtn = New Guna.UI2.WinForms.Guna2Button()
+        CancelBtn = New Guna.UI2.WinForms.Guna2Button()
+        Panel2 = New Panel()
+        Guna2Panel2 = New Guna.UI2.WinForms.Guna2Panel()
+        Panel4 = New Panel()
         SubtotalLbl = New Label()
         Label6 = New Label()
-        pnlOrderHeader = New Panel()
-        lblOrderTitle = New Label()
-        pnlMenu = New Panel()
-        FoodPnl = New FlowLayoutPanel()
-        pnlMenuActions = New Panel()
-        IconButton2 = New FontAwesome.Sharp.IconButton()
-        RecentOrdersBtn = New FontAwesome.Sharp.IconButton()
-        CancelBtn = New FontAwesome.Sharp.IconButton()
-        DiscountBtn = New FontAwesome.Sharp.IconButton()
-        CreateOrderBtn = New FontAwesome.Sharp.IconButton()
-        MenuCategoryPnl = New FlowLayoutPanel()
-        pnlHeader.SuspendLayout()
-        pnlHeaderActions.SuspendLayout()
-        pnlSearch.SuspendLayout()
+        TotalPnl = New Panel()
+        Panel3 = New Panel()
+        TotalLbl = New Label()
+        Label2 = New Label()
+        DiscountLbl = New Label()
+        Label3 = New Label()
+        Guna2Panel1 = New Guna.UI2.WinForms.Guna2Panel()
+        Label11 = New Label()
+        OrderPnl = New FlowLayoutPanel()
+        NavbarPnl.SuspendLayout()
         CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
-        pnlOrderSidebar.SuspendLayout()
-        pnlTotal.SuspendLayout()
-        pnlTotalContent.SuspendLayout()
-        pnlTotalRow.SuspendLayout()
-        pnlDiscountRow.SuspendLayout()
-        pnlSubtotalRow.SuspendLayout()
-        pnlOrderHeader.SuspendLayout()
-        pnlMenu.SuspendLayout()
-        pnlMenuActions.SuspendLayout()
+        Panel1.SuspendLayout()
+        MenuPnl.SuspendLayout()
+        pnlwas.SuspendLayout()
+        CurrentFocusedPnl.SuspendLayout()
+        Panel2.SuspendLayout()
+        Guna2Panel2.SuspendLayout()
+        Panel4.SuspendLayout()
+        TotalPnl.SuspendLayout()
+        Panel3.SuspendLayout()
+        Guna2Panel1.SuspendLayout()
         SuspendLayout()
         ' 
-        ' pnlHeader
+        ' NavbarPnl
         ' 
-        pnlHeader.BackColor = Color.FromArgb(CByte(37), CByte(42), CByte(52))
-        pnlHeader.Controls.Add(lblHeaderTitle)
-        pnlHeader.Controls.Add(lblHeaderSubtitle)
-        pnlHeader.Controls.Add(pnlHeaderActions)
-        pnlHeader.Controls.Add(pnlSearch)
-        pnlHeader.Dock = DockStyle.Top
-        pnlHeader.Location = New Point(0, 0)
-        pnlHeader.Name = "pnlHeader"
-        pnlHeader.Size = New Size(1600, 90)
-        pnlHeader.TabIndex = 0
+        NavbarPnl.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
+        NavbarPnl.BackColor = Color.Transparent
+        NavbarPnl.BorderRadius = 10
+        NavbarPnl.Controls.Add(LogoutBtn)
+        NavbarPnl.Controls.Add(SearchBtn)
+        NavbarPnl.Controls.Add(SearchTxtBox)
+        NavbarPnl.Controls.Add(Label1)
+        NavbarPnl.Controls.Add(DataGridView1)
+        NavbarPnl.CustomizableEdges = CustomizableEdges7
+        NavbarPnl.FillColor = Color.SteelBlue
+        NavbarPnl.Location = New Point(495, 12)
+        NavbarPnl.Name = "NavbarPnl"
+        NavbarPnl.ShadowDecoration.BorderRadius = 10
+        NavbarPnl.ShadowDecoration.CustomizableEdges = CustomizableEdges8
+        NavbarPnl.ShadowDecoration.Enabled = True
+        NavbarPnl.ShadowDecoration.Shadow = New Padding(1, 1, 5, 5)
+        NavbarPnl.Size = New Size(735, 68)
+        NavbarPnl.TabIndex = 1
         ' 
-        ' lblHeaderTitle
+        ' LogoutBtn
         ' 
-        lblHeaderTitle.AutoSize = True
-        lblHeaderTitle.Font = New Font("Segoe UI", 20F, FontStyle.Bold)
-        lblHeaderTitle.ForeColor = Color.White
-        lblHeaderTitle.Location = New Point(30, 20)
-        lblHeaderTitle.Name = "lblHeaderTitle"
-        lblHeaderTitle.Size = New Size(159, 46)
-        lblHeaderTitle.TabIndex = 0
-        lblHeaderTitle.Text = "OrderUp"
-        ' 
-        ' lblHeaderSubtitle
-        ' 
-        lblHeaderSubtitle.AutoSize = True
-        lblHeaderSubtitle.Font = New Font("Segoe UI", 10F)
-        lblHeaderSubtitle.ForeColor = Color.FromArgb(CByte(148), CByte(163), CByte(184))
-        lblHeaderSubtitle.Location = New Point(35, 63)
-        lblHeaderSubtitle.Name = "lblHeaderSubtitle"
-        lblHeaderSubtitle.Size = New Size(105, 23)
-        lblHeaderSubtitle.TabIndex = 1
-        lblHeaderSubtitle.Text = "Point of Sale"
-        ' 
-        ' pnlHeaderActions
-        ' 
-        pnlHeaderActions.Controls.Add(IconButton3)
-        pnlHeaderActions.Controls.Add(SettingsBtn)
-        pnlHeaderActions.Dock = DockStyle.Right
-        pnlHeaderActions.Location = New Point(1500, 0)
-        pnlHeaderActions.Name = "pnlHeaderActions"
-        pnlHeaderActions.Padding = New Padding(10, 20, 20, 20)
-        pnlHeaderActions.Size = New Size(100, 90)
-        pnlHeaderActions.TabIndex = 3
-        ' 
-        ' IconButton3
-        ' 
-        IconButton3.BackColor = Color.FromArgb(CByte(220), CByte(38), CByte(38))
-        IconButton3.Cursor = Cursors.Hand
-        IconButton3.Dock = DockStyle.Right
-        IconButton3.FlatAppearance.BorderSize = 0
-        IconButton3.FlatStyle = FlatStyle.Flat
-        IconButton3.IconChar = FontAwesome.Sharp.IconChar.SignOutAlt
-        IconButton3.IconColor = Color.White
-        IconButton3.IconFont = FontAwesome.Sharp.IconFont.Auto
-        IconButton3.IconSize = 24
-        IconButton3.Location = New Point(10, 20)
-        IconButton3.Name = "IconButton3"
-        IconButton3.Size = New Size(35, 50)
-        IconButton3.TabIndex = 1
-        IconButton3.UseVisualStyleBackColor = False
-        ' 
-        ' SettingsBtn
-        ' 
-        SettingsBtn.BackColor = Color.FromArgb(CByte(71), CByte(85), CByte(105))
-        SettingsBtn.Cursor = Cursors.Hand
-        SettingsBtn.Dock = DockStyle.Right
-        SettingsBtn.FlatAppearance.BorderSize = 0
-        SettingsBtn.FlatStyle = FlatStyle.Flat
-        SettingsBtn.IconChar = FontAwesome.Sharp.IconChar.Cog
-        SettingsBtn.IconColor = Color.White
-        SettingsBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
-        SettingsBtn.IconSize = 24
-        SettingsBtn.Location = New Point(45, 20)
-        SettingsBtn.Name = "SettingsBtn"
-        SettingsBtn.Size = New Size(35, 50)
-        SettingsBtn.TabIndex = 0
-        SettingsBtn.UseVisualStyleBackColor = False
-        ' 
-        ' pnlSearch
-        ' 
-        pnlSearch.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
-        pnlSearch.BackColor = Color.FromArgb(CByte(45), CByte(55), CByte(72))
-        pnlSearch.Controls.Add(SearchTxtBox)
-        pnlSearch.Controls.Add(SearchBtn)
-        pnlSearch.Location = New Point(550, 20)
-        pnlSearch.Name = "pnlSearch"
-        pnlSearch.Size = New Size(500, 50)
-        pnlSearch.TabIndex = 2
-        ' 
-        ' SearchTxtBox
-        ' 
-        SearchTxtBox.BackColor = Color.FromArgb(CByte(45), CByte(55), CByte(72))
-        SearchTxtBox.BorderStyle = BorderStyle.None
-        SearchTxtBox.Dock = DockStyle.Fill
-        SearchTxtBox.Font = New Font("Segoe UI", 12F)
-        SearchTxtBox.ForeColor = Color.White
-        SearchTxtBox.Location = New Point(0, 0)
-        SearchTxtBox.Multiline = True
-        SearchTxtBox.Name = "SearchTxtBox"
-        SearchTxtBox.PlaceholderText = "🔍 Search menu items..."
-        SearchTxtBox.Size = New Size(380, 50)
-        SearchTxtBox.TabIndex = 0
+        LogoutBtn.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        LogoutBtn.BackColor = Color.Transparent
+        LogoutBtn.BorderRadius = 10
+        LogoutBtn.Cursor = Cursors.Hand
+        LogoutBtn.CustomizableEdges = CustomizableEdges1
+        LogoutBtn.FillColor = Color.DarkRed
+        LogoutBtn.Font = New Font("Segoe UI Semibold", 10F, FontStyle.Bold)
+        LogoutBtn.ForeColor = SystemColors.ControlLightLight
+        LogoutBtn.Location = New Point(634, 15)
+        LogoutBtn.Name = "LogoutBtn"
+        LogoutBtn.ShadowDecoration.BorderRadius = 10
+        LogoutBtn.ShadowDecoration.CustomizableEdges = CustomizableEdges2
+        LogoutBtn.ShadowDecoration.Depth = 20
+        LogoutBtn.ShadowDecoration.Enabled = True
+        LogoutBtn.ShadowDecoration.Shadow = New Padding(1, 1, 5, 5)
+        LogoutBtn.Size = New Size(92, 36)
+        LogoutBtn.TabIndex = 10
+        LogoutBtn.Text = "→ Logout"
         ' 
         ' SearchBtn
         ' 
-        SearchBtn.BackColor = Color.FromArgb(CByte(16), CByte(185), CByte(129))
-        SearchBtn.Cursor = Cursors.Hand
-        SearchBtn.Dock = DockStyle.Right
-        SearchBtn.FlatAppearance.BorderSize = 0
-        SearchBtn.FlatStyle = FlatStyle.Flat
-        SearchBtn.Font = New Font("Segoe UI Semibold", 10F, FontStyle.Bold)
-        SearchBtn.ForeColor = Color.White
-        SearchBtn.IconChar = FontAwesome.Sharp.IconChar.Search
-        SearchBtn.IconColor = Color.White
-        SearchBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
-        SearchBtn.IconSize = 20
-        SearchBtn.Location = New Point(380, 0)
+        SearchBtn.Anchor = AnchorStyles.None
+        SearchBtn.BackColor = Color.Transparent
+        SearchBtn.BorderRadius = 10
+        SearchBtn.CustomizableEdges = CustomizableEdges3
+        SearchBtn.FillColor = Color.SpringGreen
+        SearchBtn.Font = New Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        SearchBtn.ForeColor = Color.Black
+        SearchBtn.Location = New Point(434, 15)
         SearchBtn.Name = "SearchBtn"
-        SearchBtn.Size = New Size(120, 50)
-        SearchBtn.TabIndex = 1
-        SearchBtn.Text = "Search"
-        SearchBtn.TextImageRelation = TextImageRelation.ImageBeforeText
-        SearchBtn.UseVisualStyleBackColor = False
+        SearchBtn.ShadowDecoration.BorderRadius = 10
+        SearchBtn.ShadowDecoration.CustomizableEdges = CustomizableEdges4
+        SearchBtn.ShadowDecoration.Depth = 20
+        SearchBtn.ShadowDecoration.Enabled = True
+        SearchBtn.ShadowDecoration.Shadow = New Padding(1, 1, 5, 5)
+        SearchBtn.Size = New Size(97, 36)
+        SearchBtn.TabIndex = 13
+        SearchBtn.Text = "⌕ Search"
+        ' 
+        ' SearchTxtBox
+        ' 
+        SearchTxtBox.Anchor = AnchorStyles.None
+        SearchTxtBox.BorderRadius = 10
+        SearchTxtBox.CustomizableEdges = CustomizableEdges5
+        SearchTxtBox.DefaultText = ""
+        SearchTxtBox.Font = New Font("Segoe UI", 10F)
+        SearchTxtBox.Location = New Point(87, 15)
+        SearchTxtBox.Name = "SearchTxtBox"
+        SearchTxtBox.PlaceholderText = "Search item name here"
+        SearchTxtBox.SelectedText = ""
+        SearchTxtBox.ShadowDecoration.CustomizableEdges = CustomizableEdges6
+        SearchTxtBox.Size = New Size(341, 39)
+        SearchTxtBox.TabIndex = 12
+        ' 
+        ' Label1
+        ' 
+        Label1.Anchor = AnchorStyles.None
+        Label1.AutoSize = True
+        Label1.Font = New Font("Segoe UI Semibold", 15F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label1.ForeColor = SystemColors.ControlLightLight
+        Label1.Location = New Point(9, 19)
+        Label1.Name = "Label1"
+        Label1.Size = New Size(72, 28)
+        Label1.TabIndex = 11
+        Label1.Text = "Search"
         ' 
         ' DataGridView1
         ' 
         DataGridView1.AllowUserToAddRows = False
         DataGridView1.AllowUserToDeleteRows = False
-        DataGridView1.ColumnHeadersHeight = 29
-        DataGridView1.Location = New Point(0, 0)
+        DataGridView1.AllowUserToOrderColumns = True
+        DataGridView1.AllowUserToResizeColumns = False
+        DataGridView1.AllowUserToResizeRows = False
+        DataGridView1.Anchor = AnchorStyles.None
+        DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+        DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridView1.Location = New Point(402, 28)
         DataGridView1.Name = "DataGridView1"
-        DataGridView1.RowHeadersWidth = 51
-        DataGridView1.Size = New Size(10, 10)
-        DataGridView1.TabIndex = 0
+        DataGridView1.Size = New Size(29, 10)
+        DataGridView1.TabIndex = 9
         DataGridView1.Visible = False
         ' 
-        ' pnlOrderSidebar
+        ' CreateOrderBtn
         ' 
-        pnlOrderSidebar.BackColor = Color.FromArgb(CByte(247), CByte(250), CByte(252))
-        pnlOrderSidebar.Controls.Add(OrderPnl)
-        pnlOrderSidebar.Controls.Add(pnlTotal)
-        pnlOrderSidebar.Controls.Add(pnlOrderHeader)
-        pnlOrderSidebar.Dock = DockStyle.Left
-        pnlOrderSidebar.Location = New Point(0, 90)
-        pnlOrderSidebar.Name = "pnlOrderSidebar"
-        pnlOrderSidebar.Size = New Size(480, 920)
-        pnlOrderSidebar.TabIndex = 1
+        CreateOrderBtn.BackColor = Color.Transparent
+        CreateOrderBtn.BorderRadius = 10
+        CreateOrderBtn.Cursor = Cursors.Hand
+        CreateOrderBtn.CustomizableEdges = CustomizableEdges9
+        CreateOrderBtn.FillColor = Color.SpringGreen
+        CreateOrderBtn.Font = New Font("Segoe UI", 9F)
+        CreateOrderBtn.ForeColor = Color.Black
+        CreateOrderBtn.Location = New Point(15, 42)
+        CreateOrderBtn.Name = "CreateOrderBtn"
+        CreateOrderBtn.ShadowDecoration.BorderRadius = 10
+        CreateOrderBtn.ShadowDecoration.CustomizableEdges = CustomizableEdges10
+        CreateOrderBtn.ShadowDecoration.Depth = 20
+        CreateOrderBtn.ShadowDecoration.Enabled = True
+        CreateOrderBtn.ShadowDecoration.Shadow = New Padding(1, 1, 5, 5)
+        CreateOrderBtn.Size = New Size(123, 38)
+        CreateOrderBtn.TabIndex = 1
+        CreateOrderBtn.Text = "✓ Create order"
         ' 
-        ' OrderPnl
+        ' DiscountBtn
         ' 
-        OrderPnl.AutoScroll = True
-        OrderPnl.BackColor = Color.White
-        OrderPnl.Dock = DockStyle.Fill
-        OrderPnl.FlowDirection = FlowDirection.TopDown
-        OrderPnl.Location = New Point(0, 70)
-        OrderPnl.Name = "OrderPnl"
-        OrderPnl.Padding = New Padding(15)
-        OrderPnl.Size = New Size(480, 600)
-        OrderPnl.TabIndex = 1
-        OrderPnl.WrapContents = False
+        DiscountBtn.BackColor = Color.Transparent
+        DiscountBtn.BorderRadius = 10
+        DiscountBtn.Cursor = Cursors.Hand
+        DiscountBtn.CustomizableEdges = CustomizableEdges11
+        DiscountBtn.FillColor = Color.Gold
+        DiscountBtn.Font = New Font("Segoe UI", 9F)
+        DiscountBtn.ForeColor = Color.Black
+        DiscountBtn.Location = New Point(157, 42)
+        DiscountBtn.Name = "DiscountBtn"
+        DiscountBtn.ShadowDecoration.BorderRadius = 10
+        DiscountBtn.ShadowDecoration.CustomizableEdges = CustomizableEdges12
+        DiscountBtn.ShadowDecoration.Depth = 20
+        DiscountBtn.ShadowDecoration.Enabled = True
+        DiscountBtn.ShadowDecoration.Shadow = New Padding(1, 1, 5, 5)
+        DiscountBtn.Size = New Size(123, 38)
+        DiscountBtn.TabIndex = 5
+        DiscountBtn.Text = "🏷️ Apply discount"
         ' 
-        ' pnlTotal
+        ' Panel1
         ' 
-        pnlTotal.BackColor = Color.FromArgb(CByte(26), CByte(32), CByte(44))
-        pnlTotal.Controls.Add(pnlTotalContent)
-        pnlTotal.Dock = DockStyle.Bottom
-        pnlTotal.Location = New Point(0, 670)
-        pnlTotal.Name = "pnlTotal"
-        pnlTotal.Padding = New Padding(25)
-        pnlTotal.Size = New Size(480, 250)
-        pnlTotal.TabIndex = 2
+        Panel1.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        Panel1.BackColor = Color.Transparent
+        Panel1.Controls.Add(MenuPnl)
+        Panel1.Controls.Add(pnlwas)
+        Panel1.Location = New Point(495, 89)
+        Panel1.Name = "Panel1"
+        Panel1.Size = New Size(734, 716)
+        Panel1.TabIndex = 5
         ' 
-        ' pnlTotalContent
+        ' MenuPnl
         ' 
-        pnlTotalContent.Controls.Add(pnlTotalRow)
-        pnlTotalContent.Controls.Add(pnlDiscountRow)
-        pnlTotalContent.Controls.Add(pnlSubtotalRow)
-        pnlTotalContent.Dock = DockStyle.Fill
-        pnlTotalContent.Location = New Point(25, 25)
-        pnlTotalContent.Name = "pnlTotalContent"
-        pnlTotalContent.Size = New Size(430, 200)
-        pnlTotalContent.TabIndex = 0
+        MenuPnl.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
+        MenuPnl.BackColor = Color.Transparent
+        MenuPnl.BorderRadius = 10
+        MenuPnl.Controls.Add(Label9)
+        MenuPnl.Controls.Add(MenuContainerPnl)
+        MenuPnl.CustomizableEdges = CustomizableEdges13
+        MenuPnl.FillColor = Color.White
+        MenuPnl.Location = New Point(2, 8)
+        MenuPnl.Name = "MenuPnl"
+        MenuPnl.ShadowDecoration.CustomizableEdges = CustomizableEdges14
+        MenuPnl.ShadowDecoration.Depth = 10
+        MenuPnl.ShadowDecoration.Enabled = True
+        MenuPnl.ShadowDecoration.Shadow = New Padding(1, 1, 5, 5)
+        MenuPnl.Size = New Size(729, 114)
+        MenuPnl.TabIndex = 3
         ' 
-        ' pnlTotalRow
+        ' Label9
         ' 
-        pnlTotalRow.BackColor = Color.FromArgb(CByte(16), CByte(185), CByte(129))
-        pnlTotalRow.Controls.Add(TotalLbl)
-        pnlTotalRow.Controls.Add(Label2)
-        pnlTotalRow.Dock = DockStyle.Bottom
-        pnlTotalRow.Location = New Point(0, 116)
-        pnlTotalRow.Name = "pnlTotalRow"
-        pnlTotalRow.Padding = New Padding(20, 15, 20, 15)
-        pnlTotalRow.Size = New Size(430, 84)
-        pnlTotalRow.TabIndex = 2
+        Label9.AutoSize = True
+        Label9.Font = New Font("Segoe UI", 15F)
+        Label9.Location = New Point(21, 7)
+        Label9.Name = "Label9"
+        Label9.Size = New Size(105, 28)
+        Label9.TabIndex = 10
+        Label9.Text = "Categories"
         ' 
-        ' TotalLbl
+        ' MenuContainerPnl
         ' 
-        TotalLbl.Dock = DockStyle.Right
-        TotalLbl.Font = New Font("Segoe UI", 24F, FontStyle.Bold)
-        TotalLbl.ForeColor = Color.White
-        TotalLbl.Location = New Point(230, 15)
-        TotalLbl.Name = "TotalLbl"
-        TotalLbl.Size = New Size(180, 54)
-        TotalLbl.TabIndex = 1
-        TotalLbl.Text = "₱0"
-        TotalLbl.TextAlign = ContentAlignment.MiddleRight
+        MenuContainerPnl.AutoSize = True
+        MenuContainerPnl.Location = New Point(10, 38)
+        MenuContainerPnl.Name = "MenuContainerPnl"
+        MenuContainerPnl.Size = New Size(713, 55)
+        MenuContainerPnl.TabIndex = 0
         ' 
-        ' Label2
+        ' pnlwas
         ' 
-        Label2.AutoSize = True
-        Label2.Dock = DockStyle.Left
-        Label2.Font = New Font("Segoe UI", 18F, FontStyle.Bold)
-        Label2.ForeColor = Color.White
-        Label2.Location = New Point(20, 15)
-        Label2.Name = "Label2"
-        Label2.Size = New Size(109, 41)
-        Label2.TabIndex = 0
-        Label2.Text = "TOTAL"
+        pnlwas.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        pnlwas.BackColor = Color.Transparent
+        pnlwas.BorderRadius = 10
+        pnlwas.Controls.Add(Label10)
+        pnlwas.Controls.Add(FoodPnl)
+        pnlwas.CustomizableEdges = CustomizableEdges15
+        pnlwas.FillColor = Color.WhiteSmoke
+        pnlwas.Location = New Point(2, 128)
+        pnlwas.Name = "pnlwas"
+        pnlwas.ShadowDecoration.CustomizableEdges = CustomizableEdges16
+        pnlwas.ShadowDecoration.Depth = 10
+        pnlwas.ShadowDecoration.Shadow = New Padding(1, 1, 5, 5)
+        pnlwas.Size = New Size(732, 462)
+        pnlwas.TabIndex = 2
         ' 
-        ' pnlDiscountRow
+        ' Label10
         ' 
-        pnlDiscountRow.Controls.Add(DiscountLbl)
-        pnlDiscountRow.Controls.Add(Label3)
-        pnlDiscountRow.Dock = DockStyle.Top
-        pnlDiscountRow.Location = New Point(0, 60)
-        pnlDiscountRow.Name = "pnlDiscountRow"
-        pnlDiscountRow.Padding = New Padding(20, 10, 20, 10)
-        pnlDiscountRow.Size = New Size(430, 50)
-        pnlDiscountRow.TabIndex = 1
+        Label10.AutoSize = True
+        Label10.Font = New Font("Segoe UI", 15F)
+        Label10.Location = New Point(21, 15)
+        Label10.Name = "Label10"
+        Label10.Size = New Size(114, 28)
+        Label10.TabIndex = 11
+        Label10.Text = "Menu Items"
         ' 
-        ' DiscountLbl
+        ' FoodPnl
         ' 
-        DiscountLbl.Dock = DockStyle.Right
-        DiscountLbl.Font = New Font("Segoe UI", 13F, FontStyle.Bold)
-        DiscountLbl.ForeColor = Color.FromArgb(CByte(245), CByte(101), CByte(101))
-        DiscountLbl.Location = New Point(310, 10)
-        DiscountLbl.Name = "DiscountLbl"
-        DiscountLbl.Size = New Size(100, 30)
-        DiscountLbl.TabIndex = 1
-        DiscountLbl.Text = "%0"
-        DiscountLbl.TextAlign = ContentAlignment.MiddleRight
+        FoodPnl.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        FoodPnl.AutoScroll = True
+        FoodPnl.Location = New Point(10, 46)
+        FoodPnl.Name = "FoodPnl"
+        FoodPnl.Size = New Size(713, 400)
+        FoodPnl.TabIndex = 1
         ' 
-        ' Label3
+        ' CurrentFocusedPnl
         ' 
-        Label3.AutoSize = True
-        Label3.Dock = DockStyle.Left
-        Label3.Font = New Font("Segoe UI", 12F)
-        Label3.ForeColor = Color.FromArgb(CByte(226), CByte(232), CByte(240))
-        Label3.Location = New Point(20, 10)
-        Label3.Name = "Label3"
-        Label3.Size = New Size(89, 28)
-        Label3.TabIndex = 0
-        Label3.Text = "Discount"
+        CurrentFocusedPnl.Anchor = AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        CurrentFocusedPnl.BackColor = Color.Transparent
+        CurrentFocusedPnl.BorderRadius = 10
+        CurrentFocusedPnl.Controls.Add(Label8)
+        CurrentFocusedPnl.Controls.Add(RecentOrdersBtn)
+        CurrentFocusedPnl.Controls.Add(Label7)
+        CurrentFocusedPnl.Controls.Add(Label5)
+        CurrentFocusedPnl.Controls.Add(Label4)
+        CurrentFocusedPnl.Controls.Add(ShortCutKeysBtn)
+        CurrentFocusedPnl.Controls.Add(CancelBtn)
+        CurrentFocusedPnl.Controls.Add(CreateOrderBtn)
+        CurrentFocusedPnl.Controls.Add(DiscountBtn)
+        CurrentFocusedPnl.CustomizableEdges = CustomizableEdges23
+        CurrentFocusedPnl.FillColor = Color.White
+        CurrentFocusedPnl.Location = New Point(494, 690)
+        CurrentFocusedPnl.Name = "CurrentFocusedPnl"
+        CurrentFocusedPnl.ShadowDecoration.BorderRadius = 10
+        CurrentFocusedPnl.ShadowDecoration.CustomizableEdges = CustomizableEdges24
+        CurrentFocusedPnl.ShadowDecoration.Depth = 20
+        CurrentFocusedPnl.ShadowDecoration.Enabled = True
+        CurrentFocusedPnl.ShadowDecoration.Shadow = New Padding(1, 1, 5, 5)
+        CurrentFocusedPnl.Size = New Size(732, 102)
+        CurrentFocusedPnl.TabIndex = 0
         ' 
-        ' pnlSubtotalRow
+        ' Label8
         ' 
-        pnlSubtotalRow.Controls.Add(SubtotalLbl)
-        pnlSubtotalRow.Controls.Add(Label6)
-        pnlSubtotalRow.Dock = DockStyle.Top
-        pnlSubtotalRow.Location = New Point(0, 0)
-        pnlSubtotalRow.Name = "pnlSubtotalRow"
-        pnlSubtotalRow.Padding = New Padding(20, 10, 20, 10)
-        pnlSubtotalRow.Size = New Size(430, 60)
-        pnlSubtotalRow.TabIndex = 0
+        Label8.AutoSize = True
+        Label8.Font = New Font("Segoe UI", 15F)
+        Label8.Location = New Point(456, 10)
+        Label8.Name = "Label8"
+        Label8.Size = New Size(82, 28)
+        Label8.TabIndex = 14
+        Label8.Text = "Ctrl + O"
+        ' 
+        ' RecentOrdersBtn
+        ' 
+        RecentOrdersBtn.BackColor = Color.Transparent
+        RecentOrdersBtn.BorderRadius = 10
+        RecentOrdersBtn.Cursor = Cursors.Hand
+        RecentOrdersBtn.CustomizableEdges = CustomizableEdges17
+        RecentOrdersBtn.FillColor = Color.RoyalBlue
+        RecentOrdersBtn.Font = New Font("Segoe UI", 9F)
+        RecentOrdersBtn.ForeColor = Color.White
+        RecentOrdersBtn.Location = New Point(433, 42)
+        RecentOrdersBtn.Name = "RecentOrdersBtn"
+        RecentOrdersBtn.ShadowDecoration.BorderRadius = 10
+        RecentOrdersBtn.ShadowDecoration.CustomizableEdges = CustomizableEdges18
+        RecentOrdersBtn.ShadowDecoration.Depth = 20
+        RecentOrdersBtn.ShadowDecoration.Enabled = True
+        RecentOrdersBtn.ShadowDecoration.Shadow = New Padding(1, 1, 5, 5)
+        RecentOrdersBtn.Size = New Size(121, 36)
+        RecentOrdersBtn.TabIndex = 13
+        RecentOrdersBtn.Text = "⏱︎ Recent orders"
+        ' 
+        ' Label7
+        ' 
+        Label7.AutoSize = True
+        Label7.Font = New Font("Segoe UI", 15F)
+        Label7.Location = New Point(176, 11)
+        Label7.Name = "Label7"
+        Label7.Size = New Size(81, 28)
+        Label7.TabIndex = 12
+        Label7.Text = "Ctrl + D"
+        ' 
+        ' Label5
+        ' 
+        Label5.AutoSize = True
+        Label5.Font = New Font("Segoe UI", 15F)
+        Label5.Location = New Point(317, 11)
+        Label5.Name = "Label5"
+        Label5.Size = New Size(79, 28)
+        Label5.TabIndex = 11
+        Label5.Text = "Ctrl + C"
+        ' 
+        ' Label4
+        ' 
+        Label4.AutoSize = True
+        Label4.Font = New Font("Segoe UI", 15F)
+        Label4.Location = New Point(21, 11)
+        Label4.Name = "Label4"
+        Label4.Size = New Size(112, 28)
+        Label4.TabIndex = 8
+        Label4.Text = "Ctrl + Enter"
+        ' 
+        ' ShortCutKeysBtn
+        ' 
+        ShortCutKeysBtn.BackColor = Color.Transparent
+        ShortCutKeysBtn.BorderRadius = 10
+        ShortCutKeysBtn.Cursor = Cursors.Hand
+        ShortCutKeysBtn.CustomizableEdges = CustomizableEdges19
+        ShortCutKeysBtn.FillColor = Color.Silver
+        ShortCutKeysBtn.Font = New Font("Segoe UI", 9F)
+        ShortCutKeysBtn.ForeColor = Color.Black
+        ShortCutKeysBtn.Location = New Point(575, 42)
+        ShortCutKeysBtn.Name = "ShortCutKeysBtn"
+        ShortCutKeysBtn.ShadowDecoration.BorderRadius = 10
+        ShortCutKeysBtn.ShadowDecoration.CustomizableEdges = CustomizableEdges20
+        ShortCutKeysBtn.ShadowDecoration.Depth = 20
+        ShortCutKeysBtn.ShadowDecoration.Enabled = True
+        ShortCutKeysBtn.ShadowDecoration.Shadow = New Padding(1, 1, 5, 5)
+        ShortCutKeysBtn.Size = New Size(114, 36)
+        ShortCutKeysBtn.TabIndex = 10
+        ShortCutKeysBtn.Text = "⌨️ Shortcut keys"
+        ' 
+        ' CancelBtn
+        ' 
+        CancelBtn.BackColor = Color.Transparent
+        CancelBtn.BorderRadius = 10
+        CancelBtn.Cursor = Cursors.Hand
+        CancelBtn.CustomizableEdges = CustomizableEdges21
+        CancelBtn.FillColor = Color.Gray
+        CancelBtn.Font = New Font("Segoe UI", 9F)
+        CancelBtn.ForeColor = Color.White
+        CancelBtn.Location = New Point(301, 42)
+        CancelBtn.Name = "CancelBtn"
+        CancelBtn.ShadowDecoration.BorderRadius = 10
+        CancelBtn.ShadowDecoration.CustomizableEdges = CustomizableEdges22
+        CancelBtn.ShadowDecoration.Depth = 20
+        CancelBtn.ShadowDecoration.Enabled = True
+        CancelBtn.ShadowDecoration.Shadow = New Padding(1, 1, 5, 5)
+        CancelBtn.Size = New Size(114, 36)
+        CancelBtn.TabIndex = 9
+        CancelBtn.Text = "❌Cancel order"
+        ' 
+        ' Panel2
+        ' 
+        Panel2.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left
+        Panel2.BackColor = Color.Transparent
+        Panel2.Controls.Add(Guna2Panel2)
+        Panel2.Controls.Add(Guna2Panel1)
+        Panel2.Location = New Point(12, 0)
+        Panel2.Name = "Panel2"
+        Panel2.Size = New Size(479, 792)
+        Panel2.TabIndex = 6
+        ' 
+        ' Guna2Panel2
+        ' 
+        Guna2Panel2.Anchor = AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        Guna2Panel2.BackColor = Color.Transparent
+        Guna2Panel2.BorderRadius = 10
+        Guna2Panel2.Controls.Add(Panel4)
+        Guna2Panel2.Controls.Add(TotalPnl)
+        Guna2Panel2.CustomizableEdges = CustomizableEdges25
+        Guna2Panel2.FillColor = Color.White
+        Guna2Panel2.Location = New Point(32, 621)
+        Guna2Panel2.Name = "Guna2Panel2"
+        Guna2Panel2.ShadowDecoration.BorderRadius = 10
+        Guna2Panel2.ShadowDecoration.CustomizableEdges = CustomizableEdges26
+        Guna2Panel2.ShadowDecoration.Depth = 20
+        Guna2Panel2.ShadowDecoration.Enabled = True
+        Guna2Panel2.ShadowDecoration.Shadow = New Padding(1, 1, 5, 5)
+        Guna2Panel2.Size = New Size(404, 163)
+        Guna2Panel2.TabIndex = 6
+        ' 
+        ' Panel4
+        ' 
+        Panel4.BackColor = SystemColors.ControlLightLight
+        Panel4.Controls.Add(SubtotalLbl)
+        Panel4.Controls.Add(Label6)
+        Panel4.Location = New Point(0, 11)
+        Panel4.Name = "Panel4"
+        Panel4.Size = New Size(404, 41)
+        Panel4.TabIndex = 9
         ' 
         ' SubtotalLbl
         ' 
-        SubtotalLbl.Dock = DockStyle.Right
-        SubtotalLbl.Font = New Font("Segoe UI", 14F, FontStyle.Bold)
-        SubtotalLbl.ForeColor = Color.White
-        SubtotalLbl.Location = New Point(260, 10)
+        SubtotalLbl.AutoSize = True
+        SubtotalLbl.Font = New Font("Segoe UI", 15F)
+        SubtotalLbl.Location = New Point(304, 3)
         SubtotalLbl.Name = "SubtotalLbl"
-        SubtotalLbl.Size = New Size(150, 40)
-        SubtotalLbl.TabIndex = 1
+        SubtotalLbl.Size = New Size(35, 28)
+        SubtotalLbl.TabIndex = 9
         SubtotalLbl.Text = "₱0"
-        SubtotalLbl.TextAlign = ContentAlignment.MiddleRight
         ' 
         ' Label6
         ' 
         Label6.AutoSize = True
-        Label6.Dock = DockStyle.Left
-        Label6.Font = New Font("Segoe UI", 12F)
-        Label6.ForeColor = Color.FromArgb(CByte(226), CByte(232), CByte(240))
-        Label6.Location = New Point(20, 10)
+        Label6.Font = New Font("Segoe UI", 15F)
+        Label6.Location = New Point(20, 3)
         Label6.Name = "Label6"
         Label6.Size = New Size(87, 28)
-        Label6.TabIndex = 0
+        Label6.TabIndex = 8
         Label6.Text = "Subtotal"
         ' 
-        ' pnlOrderHeader
+        ' TotalPnl
         ' 
-        pnlOrderHeader.BackColor = Color.FromArgb(CByte(37), CByte(42), CByte(52))
-        pnlOrderHeader.Controls.Add(lblOrderTitle)
-        pnlOrderHeader.Dock = DockStyle.Top
-        pnlOrderHeader.Location = New Point(0, 0)
-        pnlOrderHeader.Name = "pnlOrderHeader"
-        pnlOrderHeader.Padding = New Padding(25, 20, 25, 20)
-        pnlOrderHeader.Size = New Size(480, 70)
-        pnlOrderHeader.TabIndex = 0
+        TotalPnl.Anchor = AnchorStyles.Bottom Or AnchorStyles.Left
+        TotalPnl.BackColor = Color.LightSteelBlue
+        TotalPnl.Controls.Add(Panel3)
+        TotalPnl.Controls.Add(DiscountLbl)
+        TotalPnl.Controls.Add(Label3)
+        TotalPnl.Location = New Point(0, 19)
+        TotalPnl.Name = "TotalPnl"
+        TotalPnl.Size = New Size(404, 129)
+        TotalPnl.TabIndex = 4
         ' 
-        ' lblOrderTitle
+        ' Panel3
         ' 
-        lblOrderTitle.AutoSize = True
-        lblOrderTitle.Dock = DockStyle.Left
-        lblOrderTitle.Font = New Font("Segoe UI", 14F, FontStyle.Bold)
-        lblOrderTitle.ForeColor = Color.White
-        lblOrderTitle.Location = New Point(25, 20)
-        lblOrderTitle.Name = "lblOrderTitle"
-        lblOrderTitle.Size = New Size(215, 32)
-        lblOrderTitle.TabIndex = 0
-        lblOrderTitle.Text = ChrW(55357) & ChrW(57042) & " Current Order"
+        Panel3.BackColor = Color.SteelBlue
+        Panel3.Controls.Add(TotalLbl)
+        Panel3.Controls.Add(Label2)
+        Panel3.Location = New Point(0, 78)
+        Panel3.Name = "Panel3"
+        Panel3.Size = New Size(404, 50)
+        Panel3.TabIndex = 8
         ' 
-        ' pnlMenu
+        ' TotalLbl
         ' 
-        pnlMenu.BackColor = Color.FromArgb(CByte(247), CByte(250), CByte(252))
-        pnlMenu.Controls.Add(FoodPnl)
-        pnlMenu.Controls.Add(pnlMenuActions)
-        pnlMenu.Controls.Add(MenuCategoryPnl)
-        pnlMenu.Dock = DockStyle.Fill
-        pnlMenu.Location = New Point(480, 90)
-        pnlMenu.Name = "pnlMenu"
-        pnlMenu.Size = New Size(1120, 920)
-        pnlMenu.TabIndex = 2
+        TotalLbl.AutoSize = True
+        TotalLbl.Font = New Font("Segoe UI", 20F)
+        TotalLbl.ForeColor = SystemColors.ControlLightLight
+        TotalLbl.Location = New Point(298, 7)
+        TotalLbl.Name = "TotalLbl"
+        TotalLbl.Size = New Size(48, 37)
+        TotalLbl.TabIndex = 3
+        TotalLbl.Text = "₱0"
         ' 
-        ' FoodPnl
+        ' Label2
         ' 
-        FoodPnl.AutoScroll = True
-        FoodPnl.BackColor = Color.White
-        FoodPnl.Dock = DockStyle.Fill
-        FoodPnl.Location = New Point(0, 80)
-        FoodPnl.Name = "FoodPnl"
-        FoodPnl.Padding = New Padding(25)
-        FoodPnl.Size = New Size(1120, 730)
-        FoodPnl.TabIndex = 1
+        Label2.AutoSize = True
+        Label2.Font = New Font("Segoe UI", 20F)
+        Label2.ForeColor = SystemColors.ControlLightLight
+        Label2.Location = New Point(29, 7)
+        Label2.Name = "Label2"
+        Label2.Size = New Size(74, 37)
+        Label2.TabIndex = 2
+        Label2.Text = "Total"
         ' 
-        ' pnlMenuActions
+        ' DiscountLbl
         ' 
-        pnlMenuActions.BackColor = Color.White
-        pnlMenuActions.BorderStyle = BorderStyle.FixedSingle
-        pnlMenuActions.Controls.Add(IconButton2)
-        pnlMenuActions.Controls.Add(RecentOrdersBtn)
-        pnlMenuActions.Controls.Add(CancelBtn)
-        pnlMenuActions.Controls.Add(DiscountBtn)
-        pnlMenuActions.Controls.Add(CreateOrderBtn)
-        pnlMenuActions.Dock = DockStyle.Bottom
-        pnlMenuActions.Location = New Point(0, 810)
-        pnlMenuActions.Name = "pnlMenuActions"
-        pnlMenuActions.Padding = New Padding(20)
-        pnlMenuActions.Size = New Size(1120, 110)
-        pnlMenuActions.TabIndex = 2
+        DiscountLbl.AutoSize = True
+        DiscountLbl.Font = New Font("Segoe UI", 15F)
+        DiscountLbl.ForeColor = Color.Red
+        DiscountLbl.Location = New Point(300, 43)
+        DiscountLbl.Name = "DiscountLbl"
+        DiscountLbl.Size = New Size(39, 28)
+        DiscountLbl.TabIndex = 4
+        DiscountLbl.Text = "%0"
         ' 
-        ' IconButton2
+        ' Label3
         ' 
-        IconButton2.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        IconButton2.BackColor = Color.FromArgb(CByte(113), CByte(128), CByte(150))
-        IconButton2.Cursor = Cursors.Hand
-        IconButton2.FlatAppearance.BorderSize = 0
-        IconButton2.FlatStyle = FlatStyle.Flat
-        IconButton2.Font = New Font("Segoe UI Semibold", 10F, FontStyle.Bold)
-        IconButton2.ForeColor = Color.White
-        IconButton2.IconChar = FontAwesome.Sharp.IconChar.Keyboard
-        IconButton2.IconColor = Color.White
-        IconButton2.IconFont = FontAwesome.Sharp.IconFont.Auto
-        IconButton2.IconSize = 22
-        IconButton2.ImageAlign = ContentAlignment.MiddleLeft
-        IconButton2.Location = New Point(914, 25)
-        IconButton2.Name = "IconButton2"
-        IconButton2.Padding = New Padding(8, 0, 8, 0)
-        IconButton2.Size = New Size(175, 58)
-        IconButton2.TabIndex = 4
-        IconButton2.Text = "Shortcuts"
-        IconButton2.TextImageRelation = TextImageRelation.ImageBeforeText
-        IconButton2.UseVisualStyleBackColor = False
+        Label3.AutoSize = True
+        Label3.Font = New Font("Segoe UI", 15F)
+        Label3.Location = New Point(18, 43)
+        Label3.Name = "Label3"
+        Label3.Size = New Size(89, 28)
+        Label3.TabIndex = 3
+        Label3.Text = "Discount"
         ' 
-        ' RecentOrdersBtn
+        ' Guna2Panel1
         ' 
-        RecentOrdersBtn.BackColor = Color.FromArgb(CByte(59), CByte(130), CByte(246))
-        RecentOrdersBtn.Cursor = Cursors.Hand
-        RecentOrdersBtn.FlatAppearance.BorderSize = 0
-        RecentOrdersBtn.FlatStyle = FlatStyle.Flat
-        RecentOrdersBtn.Font = New Font("Segoe UI Semibold", 10F, FontStyle.Bold)
-        RecentOrdersBtn.ForeColor = Color.White
-        RecentOrdersBtn.IconChar = FontAwesome.Sharp.IconChar.ClockRotateLeft
-        RecentOrdersBtn.IconColor = Color.White
-        RecentOrdersBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
-        RecentOrdersBtn.IconSize = 22
-        RecentOrdersBtn.ImageAlign = ContentAlignment.MiddleLeft
-        RecentOrdersBtn.Location = New Point(690, 25)
-        RecentOrdersBtn.Name = "RecentOrdersBtn"
-        RecentOrdersBtn.Padding = New Padding(8, 0, 8, 0)
-        RecentOrdersBtn.Size = New Size(200, 58)
-        RecentOrdersBtn.TabIndex = 3
-        RecentOrdersBtn.Text = "Recent Orders"
-        RecentOrdersBtn.TextImageRelation = TextImageRelation.ImageBeforeText
-        RecentOrdersBtn.UseVisualStyleBackColor = False
+        Guna2Panel1.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left
+        Guna2Panel1.BackColor = Color.Transparent
+        Guna2Panel1.BorderRadius = 10
+        Guna2Panel1.Controls.Add(Label11)
+        Guna2Panel1.Controls.Add(OrderPnl)
+        Guna2Panel1.CustomizableEdges = CustomizableEdges27
+        Guna2Panel1.FillColor = Color.White
+        Guna2Panel1.Location = New Point(13, 7)
+        Guna2Panel1.Name = "Guna2Panel1"
+        Guna2Panel1.ShadowDecoration.BorderRadius = 10
+        Guna2Panel1.ShadowDecoration.CustomizableEdges = CustomizableEdges28
+        Guna2Panel1.ShadowDecoration.Depth = 20
+        Guna2Panel1.ShadowDecoration.Enabled = True
+        Guna2Panel1.ShadowDecoration.Shadow = New Padding(1, 1, 5, 5)
+        Guna2Panel1.Size = New Size(452, 608)
+        Guna2Panel1.TabIndex = 5
         ' 
-        ' CancelBtn
+        ' Label11
         ' 
-        CancelBtn.BackColor = Color.FromArgb(CByte(220), CByte(38), CByte(38))
-        CancelBtn.Cursor = Cursors.Hand
-        CancelBtn.FlatAppearance.BorderSize = 0
-        CancelBtn.FlatStyle = FlatStyle.Flat
-        CancelBtn.Font = New Font("Segoe UI Semibold", 10F, FontStyle.Bold)
-        CancelBtn.ForeColor = Color.White
-        CancelBtn.IconChar = FontAwesome.Sharp.IconChar.Close
-        CancelBtn.IconColor = Color.White
-        CancelBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
-        CancelBtn.IconSize = 22
-        CancelBtn.ImageAlign = ContentAlignment.MiddleLeft
-        CancelBtn.Location = New Point(485, 25)
-        CancelBtn.Name = "CancelBtn"
-        CancelBtn.Padding = New Padding(8, 0, 8, 0)
-        CancelBtn.Size = New Size(180, 58)
-        CancelBtn.TabIndex = 2
-        CancelBtn.Text = "Cancel Order"
-        CancelBtn.TextImageRelation = TextImageRelation.ImageBeforeText
-        CancelBtn.UseVisualStyleBackColor = False
+        Label11.AutoSize = True
+        Label11.Font = New Font("Segoe UI", 15F)
+        Label11.Location = New Point(10, 9)
+        Label11.Name = "Label11"
+        Label11.Size = New Size(130, 28)
+        Label11.TabIndex = 11
+        Label11.Text = "Current order"
         ' 
-        ' DiscountBtn
+        ' OrderPnl
         ' 
-        DiscountBtn.BackColor = Color.FromArgb(CByte(251), CByte(191), CByte(36))
-        DiscountBtn.Cursor = Cursors.Hand
-        DiscountBtn.FlatAppearance.BorderSize = 0
-        DiscountBtn.FlatStyle = FlatStyle.Flat
-        DiscountBtn.Font = New Font("Segoe UI Semibold", 10F, FontStyle.Bold)
-        DiscountBtn.ForeColor = Color.White
-        DiscountBtn.IconChar = FontAwesome.Sharp.IconChar.Tag
-        DiscountBtn.IconColor = Color.White
-        DiscountBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
-        DiscountBtn.IconSize = 22
-        DiscountBtn.ImageAlign = ContentAlignment.MiddleLeft
-        DiscountBtn.Location = New Point(270, 25)
-        DiscountBtn.Name = "DiscountBtn"
-        DiscountBtn.Padding = New Padding(8, 0, 8, 0)
-        DiscountBtn.Size = New Size(190, 58)
-        DiscountBtn.TabIndex = 1
-        DiscountBtn.Text = "Apply Discount"
-        DiscountBtn.TextImageRelation = TextImageRelation.ImageBeforeText
-        DiscountBtn.UseVisualStyleBackColor = False
-        ' 
-        ' CreateOrderBtn
-        ' 
-        CreateOrderBtn.BackColor = Color.FromArgb(CByte(16), CByte(185), CByte(129))
-        CreateOrderBtn.Cursor = Cursors.Hand
-        CreateOrderBtn.FlatAppearance.BorderSize = 0
-        CreateOrderBtn.FlatStyle = FlatStyle.Flat
-        CreateOrderBtn.Font = New Font("Segoe UI", 11F, FontStyle.Bold)
-        CreateOrderBtn.ForeColor = Color.White
-        CreateOrderBtn.IconChar = FontAwesome.Sharp.IconChar.CheckCircle
-        CreateOrderBtn.IconColor = Color.White
-        CreateOrderBtn.IconFont = FontAwesome.Sharp.IconFont.Auto
-        CreateOrderBtn.IconSize = 26
-        CreateOrderBtn.ImageAlign = ContentAlignment.MiddleLeft
-        CreateOrderBtn.Location = New Point(25, 25)
-        CreateOrderBtn.Name = "CreateOrderBtn"
-        CreateOrderBtn.Padding = New Padding(12, 0, 12, 0)
-        CreateOrderBtn.Size = New Size(220, 58)
-        CreateOrderBtn.TabIndex = 0
-        CreateOrderBtn.Text = "Create Order"
-        CreateOrderBtn.TextImageRelation = TextImageRelation.ImageBeforeText
-        CreateOrderBtn.UseVisualStyleBackColor = False
-        ' 
-        ' MenuCategoryPnl
-        ' 
-        MenuCategoryPnl.BackColor = Color.White
-        MenuCategoryPnl.Dock = DockStyle.Top
-        MenuCategoryPnl.Location = New Point(0, 0)
-        MenuCategoryPnl.Name = "MenuCategoryPnl"
-        MenuCategoryPnl.Padding = New Padding(20, 15, 20, 15)
-        MenuCategoryPnl.Size = New Size(1120, 80)
-        MenuCategoryPnl.TabIndex = 0
+        OrderPnl.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left
+        OrderPnl.AutoScroll = True
+        OrderPnl.BackColor = SystemColors.ControlLightLight
+        OrderPnl.FlowDirection = FlowDirection.TopDown
+        OrderPnl.Location = New Point(3, 46)
+        OrderPnl.Name = "OrderPnl"
+        OrderPnl.Size = New Size(446, 549)
+        OrderPnl.TabIndex = 8
+        OrderPnl.WrapContents = False
         ' 
         ' Order
         ' 
-        AutoScaleDimensions = New SizeF(8F, 20F)
+        AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        BackColor = Color.FromArgb(CByte(247), CByte(250), CByte(252))
-        ClientSize = New Size(1600, 1010)
-        Controls.Add(pnlMenu)
-        Controls.Add(pnlOrderSidebar)
-        Controls.Add(pnlHeader)
-        Controls.Add(DataGridView1)
-        Font = New Font("Segoe UI", 9F)
+        BackColor = Color.Gainsboro
+        ClientSize = New Size(1241, 804)
+        Controls.Add(Panel2)
+        Controls.Add(NavbarPnl)
+        Controls.Add(CurrentFocusedPnl)
+        Controls.Add(Panel1)
         Name = "Order"
-        Text = "OrderUp! - Point of Sale"
-        pnlHeader.ResumeLayout(False)
-        pnlHeader.PerformLayout()
-        pnlHeaderActions.ResumeLayout(False)
-        pnlSearch.ResumeLayout(False)
-        pnlSearch.PerformLayout()
+        Text = "Order form"
+        NavbarPnl.ResumeLayout(False)
+        NavbarPnl.PerformLayout()
         CType(DataGridView1, ComponentModel.ISupportInitialize).EndInit()
-        pnlOrderSidebar.ResumeLayout(False)
-        pnlTotal.ResumeLayout(False)
-        pnlTotalContent.ResumeLayout(False)
-        pnlTotalRow.ResumeLayout(False)
-        pnlTotalRow.PerformLayout()
-        pnlDiscountRow.ResumeLayout(False)
-        pnlDiscountRow.PerformLayout()
-        pnlSubtotalRow.ResumeLayout(False)
-        pnlSubtotalRow.PerformLayout()
-        pnlOrderHeader.ResumeLayout(False)
-        pnlOrderHeader.PerformLayout()
-        pnlMenu.ResumeLayout(False)
-        pnlMenuActions.ResumeLayout(False)
+        Panel1.ResumeLayout(False)
+        MenuPnl.ResumeLayout(False)
+        MenuPnl.PerformLayout()
+        pnlwas.ResumeLayout(False)
+        pnlwas.PerformLayout()
+        CurrentFocusedPnl.ResumeLayout(False)
+        CurrentFocusedPnl.PerformLayout()
+        Panel2.ResumeLayout(False)
+        Guna2Panel2.ResumeLayout(False)
+        Panel4.ResumeLayout(False)
+        Panel4.PerformLayout()
+        TotalPnl.ResumeLayout(False)
+        TotalPnl.PerformLayout()
+        Panel3.ResumeLayout(False)
+        Panel3.PerformLayout()
+        Guna2Panel1.ResumeLayout(False)
+        Guna2Panel1.PerformLayout()
         ResumeLayout(False)
     End Sub
-
-    Friend WithEvents pnlHeader As Panel
-    Friend WithEvents lblHeaderTitle As Label
-    Friend WithEvents lblHeaderSubtitle As Label
-    Friend WithEvents pnlHeaderActions As Panel
-    Friend WithEvents IconButton3 As FontAwesome.Sharp.IconButton
-    Friend WithEvents SettingsBtn As FontAwesome.Sharp.IconButton
-    Friend WithEvents pnlSearch As Panel
-    Friend WithEvents SearchTxtBox As TextBox
-    Friend WithEvents SearchBtn As FontAwesome.Sharp.IconButton
-    Friend WithEvents DataGridView1 As DataGridView
-    Friend WithEvents pnlOrderSidebar As Panel
-    Friend WithEvents OrderPnl As FlowLayoutPanel
-    Friend WithEvents pnlTotal As Panel
-    Friend WithEvents pnlTotalContent As Panel
-    Friend WithEvents pnlTotalRow As Panel
-    Friend WithEvents TotalLbl As Label
-    Friend WithEvents Label2 As Label
-    Friend WithEvents pnlDiscountRow As Panel
+    Friend WithEvents TestTable As DataGridView
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents DiscountBtn As Guna.UI2.WinForms.Guna2Button
+    Friend WithEvents CreateOrderBtn As Guna.UI2.WinForms.Guna2Button
+    Friend WithEvents CurrentFocusedPnl As Guna.UI2.WinForms.Guna2Panel
+    Friend WithEvents CancelBtn As Guna.UI2.WinForms.Guna2Button
+    Friend WithEvents ShortCutKeysBtn As Guna.UI2.WinForms.Guna2Button
+    Friend WithEvents Label7 As Label
+    Friend WithEvents Label5 As Label
+    Friend WithEvents Label4 As Label
+    Friend WithEvents RecentOrdersBtn As Guna.UI2.WinForms.Guna2Button
+    Friend WithEvents Label8 As Label
+    Friend WithEvents Panel2 As Panel
+    Friend WithEvents TotalPnl As Panel
     Friend WithEvents DiscountLbl As Label
     Friend WithEvents Label3 As Label
-    Friend WithEvents pnlSubtotalRow As Panel
+    Friend WithEvents Panel3 As Panel
+    Friend WithEvents TotalLbl As Label
+    Friend WithEvents Label2 As Label
+    Friend WithEvents Panel4 As Panel
     Friend WithEvents SubtotalLbl As Label
     Friend WithEvents Label6 As Label
-    Friend WithEvents pnlOrderHeader As Panel
-    Friend WithEvents lblOrderTitle As Label
-    Friend WithEvents pnlMenu As Panel
+    Friend WithEvents MenuPnl As Guna.UI2.WinForms.Guna2Panel
+    Friend WithEvents pnlwas As Guna.UI2.WinForms.Guna2Panel
+    Friend WithEvents MenuContainerPnl As FlowLayoutPanel
     Friend WithEvents FoodPnl As FlowLayoutPanel
-    Friend WithEvents pnlMenuActions As Panel
-    Friend WithEvents IconButton2 As FontAwesome.Sharp.IconButton
-    Friend WithEvents RecentOrdersBtn As FontAwesome.Sharp.IconButton
-    Friend WithEvents CancelBtn As FontAwesome.Sharp.IconButton
-    Friend WithEvents DiscountBtn As FontAwesome.Sharp.IconButton
-    Friend WithEvents CreateOrderBtn As FontAwesome.Sharp.IconButton
-    Friend WithEvents MenuCategoryPnl As FlowLayoutPanel
+    Friend WithEvents Label9 As Label
+    Friend WithEvents Label10 As Label
+    Friend WithEvents Guna2Panel1 As Guna.UI2.WinForms.Guna2Panel
+    Friend WithEvents OrderPnl As FlowLayoutPanel
+    Friend WithEvents Guna2Panel2 As Guna.UI2.WinForms.Guna2Panel
+    Friend WithEvents Label11 As Label
+    Friend WithEvents LogoutBtn As Guna.UI2.WinForms.Guna2Button
+    Friend WithEvents SearchBtn As Guna.UI2.WinForms.Guna2Button
+    Friend WithEvents SearchTxtBox As Guna.UI2.WinForms.Guna2TextBox
+    Friend WithEvents Label1 As Label
+    Friend WithEvents DataGridView1 As DataGridView
+    Friend WithEvents NavbarPnl As Guna.UI2.WinForms.Guna2Panel
 End Class

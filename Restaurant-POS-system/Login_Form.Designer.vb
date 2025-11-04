@@ -22,148 +22,204 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        UsernameTxtBox = New TextBox()
-        PasswordTxtBox = New TextBox()
-        UsernameLbl = New Label()
-        PasswordLbl = New Label()
-        Label3 = New Label()
+        Dim CustomizableEdges9 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges10 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges7 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges8 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges1 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges2 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges3 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges4 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges5 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Dim CustomizableEdges6 As Guna.UI2.WinForms.Suite.CustomizableEdges = New Guna.UI2.WinForms.Suite.CustomizableEdges()
+        Guna2GradientPanel1 = New Guna.UI2.WinForms.Guna2GradientPanel()
+        Panel1 = New Guna.UI2.WinForms.Guna2Panel()
         LoginAsAdminBtn = New PictureBox()
-        LoginBtn = New Button()
-        Panel1 = New Panel()
-        PictureBox1 = New PictureBox()
-        CType(LoginAsAdminBtn, ComponentModel.ISupportInitialize).BeginInit()
+        UsernameTxtBox = New Guna.UI2.WinForms.Guna2TextBox()
+        PasswordTxtBox = New Guna.UI2.WinForms.Guna2TextBox()
+        UsernameLbl = New Label()
+        LoginBtn = New Guna.UI2.WinForms.Guna2Button()
+        PasswordLbl = New Label()
+        PictureBox2 = New PictureBox()
+        Guna2GradientPanel1.SuspendLayout()
         Panel1.SuspendLayout()
-        CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
+        CType(LoginAsAdminBtn, ComponentModel.ISupportInitialize).BeginInit()
+        CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
-        ' UsernameTxtBox
+        ' Guna2GradientPanel1
         ' 
-        UsernameTxtBox.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left
-        UsernameTxtBox.Font = New Font("Segoe UI", 20F)
-        UsernameTxtBox.Location = New Point(45, 234)
-        UsernameTxtBox.Name = "UsernameTxtBox"
-        UsernameTxtBox.Size = New Size(385, 43)
-        UsernameTxtBox.TabIndex = 0
-        UsernameTxtBox.Text = "user"
-        ' 
-        ' PasswordTxtBox
-        ' 
-        PasswordTxtBox.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left
-        PasswordTxtBox.Font = New Font("Segoe UI", 20F, FontStyle.Bold)
-        PasswordTxtBox.Location = New Point(45, 347)
-        PasswordTxtBox.Name = "PasswordTxtBox"
-        PasswordTxtBox.PasswordChar = "·"c
-        PasswordTxtBox.Size = New Size(385, 43)
-        PasswordTxtBox.TabIndex = 1
-        PasswordTxtBox.Text = "user"
-        ' 
-        ' UsernameLbl
-        ' 
-        UsernameLbl.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left
-        UsernameLbl.AutoSize = True
-        UsernameLbl.Font = New Font("Segoe UI", 20F)
-        UsernameLbl.Location = New Point(45, 194)
-        UsernameLbl.Name = "UsernameLbl"
-        UsernameLbl.Size = New Size(136, 37)
-        UsernameLbl.TabIndex = 2
-        UsernameLbl.Text = "Username"
-        ' 
-        ' PasswordLbl
-        ' 
-        PasswordLbl.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left
-        PasswordLbl.AutoSize = True
-        PasswordLbl.Font = New Font("Segoe UI", 20F)
-        PasswordLbl.Location = New Point(45, 307)
-        PasswordLbl.Name = "PasswordLbl"
-        PasswordLbl.Size = New Size(128, 37)
-        PasswordLbl.TabIndex = 3
-        PasswordLbl.Text = "Password"
-        ' 
-        ' Label3
-        ' 
-        Label3.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left
-        Label3.AutoSize = True
-        Label3.Font = New Font("Showcard Gothic", 36F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
-        Label3.Location = New Point(45, 94)
-        Label3.Name = "Label3"
-        Label3.Size = New Size(272, 60)
-        Label3.TabIndex = 4
-        Label3.Text = "OrderUp!"
-        ' 
-        ' LoginAsAdminBtn
-        ' 
-        LoginAsAdminBtn.Anchor = AnchorStyles.Top
-        LoginAsAdminBtn.Image = My.Resources.Resources.admin_icon
-        LoginAsAdminBtn.Location = New Point(420, 13)
-        LoginAsAdminBtn.Name = "LoginAsAdminBtn"
-        LoginAsAdminBtn.Size = New Size(39, 39)
-        LoginAsAdminBtn.SizeMode = PictureBoxSizeMode.StretchImage
-        LoginAsAdminBtn.TabIndex = 5
-        LoginAsAdminBtn.TabStop = False
-        ' 
-        ' LoginBtn
-        ' 
-        LoginBtn.BackColor = Color.SpringGreen
-        LoginBtn.FlatStyle = FlatStyle.Flat
-        LoginBtn.Location = New Point(240, 421)
-        LoginBtn.Name = "LoginBtn"
-        LoginBtn.Size = New Size(190, 48)
-        LoginBtn.TabIndex = 6
-        LoginBtn.Text = "Login"
-        LoginBtn.UseVisualStyleBackColor = False
+        Guna2GradientPanel1.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        Guna2GradientPanel1.BackColor = Color.Transparent
+        Guna2GradientPanel1.Controls.Add(Panel1)
+        Guna2GradientPanel1.CustomizableEdges = CustomizableEdges9
+        Guna2GradientPanel1.FillColor = Color.LightSteelBlue
+        Guna2GradientPanel1.FillColor2 = Color.SteelBlue
+        Guna2GradientPanel1.GradientMode = Drawing2D.LinearGradientMode.ForwardDiagonal
+        Guna2GradientPanel1.Location = New Point(-2, 0)
+        Guna2GradientPanel1.Name = "Guna2GradientPanel1"
+        Guna2GradientPanel1.ShadowDecoration.CustomizableEdges = CustomizableEdges10
+        Guna2GradientPanel1.Size = New Size(1046, 685)
+        Guna2GradientPanel1.TabIndex = 9
         ' 
         ' Panel1
         ' 
-        Panel1.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left
-        Panel1.BackColor = Color.MediumSeaGreen
+        Panel1.Anchor = AnchorStyles.None
+        Panel1.BackColor = Color.Transparent
+        Panel1.BorderRadius = 10
         Panel1.Controls.Add(LoginAsAdminBtn)
         Panel1.Controls.Add(UsernameTxtBox)
         Panel1.Controls.Add(PasswordTxtBox)
         Panel1.Controls.Add(UsernameLbl)
         Panel1.Controls.Add(LoginBtn)
         Panel1.Controls.Add(PasswordLbl)
-        Panel1.Controls.Add(Label3)
-        Panel1.Location = New Point(-1, -1)
+        Panel1.Controls.Add(PictureBox2)
+        Panel1.CustomizableEdges = CustomizableEdges7
+        Panel1.FillColor = Color.White
+        Panel1.Location = New Point(288, 81)
         Panel1.Name = "Panel1"
-        Panel1.Size = New Size(471, 608)
-        Panel1.TabIndex = 8
+        Panel1.ShadowDecoration.BorderRadius = 10
+        Panel1.ShadowDecoration.Color = Color.DimGray
+        Panel1.ShadowDecoration.CustomizableEdges = CustomizableEdges8
+        Panel1.ShadowDecoration.Enabled = True
+        Panel1.ShadowDecoration.Shadow = New Padding(1, 2, 7, 7)
+        Panel1.Size = New Size(471, 523)
+        Panel1.TabIndex = 9
         ' 
-        ' PictureBox1
+        ' LoginAsAdminBtn
         ' 
-        PictureBox1.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
-        PictureBox1.Image = My.Resources.Resources.login_page_photo
-        PictureBox1.Location = New Point(471, 0)
-        PictureBox1.Name = "PictureBox1"
-        PictureBox1.Size = New Size(573, 606)
-        PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage
-        PictureBox1.TabIndex = 9
-        PictureBox1.TabStop = False
+        LoginAsAdminBtn.Anchor = AnchorStyles.Top
+        LoginAsAdminBtn.Enabled = False
+        LoginAsAdminBtn.Image = My.Resources.Resources.admin_icon
+        LoginAsAdminBtn.Location = New Point(419, 13)
+        LoginAsAdminBtn.Name = "LoginAsAdminBtn"
+        LoginAsAdminBtn.Size = New Size(39, 39)
+        LoginAsAdminBtn.SizeMode = PictureBoxSizeMode.StretchImage
+        LoginAsAdminBtn.TabIndex = 5
+        LoginAsAdminBtn.TabStop = False
+        LoginAsAdminBtn.Visible = False
+        ' 
+        ' UsernameTxtBox
+        ' 
+        UsernameTxtBox.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left
+        UsernameTxtBox.BackColor = Color.Transparent
+        UsernameTxtBox.BorderRadius = 10
+        UsernameTxtBox.CustomizableEdges = CustomizableEdges1
+        UsernameTxtBox.DefaultText = "admin"
+        UsernameTxtBox.Font = New Font("Segoe UI", 20F)
+        UsernameTxtBox.ForeColor = Color.FromArgb(CByte(0), CByte(0), CByte(64))
+        UsernameTxtBox.Location = New Point(45, 234)
+        UsernameTxtBox.Name = "UsernameTxtBox"
+        UsernameTxtBox.PlaceholderText = ""
+        UsernameTxtBox.SelectedText = ""
+        UsernameTxtBox.ShadowDecoration.BorderRadius = 10
+        UsernameTxtBox.ShadowDecoration.CustomizableEdges = CustomizableEdges2
+        UsernameTxtBox.ShadowDecoration.Depth = 20
+        UsernameTxtBox.ShadowDecoration.Enabled = True
+        UsernameTxtBox.ShadowDecoration.Shadow = New Padding(1, 1, 6, 6)
+        UsernameTxtBox.Size = New Size(385, 45)
+        UsernameTxtBox.TabIndex = 0
+        ' 
+        ' PasswordTxtBox
+        ' 
+        PasswordTxtBox.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left
+        PasswordTxtBox.BackColor = Color.Transparent
+        PasswordTxtBox.BorderRadius = 10
+        PasswordTxtBox.CustomizableEdges = CustomizableEdges3
+        PasswordTxtBox.DefaultText = "admin"
+        PasswordTxtBox.Font = New Font("Segoe UI", 20F, FontStyle.Bold)
+        PasswordTxtBox.ForeColor = Color.FromArgb(CByte(0), CByte(0), CByte(64))
+        PasswordTxtBox.Location = New Point(45, 347)
+        PasswordTxtBox.Name = "PasswordTxtBox"
+        PasswordTxtBox.PasswordChar = "·"c
+        PasswordTxtBox.PlaceholderText = ""
+        PasswordTxtBox.SelectedText = ""
+        PasswordTxtBox.ShadowDecoration.BorderRadius = 10
+        PasswordTxtBox.ShadowDecoration.CustomizableEdges = CustomizableEdges4
+        PasswordTxtBox.ShadowDecoration.Depth = 20
+        PasswordTxtBox.ShadowDecoration.Enabled = True
+        PasswordTxtBox.ShadowDecoration.Shadow = New Padding(1, 1, 6, 6)
+        PasswordTxtBox.Size = New Size(385, 45)
+        PasswordTxtBox.TabIndex = 1
+        ' 
+        ' UsernameLbl
+        ' 
+        UsernameLbl.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left
+        UsernameLbl.AutoSize = True
+        UsernameLbl.Font = New Font("Segoe UI", 20F)
+        UsernameLbl.ForeColor = Color.MidnightBlue
+        UsernameLbl.Location = New Point(45, 194)
+        UsernameLbl.Name = "UsernameLbl"
+        UsernameLbl.Size = New Size(136, 37)
+        UsernameLbl.TabIndex = 2
+        UsernameLbl.Text = "Username"
+        ' 
+        ' LoginBtn
+        ' 
+        LoginBtn.BackColor = Color.Transparent
+        LoginBtn.BorderRadius = 10
+        LoginBtn.Cursor = Cursors.Hand
+        LoginBtn.CustomizableEdges = CustomizableEdges5
+        LoginBtn.FillColor = Color.YellowGreen
+        LoginBtn.Font = New Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        LoginBtn.ForeColor = Color.White
+        LoginBtn.Location = New Point(240, 421)
+        LoginBtn.Name = "LoginBtn"
+        LoginBtn.ShadowDecoration.BorderRadius = 10
+        LoginBtn.ShadowDecoration.CustomizableEdges = CustomizableEdges6
+        LoginBtn.ShadowDecoration.Depth = 20
+        LoginBtn.ShadowDecoration.Enabled = True
+        LoginBtn.ShadowDecoration.Shadow = New Padding(1, 1, 6, 6)
+        LoginBtn.Size = New Size(190, 48)
+        LoginBtn.TabIndex = 6
+        LoginBtn.Text = "Login"
+        ' 
+        ' PasswordLbl
+        ' 
+        PasswordLbl.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left
+        PasswordLbl.AutoSize = True
+        PasswordLbl.Font = New Font("Segoe UI", 20F)
+        PasswordLbl.ForeColor = Color.MidnightBlue
+        PasswordLbl.Location = New Point(45, 307)
+        PasswordLbl.Name = "PasswordLbl"
+        PasswordLbl.Size = New Size(128, 37)
+        PasswordLbl.TabIndex = 3
+        PasswordLbl.Text = "Password"
+        ' 
+        ' PictureBox2
+        ' 
+        PictureBox2.Location = New Point(23, -11)
+        PictureBox2.Name = "PictureBox2"
+        PictureBox2.Size = New Size(426, 248)
+        PictureBox2.SizeMode = PictureBoxSizeMode.StretchImage
+        PictureBox2.TabIndex = 7
+        PictureBox2.TabStop = False
         ' 
         ' Form1
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        BackColor = SystemColors.ControlDark
-        ClientSize = New Size(1041, 604)
-        Controls.Add(PictureBox1)
-        Controls.Add(Panel1)
+        BackColor = Color.LightSteelBlue
+        ClientSize = New Size(1041, 682)
+        Controls.Add(Guna2GradientPanel1)
         Name = "Form1"
         Text = "OrderUp!"
-        CType(LoginAsAdminBtn, ComponentModel.ISupportInitialize).EndInit()
+        Guna2GradientPanel1.ResumeLayout(False)
         Panel1.ResumeLayout(False)
         Panel1.PerformLayout()
-        CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
+        CType(LoginAsAdminBtn, ComponentModel.ISupportInitialize).EndInit()
+        CType(PictureBox2, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
     End Sub
 
-    Friend WithEvents UsernameTxtBox As TextBox
-    Friend WithEvents PasswordTxtBox As TextBox
-    Friend WithEvents UsernameLbl As Label
-    Friend WithEvents PasswordLbl As Label
-    Friend WithEvents Label3 As Label
+    Friend WithEvents Guna2GradientPanel1 As Guna.UI2.WinForms.Guna2GradientPanel
+    Friend WithEvents Panel1 As Guna.UI2.WinForms.Guna2Panel
     Friend WithEvents LoginAsAdminBtn As PictureBox
-    Friend WithEvents LoginBtn As Button
-    Friend WithEvents Panel1 As Panel
-    Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents UsernameTxtBox As Guna.UI2.WinForms.Guna2TextBox
+    Friend WithEvents PasswordTxtBox As Guna.UI2.WinForms.Guna2TextBox
+    Friend WithEvents UsernameLbl As Label
+    Friend WithEvents LoginBtn As Guna.UI2.WinForms.Guna2Button
+    Friend WithEvents PasswordLbl As Label
+    Friend WithEvents PictureBox2 As PictureBox
 
 End Class
