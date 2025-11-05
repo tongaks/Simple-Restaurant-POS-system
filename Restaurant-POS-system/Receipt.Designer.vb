@@ -140,9 +140,10 @@ Partial Class Receipt
         TransitionAnimator.SetDecoration(pnlMain, Guna.UI2.AnimatorNS.DecorationType.None)
         pnlMain.Dock = DockStyle.Fill
         pnlMain.Location = New Point(0, 0)
+        pnlMain.Margin = New Padding(3, 2, 3, 2)
         pnlMain.Name = "pnlMain"
         pnlMain.ShadowDecoration.CustomizableEdges = CustomizableEdges48
-        pnlMain.Size = New Size(1400, 900)
+        pnlMain.Size = New Size(1225, 675)
         pnlMain.TabIndex = 0
         ' 
         ' pnlContent
@@ -153,11 +154,12 @@ Partial Class Receipt
         pnlContent.CustomizableEdges = CustomizableEdges27
         TransitionAnimator.SetDecoration(pnlContent, Guna.UI2.AnimatorNS.DecorationType.None)
         pnlContent.Dock = DockStyle.Fill
-        pnlContent.Location = New Point(0, 100)
+        pnlContent.Location = New Point(0, 75)
+        pnlContent.Margin = New Padding(3, 2, 3, 2)
         pnlContent.Name = "pnlContent"
-        pnlContent.Padding = New Padding(30, 20, 30, 20)
+        pnlContent.Padding = New Padding(26, 15, 26, 15)
         pnlContent.ShadowDecoration.CustomizableEdges = CustomizableEdges28
-        pnlContent.Size = New Size(1400, 700)
+        pnlContent.Size = New Size(1225, 525)
         pnlContent.TabIndex = 1
         ' 
         ' pnlNativeReceipt
@@ -170,7 +172,8 @@ Partial Class Receipt
         pnlNativeReceipt.CustomizableEdges = CustomizableEdges19
         TransitionAnimator.SetDecoration(pnlNativeReceipt, Guna.UI2.AnimatorNS.DecorationType.None)
         pnlNativeReceipt.Dock = DockStyle.Fill
-        pnlNativeReceipt.Location = New Point(30, 20)
+        pnlNativeReceipt.Location = New Point(26, 15)
+        pnlNativeReceipt.Margin = New Padding(3, 2, 3, 2)
         pnlNativeReceipt.Name = "pnlNativeReceipt"
         pnlNativeReceipt.ShadowDecoration.BorderRadius = 20
         pnlNativeReceipt.ShadowDecoration.Color = Color.FromArgb(CByte(100), CByte(100), CByte(100))
@@ -178,7 +181,7 @@ Partial Class Receipt
         pnlNativeReceipt.ShadowDecoration.Depth = 15
         pnlNativeReceipt.ShadowDecoration.Enabled = True
         pnlNativeReceipt.ShadowDecoration.Shadow = New Padding(0, 0, 8, 8)
-        pnlNativeReceipt.Size = New Size(1340, 660)
+        pnlNativeReceipt.Size = New Size(1173, 495)
         pnlNativeReceipt.TabIndex = 0
         ' 
         ' pnlReceiptScroll
@@ -189,11 +192,12 @@ Partial Class Receipt
         pnlReceiptScroll.CustomizableEdges = CustomizableEdges1
         TransitionAnimator.SetDecoration(pnlReceiptScroll, Guna.UI2.AnimatorNS.DecorationType.None)
         pnlReceiptScroll.Dock = DockStyle.Fill
-        pnlReceiptScroll.Location = New Point(0, 200)
+        pnlReceiptScroll.Location = New Point(0, 150)
+        pnlReceiptScroll.Margin = New Padding(3, 2, 3, 2)
         pnlReceiptScroll.Name = "pnlReceiptScroll"
-        pnlReceiptScroll.Padding = New Padding(40, 20, 40, 20)
+        pnlReceiptScroll.Padding = New Padding(35, 15, 35, 15)
         pnlReceiptScroll.ShadowDecoration.CustomizableEdges = CustomizableEdges2
-        pnlReceiptScroll.Size = New Size(1340, 260)
+        pnlReceiptScroll.Size = New Size(1173, 195)
         pnlReceiptScroll.TabIndex = 1
         ' 
         ' flowItemsContainer
@@ -204,9 +208,10 @@ Partial Class Receipt
         TransitionAnimator.SetDecoration(flowItemsContainer, Guna.UI2.AnimatorNS.DecorationType.None)
         flowItemsContainer.Dock = DockStyle.Top
         flowItemsContainer.FlowDirection = FlowDirection.TopDown
-        flowItemsContainer.Location = New Point(40, 20)
+        flowItemsContainer.Location = New Point(35, 15)
+        flowItemsContainer.Margin = New Padding(3, 2, 3, 2)
         flowItemsContainer.Name = "flowItemsContainer"
-        flowItemsContainer.Size = New Size(1260, 0)
+        flowItemsContainer.Size = New Size(1103, 0)
         flowItemsContainer.TabIndex = 0
         flowItemsContainer.WrapContents = False
         ' 
@@ -217,11 +222,12 @@ Partial Class Receipt
         pnlReceiptFooter.CustomizableEdges = CustomizableEdges11
         TransitionAnimator.SetDecoration(pnlReceiptFooter, Guna.UI2.AnimatorNS.DecorationType.None)
         pnlReceiptFooter.Dock = DockStyle.Bottom
-        pnlReceiptFooter.Location = New Point(0, 460)
+        pnlReceiptFooter.Location = New Point(0, 345)
+        pnlReceiptFooter.Margin = New Padding(3, 2, 3, 2)
         pnlReceiptFooter.Name = "pnlReceiptFooter"
-        pnlReceiptFooter.Padding = New Padding(40, 30, 40, 30)
+        pnlReceiptFooter.Padding = New Padding(35, 22, 35, 22)
         pnlReceiptFooter.ShadowDecoration.CustomizableEdges = CustomizableEdges12
-        pnlReceiptFooter.Size = New Size(1340, 200)
+        pnlReceiptFooter.Size = New Size(1173, 150)
         pnlReceiptFooter.TabIndex = 2
         ' 
         ' pnlTotalsCard
@@ -237,14 +243,15 @@ Partial Class Receipt
         pnlTotalsCard.FillColor = Color.FromArgb(CByte(248), CByte(250), CByte(252))
         pnlTotalsCard.FillColor2 = Color.White
         pnlTotalsCard.GradientMode = Drawing2D.LinearGradientMode.Vertical
-        pnlTotalsCard.Location = New Point(840, 30)
+        pnlTotalsCard.Location = New Point(736, 22)
+        pnlTotalsCard.Margin = New Padding(3, 2, 3, 2)
         pnlTotalsCard.Name = "pnlTotalsCard"
         pnlTotalsCard.ShadowDecoration.BorderRadius = 20
         pnlTotalsCard.ShadowDecoration.Color = Color.FromArgb(CByte(100), CByte(100), CByte(100))
         pnlTotalsCard.ShadowDecoration.CustomizableEdges = CustomizableEdges10
         pnlTotalsCard.ShadowDecoration.Depth = 10
         pnlTotalsCard.ShadowDecoration.Enabled = True
-        pnlTotalsCard.Size = New Size(460, 140)
+        pnlTotalsCard.Size = New Size(402, 106)
         pnlTotalsCard.TabIndex = 0
         ' 
         ' pnlTotalRow
@@ -255,22 +262,23 @@ Partial Class Receipt
         pnlTotalRow.CustomizableEdges = CustomizableEdges3
         TransitionAnimator.SetDecoration(pnlTotalRow, Guna.UI2.AnimatorNS.DecorationType.None)
         pnlTotalRow.Dock = DockStyle.Top
-        pnlTotalRow.Location = New Point(0, 80)
+        pnlTotalRow.Location = New Point(0, 60)
+        pnlTotalRow.Margin = New Padding(3, 2, 3, 2)
         pnlTotalRow.Name = "pnlTotalRow"
-        pnlTotalRow.Padding = New Padding(25, 8, 25, 8)
+        pnlTotalRow.Padding = New Padding(22, 6, 22, 6)
         pnlTotalRow.ShadowDecoration.CustomizableEdges = CustomizableEdges4
-        pnlTotalRow.Size = New Size(460, 60)
+        pnlTotalRow.Size = New Size(402, 45)
         pnlTotalRow.TabIndex = 2
         ' 
         ' lblTotalAmount
         ' 
         TransitionAnimator.SetDecoration(lblTotalAmount, Guna.UI2.AnimatorNS.DecorationType.None)
         lblTotalAmount.Dock = DockStyle.Right
-        lblTotalAmount.Font = New Font("Segoe UI", 20F, FontStyle.Bold)
+        lblTotalAmount.Font = New Font("Segoe UI", 20.0F, FontStyle.Bold)
         lblTotalAmount.ForeColor = Color.FromArgb(CByte(16), CByte(185), CByte(129))
-        lblTotalAmount.Location = New Point(260, 8)
+        lblTotalAmount.Location = New Point(227, 6)
         lblTotalAmount.Name = "lblTotalAmount"
-        lblTotalAmount.Size = New Size(175, 44)
+        lblTotalAmount.Size = New Size(153, 33)
         lblTotalAmount.TabIndex = 1
         lblTotalAmount.Text = "₱0.00"
         lblTotalAmount.TextAlign = ContentAlignment.MiddleRight
@@ -280,11 +288,11 @@ Partial Class Receipt
         lblTotalLabel.AutoSize = True
         TransitionAnimator.SetDecoration(lblTotalLabel, Guna.UI2.AnimatorNS.DecorationType.None)
         lblTotalLabel.Dock = DockStyle.Left
-        lblTotalLabel.Font = New Font("Segoe UI", 16F, FontStyle.Bold)
+        lblTotalLabel.Font = New Font("Segoe UI", 16.0F, FontStyle.Bold)
         lblTotalLabel.ForeColor = Color.FromArgb(CByte(71), CByte(85), CByte(105))
-        lblTotalLabel.Location = New Point(25, 8)
+        lblTotalLabel.Location = New Point(22, 6)
         lblTotalLabel.Name = "lblTotalLabel"
-        lblTotalLabel.Size = New Size(82, 37)
+        lblTotalLabel.Size = New Size(64, 30)
         lblTotalLabel.TabIndex = 0
         lblTotalLabel.Text = "Total"
         ' 
@@ -296,22 +304,23 @@ Partial Class Receipt
         pnlDiscountRow.CustomizableEdges = CustomizableEdges5
         TransitionAnimator.SetDecoration(pnlDiscountRow, Guna.UI2.AnimatorNS.DecorationType.None)
         pnlDiscountRow.Dock = DockStyle.Top
-        pnlDiscountRow.Location = New Point(0, 40)
+        pnlDiscountRow.Location = New Point(0, 30)
+        pnlDiscountRow.Margin = New Padding(3, 2, 3, 2)
         pnlDiscountRow.Name = "pnlDiscountRow"
-        pnlDiscountRow.Padding = New Padding(25, 8, 25, 8)
+        pnlDiscountRow.Padding = New Padding(22, 6, 22, 6)
         pnlDiscountRow.ShadowDecoration.CustomizableEdges = CustomizableEdges6
-        pnlDiscountRow.Size = New Size(460, 40)
+        pnlDiscountRow.Size = New Size(402, 30)
         pnlDiscountRow.TabIndex = 1
         ' 
         ' lblDiscountAmount
         ' 
         TransitionAnimator.SetDecoration(lblDiscountAmount, Guna.UI2.AnimatorNS.DecorationType.None)
         lblDiscountAmount.Dock = DockStyle.Right
-        lblDiscountAmount.Font = New Font("Segoe UI", 11F, FontStyle.Bold)
+        lblDiscountAmount.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
         lblDiscountAmount.ForeColor = Color.FromArgb(CByte(239), CByte(68), CByte(68))
-        lblDiscountAmount.Location = New Point(310, 8)
+        lblDiscountAmount.Location = New Point(271, 6)
         lblDiscountAmount.Name = "lblDiscountAmount"
-        lblDiscountAmount.Size = New Size(125, 24)
+        lblDiscountAmount.Size = New Size(109, 18)
         lblDiscountAmount.TabIndex = 1
         lblDiscountAmount.Text = "-₱0.00"
         lblDiscountAmount.TextAlign = ContentAlignment.MiddleRight
@@ -321,11 +330,11 @@ Partial Class Receipt
         lblDiscountLabel.AutoSize = True
         TransitionAnimator.SetDecoration(lblDiscountLabel, Guna.UI2.AnimatorNS.DecorationType.None)
         lblDiscountLabel.Dock = DockStyle.Left
-        lblDiscountLabel.Font = New Font("Segoe UI", 11F)
+        lblDiscountLabel.Font = New Font("Segoe UI", 11.0F)
         lblDiscountLabel.ForeColor = Color.FromArgb(CByte(100), CByte(116), CByte(139))
-        lblDiscountLabel.Location = New Point(25, 8)
+        lblDiscountLabel.Location = New Point(22, 6)
         lblDiscountLabel.Name = "lblDiscountLabel"
-        lblDiscountLabel.Size = New Size(129, 25)
+        lblDiscountLabel.Size = New Size(101, 20)
         lblDiscountLabel.TabIndex = 0
         lblDiscountLabel.Text = "Discount (0%)"
         ' 
@@ -338,21 +347,22 @@ Partial Class Receipt
         TransitionAnimator.SetDecoration(pnlSubtotalRow, Guna.UI2.AnimatorNS.DecorationType.None)
         pnlSubtotalRow.Dock = DockStyle.Top
         pnlSubtotalRow.Location = New Point(0, 0)
+        pnlSubtotalRow.Margin = New Padding(3, 2, 3, 2)
         pnlSubtotalRow.Name = "pnlSubtotalRow"
-        pnlSubtotalRow.Padding = New Padding(25, 8, 25, 8)
+        pnlSubtotalRow.Padding = New Padding(22, 6, 22, 6)
         pnlSubtotalRow.ShadowDecoration.CustomizableEdges = CustomizableEdges8
-        pnlSubtotalRow.Size = New Size(460, 40)
+        pnlSubtotalRow.Size = New Size(402, 30)
         pnlSubtotalRow.TabIndex = 0
         ' 
         ' lblSubtotalAmount
         ' 
         TransitionAnimator.SetDecoration(lblSubtotalAmount, Guna.UI2.AnimatorNS.DecorationType.None)
         lblSubtotalAmount.Dock = DockStyle.Right
-        lblSubtotalAmount.Font = New Font("Segoe UI", 11F, FontStyle.Bold)
+        lblSubtotalAmount.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
         lblSubtotalAmount.ForeColor = Color.FromArgb(CByte(51), CByte(65), CByte(85))
-        lblSubtotalAmount.Location = New Point(310, 8)
+        lblSubtotalAmount.Location = New Point(271, 6)
         lblSubtotalAmount.Name = "lblSubtotalAmount"
-        lblSubtotalAmount.Size = New Size(125, 24)
+        lblSubtotalAmount.Size = New Size(109, 18)
         lblSubtotalAmount.TabIndex = 1
         lblSubtotalAmount.Text = "₱0.00"
         lblSubtotalAmount.TextAlign = ContentAlignment.MiddleRight
@@ -362,11 +372,11 @@ Partial Class Receipt
         lblSubtotalLabel.AutoSize = True
         TransitionAnimator.SetDecoration(lblSubtotalLabel, Guna.UI2.AnimatorNS.DecorationType.None)
         lblSubtotalLabel.Dock = DockStyle.Left
-        lblSubtotalLabel.Font = New Font("Segoe UI", 11F)
+        lblSubtotalLabel.Font = New Font("Segoe UI", 11.0F)
         lblSubtotalLabel.ForeColor = Color.FromArgb(CByte(100), CByte(116), CByte(139))
-        lblSubtotalLabel.Location = New Point(25, 8)
+        lblSubtotalLabel.Location = New Point(22, 6)
         lblSubtotalLabel.Name = "lblSubtotalLabel"
-        lblSubtotalLabel.Size = New Size(82, 25)
+        lblSubtotalLabel.Size = New Size(65, 20)
         lblSubtotalLabel.TabIndex = 0
         lblSubtotalLabel.Text = "Subtotal"
         ' 
@@ -381,10 +391,11 @@ Partial Class Receipt
         pnlReceiptHeader.FillColor = Color.FromArgb(CByte(37), CByte(42), CByte(52))
         pnlReceiptHeader.FillColor2 = Color.FromArgb(CByte(71), CByte(85), CByte(105))
         pnlReceiptHeader.Location = New Point(0, 0)
+        pnlReceiptHeader.Margin = New Padding(3, 2, 3, 2)
         pnlReceiptHeader.Name = "pnlReceiptHeader"
-        pnlReceiptHeader.Padding = New Padding(40, 30, 40, 30)
+        pnlReceiptHeader.Padding = New Padding(35, 22, 35, 22)
         pnlReceiptHeader.ShadowDecoration.CustomizableEdges = CustomizableEdges18
-        pnlReceiptHeader.Size = New Size(1340, 200)
+        pnlReceiptHeader.Size = New Size(1173, 150)
         pnlReceiptHeader.TabIndex = 0
         ' 
         ' pnlHeaderInfo
@@ -397,22 +408,23 @@ Partial Class Receipt
         pnlHeaderInfo.CustomizableEdges = CustomizableEdges13
         TransitionAnimator.SetDecoration(pnlHeaderInfo, Guna.UI2.AnimatorNS.DecorationType.None)
         pnlHeaderInfo.Dock = DockStyle.Fill
-        pnlHeaderInfo.Location = New Point(440, 30)
+        pnlHeaderInfo.Location = New Point(385, 22)
+        pnlHeaderInfo.Margin = New Padding(3, 2, 3, 2)
         pnlHeaderInfo.Name = "pnlHeaderInfo"
-        pnlHeaderInfo.Padding = New Padding(20, 10, 0, 10)
+        pnlHeaderInfo.Padding = New Padding(18, 8, 0, 8)
         pnlHeaderInfo.ShadowDecoration.CustomizableEdges = CustomizableEdges14
-        pnlHeaderInfo.Size = New Size(860, 140)
+        pnlHeaderInfo.Size = New Size(753, 106)
         pnlHeaderInfo.TabIndex = 1
         ' 
         ' lblPaymentMethod
         ' 
         lblPaymentMethod.AutoSize = True
         TransitionAnimator.SetDecoration(lblPaymentMethod, Guna.UI2.AnimatorNS.DecorationType.None)
-        lblPaymentMethod.Font = New Font("Segoe UI", 11F)
+        lblPaymentMethod.Font = New Font("Segoe UI", 11.0F)
         lblPaymentMethod.ForeColor = Color.FromArgb(CByte(203), CByte(213), CByte(225))
-        lblPaymentMethod.Location = New Point(25, 100)
+        lblPaymentMethod.Location = New Point(22, 75)
         lblPaymentMethod.Name = "lblPaymentMethod"
-        lblPaymentMethod.Size = New Size(134, 25)
+        lblPaymentMethod.Size = New Size(103, 20)
         lblPaymentMethod.TabIndex = 3
         lblPaymentMethod.Text = "Payment: Cash"
         ' 
@@ -420,11 +432,11 @@ Partial Class Receipt
         ' 
         lblCashier.AutoSize = True
         TransitionAnimator.SetDecoration(lblCashier, Guna.UI2.AnimatorNS.DecorationType.None)
-        lblCashier.Font = New Font("Segoe UI", 11F)
+        lblCashier.Font = New Font("Segoe UI", 11.0F)
         lblCashier.ForeColor = Color.FromArgb(CByte(203), CByte(213), CByte(225))
-        lblCashier.Location = New Point(25, 70)
+        lblCashier.Location = New Point(22, 52)
         lblCashier.Name = "lblCashier"
-        lblCashier.Size = New Size(120, 25)
+        lblCashier.Size = New Size(91, 20)
         lblCashier.TabIndex = 2
         lblCashier.Text = "Cashier: user"
         ' 
@@ -432,11 +444,11 @@ Partial Class Receipt
         ' 
         lblDateTime.AutoSize = True
         TransitionAnimator.SetDecoration(lblDateTime, Guna.UI2.AnimatorNS.DecorationType.None)
-        lblDateTime.Font = New Font("Segoe UI", 11F)
+        lblDateTime.Font = New Font("Segoe UI", 11.0F)
         lblDateTime.ForeColor = Color.FromArgb(CByte(203), CByte(213), CByte(225))
-        lblDateTime.Location = New Point(25, 40)
+        lblDateTime.Location = New Point(22, 30)
         lblDateTime.Name = "lblDateTime"
-        lblDateTime.Size = New Size(229, 25)
+        lblDateTime.Size = New Size(182, 20)
         lblDateTime.TabIndex = 1
         lblDateTime.Text = "Date: 2025-10-22 09:13:15"
         ' 
@@ -444,11 +456,11 @@ Partial Class Receipt
         ' 
         lblOrderId.AutoSize = True
         TransitionAnimator.SetDecoration(lblOrderId, Guna.UI2.AnimatorNS.DecorationType.None)
-        lblOrderId.Font = New Font("Segoe UI", 14F, FontStyle.Bold)
+        lblOrderId.Font = New Font("Segoe UI", 14.0F, FontStyle.Bold)
         lblOrderId.ForeColor = Color.White
-        lblOrderId.Location = New Point(20, 10)
+        lblOrderId.Location = New Point(18, 8)
         lblOrderId.Name = "lblOrderId"
-        lblOrderId.Size = New Size(171, 32)
+        lblOrderId.Size = New Size(135, 25)
         lblOrderId.TabIndex = 0
         lblOrderId.Text = "Order #12345"
         ' 
@@ -460,21 +472,22 @@ Partial Class Receipt
         pnlLogo.CustomizableEdges = CustomizableEdges15
         TransitionAnimator.SetDecoration(pnlLogo, Guna.UI2.AnimatorNS.DecorationType.None)
         pnlLogo.Dock = DockStyle.Left
-        pnlLogo.Location = New Point(40, 30)
+        pnlLogo.Location = New Point(35, 22)
+        pnlLogo.Margin = New Padding(3, 2, 3, 2)
         pnlLogo.Name = "pnlLogo"
         pnlLogo.ShadowDecoration.CustomizableEdges = CustomizableEdges16
-        pnlLogo.Size = New Size(400, 140)
+        pnlLogo.Size = New Size(350, 106)
         pnlLogo.TabIndex = 0
         ' 
         ' lblAppTitle
         ' 
         lblAppTitle.AutoSize = True
         TransitionAnimator.SetDecoration(lblAppTitle, Guna.UI2.AnimatorNS.DecorationType.None)
-        lblAppTitle.Font = New Font("Segoe UI", 32F, FontStyle.Bold)
+        lblAppTitle.Font = New Font("Segoe UI", 32.0F, FontStyle.Bold)
         lblAppTitle.ForeColor = Color.White
-        lblAppTitle.Location = New Point(0, 30)
+        lblAppTitle.Location = New Point(0, 22)
         lblAppTitle.Name = "lblAppTitle"
-        lblAppTitle.Size = New Size(247, 72)
+        lblAppTitle.Size = New Size(200, 59)
         lblAppTitle.TabIndex = 0
         lblAppTitle.Text = "OrderUp"
         ' 
@@ -482,11 +495,11 @@ Partial Class Receipt
         ' 
         lblAppSubtitle.AutoSize = True
         TransitionAnimator.SetDecoration(lblAppSubtitle, Guna.UI2.AnimatorNS.DecorationType.None)
-        lblAppSubtitle.Font = New Font("Segoe UI", 12F)
+        lblAppSubtitle.Font = New Font("Segoe UI", 12.0F)
         lblAppSubtitle.ForeColor = Color.FromArgb(CByte(203), CByte(213), CByte(225))
-        lblAppSubtitle.Location = New Point(5, 100)
+        lblAppSubtitle.Location = New Point(4, 75)
         lblAppSubtitle.Name = "lblAppSubtitle"
-        lblAppSubtitle.Size = New Size(218, 28)
+        lblAppSubtitle.Size = New Size(175, 21)
         lblAppSubtitle.TabIndex = 1
         lblAppSubtitle.Text = "Restaurant Point of Sale"
         ' 
@@ -499,7 +512,8 @@ Partial Class Receipt
         pnlPdfViewer.CustomizableEdges = CustomizableEdges25
         TransitionAnimator.SetDecoration(pnlPdfViewer, Guna.UI2.AnimatorNS.DecorationType.None)
         pnlPdfViewer.Dock = DockStyle.Fill
-        pnlPdfViewer.Location = New Point(30, 20)
+        pnlPdfViewer.Location = New Point(26, 15)
+        pnlPdfViewer.Margin = New Padding(3, 2, 3, 2)
         pnlPdfViewer.Name = "pnlPdfViewer"
         pnlPdfViewer.ShadowDecoration.BorderRadius = 20
         pnlPdfViewer.ShadowDecoration.Color = Color.FromArgb(CByte(100), CByte(100), CByte(100))
@@ -507,7 +521,7 @@ Partial Class Receipt
         pnlPdfViewer.ShadowDecoration.Depth = 15
         pnlPdfViewer.ShadowDecoration.Enabled = True
         pnlPdfViewer.ShadowDecoration.Shadow = New Padding(0, 0, 8, 8)
-        pnlPdfViewer.Size = New Size(1340, 660)
+        pnlPdfViewer.Size = New Size(1173, 495)
         pnlPdfViewer.TabIndex = 1
         pnlPdfViewer.Visible = False
         ' 
@@ -516,10 +530,10 @@ Partial Class Receipt
         pdfViewer.BackColor = Color.FromArgb(CByte(240), CByte(242), CByte(245))
         TransitionAnimator.SetDecoration(pdfViewer, Guna.UI2.AnimatorNS.DecorationType.None)
         pdfViewer.Dock = DockStyle.Fill
-        pdfViewer.Location = New Point(0, 60)
-        pdfViewer.Margin = New Padding(4, 5, 4, 5)
+        pdfViewer.Location = New Point(0, 45)
+        pdfViewer.Margin = New Padding(4)
         pdfViewer.Name = "pdfViewer"
-        pdfViewer.Size = New Size(1340, 600)
+        pdfViewer.Size = New Size(1173, 450)
         pdfViewer.TabIndex = 1
         pdfViewer.ZoomMode = PdfiumViewer.PdfViewerZoomMode.FitWidth
         ' 
@@ -534,10 +548,11 @@ Partial Class Receipt
         pnlPdfToolbar.FillColor = Color.FromArgb(CByte(37), CByte(42), CByte(52))
         pnlPdfToolbar.FillColor2 = Color.FromArgb(CByte(71), CByte(85), CByte(105))
         pnlPdfToolbar.Location = New Point(0, 0)
+        pnlPdfToolbar.Margin = New Padding(3, 2, 3, 2)
         pnlPdfToolbar.Name = "pnlPdfToolbar"
-        pnlPdfToolbar.Padding = New Padding(15, 8, 15, 8)
+        pnlPdfToolbar.Padding = New Padding(13, 6, 13, 6)
         pnlPdfToolbar.ShadowDecoration.CustomizableEdges = CustomizableEdges24
-        pnlPdfToolbar.Size = New Size(1340, 60)
+        pnlPdfToolbar.Size = New Size(1173, 45)
         pnlPdfToolbar.TabIndex = 0
         ' 
         ' btnPdfZoom
@@ -559,11 +574,12 @@ Partial Class Receipt
         btnPdfZoom.HoverState.FillColor = Color.FromArgb(CByte(45), CByte(212), CByte(191))
         btnPdfZoom.ImageAlign = HorizontalAlignment.Left
         btnPdfZoom.ImageSize = New Size(18, 18)
-        btnPdfZoom.Location = New Point(15, 8)
+        btnPdfZoom.Location = New Point(13, 6)
+        btnPdfZoom.Margin = New Padding(3, 2, 3, 2)
         btnPdfZoom.Name = "btnPdfZoom"
-        btnPdfZoom.Padding = New Padding(8, 0, 8, 0)
+        btnPdfZoom.Padding = New Padding(7, 0, 7, 0)
         btnPdfZoom.ShadowDecoration.CustomizableEdges = CustomizableEdges22
-        btnPdfZoom.Size = New Size(150, 44)
+        btnPdfZoom.Size = New Size(131, 33)
         btnPdfZoom.TabIndex = 0
         btnPdfZoom.Text = "🔍 Fit Width"
         btnPdfZoom.TextAlign = HorizontalAlignment.Right
@@ -578,12 +594,13 @@ Partial Class Receipt
         pnlHeader.FillColor = Color.FromArgb(CByte(37), CByte(42), CByte(52))
         pnlHeader.FillColor2 = Color.FromArgb(CByte(71), CByte(85), CByte(105))
         pnlHeader.Location = New Point(0, 0)
+        pnlHeader.Margin = New Padding(3, 2, 3, 2)
         pnlHeader.Name = "pnlHeader"
-        pnlHeader.Padding = New Padding(40, 20, 40, 20)
+        pnlHeader.Padding = New Padding(35, 15, 35, 15)
         pnlHeader.ShadowDecoration.CustomizableEdges = CustomizableEdges36
         pnlHeader.ShadowDecoration.Depth = 8
         pnlHeader.ShadowDecoration.Enabled = True
-        pnlHeader.Size = New Size(1400, 100)
+        pnlHeader.Size = New Size(1225, 75)
         pnlHeader.TabIndex = 0
         ' 
         ' pnlViewToggle
@@ -594,11 +611,12 @@ Partial Class Receipt
         pnlViewToggle.CustomizableEdges = CustomizableEdges33
         TransitionAnimator.SetDecoration(pnlViewToggle, Guna.UI2.AnimatorNS.DecorationType.None)
         pnlViewToggle.Dock = DockStyle.Right
-        pnlViewToggle.Location = New Point(1040, 20)
+        pnlViewToggle.Location = New Point(910, 15)
+        pnlViewToggle.Margin = New Padding(3, 2, 3, 2)
         pnlViewToggle.Name = "pnlViewToggle"
-        pnlViewToggle.Padding = New Padding(5)
+        pnlViewToggle.Padding = New Padding(4)
         pnlViewToggle.ShadowDecoration.CustomizableEdges = CustomizableEdges34
-        pnlViewToggle.Size = New Size(320, 60)
+        pnlViewToggle.Size = New Size(280, 45)
         pnlViewToggle.TabIndex = 1
         ' 
         ' btnViewPdf
@@ -615,15 +633,16 @@ Partial Class Receipt
         btnViewPdf.DisabledState.ForeColor = Color.FromArgb(CByte(141), CByte(141), CByte(141))
         btnViewPdf.Dock = DockStyle.Right
         btnViewPdf.FillColor = Color.FromArgb(CByte(71), CByte(85), CByte(105))
-        btnViewPdf.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        btnViewPdf.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
         btnViewPdf.ForeColor = Color.White
         btnViewPdf.HoverState.FillColor = Color.FromArgb(CByte(100), CByte(116), CByte(139))
         btnViewPdf.ImageAlign = HorizontalAlignment.Left
-        btnViewPdf.Location = New Point(161, 5)
+        btnViewPdf.Location = New Point(141, 4)
+        btnViewPdf.Margin = New Padding(3, 2, 3, 2)
         btnViewPdf.Name = "btnViewPdf"
-        btnViewPdf.Padding = New Padding(10, 0, 10, 0)
+        btnViewPdf.Padding = New Padding(9, 0, 9, 0)
         btnViewPdf.ShadowDecoration.CustomizableEdges = CustomizableEdges30
-        btnViewPdf.Size = New Size(154, 50)
+        btnViewPdf.Size = New Size(135, 37)
         btnViewPdf.TabIndex = 1
         btnViewPdf.Text = "📄 PDF View"
         btnViewPdf.TextAlign = HorizontalAlignment.Right
@@ -642,15 +661,16 @@ Partial Class Receipt
         btnViewNative.DisabledState.ForeColor = Color.FromArgb(CByte(141), CByte(141), CByte(141))
         btnViewNative.Dock = DockStyle.Left
         btnViewNative.FillColor = Color.FromArgb(CByte(16), CByte(185), CByte(129))
-        btnViewNative.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        btnViewNative.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
         btnViewNative.ForeColor = Color.White
         btnViewNative.HoverState.FillColor = Color.FromArgb(CByte(5), CByte(150), CByte(105))
         btnViewNative.ImageAlign = HorizontalAlignment.Left
-        btnViewNative.Location = New Point(5, 5)
+        btnViewNative.Location = New Point(4, 4)
+        btnViewNative.Margin = New Padding(3, 2, 3, 2)
         btnViewNative.Name = "btnViewNative"
-        btnViewNative.Padding = New Padding(10, 0, 10, 0)
+        btnViewNative.Padding = New Padding(9, 0, 9, 0)
         btnViewNative.ShadowDecoration.CustomizableEdges = CustomizableEdges32
-        btnViewNative.Size = New Size(150, 50)
+        btnViewNative.Size = New Size(131, 37)
         btnViewNative.TabIndex = 0
         btnViewNative.Text = ChrW(55358) & ChrW(56830) & " Receipt"
         btnViewNative.TextAlign = HorizontalAlignment.Right
@@ -660,11 +680,11 @@ Partial Class Receipt
         lblHeaderTitle.AutoSize = True
         lblHeaderTitle.BackColor = Color.Transparent
         TransitionAnimator.SetDecoration(lblHeaderTitle, Guna.UI2.AnimatorNS.DecorationType.None)
-        lblHeaderTitle.Font = New Font("Segoe UI", 18F, FontStyle.Bold)
+        lblHeaderTitle.Font = New Font("Segoe UI", 18.0F, FontStyle.Bold)
         lblHeaderTitle.ForeColor = Color.White
-        lblHeaderTitle.Location = New Point(40, 30)
+        lblHeaderTitle.Location = New Point(35, 22)
         lblHeaderTitle.Name = "lblHeaderTitle"
-        lblHeaderTitle.Size = New Size(259, 41)
+        lblHeaderTitle.Size = New Size(212, 32)
         lblHeaderTitle.TabIndex = 0
         lblHeaderTitle.Text = ChrW(55358) & ChrW(56830) & " Order Receipt"
         ' 
@@ -680,13 +700,14 @@ Partial Class Receipt
         pnlActions.CustomizableEdges = CustomizableEdges45
         TransitionAnimator.SetDecoration(pnlActions, Guna.UI2.AnimatorNS.DecorationType.None)
         pnlActions.Dock = DockStyle.Bottom
-        pnlActions.Location = New Point(0, 800)
+        pnlActions.Location = New Point(0, 600)
+        pnlActions.Margin = New Padding(3, 2, 3, 2)
         pnlActions.Name = "pnlActions"
-        pnlActions.Padding = New Padding(40, 15, 40, 15)
+        pnlActions.Padding = New Padding(35, 11, 35, 11)
         pnlActions.ShadowDecoration.CustomizableEdges = CustomizableEdges46
         pnlActions.ShadowDecoration.Depth = 10
         pnlActions.ShadowDecoration.Enabled = True
-        pnlActions.Size = New Size(1400, 100)
+        pnlActions.Size = New Size(1225, 75)
         pnlActions.TabIndex = 2
         ' 
         ' btnEmail
@@ -702,20 +723,21 @@ Partial Class Receipt
         btnEmail.DisabledState.FillColor = Color.FromArgb(CByte(169), CByte(169), CByte(169))
         btnEmail.DisabledState.ForeColor = Color.FromArgb(CByte(141), CByte(141), CByte(141))
         btnEmail.FillColor = Color.FromArgb(CByte(99), CByte(102), CByte(241))
-        btnEmail.Font = New Font("Segoe UI", 11F, FontStyle.Bold)
+        btnEmail.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
         btnEmail.ForeColor = Color.White
         btnEmail.HoverState.FillColor = Color.FromArgb(CByte(79), CByte(70), CByte(229))
         btnEmail.ImageAlign = HorizontalAlignment.Left
         btnEmail.ImageSize = New Size(24, 24)
-        btnEmail.Location = New Point(720, 21)
+        btnEmail.Location = New Point(630, 16)
+        btnEmail.Margin = New Padding(3, 2, 3, 2)
         btnEmail.Name = "btnEmail"
-        btnEmail.Padding = New Padding(12, 0, 12, 0)
+        btnEmail.Padding = New Padding(10, 0, 10, 0)
         btnEmail.ShadowDecoration.BorderRadius = 15
         btnEmail.ShadowDecoration.Color = Color.FromArgb(CByte(99), CByte(102), CByte(241))
         btnEmail.ShadowDecoration.CustomizableEdges = CustomizableEdges38
         btnEmail.ShadowDecoration.Depth = 8
         btnEmail.ShadowDecoration.Enabled = True
-        btnEmail.Size = New Size(200, 58)
+        btnEmail.Size = New Size(175, 44)
         btnEmail.TabIndex = 3
         btnEmail.Text = "✉️ Email"
         btnEmail.TextAlign = HorizontalAlignment.Right
@@ -733,20 +755,21 @@ Partial Class Receipt
         btnPrint.DisabledState.FillColor = Color.FromArgb(CByte(169), CByte(169), CByte(169))
         btnPrint.DisabledState.ForeColor = Color.FromArgb(CByte(141), CByte(141), CByte(141))
         btnPrint.FillColor = Color.FromArgb(CByte(59), CByte(130), CByte(246))
-        btnPrint.Font = New Font("Segoe UI", 11F, FontStyle.Bold)
+        btnPrint.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
         btnPrint.ForeColor = Color.White
         btnPrint.HoverState.FillColor = Color.FromArgb(CByte(37), CByte(99), CByte(235))
         btnPrint.ImageAlign = HorizontalAlignment.Left
         btnPrint.ImageSize = New Size(24, 24)
-        btnPrint.Location = New Point(490, 21)
+        btnPrint.Location = New Point(429, 16)
+        btnPrint.Margin = New Padding(3, 2, 3, 2)
         btnPrint.Name = "btnPrint"
-        btnPrint.Padding = New Padding(12, 0, 12, 0)
+        btnPrint.Padding = New Padding(10, 0, 10, 0)
         btnPrint.ShadowDecoration.BorderRadius = 15
         btnPrint.ShadowDecoration.Color = Color.FromArgb(CByte(59), CByte(130), CByte(246))
         btnPrint.ShadowDecoration.CustomizableEdges = CustomizableEdges40
         btnPrint.ShadowDecoration.Depth = 8
         btnPrint.ShadowDecoration.Enabled = True
-        btnPrint.Size = New Size(200, 58)
+        btnPrint.Size = New Size(175, 44)
         btnPrint.TabIndex = 2
         btnPrint.Text = "🖨️ Print"
         btnPrint.TextAlign = HorizontalAlignment.Right
@@ -764,20 +787,21 @@ Partial Class Receipt
         btnSavePdf.DisabledState.FillColor = Color.FromArgb(CByte(169), CByte(169), CByte(169))
         btnSavePdf.DisabledState.ForeColor = Color.FromArgb(CByte(141), CByte(141), CByte(141))
         btnSavePdf.FillColor = Color.FromArgb(CByte(16), CByte(185), CByte(129))
-        btnSavePdf.Font = New Font("Segoe UI", 11F, FontStyle.Bold)
+        btnSavePdf.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
         btnSavePdf.ForeColor = Color.White
         btnSavePdf.HoverState.FillColor = Color.FromArgb(CByte(5), CByte(150), CByte(105))
         btnSavePdf.ImageAlign = HorizontalAlignment.Left
         btnSavePdf.ImageSize = New Size(24, 24)
-        btnSavePdf.Location = New Point(260, 21)
+        btnSavePdf.Location = New Point(228, 16)
+        btnSavePdf.Margin = New Padding(3, 2, 3, 2)
         btnSavePdf.Name = "btnSavePdf"
-        btnSavePdf.Padding = New Padding(12, 0, 12, 0)
+        btnSavePdf.Padding = New Padding(10, 0, 10, 0)
         btnSavePdf.ShadowDecoration.BorderRadius = 15
         btnSavePdf.ShadowDecoration.Color = Color.FromArgb(CByte(16), CByte(185), CByte(129))
         btnSavePdf.ShadowDecoration.CustomizableEdges = CustomizableEdges42
         btnSavePdf.ShadowDecoration.Depth = 8
         btnSavePdf.ShadowDecoration.Enabled = True
-        btnSavePdf.Size = New Size(200, 58)
+        btnSavePdf.Size = New Size(175, 44)
         btnSavePdf.TabIndex = 1
         btnSavePdf.Text = "⬇️ Save PDF"
         btnSavePdf.TextAlign = HorizontalAlignment.Right
@@ -796,19 +820,20 @@ Partial Class Receipt
         btnClose.DisabledState.FillColor = Color.FromArgb(CByte(169), CByte(169), CByte(169))
         btnClose.DisabledState.ForeColor = Color.FromArgb(CByte(141), CByte(141), CByte(141))
         btnClose.FillColor = Color.FromArgb(CByte(71), CByte(85), CByte(105))
-        btnClose.Font = New Font("Segoe UI", 11F, FontStyle.Bold)
+        btnClose.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
         btnClose.ForeColor = Color.White
         btnClose.HoverState.FillColor = Color.FromArgb(CByte(51), CByte(65), CByte(85))
         btnClose.ImageAlign = HorizontalAlignment.Left
         btnClose.ImageSize = New Size(24, 24)
-        btnClose.Location = New Point(1160, 21)
+        btnClose.Location = New Point(1015, 16)
+        btnClose.Margin = New Padding(3, 2, 3, 2)
         btnClose.Name = "btnClose"
-        btnClose.Padding = New Padding(12, 0, 12, 0)
+        btnClose.Padding = New Padding(10, 0, 10, 0)
         btnClose.ShadowDecoration.BorderRadius = 15
         btnClose.ShadowDecoration.CustomizableEdges = CustomizableEdges44
         btnClose.ShadowDecoration.Depth = 5
         btnClose.ShadowDecoration.Enabled = True
-        btnClose.Size = New Size(180, 58)
+        btnClose.Size = New Size(158, 44)
         btnClose.TabIndex = 0
         btnClose.Text = "❌ Close"
         btnClose.TextAlign = HorizontalAlignment.Right
@@ -837,7 +862,7 @@ Partial Class Receipt
         Animation1.AnimateOnlyDifferences = True
         Animation1.BlindCoeff = CType(resources.GetObject("Animation1.BlindCoeff"), PointF)
         Animation1.LeafCoeff = 0F
-        Animation1.MaxTime = 1F
+        Animation1.MaxTime = 1.0F
         Animation1.MinTime = 0F
         Animation1.MosaicCoeff = CType(resources.GetObject("Animation1.MosaicCoeff"), PointF)
         Animation1.MosaicShift = CType(resources.GetObject("Animation1.MosaicShift"), PointF)
@@ -855,15 +880,16 @@ Partial Class Receipt
         ' 
         ' Receipt
         ' 
-        AutoScaleDimensions = New SizeF(8F, 20F)
+        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(1400, 900)
+        ClientSize = New Size(1225, 675)
         Controls.Add(pnlMain)
         TransitionAnimator.SetDecoration(Me, Guna.UI2.AnimatorNS.DecorationType.None)
-        Font = New Font("Segoe UI", 9F)
+        Font = New Font("Segoe UI", 9.0F)
         FormBorderStyle = FormBorderStyle.None
         KeyPreview = True
-        MinimumSize = New Size(1000, 600)
+        Margin = New Padding(3, 2, 3, 2)
+        MinimumSize = New Size(875, 450)
         Name = "Receipt"
         StartPosition = FormStartPosition.CenterParent
         Text = "Order Receipt - OrderUp"

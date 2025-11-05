@@ -547,7 +547,7 @@ Public Class SalesReport
                 Dim headerQuery As String = "SELECT id, order_date, order_time, username, total_amount FROM orders WHERE id = @orderId LIMIT 1"
                 Dim orderDate As DateTime = DateTime.Now
                 Dim username As String = ""
-                Dim totalAmount As Decimal = 0D
+                Dim finalTotalAmount As Decimal = 0D ' This is the FINAL total
 
                 Using hdrCmd As New MySqlCommand(headerQuery, connection)
                     hdrCmd.Parameters.AddWithValue("@orderId", orderId)
@@ -555,7 +555,7 @@ Public Class SalesReport
                         If rdr.Read() Then
                             orderDate = If(IsDBNull(rdr("order_date")), DateTime.Now, Convert.ToDateTime(rdr("order_date")))
                             username = If(IsDBNull(rdr("username")), "", rdr("username").ToString())
-                            totalAmount = If(IsDBNull(rdr("total_amount")), 0D, Convert.ToDecimal(rdr("total_amount")))
+                            finalTotalAmount = If(IsDBNull(rdr("total_amount")), 0D, Convert.ToDecimal(rdr("total_amount")))
                         Else
                             MessageBox.Show("Order not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                             Return
@@ -572,52 +572,75 @@ Public Class SalesReport
                     Using rdr As MySqlDataReader = itemsCmd.ExecuteReader()
                         While rdr.Read()
                             Dim it As New OrderItem With {
-                            .ItemName = If(IsDBNull(rdr("item_name")), "", rdr("item_name").ToString()),
+                            .ItemName = If(IsDBNull(rdr("item_name")), "",
+rdr("item_name").ToString()),
                             .Quantity = If(IsDBNull(rdr("quantity")), 0, Convert.ToInt32(rdr("quantity"))),
                             .Price = If(IsDBNull(rdr("price")), 0D, Convert.ToDecimal(rdr("price"))),
-                            .Total = If(IsDBNull(rdr("quantity")), 0, Convert.ToInt32(rdr("quantity"))) * If(IsDBNull(rdr("price")), 0D, Convert.ToDecimal(rdr("price")))
+                            .Total = If(IsDBNull(rdr("quantity")), 0, Convert.ToInt32(rdr("quantity"))) * If(IsDBNull(rdr("price")), 0D,
+Convert.ToDecimal(rdr("price")))
                         }
                             items.Add(it)
                         End While
                     End Using
                 End Using
 
-                ' Build orderData
+                ' --- MODIFICATION START ---
+                ' We must recalculate the Subtotal and Discount from the items,
+                ' as this data is not stored in your 'orders' table.
+
+                Dim calculatedSubtotal As Decimal = 0D
+                For Each it In items
+                    calculatedSubtotal += it.Total
+                Next
+
+                Dim discountAmount As Decimal = calculatedSubtotal - finalTotalAmount
+                Dim discountPercent As Double = 0D
+
+                If calculatedSubtotal > 0 Then
+                    ' Calculate the percentage
+                    discountPercent = (CDbl(discountAmount) / CDbl(calculatedSubtotal)) * 100D
+                End If
+                ' --- MODIFICATION END ---
+
+
+                ' Build orderData (NOW WITH CORRECT VALUES)
                 Dim orderData As New Receipt.OrderData With {
                 .OrderId = orderId.ToString(),
                 .OrderDate = orderDate,
-                .CashierName = username,
+        .CashierName = username,
                 .Items = New List(Of Receipt.OrderItem),
-                .Subtotal = totalAmount,
-                .DiscountPercent = 0,
-                .Total = totalAmount,
-                .PaymentMethod = "Cash"
-            }
+                .Subtotal = calculatedSubtotal,  ' <-- FIXED
+                .DiscountPercent = discountPercent, ' <-- FIXED
+                .Total = finalTotalAmount,
+                .PaymentMethod = "Cash" ' <-- Assuming 'Cash'
+    }
 
                 For Each it In items
                     orderData.Items.Add(New Receipt.OrderItem With {
                     .Name = it.ItemName,
-                    .Amount = it.Quantity,
+            .Amount = it.Quantity,
                     .Price = it.Price,
                     .Total = it.Total
                 })
                 Next
 
-                ' If no DB items, try to locate saved PDF named Receipt_{orderId}.pdf in Documents\Receipts (created by ordering form)
+                ' If no DB items, try to locate
+                ' saved PDF named Receipt_{orderId}.pdf in Documents\Receipts (created by ordering form)
                 Dim pdfPath As String = String.Empty
-                If orderData.Items.Count = 0 Then
-                    Dim receiptsDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Receipts")
-                    Dim candidate = Path.Combine(receiptsDir, "Receipt_" & orderId.ToString() & ".pdf")
-                    If File.Exists(candidate) Then
-                        pdfPath = candidate
-                    Else
-                        ' try other common patterns (backup)
-                        If Directory.Exists(receiptsDir) Then
-                            Dim files = Directory.GetFiles(receiptsDir, "Receipt_*" & orderId.ToString() & "*.pdf")
-                            If files.Length > 0 Then pdfPath = files(0)
-                        End If
+                ' --- MODIFICATION: Updated this logic to look for the correct file name ---
+                Dim receiptsDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Receipts")
+                Dim candidate = Path.Combine(receiptsDir, "Receipt" & orderId.ToString() & ".pdf") ' <-- Fixed filename format
+
+                If File.Exists(candidate) Then
+                    pdfPath = candidate
+                Else
+                    ' try other common patterns (backup)
+                    If Directory.Exists(receiptsDir) Then
+                        Dim files = Directory.GetFiles(receiptsDir, "Receipt*" & orderId.ToString() & "*.pdf")
+                        If files.Length > 0 Then pdfPath = files(0)
                     End If
                 End If
+                ' --- END MODIFICATION ---
 
                 ' Show receipt: prefer native (items present) but pass pdfPath so pdf view is available
                 Dim receiptForm As New Receipt()

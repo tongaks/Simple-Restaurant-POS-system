@@ -80,106 +80,33 @@ Public Class Receipt
             pnlNativeReceipt.Visible = True
             _currentView = "native"
 
-            ' Clear the scroll area and create a stable content panel we control explicitly
-            pnlReceiptScroll.Controls.Clear()
-
-            Dim content As New Panel()
-            content.Name = "receiptContentPanel"
-            content.BackColor = Color.Transparent
-            content.AutoSize = False
-            content.Location = New Point(40, 20)
-            content.Width = Math.Max(600, pnlReceiptScroll.ClientSize.Width - 80)
-            content.AutoScroll = False
-
-            Dim y As Integer = 0
-            Dim rowHeight As Integer = 80
-            Dim leftPadding As Integer = 0
+            ' --- MODIFICATION START ---
+            ' Clear the flow container, not the entire scroll panel
+            flowItemsContainer.Controls.Clear()
 
             If _orderData.Items IsNot Nothing AndAlso _orderData.Items.Count > 0 Then
+                ' Loop and use the CreateItemCard function
                 For Each item In _orderData.Items
-                    ' simple row panel - avoids layout race conditions
-                    Dim row As New Panel With {
-                    .BackColor = Color.FromArgb(248, 250, 252),
-                    .Location = New Point(leftPadding, y),
-                    .Size = New Size(content.Width, rowHeight)
-                }
-
-                    ' Quantity (left)
-                    Dim lblQty As New Label With {
-                    .Text = item.Amount.ToString(),
-                    .Font = New Font("Segoe UI", 16, FontStyle.Bold),
-                    .ForeColor = Color.FromArgb(16, 185, 129),
-                    .Location = New Point(12, 20),
-                    .AutoSize = True,
-                    .BackColor = Color.Transparent
-                }
-
-                    ' Name (middle)
-                    Dim lblName As New Label With {
-                    .Text = item.Name,
-                    .Font = New Font("Segoe UI", 12, FontStyle.Bold),
-                    .ForeColor = Color.FromArgb(30, 41, 59),
-                    .Location = New Point(86, 18),
-                    .AutoSize = False,
-                    .Size = New Size(CInt(row.Width * 0.65), 24),
-                    .BackColor = Color.Transparent
-                }
-
-                    ' Unit price (below name)
-                    Dim lblUnit As New Label With {
-                    .Text = "₱" & item.Price.ToString("N2") & " each",
-                    .Font = New Font("Segoe UI", 9.5F, FontStyle.Regular),
-                    .ForeColor = Color.FromArgb(100, 116, 139),
-                    .Location = New Point(86, 42),
-                    .AutoSize = True,
-                    .BackColor = Color.Transparent
-                }
-
-                    ' Total (right)
-                    Dim lblTotal As New Label With {
-                    .Text = "₱" & item.Total.ToString("N2"),
-                    .Font = New Font("Segoe UI Semibold", 14, FontStyle.Bold),
-                    .ForeColor = Color.FromArgb(15, 23, 42),
-                    .AutoSize = True,
-                    .BackColor = Color.Transparent
-                }
-                    lblTotal.Location = New Point(row.Width - lblTotal.PreferredWidth - 24, 22)
-
-                    row.Controls.Add(lblQty)
-                    row.Controls.Add(lblName)
-                    row.Controls.Add(lblUnit)
-                    row.Controls.Add(lblTotal)
-
-                    ' Reposition total if row resized later
-                    AddHandler row.SizeChanged, Sub()
-                                                    Try
-                                                        lblTotal.Location = New Point(row.Width - lblTotal.PreferredWidth - 24, 22)
-                                                    Catch
-                                                    End Try
-                                                End Sub
-
-                    content.Controls.Add(row)
-                    y += rowHeight + 12
+                    ' Call your existing function to create the nice-looking card
+                    Dim itemCard As Guna.UI2.WinForms.Guna2Panel = CreateItemCard(item)
+                    ' Add the card to the FlowLayoutPanel
+                    flowItemsContainer.Controls.Add(itemCard)
                 Next
             Else
+                ' Show a placeholder if no items
                 Dim placeholder As New Label With {
-                .AutoSize = False,
-                .Text = "No items found for this receipt.",
-                .Font = New Font("Segoe UI", 12.0F, FontStyle.Italic),
-                .ForeColor = Color.FromArgb(150, 150, 150),
-                .TextAlign = ContentAlignment.MiddleCenter,
-                .Height = 80,
-                .Width = content.Width,
-                .Location = New Point(leftPadding, y),
-                .BackColor = Color.Transparent
-            }
-                content.Controls.Add(placeholder)
-                y += placeholder.Height + 12
+             .AutoSize = False,
+                    .Text = "No items found for this receipt.",
+                    .Font = New Font("Segoe UI", 12.0F, FontStyle.Italic),
+                    .ForeColor = Color.FromArgb(150, 150, 150),
+                    .TextAlign = ContentAlignment.MiddleCenter,
+             .Height = 80,
+                    .Width = flowItemsContainer.ClientSize.Width - 10, ' Fit container
+                    .BackColor = Color.Transparent
+                }
+                flowItemsContainer.Controls.Add(placeholder)
             End If
-
-            ' Set content size so scroll works
-            content.Height = Math.Max(1, y)
-            pnlReceiptScroll.Controls.Add(content)
+            ' --- MODIFICATION END ---
 
             ' Totals update (always)
             lblSubtotalAmount.Text = "₱" & _orderData.Subtotal.ToString("N2")
@@ -189,7 +116,8 @@ Public Class Receipt
             lblTotalAmount.Text = "₱" & _orderData.Total.ToString("N2")
 
         Catch ex As Exception
-            MessageBox.Show("Error populating receipt: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Error populating receipt: " & ex.Message, "Error",
+MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 

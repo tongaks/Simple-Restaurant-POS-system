@@ -677,39 +677,83 @@ Public Class Order
         Dim Connection As New MySqlConnection(ConnectionString)
 
         Dim TotalAmount = Double.Parse(TotalLbl.Text.Substring(1))
+        Dim newOrderId As Long = 0 ' We will get the new ID
 
         Try
             Connection.Open()
-            Dim Query = "INSERT INTO orders (order_date, order_time, username, total_amount) VALUES (@date, @time, @user, @total)"
+            ' --- MODIFICATION: Added 'SELECT LAST_INSERT_ID()' to get the actual Order ID ---
+            Dim Query = "INSERT INTO orders (order_date, order_time, username, total_amount) VALUES (@date, @time, @user, @total); SELECT LAST_INSERT_ID();"
             Dim Command As New MySqlCommand(Query, Connection)
             Command.Parameters.AddWithValue("@date", Date.Now.ToString("yyyy-MM-dd"))
             Command.Parameters.AddWithValue("@time", Date.Now.ToString("HH:mm:ss"))
             Command.Parameters.AddWithValue("@user", CurrentUser)
             Command.Parameters.AddWithValue("@total", TotalAmount)
 
-            If Command.ExecuteNonQuery > 0 Then
+            ' ExecuteScalar will run the INSERT and then return the ID from 'SELECT LAST_INSERT_ID()'
+            newOrderId = Convert.ToInt64(Command.ExecuteScalar())
+
+
+            If newOrderId > 0 Then
+
+                ' --- ⭐️⭐️⭐️ START OF NEW CODE ⭐️⭐️⭐️ ---
+                ' We MUST save the items to the database so the sales report can find them later.
+                Dim itemQuery As String = "INSERT INTO order_items (order_id, item_name, price, quantity) VALUES (@orderId, @itemName, @price, @quantity)"
+
+                For Each row As DataGridViewRow In DataGridView1.Rows
+                    If row.Cells(1).Value IsNot Nothing Then
+                        Dim itemName As String = CStr(row.Cells(1).Value)
+                        Dim itemPrice As Decimal = CDec(row.Cells(2).Value)
+                        Dim itemAmount As Integer = CInt(row.Cells(0).Value)
+
+                        Using itemCmd As New MySqlCommand(itemQuery, Connection)
+                            itemCmd.Parameters.AddWithValue("@orderId", newOrderId)
+                            itemCmd.Parameters.AddWithValue("@itemName", itemName)
+                            itemCmd.Parameters.AddWithValue("@price", itemPrice)
+                            itemCmd.Parameters.AddWithValue("@quantity", itemAmount)
+
+                            itemCmd.ExecuteNonQuery() ' Insert the item row
+                        End Using
+                    End If
+                Next
+                ' --- ⭐️⭐️⭐️ END OF NEW CODE ⭐️⭐️⭐️ ---
+
+
                 MsgBox("Order created", MsgBoxStyle.Information, "Success")
-                Dim receiptName = CreateReceiptPDF()
+                ' Pass the newOrderId to your PDF
+                Dim receiptName = CreateReceiptPDF(newOrderId.ToString())
 
-                ' display receipt
-                Dim receiptForm As New Form
-                receiptForm.Size = New System.Drawing.Size(500, 800)
-                receiptForm.KeyPreview = True
-                receiptForm.Text = "Receipt"
-                receiptForm.StartPosition = FormStartPosition.CenterScreen
-                AddHandler receiptForm.KeyPress, Sub()
-                                                     receiptForm.Close()
-                                                 End Sub
+                ' --- This part is the same as before, loading the receipt ---
+                ' 1. Create the OrderData object
+                Dim orderData As New Receipt.OrderData With {
+                    .OrderId = newOrderId.ToString(),
+                    .OrderDate = Date.Now,
+                    .CashierName = CurrentUser,
+                    .PaymentMethod = "Cash", ' Assuming 'Cash'
+                    .Items = New List(Of Receipt.OrderItem)(),
+                    .Subtotal = CDec(CurrentSubTotal),
+                    .DiscountPercent = DiscountValue * 100,
+                    .Total = CDec(CurrentTotal)
+                }
 
-                Dim pdfViewer1 = New PdfiumViewer.PdfViewer()
-                pdfViewer1.Dock = DockStyle.Fill
-                receiptForm.Controls.Add(pdfViewer1)
-                pdfViewer1.Document = PdfiumViewer.PdfDocument.Load(receiptName)
-                pdfViewer1.ZoomMode = PdfViewerZoomMode.FitWidth
+                ' 2. Populate the Items list from your DataGridView1
+                For Each row As DataGridViewRow In DataGridView1.Rows
+                    If row.Cells(1).Value IsNot Nothing Then
+                        Dim item As New Receipt.OrderItem With {
+                            .Amount = CInt(row.Cells(0).Value),
+                            .Name = CStr(row.Cells(1).Value),
+                            .Price = CDec(row.Cells(2).Value),
+                            .Total = CDec(row.Cells(2).Value) * CInt(row.Cells(0).Value)
+                        }
+                        orderData.Items.Add(item)
+                    End If
+                Next
 
-                receiptForm.Height = pdfViewer1.Height
-                receiptForm.ShowDialog()
-
+                ' 3. Show your custom Receipt form
+                Using receiptForm As New Receipt()
+                    receiptForm.LoadReceipt(orderData, receiptName)
+                    receiptForm.ShowDialog()
+                End Using
+                ' --- End of receipt loading ---
 
                 InsertActivityLog("Created an order with total of " & CurrentTotal)
 
@@ -733,23 +777,6 @@ Public Class Order
                 Connection.Close()
             End If
         End Try
-    End Sub
-    Private Sub SearchBtn_Click(sender As Object, e As EventArgs) Handles SearchBtn.Click
-        If Not String.IsNullOrEmpty(SearchTxtBox.Text) Then
-            SearchItem(SearchTxtBox.Text)
-        Else
-            'CurrentCategory = MenuCategories(0)
-
-            FoodPnl.Controls.Clear()
-            FoodPnl.Focus()
-
-            HandleCategorylick(MenuCategories(0), Nothing)
-
-            LoadMenuItems(CurrentCategory.Text, FoodPnl)
-            For Each btn As Guna2PictureBox In MenuItems
-                AddHandler btn.Click, AddressOf HandleItemClick
-            Next
-        End If
     End Sub
     Private Sub IncreaseButtonHandler(sender As Object, e As EventArgs)
         Dim itemName As String = CType(sender, Guna2CircleButton).Tag.ToString()
@@ -851,7 +878,7 @@ Public Class Order
 
 
     ' Create receipt
-    Private Function CreateReceiptPDF()
+    Private Function CreateReceiptPDF(ByVal newOrderId As String) As String
         Dim receipt As New PdfSharp.Pdf.PdfDocument
         Dim page As PdfPage = receipt.AddPage()
         Dim gfx As XGraphics = XGraphics.FromPdfPage(page)
@@ -862,8 +889,9 @@ Public Class Order
 
         gfx.DrawString("Cashier: " & CurrentUser, regFont, textBrush, New XRect(50, 50, 200, 100), XStringFormats.TopLeft)
         gfx.DrawString("Date & time: " & currentDate, regFont, textBrush, New XRect(50, 80, 200, 100), XStringFormats.TopLeft)
+        gfx.DrawString("Order ID: #" & newOrderId, regFont, textBrush, New XRect(50, 100, 200, 100), XStringFormats.TopLeft)
 
-        Dim posY As Integer = 120
+        Dim posY As Integer = 140 ' <-- Adjusted Y position
         For Each row As DataGridViewRow In DataGridView1.Rows
             Dim itemName As String = row.Cells(1).Value.ToString
             Dim itemPrice As String = row.Cells(2).Value.ToString
@@ -874,28 +902,11 @@ Public Class Order
         Next
 
         gfx.DrawString("Sub total: ₱" & CurrentSubTotal, regFont, textBrush, New XRect(50, posY + 50, 200, 100), XStringFormats.TopLeft)
-        gfx.DrawString("Discount: %" & DiscountValue, regFont, textBrush, New XRect(50, posY + 80, 200, 100), XStringFormats.TopLeft)
+        gfx.DrawString("Discount: %" & (DiscountValue * 100), regFont, textBrush, New XRect(50, posY + 80, 200, 100), XStringFormats.TopLeft)
         gfx.DrawString("Total: ₱" & CurrentTotal, regFont, textBrush, New XRect(50, posY + 110, 200, 100), XStringFormats.TopLeft)
 
-        Dim receiptID As String = ""
-
-        Dim Connection As New MySqlConnection(GetGlobalConnectionString)
-        Try
-            Connection.Open()
-            Dim Query As String = "SELECT COUNT(*) AS `TOTAL` FROM restaurant.orders"
-            Dim Command As New MySqlCommand(Query, Connection)
-            Dim Reader As MySqlDataReader = Command.ExecuteReader
-
-            If Reader.Read Then
-                receiptID = Reader("TOTAL")
-            End If
-
-            'MsgBox("total number of orders: " & idCount)
-            'receiptID = idCount
-
-        Catch ex As Exception
-            MsgBox("Error from db: " & ex.ToString, MsgBoxStyle.Critical, "Error")
-        End Try
+        ' --- MODIFICATION: Removed the database call for COUNT(*) ---
+        Dim receiptID As String = newOrderId
 
         Dim basePath As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) ' Using MyDocuments as a dynamic base path
         Dim receiptsFolder As String = Path.Combine(basePath, "Receipts")
