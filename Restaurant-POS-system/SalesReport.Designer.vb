@@ -110,7 +110,7 @@ Partial Class SalesReport
         ' Guna2BorderlessForm1
         ' 
         Guna2BorderlessForm1.BorderRadius = 25
-        ' Note: BorderlessForm.ContainerControl is not set for UserControl hosting.
+        Guna2BorderlessForm1.ContainerControl = Me
         Guna2BorderlessForm1.DockIndicatorTransparencyValue = 0.6R
         Guna2BorderlessForm1.ShadowColor = Color.FromArgb(CByte(31), CByte(138), CByte(112))
         Guna2BorderlessForm1.TransparentWhileDrag = True
@@ -118,7 +118,6 @@ Partial Class SalesReport
         ' Guna2ShadowForm1
         ' 
         Guna2ShadowForm1.ShadowColor = Color.FromArgb(CByte(31), CByte(138), CByte(112))
-        ' Note: ShadowForm.TargetForm is not assigned for UserControl hosting.
         ' 
         ' Guna2Elipse1
         ' 
@@ -133,9 +132,10 @@ Partial Class SalesReport
         pnlScrollContainer.CustomizableEdges = CustomizableEdges27
         pnlScrollContainer.Dock = DockStyle.Fill
         pnlScrollContainer.Location = New Point(0, 0)
+        pnlScrollContainer.Margin = New Padding(3, 2, 3, 2)
         pnlScrollContainer.Name = "pnlScrollContainer"
         pnlScrollContainer.ShadowDecoration.CustomizableEdges = CustomizableEdges28
-        pnlScrollContainer.Size = New Size(1600, 1000)
+        pnlScrollContainer.Size = New Size(1400, 750)
         pnlScrollContainer.TabIndex = 0
         ' 
         ' pnlMainContent
@@ -147,12 +147,13 @@ Partial Class SalesReport
         pnlMainContent.Controls.Add(pnlControls)
         pnlMainContent.Controls.Add(pnlHeader)
         pnlMainContent.CustomizableEdges = CustomizableEdges25
-        pnlMainContent.Dock = DockStyle.Top
+        pnlMainContent.Dock = DockStyle.None
         pnlMainContent.Location = New Point(0, 0)
-        pnlMainContent.MinimumSize = New Size(1560, 1400)
+        pnlMainContent.Margin = New Padding(3, 2, 3, 2)
+        pnlMainContent.MinimumSize = New Size(1365, 1050)
         pnlMainContent.Name = "pnlMainContent"
         pnlMainContent.ShadowDecoration.CustomizableEdges = CustomizableEdges26
-        pnlMainContent.Size = New Size(1579, 1400)
+        pnlMainContent.Size = New Size(1383, 1050)
         pnlMainContent.TabIndex = 0
         ' 
         ' pnlTransactions
@@ -161,14 +162,14 @@ Partial Class SalesReport
         pnlTransactions.Controls.Add(dgvTransactions)
         pnlTransactions.Controls.Add(lblTransactions)
         pnlTransactions.FillColor = Color.White
-        pnlTransactions.Location = New Point(40, 945)
-        pnlTransactions.Margin = New Padding(40, 20, 40, 40)
+        pnlTransactions.Location = New Point(35, 709)
+        pnlTransactions.Margin = New Padding(35, 15, 35, 30)
         pnlTransactions.Name = "pnlTransactions"
-        pnlTransactions.Padding = New Padding(25)
+        pnlTransactions.Padding = New Padding(22, 19, 22, 19)
         pnlTransactions.Radius = 22
         pnlTransactions.ShadowColor = Color.Black
         pnlTransactions.ShadowDepth = 15
-        pnlTransactions.Size = New Size(1480, 420)
+        pnlTransactions.Size = New Size(1295, 315)
         pnlTransactions.TabIndex = 4
         ' 
         ' dgvTransactions
@@ -179,7 +180,7 @@ Partial Class SalesReport
         dgvTransactions.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         DataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle2.BackColor = Color.FromArgb(CByte(31), CByte(138), CByte(112))
-        DataGridViewCellStyle2.Font = New Font("Segoe UI Semibold", 11.0F, FontStyle.Bold)
+        DataGridViewCellStyle2.Font = New Font("Segoe UI Semibold", 11F, FontStyle.Bold)
         DataGridViewCellStyle2.ForeColor = Color.White
         DataGridViewCellStyle2.Padding = New Padding(10, 5, 10, 5)
         DataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(CByte(31), CByte(138), CByte(112))
@@ -197,13 +198,14 @@ Partial Class SalesReport
         DataGridViewCellStyle3.WrapMode = DataGridViewTriState.False
         dgvTransactions.DefaultCellStyle = DataGridViewCellStyle3
         dgvTransactions.GridColor = Color.FromArgb(CByte(240), CByte(240), CByte(240))
-        dgvTransactions.Location = New Point(25, 75)
+        dgvTransactions.Location = New Point(22, 56)
+        dgvTransactions.Margin = New Padding(3, 2, 3, 2)
         dgvTransactions.Name = "dgvTransactions"
         dgvTransactions.ReadOnly = True
         dgvTransactions.RowHeadersVisible = False
         dgvTransactions.RowHeadersWidth = 51
         dgvTransactions.RowTemplate.Height = 45
-        dgvTransactions.Size = New Size(1430, 320)
+        dgvTransactions.Size = New Size(1251, 240)
         dgvTransactions.TabIndex = 1
         dgvTransactions.ThemeStyle.AlternatingRowsStyle.BackColor = Color.FromArgb(CByte(250), CByte(250), CByte(250))
         dgvTransactions.ThemeStyle.AlternatingRowsStyle.Font = Nothing
@@ -214,7 +216,7 @@ Partial Class SalesReport
         dgvTransactions.ThemeStyle.GridColor = Color.FromArgb(CByte(240), CByte(240), CByte(240))
         dgvTransactions.ThemeStyle.HeaderStyle.BackColor = Color.FromArgb(CByte(31), CByte(138), CByte(112))
         dgvTransactions.ThemeStyle.HeaderStyle.BorderStyle = DataGridViewHeaderBorderStyle.None
-        dgvTransactions.ThemeStyle.HeaderStyle.Font = New Font("Segoe UI Semibold", 11.0F, FontStyle.Bold)
+        dgvTransactions.ThemeStyle.HeaderStyle.Font = New Font("Segoe UI Semibold", 11F, FontStyle.Bold)
         dgvTransactions.ThemeStyle.HeaderStyle.ForeColor = Color.White
         dgvTransactions.ThemeStyle.HeaderStyle.HeaightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing
         dgvTransactions.ThemeStyle.HeaderStyle.Height = 50
@@ -231,11 +233,11 @@ Partial Class SalesReport
         ' 
         lblTransactions.AutoSize = True
         lblTransactions.BackColor = Color.Transparent
-        lblTransactions.Font = New Font("Segoe UI", 16.0F, FontStyle.Bold)
+        lblTransactions.Font = New Font("Segoe UI", 16F, FontStyle.Bold)
         lblTransactions.ForeColor = Color.FromArgb(CByte(30), CByte(30), CByte(30))
-        lblTransactions.Location = New Point(25, 25)
+        lblTransactions.Location = New Point(22, 19)
         lblTransactions.Name = "lblTransactions"
-        lblTransactions.Size = New Size(310, 37)
+        lblTransactions.Size = New Size(255, 30)
         lblTransactions.TabIndex = 0
         lblTransactions.Text = "📋 Recent Transactions"
         ' 
@@ -245,10 +247,10 @@ Partial Class SalesReport
         pnlCharts.Controls.Add(pnlDailySalesChart)
         pnlCharts.Controls.Add(pnlTopItemsChart)
         pnlCharts.Controls.Add(pnlRevenueChart)
-        pnlCharts.Location = New Point(40, 465)
-        pnlCharts.Margin = New Padding(40, 20, 40, 20)
+        pnlCharts.Location = New Point(35, 349)
+        pnlCharts.Margin = New Padding(35, 15, 35, 15)
         pnlCharts.Name = "pnlCharts"
-        pnlCharts.Size = New Size(1480, 460)
+        pnlCharts.Size = New Size(1295, 345)
         pnlCharts.TabIndex = 3
         ' 
         ' pnlDailySalesChart
@@ -257,23 +259,24 @@ Partial Class SalesReport
         pnlDailySalesChart.Controls.Add(Label4)
         pnlDailySalesChart.FillColor = Color.White
         pnlDailySalesChart.Location = New Point(0, 0)
+        pnlDailySalesChart.Margin = New Padding(3, 2, 3, 2)
         pnlDailySalesChart.Name = "pnlDailySalesChart"
-        pnlDailySalesChart.Padding = New Padding(25)
+        pnlDailySalesChart.Padding = New Padding(22, 19, 22, 19)
         pnlDailySalesChart.Radius = 22
         pnlDailySalesChart.ShadowColor = Color.Black
         pnlDailySalesChart.ShadowDepth = 15
-        pnlDailySalesChart.Size = New Size(480, 440)
+        pnlDailySalesChart.Size = New Size(420, 330)
         pnlDailySalesChart.TabIndex = 0
         ' 
         ' Label4
         ' 
         Label4.AutoSize = True
         Label4.BackColor = Color.Transparent
-        Label4.Font = New Font("Segoe UI", 16.0F, FontStyle.Bold)
+        Label4.Font = New Font("Segoe UI", 16F, FontStyle.Bold)
         Label4.ForeColor = Color.FromArgb(CByte(30), CByte(30), CByte(30))
-        Label4.Location = New Point(25, 25)
+        Label4.Location = New Point(22, 19)
         Label4.Name = "Label4"
-        Label4.Size = New Size(198, 37)
+        Label4.Size = New Size(160, 30)
         Label4.TabIndex = 0
         Label4.Text = "📊 Daily Sales"
         ' 
@@ -282,24 +285,25 @@ Partial Class SalesReport
         pnlTopItemsChart.BackColor = Color.Transparent
         pnlTopItemsChart.Controls.Add(Label5)
         pnlTopItemsChart.FillColor = Color.White
-        pnlTopItemsChart.Location = New Point(500, 0)
+        pnlTopItemsChart.Location = New Point(438, 0)
+        pnlTopItemsChart.Margin = New Padding(3, 2, 3, 2)
         pnlTopItemsChart.Name = "pnlTopItemsChart"
-        pnlTopItemsChart.Padding = New Padding(25)
+        pnlTopItemsChart.Padding = New Padding(22, 19, 22, 19)
         pnlTopItemsChart.Radius = 22
         pnlTopItemsChart.ShadowColor = Color.Black
         pnlTopItemsChart.ShadowDepth = 15
-        pnlTopItemsChart.Size = New Size(480, 440)
+        pnlTopItemsChart.Size = New Size(420, 330)
         pnlTopItemsChart.TabIndex = 1
         ' 
         ' Label5
         ' 
         Label5.AutoSize = True
         Label5.BackColor = Color.Transparent
-        Label5.Font = New Font("Segoe UI", 16.0F, FontStyle.Bold)
+        Label5.Font = New Font("Segoe UI", 16F, FontStyle.Bold)
         Label5.ForeColor = Color.FromArgb(CByte(30), CByte(30), CByte(30))
-        Label5.Location = New Point(25, 25)
+        Label5.Location = New Point(22, 19)
         Label5.Name = "Label5"
-        Label5.Size = New Size(204, 37)
+        Label5.Size = New Size(171, 30)
         Label5.TabIndex = 0
         Label5.Text = "🔥 Top 5 Items"
         ' 
@@ -308,24 +312,25 @@ Partial Class SalesReport
         pnlRevenueChart.BackColor = Color.Transparent
         pnlRevenueChart.Controls.Add(Label7)
         pnlRevenueChart.FillColor = Color.White
-        pnlRevenueChart.Location = New Point(1000, 0)
+        pnlRevenueChart.Location = New Point(875, 0)
+        pnlRevenueChart.Margin = New Padding(3, 2, 3, 2)
         pnlRevenueChart.Name = "pnlRevenueChart"
-        pnlRevenueChart.Padding = New Padding(25)
+        pnlRevenueChart.Padding = New Padding(22, 19, 22, 19)
         pnlRevenueChart.Radius = 22
         pnlRevenueChart.ShadowColor = Color.Black
         pnlRevenueChart.ShadowDepth = 15
-        pnlRevenueChart.Size = New Size(480, 440)
+        pnlRevenueChart.Size = New Size(420, 330)
         pnlRevenueChart.TabIndex = 2
         ' 
         ' Label7
         ' 
         Label7.AutoSize = True
         Label7.BackColor = Color.Transparent
-        Label7.Font = New Font("Segoe UI", 16.0F, FontStyle.Bold)
+        Label7.Font = New Font("Segoe UI", 16F, FontStyle.Bold)
         Label7.ForeColor = Color.FromArgb(CByte(30), CByte(30), CByte(30))
-        Label7.Location = New Point(25, 25)
+        Label7.Location = New Point(22, 19)
         Label7.Name = "Label7"
-        Label7.Size = New Size(249, 37)
+        Label7.Size = New Size(202, 30)
         Label7.TabIndex = 0
         Label7.Text = "📈 Revenue Trend"
         ' 
@@ -335,10 +340,10 @@ Partial Class SalesReport
         pnlMetrics.Controls.Add(pnlTotalSales)
         pnlMetrics.Controls.Add(pnlOrderCount)
         pnlMetrics.Controls.Add(pnlAvgOrder)
-        pnlMetrics.Location = New Point(40, 275)
-        pnlMetrics.Margin = New Padding(40, 20, 40, 20)
+        pnlMetrics.Location = New Point(35, 206)
+        pnlMetrics.Margin = New Padding(35, 15, 35, 15)
         pnlMetrics.Name = "pnlMetrics"
-        pnlMetrics.Size = New Size(1480, 170)
+        pnlMetrics.Size = New Size(1295, 128)
         pnlMetrics.TabIndex = 2
         ' 
         ' pnlTotalSales
@@ -353,23 +358,24 @@ Partial Class SalesReport
         pnlTotalSales.FillColor2 = Color.FromArgb(CByte(255), CByte(170), CByte(51))
         pnlTotalSales.GradientMode = Drawing2D.LinearGradientMode.Vertical
         pnlTotalSales.Location = New Point(0, 0)
+        pnlTotalSales.Margin = New Padding(3, 2, 3, 2)
         pnlTotalSales.Name = "pnlTotalSales"
         pnlTotalSales.ShadowDecoration.Color = Color.FromArgb(CByte(255), CByte(200), CByte(87))
         pnlTotalSales.ShadowDecoration.CustomizableEdges = CustomizableEdges2
         pnlTotalSales.ShadowDecoration.Depth = 20
         pnlTotalSales.ShadowDecoration.Enabled = True
-        pnlTotalSales.Size = New Size(480, 160)
+        pnlTotalSales.Size = New Size(420, 120)
         pnlTotalSales.TabIndex = 0
         ' 
         ' lblTotalsalesicon
         ' 
         lblTotalsalesicon.AutoSize = True
         lblTotalsalesicon.BackColor = Color.Transparent
-        lblTotalsalesicon.Font = New Font("Segoe UI", 42.0F)
+        lblTotalsalesicon.Font = New Font("Segoe UI", 42F)
         lblTotalsalesicon.ForeColor = Color.White
-        lblTotalsalesicon.Location = New Point(25, 25)
+        lblTotalsalesicon.Location = New Point(22, 19)
         lblTotalsalesicon.Name = "lblTotalsalesicon"
-        lblTotalsalesicon.Size = New Size(117, 93)
+        lblTotalsalesicon.Size = New Size(109, 74)
         lblTotalsalesicon.TabIndex = 0
         lblTotalsalesicon.Text = "💰"
         ' 
@@ -377,11 +383,11 @@ Partial Class SalesReport
         ' 
         Label3.AutoSize = True
         Label3.BackColor = Color.Transparent
-        Label3.Font = New Font("Segoe UI Semibold", 15.0F, FontStyle.Bold)
+        Label3.Font = New Font("Segoe UI Semibold", 15F, FontStyle.Bold)
         Label3.ForeColor = Color.White
-        Label3.Location = New Point(145, 35)
+        Label3.Location = New Point(127, 26)
         Label3.Name = "Label3"
-        Label3.Size = New Size(175, 35)
+        Label3.Size = New Size(139, 28)
         Label3.TabIndex = 1
         Label3.Text = "Total Revenue"
         ' 
@@ -389,11 +395,11 @@ Partial Class SalesReport
         ' 
         lblTotalSales.AutoSize = True
         lblTotalSales.BackColor = Color.Transparent
-        lblTotalSales.Font = New Font("Segoe UI", 32.0F, FontStyle.Bold)
+        lblTotalSales.Font = New Font("Segoe UI", 32F, FontStyle.Bold)
         lblTotalSales.ForeColor = Color.White
-        lblTotalSales.Location = New Point(140, 75)
+        lblTotalSales.Location = New Point(122, 56)
         lblTotalSales.Name = "lblTotalSales"
-        lblTotalSales.Size = New Size(172, 72)
+        lblTotalSales.Size = New Size(139, 59)
         lblTotalSales.TabIndex = 2
         lblTotalSales.Text = "₱0.00"
         ' 
@@ -408,24 +414,25 @@ Partial Class SalesReport
         pnlOrderCount.FillColor = Color.FromArgb(CByte(31), CByte(138), CByte(112))
         pnlOrderCount.FillColor2 = Color.FromArgb(CByte(6), CByte(182), CByte(212))
         pnlOrderCount.GradientMode = Drawing2D.LinearGradientMode.Vertical
-        pnlOrderCount.Location = New Point(500, 0)
+        pnlOrderCount.Location = New Point(438, 0)
+        pnlOrderCount.Margin = New Padding(3, 2, 3, 2)
         pnlOrderCount.Name = "pnlOrderCount"
         pnlOrderCount.ShadowDecoration.Color = Color.FromArgb(CByte(31), CByte(138), CByte(112))
         pnlOrderCount.ShadowDecoration.CustomizableEdges = CustomizableEdges4
         pnlOrderCount.ShadowDecoration.Depth = 20
         pnlOrderCount.ShadowDecoration.Enabled = True
-        pnlOrderCount.Size = New Size(480, 160)
+        pnlOrderCount.Size = New Size(420, 120)
         pnlOrderCount.TabIndex = 1
         ' 
         ' Label9
         ' 
         Label9.AutoSize = True
         Label9.BackColor = Color.Transparent
-        Label9.Font = New Font("Segoe UI", 42.0F)
+        Label9.Font = New Font("Segoe UI", 42F)
         Label9.ForeColor = Color.White
-        Label9.Location = New Point(25, 25)
+        Label9.Location = New Point(22, 19)
         Label9.Name = "Label9"
-        Label9.Size = New Size(126, 93)
+        Label9.Size = New Size(109, 74)
         Label9.TabIndex = 0
         Label9.Text = "📈"
         ' 
@@ -433,11 +440,11 @@ Partial Class SalesReport
         ' 
         Label6.AutoSize = True
         Label6.BackColor = Color.Transparent
-        Label6.Font = New Font("Segoe UI Semibold", 15.0F, FontStyle.Bold)
+        Label6.Font = New Font("Segoe UI Semibold", 15F, FontStyle.Bold)
         Label6.ForeColor = Color.White
-        Label6.Location = New Point(155, 35)
+        Label6.Location = New Point(136, 26)
         Label6.Name = "Label6"
-        Label6.Size = New Size(154, 35)
+        Label6.Size = New Size(122, 28)
         Label6.TabIndex = 1
         Label6.Text = "Total Orders"
         ' 
@@ -445,11 +452,11 @@ Partial Class SalesReport
         ' 
         lblOrderCount.AutoSize = True
         lblOrderCount.BackColor = Color.Transparent
-        lblOrderCount.Font = New Font("Segoe UI", 32.0F, FontStyle.Bold)
+        lblOrderCount.Font = New Font("Segoe UI", 32F, FontStyle.Bold)
         lblOrderCount.ForeColor = Color.White
-        lblOrderCount.Location = New Point(155, 70)
+        lblOrderCount.Location = New Point(136, 52)
         lblOrderCount.Name = "lblOrderCount"
-        lblOrderCount.Size = New Size(61, 72)
+        lblOrderCount.Size = New Size(50, 59)
         lblOrderCount.TabIndex = 2
         lblOrderCount.Text = "0"
         ' 
@@ -464,24 +471,25 @@ Partial Class SalesReport
         pnlAvgOrder.FillColor = Color.FromArgb(CByte(255), CByte(107), CByte(107))
         pnlAvgOrder.FillColor2 = Color.FromArgb(CByte(251), CByte(146), CByte(60))
         pnlAvgOrder.GradientMode = Drawing2D.LinearGradientMode.Vertical
-        pnlAvgOrder.Location = New Point(1000, 0)
+        pnlAvgOrder.Location = New Point(875, 0)
+        pnlAvgOrder.Margin = New Padding(3, 2, 3, 2)
         pnlAvgOrder.Name = "pnlAvgOrder"
         pnlAvgOrder.ShadowDecoration.Color = Color.FromArgb(CByte(255), CByte(107), CByte(107))
         pnlAvgOrder.ShadowDecoration.CustomizableEdges = CustomizableEdges6
         pnlAvgOrder.ShadowDecoration.Depth = 20
         pnlAvgOrder.ShadowDecoration.Enabled = True
-        pnlAvgOrder.Size = New Size(480, 160)
+        pnlAvgOrder.Size = New Size(420, 120)
         pnlAvgOrder.TabIndex = 2
         ' 
         ' Label10
         ' 
         Label10.AutoSize = True
         Label10.BackColor = Color.Transparent
-        Label10.Font = New Font("Segoe UI", 42.0F)
+        Label10.Font = New Font("Segoe UI", 42F)
         Label10.ForeColor = Color.White
-        Label10.Location = New Point(25, 25)
+        Label10.Location = New Point(22, 19)
         Label10.Name = "Label10"
-        Label10.Size = New Size(131, 93)
+        Label10.Size = New Size(109, 74)
         Label10.TabIndex = 0
         Label10.Text = "🛍️"
         ' 
@@ -489,11 +497,11 @@ Partial Class SalesReport
         ' 
         Label8.AutoSize = True
         Label8.BackColor = Color.Transparent
-        Label8.Font = New Font("Segoe UI Semibold", 15.0F, FontStyle.Bold)
+        Label8.Font = New Font("Segoe UI Semibold", 15F, FontStyle.Bold)
         Label8.ForeColor = Color.White
-        Label8.Location = New Point(165, 35)
+        Label8.Location = New Point(144, 26)
         Label8.Name = "Label8"
-        Label8.Size = New Size(179, 35)
+        Label8.Size = New Size(144, 28)
         Label8.TabIndex = 1
         Label8.Text = "Average Order"
         ' 
@@ -501,11 +509,11 @@ Partial Class SalesReport
         ' 
         lblAvgOrder.AutoSize = True
         lblAvgOrder.BackColor = Color.Transparent
-        lblAvgOrder.Font = New Font("Segoe UI", 32.0F, FontStyle.Bold)
+        lblAvgOrder.Font = New Font("Segoe UI", 32F, FontStyle.Bold)
         lblAvgOrder.ForeColor = Color.White
-        lblAvgOrder.Location = New Point(160, 75)
+        lblAvgOrder.Location = New Point(140, 56)
         lblAvgOrder.Name = "lblAvgOrder"
-        lblAvgOrder.Size = New Size(172, 72)
+        lblAvgOrder.Size = New Size(139, 59)
         lblAvgOrder.TabIndex = 2
         lblAvgOrder.Text = "₱0.00"
         ' 
@@ -521,25 +529,25 @@ Partial Class SalesReport
         pnlControls.Controls.Add(btnExportPdf)
         pnlControls.Controls.Add(btnPrint)
         pnlControls.FillColor = Color.White
-        pnlControls.Location = New Point(40, 145)
-        pnlControls.Margin = New Padding(40, 25, 40, 20)
+        pnlControls.Location = New Point(35, 109)
+        pnlControls.Margin = New Padding(35, 19, 35, 15)
         pnlControls.Name = "pnlControls"
-        pnlControls.Padding = New Padding(25)
+        pnlControls.Padding = New Padding(22, 19, 22, 19)
         pnlControls.Radius = 20
         pnlControls.ShadowColor = Color.Black
         pnlControls.ShadowDepth = 15
-        pnlControls.Size = New Size(1480, 110)
+        pnlControls.Size = New Size(1295, 82)
         pnlControls.TabIndex = 1
         ' 
         ' Label1
         ' 
         Label1.AutoSize = True
         Label1.BackColor = Color.Transparent
-        Label1.Font = New Font("Segoe UI Semibold", 11.0F, FontStyle.Bold)
+        Label1.Font = New Font("Segoe UI Semibold", 11F, FontStyle.Bold)
         Label1.ForeColor = Color.FromArgb(CByte(30), CByte(30), CByte(30))
-        Label1.Location = New Point(25, 38)
+        Label1.Location = New Point(22, 28)
         Label1.Name = "Label1"
-        Label1.Size = New Size(62, 25)
+        Label1.Size = New Size(49, 20)
         Label1.TabIndex = 0
         Label1.Text = "From:"
         ' 
@@ -554,12 +562,13 @@ Partial Class SalesReport
         dtpFrom.Font = New Font("Segoe UI", 10.5F)
         dtpFrom.ForeColor = Color.FromArgb(CByte(30), CByte(30), CByte(30))
         dtpFrom.Format = DateTimePickerFormat.Short
-        dtpFrom.Location = New Point(90, 33)
+        dtpFrom.Location = New Point(79, 25)
+        dtpFrom.Margin = New Padding(3, 2, 3, 2)
         dtpFrom.MaxDate = New Date(9998, 12, 31, 0, 0, 0, 0)
         dtpFrom.MinDate = New Date(1753, 1, 1, 0, 0, 0, 0)
         dtpFrom.Name = "dtpFrom"
         dtpFrom.ShadowDecoration.CustomizableEdges = CustomizableEdges8
-        dtpFrom.Size = New Size(180, 44)
+        dtpFrom.Size = New Size(158, 33)
         dtpFrom.TabIndex = 1
         dtpFrom.Value = New Date(2025, 11, 2, 23, 5, 10, 93)
         ' 
@@ -567,11 +576,11 @@ Partial Class SalesReport
         ' 
         Label2.AutoSize = True
         Label2.BackColor = Color.Transparent
-        Label2.Font = New Font("Segoe UI Semibold", 11.0F, FontStyle.Bold)
+        Label2.Font = New Font("Segoe UI Semibold", 11F, FontStyle.Bold)
         Label2.ForeColor = Color.FromArgb(CByte(30), CByte(30), CByte(30))
-        Label2.Location = New Point(290, 38)
+        Label2.Location = New Point(254, 28)
         Label2.Name = "Label2"
-        Label2.Size = New Size(36, 25)
+        Label2.Size = New Size(29, 20)
         Label2.TabIndex = 2
         Label2.Text = "To:"
         ' 
@@ -586,12 +595,13 @@ Partial Class SalesReport
         dtpTo.Font = New Font("Segoe UI", 10.5F)
         dtpTo.ForeColor = Color.FromArgb(CByte(30), CByte(30), CByte(30))
         dtpTo.Format = DateTimePickerFormat.Short
-        dtpTo.Location = New Point(330, 33)
+        dtpTo.Location = New Point(289, 25)
+        dtpTo.Margin = New Padding(3, 2, 3, 2)
         dtpTo.MaxDate = New Date(9998, 12, 31, 0, 0, 0, 0)
         dtpTo.MinDate = New Date(1753, 1, 1, 0, 0, 0, 0)
         dtpTo.Name = "dtpTo"
         dtpTo.ShadowDecoration.CustomizableEdges = CustomizableEdges10
-        dtpTo.Size = New Size(180, 44)
+        dtpTo.Size = New Size(158, 33)
         dtpTo.TabIndex = 3
         dtpTo.Value = New Date(2025, 11, 2, 23, 5, 10, 112)
         ' 
@@ -606,15 +616,16 @@ Partial Class SalesReport
         btnGenerateReport.DisabledState.FillColor = Color.FromArgb(CByte(169), CByte(169), CByte(169))
         btnGenerateReport.DisabledState.ForeColor = Color.FromArgb(CByte(141), CByte(141), CByte(141))
         btnGenerateReport.FillColor = Color.FromArgb(CByte(255), CByte(200), CByte(87))
-        btnGenerateReport.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
+        btnGenerateReport.Font = New Font("Segoe UI", 11F, FontStyle.Bold)
         btnGenerateReport.ForeColor = Color.FromArgb(CByte(30), CByte(30), CByte(30))
-        btnGenerateReport.Location = New Point(540, 28)
+        btnGenerateReport.Location = New Point(472, 21)
+        btnGenerateReport.Margin = New Padding(3, 2, 3, 2)
         btnGenerateReport.Name = "btnGenerateReport"
         btnGenerateReport.ShadowDecoration.Color = Color.FromArgb(CByte(255), CByte(200), CByte(87))
         btnGenerateReport.ShadowDecoration.CustomizableEdges = CustomizableEdges12
         btnGenerateReport.ShadowDecoration.Depth = 12
         btnGenerateReport.ShadowDecoration.Enabled = True
-        btnGenerateReport.Size = New Size(220, 54)
+        btnGenerateReport.Size = New Size(192, 40)
         btnGenerateReport.TabIndex = 4
         btnGenerateReport.Text = "✨ Generate Report"
         ' 
@@ -632,12 +643,13 @@ Partial Class SalesReport
         btnExportCsv.FillColor = Color.FromArgb(CByte(31), CByte(138), CByte(112))
         btnExportCsv.Font = New Font("Segoe UI Semibold", 10.5F, FontStyle.Bold)
         btnExportCsv.ForeColor = Color.White
-        btnExportCsv.Location = New Point(996, 28)
+        btnExportCsv.Location = New Point(872, 21)
+        btnExportCsv.Margin = New Padding(3, 2, 3, 2)
         btnExportCsv.Name = "btnExportCsv"
         btnExportCsv.ShadowDecoration.CustomizableEdges = CustomizableEdges14
         btnExportCsv.ShadowDecoration.Depth = 10
         btnExportCsv.ShadowDecoration.Enabled = True
-        btnExportCsv.Size = New Size(155, 54)
+        btnExportCsv.Size = New Size(136, 40)
         btnExportCsv.TabIndex = 5
         btnExportCsv.Text = "📊 Export CSV"
         ' 
@@ -655,12 +667,13 @@ Partial Class SalesReport
         btnExportPdf.FillColor = Color.FromArgb(CByte(239), CByte(68), CByte(68))
         btnExportPdf.Font = New Font("Segoe UI Semibold", 10.5F, FontStyle.Bold)
         btnExportPdf.ForeColor = Color.White
-        btnExportPdf.Location = New Point(1161, 28)
+        btnExportPdf.Location = New Point(1016, 21)
+        btnExportPdf.Margin = New Padding(3, 2, 3, 2)
         btnExportPdf.Name = "btnExportPdf"
         btnExportPdf.ShadowDecoration.CustomizableEdges = CustomizableEdges16
         btnExportPdf.ShadowDecoration.Depth = 10
         btnExportPdf.ShadowDecoration.Enabled = True
-        btnExportPdf.Size = New Size(155, 54)
+        btnExportPdf.Size = New Size(136, 40)
         btnExportPdf.TabIndex = 6
         btnExportPdf.Text = "📄 Export PDF"
         ' 
@@ -678,12 +691,13 @@ Partial Class SalesReport
         btnPrint.FillColor = Color.FromArgb(CByte(156), CByte(163), CByte(175))
         btnPrint.Font = New Font("Segoe UI Semibold", 10.5F, FontStyle.Bold)
         btnPrint.ForeColor = Color.White
-        btnPrint.Location = New Point(1326, 28)
+        btnPrint.Location = New Point(1160, 21)
+        btnPrint.Margin = New Padding(3, 2, 3, 2)
         btnPrint.Name = "btnPrint"
         btnPrint.ShadowDecoration.CustomizableEdges = CustomizableEdges18
         btnPrint.ShadowDecoration.Depth = 10
         btnPrint.ShadowDecoration.Enabled = True
-        btnPrint.Size = New Size(125, 54)
+        btnPrint.Size = New Size(109, 40)
         btnPrint.TabIndex = 7
         btnPrint.Text = "🖨️ Print"
         ' 
@@ -698,24 +712,24 @@ Partial Class SalesReport
         pnlHeader.FillColor = Color.FromArgb(CByte(255), CByte(200), CByte(87))
         pnlHeader.FillColor2 = Color.FromArgb(CByte(31), CByte(138), CByte(112))
         pnlHeader.Location = New Point(0, 0)
-        pnlHeader.Margin = New Padding(0, 0, 0, 20)
+        pnlHeader.Margin = New Padding(0, 0, 0, 15)
         pnlHeader.Name = "pnlHeader"
         pnlHeader.ShadowDecoration.CustomizableEdges = CustomizableEdges24
         pnlHeader.ShadowDecoration.Depth = 15
         pnlHeader.ShadowDecoration.Enabled = True
         pnlHeader.ShadowDecoration.Shadow = New Padding(0, 4, 0, 0)
-        pnlHeader.Size = New Size(1579, 120)
+        pnlHeader.Size = New Size(1383, 90)
         pnlHeader.TabIndex = 0
         ' 
         ' lblTitle
         ' 
         lblTitle.AutoSize = True
         lblTitle.BackColor = Color.Transparent
-        lblTitle.Font = New Font("Segoe UI", 28.0F, FontStyle.Bold)
+        lblTitle.Font = New Font("Segoe UI", 28F, FontStyle.Bold)
         lblTitle.ForeColor = Color.White
-        lblTitle.Location = New Point(40, 30)
+        lblTitle.Location = New Point(35, 22)
         lblTitle.Name = "lblTitle"
-        lblTitle.Size = New Size(419, 62)
+        lblTitle.Size = New Size(347, 51)
         lblTitle.TabIndex = 0
         lblTitle.Text = "📊 Sales Analytics"
         ' 
@@ -723,11 +737,11 @@ Partial Class SalesReport
         ' 
         lblSubtitle.AutoSize = True
         lblSubtitle.BackColor = Color.Transparent
-        lblSubtitle.Font = New Font("Segoe UI", 11.0F)
+        lblSubtitle.Font = New Font("Segoe UI", 11F)
         lblSubtitle.ForeColor = Color.FromArgb(CByte(255), CByte(255), CByte(255))
-        lblSubtitle.Location = New Point(52, 88)
+        lblSubtitle.Location = New Point(46, 66)
         lblSubtitle.Name = "lblSubtitle"
-        lblSubtitle.Size = New Size(152, 25)
+        lblSubtitle.Size = New Size(120, 20)
         lblSubtitle.TabIndex = 1
         lblSubtitle.Text = "Sales Dashboard"
         ' 
@@ -743,14 +757,15 @@ Partial Class SalesReport
         btnBack.DisabledState.FillColor = Color.FromArgb(CByte(169), CByte(169), CByte(169))
         btnBack.DisabledState.ForeColor = Color.FromArgb(CByte(141), CByte(141), CByte(141))
         btnBack.FillColor = Color.FromArgb(CByte(80), CByte(255), CByte(255), CByte(255))
-        btnBack.Font = New Font("Segoe UI Semibold", 11.0F, FontStyle.Bold)
+        btnBack.Font = New Font("Segoe UI Semibold", 11F, FontStyle.Bold)
         btnBack.ForeColor = Color.White
-        btnBack.Location = New Point(1327, 38)
+        btnBack.Location = New Point(1162, 28)
+        btnBack.Margin = New Padding(3, 2, 3, 2)
         btnBack.Name = "btnBack"
         btnBack.ShadowDecoration.CustomizableEdges = CustomizableEdges20
         btnBack.ShadowDecoration.Depth = 10
         btnBack.ShadowDecoration.Enabled = True
-        btnBack.Size = New Size(110, 50)
+        btnBack.Size = New Size(96, 38)
         btnBack.TabIndex = 2
         btnBack.Text = "← Back"
         btnBack.UseTransparentBackground = True
@@ -767,28 +782,28 @@ Partial Class SalesReport
         btnLogout.DisabledState.FillColor = Color.FromArgb(CByte(169), CByte(169), CByte(169))
         btnLogout.DisabledState.ForeColor = Color.FromArgb(CByte(141), CByte(141), CByte(141))
         btnLogout.FillColor = Color.FromArgb(CByte(239), CByte(68), CByte(68))
-        btnLogout.Font = New Font("Segoe UI Semibold", 11.0F, FontStyle.Bold)
+        btnLogout.Font = New Font("Segoe UI Semibold", 11F, FontStyle.Bold)
         btnLogout.ForeColor = Color.White
-        btnLogout.Location = New Point(1443, 38)
+        btnLogout.Location = New Point(1264, 28)
+        btnLogout.Margin = New Padding(3, 2, 3, 2)
         btnLogout.Name = "btnLogout"
         btnLogout.ShadowDecoration.CustomizableEdges = CustomizableEdges22
         btnLogout.ShadowDecoration.Depth = 10
         btnLogout.ShadowDecoration.Enabled = True
-        btnLogout.Size = New Size(116, 50)
+        btnLogout.Size = New Size(102, 38)
         btnLogout.TabIndex = 3
         btnLogout.Text = "⮾ Logout"
         btnLogout.UseTransparentBackground = True
         ' 
-        ' SalesReport (UserControl)
+        ' SalesReport
         ' 
-        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
+        AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.FromArgb(CByte(247), CByte(250), CByte(252))
-        ' Set control size (UserControl does not have ClientSize/Form properties)
-        Me.Size = New Size(1600, 1000)
         Controls.Add(pnlScrollContainer)
+        Margin = New Padding(3, 2, 3, 2)
         Name = "SalesReport"
-        ' Designer: no FormBorderStyle, StartPosition or Text for UserControl
+        Size = New Size(1400, 750)
         pnlScrollContainer.ResumeLayout(False)
         pnlMainContent.ResumeLayout(False)
         pnlTransactions.ResumeLayout(False)

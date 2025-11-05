@@ -61,8 +61,39 @@ Public Class SalesReport
             chartTopItems = Nothing
             chartRevenueTrend = Nothing
 
-            dtpFrom.Value = DateTime.Now.AddDays(-30)
-            dtpTo.Value = DateTime.Now
+            ' --- Date Picker Logic ---
+
+            ' Define yesterday as the maximum allowed date
+            Dim maxSelectableDate As DateTime = DateTime.Today.AddDays(0)
+
+            ' Define the absolute minimum (floor) date: August 1, 2025
+            Dim minSelectableDate As DateTime = New DateTime(2025, 8, 1)
+
+            ' 1. Set the "To" date picker
+            dtpTo.MaxDate = maxSelectableDate  ' Max selectable date is yesterday
+            dtpTo.Value = maxSelectableDate    ' Default value is yesterday
+
+            ' 2. Set the "From" date picker
+            dtpFrom.MaxDate = dtpTo.Value      ' Max selectable date is the current "To" date
+            dtpFrom.MinDate = minSelectableDate ' Set the absolute minimum date
+
+            ' Calculate default "From" (30 days before "To")
+            Dim defaultFromDate As DateTime = dtpTo.Value.AddDays(-30)
+
+            ' If default "From" is before our new floor, use the floor date instead
+            If defaultFromDate < minSelectableDate Then
+                dtpFrom.Value = minSelectableDate
+            Else
+                dtpFrom.Value = defaultFromDate
+            End If
+
+            ' 3. Set MinDate for "To" to prevent picking a date before "From"
+            ' This must be set *after* dtpFrom.Value is finalized
+            dtpTo.MinDate = dtpFrom.Value
+
+            ' 4. Add handlers to link the date pickers
+            AddHandler dtpFrom.ValueChanged, AddressOf dtpFrom_ValueChanged
+            AddHandler dtpTo.ValueChanged, AddressOf dtpTo_ValueChanged
 
             InitializeCharts()
             ShowLoadingState()
@@ -72,6 +103,24 @@ Public Class SalesReport
             MessageBox.Show("Error initializing SalesReport control: " & ex.Message, "Initialization Error",
                             MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+    End Sub
+
+    ' ===== DATEPICKER VALIDATION HANDLERS =====
+
+    ''' <summary>
+    ''' When "From" date changes, set the "To" date's minimum to match it.
+    ''' </summary>
+    Private Sub dtpFrom_ValueChanged(sender As Object, e As EventArgs)
+        ' Ensure "To" date cannot be before "From" date
+        dtpTo.MinDate = dtpFrom.Value
+    End Sub
+
+    ''' <summary>
+    ''' When "To" date changes, set the "From" date's maximum to match it.
+    ''' </summary>
+    Private Sub dtpTo_ValueChanged(sender As Object, e As EventArgs)
+        ' Ensure "From" date cannot be after "To" date
+        dtpFrom.MaxDate = dtpTo.Value
     End Sub
 
     Private Sub ShowLoadingState()
@@ -463,7 +512,7 @@ Public Class SalesReport
     ''' <summary>
     ''' Handle View Receipt button click in DataGridView
     ''' </summary>
-    Private Sub dgvTransactions_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvTransactions.CellContentClick, dgvTransactions.CellClick
+    Private Sub dgvTransactions_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvTransactions.CellContentClick
         Try
             ' Ignore header/invalid clicks
             If e.RowIndex < 0 OrElse e.ColumnIndex < 0 Then Return
